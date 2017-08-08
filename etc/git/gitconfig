@@ -1,0 +1,47 @@
+[user]
+	useConfigOnly = true
+
+[color]
+	ui = auto
+
+[core]
+	excludesfile = ~/.gitignore
+	pager = less -x5,9
+
+[alias]
+	br = branch
+	ci = commit
+	co = checkout
+	di = diff
+	dic = diff --cached
+	glog = log --graph
+	mlog = log --stat --summary
+	h = help
+	mg = merge
+	rb = rebase
+	ss = stash
+	st = status
+	un = reset HEAD --
+	sb = submodule
+	sbs = submodule status
+	rpo = remote prune origin
+	pusha = push --recurse-submodules=on-demand
+	pulla = pull --recurse-submodules
+
+[credential]
+	helper = osxkeychain
+
+[url "persistent-https"]
+	insteadof = https
+
+[url "persistent-http"]
+	insteadof = http
+
+[mergetool "idea"]
+	cmd = /usr/local/bin/idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+
+[difftool "idea"]
+	cmd = /usr/local/bin/idea diff "$LOCAL" "$REMOTE"
+
+[merge]
+	tool = idea

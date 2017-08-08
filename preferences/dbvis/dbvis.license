@@ -1,0 +1,11 @@
+# DbVisualizer License
+dbvis.license.product = DbVisualizer
+dbvis.license.edition = Personal
+dbvis.license.version = 5.*
+dbvis.license.id = 1234567890
+dbvis.license.name = Frodo
+dbvis.license.org = SSG Team
+dbvis.license.activation = 2005-01-01
+dbvis.license.upgrade.expire = 2099-01-01
+dbvis.license.expire = 2099-01-01
+dbvis.license.seal = MCwCFHWDzaLQsyo56F+nZLjFpS3Nh++JAhQeylbv6kl2I/s79uWvLhvbq/uB/w==

@@ -1,0 +1,3 @@
+#!/bin/sh
+git config user.name MoonFruit
+git config user.email dkmoonfruit@gmail.com

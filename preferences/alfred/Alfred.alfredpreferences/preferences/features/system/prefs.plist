@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ejectBlacklist</key>
+	<array>
+		<string>MacBackup</string>
+		<string>Transcend</string>
+	</array>
+	<key>ejectKeywordEnabled</key>
+	<true/>
+	<key>ejectallKeywordEnabled</key>
+	<true/>
+	<key>emptytrashConfirm</key>
+	<true/>
+	<key>emptytrashKeywordEnabled</key>
+	<false/>
+	<key>lockKeywordEnabled</key>
+	<false/>
+	<key>logoutKeywordEnabled</key>
+	<false/>
+	<key>quitallConfirm</key>
+	<true/>
+	<key>restartConfirm</key>
+	<true/>
+	<key>screensaverKeyword</key>
+	<string>lock</string>
+	<key>shutdownConfirm</key>
+	<true/>
+</dict>
+</plist>

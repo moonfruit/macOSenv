@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/local/bin/grep -E --color=auto -dskip --exclude-dir=.cvs --exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg "$@"

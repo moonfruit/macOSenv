@@ -1,0 +1,15 @@
+*~
+.DS_Store
+.*.swp
+tags
+.svn
+.git
+.hg
+CVS
+*.[oa]
+*.so
+*.dylib
+*.luac
+*.pyc
+*.log
+Icon
