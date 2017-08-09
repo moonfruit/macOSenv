@@ -1,0 +1,11 @@
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+  . /usr/local/share/bash-completion/bash_completion
+fi
+
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+if brew command command-not-found-init > /dev/null; then
+  eval "$(brew command-not-found-init)";
+fi
+
+export PATH="~/Documents/Environment/bin:~/Library/Python/2.7/bin:/usr/local/sbin:$PATH"
