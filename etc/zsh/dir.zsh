@@ -1,9 +1,6 @@
 export DOWNLOAD="$HOME/Downloads"
 hash -d DOWNLOAD="$DOWNLOAD"
 
-export ENV="$HOME/Documents/Environment"
-hash -d ENV="$ENV"
-
 export WORKSPACE="$HOME/Documents/Workspace"
 hash -d WORKSPACE="$WORKSPACE"
 

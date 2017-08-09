@@ -2,8 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ENV_HOME="$HOME/Documents/Environment"
-export ZSH="$ENV_HOME/package/zsh/oh-my-zsh"
+export ENV="$HOME/Documents/Environment"
+hash -d ENV="$ENV"
+export ZSH="$ENV/package/zsh/oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -49,7 +50,7 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-ZSH_CUSTOM="$ENV_HOME/etc/zsh"
+ZSH_CUSTOM="$ENV/etc/zsh"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
