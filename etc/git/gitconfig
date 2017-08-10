@@ -31,11 +31,11 @@
 [credential]
 	helper = osxkeychain
 
-[url "persistent-https"]
-	insteadof = https
+#[url "persistent-https"]
+#	insteadof = https
 
-[url "persistent-http"]
-	insteadof = http
+#[url "persistent-http"]
+#	insteadof = http
 
 [mergetool "idea"]
 	cmd = /usr/local/bin/idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"

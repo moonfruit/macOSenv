@@ -4,6 +4,9 @@ hash -d DOWNLOAD="$DOWNLOAD"
 export WORKSPACE="$HOME/Documents/Workspace"
 hash -d WORKSPACE="$WORKSPACE"
 
+export RESOURCES="$HOME/Resources"
+hash -d RESOURCES="$RESOURCES"
+
 export TRASH="$HOME/.Trash"
 hash -d TRASH="$TRASH"
 
