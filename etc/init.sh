@@ -14,6 +14,16 @@ mkdir -p ~/.ssh
 cd ~/.ssh || exit 1
 ln -sf ../Documents/Environment/etc/ssh/config
 
+mkdir -p ~/.config
+cd ~/.config || exit 1
+for FILE in ../Documents/Environment/etc/config/*; do
+	ln -sf "$FILE"
+done
+
+mkdir -p ~/.config/mpv
+cd ~/.config/mpv || exit 1
+ln -sf ../../Documents/Environment/preferences/mpv/mpv.conf
+
 mkdir -p ~/Library/LaunchAgents
 cd ~/Library/LaunchAgents || exit 1
 ln -sf /Users/moon/Documents/Environment/etc/aria2/aria2.plist com.github.moonfruit.aria2.plist
