@@ -7,6 +7,9 @@ hash -d WORKSPACE="$WORKSPACE"
 export RESOURCES="$HOME/Resources"
 hash -d RESOURCES="$RESOURCES"
 
+export ICLOUD="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+hash -d ICLOUD="$ICLOUD"
+
 export TRASH="$HOME/.Trash"
 hash -d TRASH="$TRASH"
 
