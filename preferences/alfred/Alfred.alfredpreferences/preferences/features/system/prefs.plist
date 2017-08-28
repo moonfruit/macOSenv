@@ -3,10 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ejectBlacklist</key>
-	<array>
-		<string>MacBackup</string>
-		<string>Transcend</string>
-	</array>
+	<array/>
 	<key>ejectKeywordEnabled</key>
 	<true/>
 	<key>ejectallKeywordEnabled</key>

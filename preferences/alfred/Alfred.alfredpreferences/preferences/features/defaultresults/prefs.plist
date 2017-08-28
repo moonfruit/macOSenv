@@ -10,9 +10,13 @@
 		<string>features.websearch.custom.E8A9EB6E-4FA6-4035-8EBA-EF71FDD08240.fallback</string>
 		<string>features.websearch.wiki.fallback</string>
 	</array>
+	<key>showArchives</key>
+	<true/>
 	<key>showContacts</key>
 	<false/>
 	<key>showDocuments</key>
+	<true/>
+	<key>showFolders</key>
 	<true/>
 	<key>showTextFiles</key>
 	<true/>

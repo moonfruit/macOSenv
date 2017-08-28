@@ -4,7 +4,7 @@ hash -d DOWNLOAD="$DOWNLOAD"
 export WORKSPACE="$HOME/Documents/Workspace"
 hash -d WORKSPACE="$WORKSPACE"
 
-export RESOURCES="$HOME/Resources"
+export RESOURCES="$HOME/Resources.localized"
 hash -d RESOURCES="$RESOURCES"
 
 export ICLOUD="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
