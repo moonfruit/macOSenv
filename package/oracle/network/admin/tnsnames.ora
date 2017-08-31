@@ -1,0 +1,15 @@
+ORADB_12 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.3.12)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = orcl.centos6vm)
+    )
+  )
+
+ORADB_30 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.3.30)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = orcl.centos6vm)
+    )
+  )
