@@ -31,3 +31,6 @@
 [submodule "package/BaiduExporter"]
 	path = package/BaiduExporter
 	url = git@github.com:acgotaku/BaiduExporter.git
+[submodule "package/SublimeClang"]
+	path = package/SublimeClang
+	url = https://github.com/quarnster/SublimeClang.git

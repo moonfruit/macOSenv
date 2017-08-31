@@ -15,3 +15,6 @@ hash -d TRASH="$TRASH"
 
 export JAVA_WORK="$WORKSPACE/java"
 hash -d JAVA_WORK="$JAVA_WORK"
+
+export TRANSCEND="/Volumes/Transcend"
+hash -d TRANSCEND="$TRANSCEND"

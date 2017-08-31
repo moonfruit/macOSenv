@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>ejectBlacklist</key>
-	<array/>
+	<array>
+		<string>Transcend</string>
+	</array>
 	<key>ejectKeywordEnabled</key>
 	<true/>
 	<key>ejectallKeywordEnabled</key>

@@ -3,11 +3,80 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>sd</string>
+	<string>Transcend</string>
+	<key>category</key>
+	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>05141473-8AFB-4FE7-9BE7-BE2390C1B960</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A9AE62AF-A95D-4DA2-A507-487B316182E7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</key>
+		<array/>
+		<key>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>8698E2A1-55A3-4788-9B9C-08915E91B54E</key>
 		<array/>
+		<key>A9AE62AF-A95D-4DA2-A507-487B316182E7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C80A0BED-90B3-4690-B837-04AD53FB2CCB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>EAAEE9D7-0FB5-458B-B525-72F470B7860A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C80A0BED-90B3-4690-B837-04AD53FB2CCB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>MoonFruit</string>
@@ -16,7 +85,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>SD Card Searcher</string>
+	<string>Transcend Tools</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -24,6 +93,8 @@
 			<dict>
 				<key>anchorfields</key>
 				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>daterange</key>
@@ -80,7 +151,7 @@
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
-				<string>SD Card Searcher</string>
+				<string>Search Transcend</string>
 				<key>types</key>
 				<array/>
 				<key>withspace</key>
@@ -93,17 +164,187 @@
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>sdm</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Mount Transcend</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>05141473-8AFB-4FE7-9BE7-BE2390C1B960</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>[[ -d /Volumes/Transcend ]] &amp;&amp; exit
+diskutil mount Transcend 2&gt;&amp;1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A9AE62AF-A95D-4DA2-A507-487B316182E7</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Transcend Tools</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>sdu</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Unmount Transcend</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>EAAEE9D7-0FB5-458B-B525-72F470B7860A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>[[ ! -d /Volumes/Transcend ]] &amp;&amp; exit
+diskutil unmount Transcend 2&gt;&amp;1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C80A0BED-90B3-4690-B837-04AD53FB2CCB</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>SD Card Searcher</string>
 	<key>uidata</key>
 	<dict>
+		<key>05141473-8AFB-4FE7-9BE7-BE2390C1B960</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>120</integer>
+		</dict>
+		<key>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>370</integer>
+			<key>ypos</key>
+			<integer>170</integer>
+		</dict>
+		<key>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>310</integer>
+			<key>ypos</key>
+			<integer>200</integer>
+		</dict>
 		<key>8698E2A1-55A3-4788-9B9C-08915E91B54E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>10</integer>
 			<key>ypos</key>
-			<real>10</real>
+			<integer>10</integer>
+		</dict>
+		<key>A9AE62AF-A95D-4DA2-A507-487B316182E7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>160</integer>
+			<key>ypos</key>
+			<integer>120</integer>
+		</dict>
+		<key>C80A0BED-90B3-4690-B837-04AD53FB2CCB</key>
+		<dict>
+			<key>xpos</key>
+			<integer>160</integer>
+			<key>ypos</key>
+			<integer>230</integer>
+		</dict>
+		<key>EAAEE9D7-0FB5-458B-B525-72F470B7860A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>230</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>

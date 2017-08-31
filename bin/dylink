@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 LIBPATH=$1
-if [ -z "$LIBPATH" ]; then
+if [[ -z "$LIBPATH" ]]; then
 	LIBPATH="$DYLD_FALLBACK_LIBRARY_PATH"
 fi
 
