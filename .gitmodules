@@ -34,3 +34,6 @@
 [submodule "package/SublimeClang"]
 	path = package/SublimeClang
 	url = https://github.com/quarnster/SublimeClang.git
+[submodule "package/WeChatTweak"]
+	path = package/WeChatTweak
+	url = https://github.com/Sunnyyoung/WeChatTweak-macOS.git

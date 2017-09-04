@@ -37,6 +37,12 @@
 [url "persistent-http"]
 	insteadof = http
 
+[protocol "persistent-https"]
+	allow = always
+
+[protocol "persistent-http"]
+	allow = always
+
 [mergetool "idea"]
 	cmd = /usr/local/bin/idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 
