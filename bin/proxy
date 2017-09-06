@@ -13,6 +13,7 @@ fi
 if [[ $port -gt 0 ]]; then
 	export http_proxy="http://dkmoonfruit:QAZwsxEDC@127.0.0.1:$port"
 	export https_proxy="$http_proxy"
+	export no_proxy=10.1.2.32
 fi
 
 exec "$@"

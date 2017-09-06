@@ -359,9 +359,9 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>954 205 544 355 0 0 1680 1028 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>530 494 620 392 0 0 1680 1050 </string>
+	<string>530 478 620 392 0 0 1680 1028 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>360 382 918 512 0 0 1680 1050 </string>
+	<string>377 417 796 473 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>0 599 1680 429 0 0 1680 1028 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
@@ -1165,6 +1165,8 @@
 		<dict>
 			<key>ASCII Anti Aliased</key>
 			<true/>
+			<key>ASCII Ligatures</key>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -1725,11 +1727,13 @@
 			<key>Name</key>
 			<string>chitupay@10.1.1.201</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1887,6 +1891,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -1908,6 +1916,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -2508,11 +2518,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.200</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -2672,6 +2684,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -2693,6 +2709,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -3293,11 +3311,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.201</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -3457,6 +3477,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -3478,6 +3502,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -4078,11 +4104,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.202</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -4242,6 +4270,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -4263,6 +4295,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -4863,11 +4897,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.203</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -5027,6 +5063,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -5048,6 +5088,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -5648,11 +5690,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.205</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -5812,6 +5856,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -5833,6 +5881,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -6433,11 +6483,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.206</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -6597,6 +6649,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -6618,6 +6674,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -7218,11 +7276,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.207</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -7382,6 +7442,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -7403,6 +7467,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -8003,11 +8069,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.208</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -8167,6 +8235,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -8188,6 +8260,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -8788,11 +8862,13 @@
 			<key>Name</key>
 			<string>app@10.1.3.210</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -8951,6 +9027,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -8972,6 +9052,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -9531,11 +9613,13 @@
 			<key>Name</key>
 			<string>builder@10.1.3.11</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -9693,6 +9777,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -9714,6 +9802,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -10319,6 +10409,8 @@
 			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
 			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
@@ -10478,6 +10570,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -10499,6 +10595,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -11101,11 +11199,13 @@
 			<key>Name</key>
 			<string>dev@10.1.3.52</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -11264,6 +11364,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -11285,6 +11389,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -11887,11 +11993,13 @@
 			<key>Name</key>
 			<string>dev@10.1.3.53</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -12050,6 +12158,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -12071,6 +12183,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -12634,11 +12748,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.11</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -12796,6 +12912,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -12817,6 +12937,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -13380,11 +13502,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.12</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -13542,6 +13666,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -13563,6 +13691,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -14126,11 +14256,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.22</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -14289,6 +14421,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -14310,6 +14446,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -14873,11 +15011,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.23</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -15035,6 +15175,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -15056,6 +15200,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -15619,11 +15765,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.26</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -15782,6 +15930,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -15803,6 +15955,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -16366,11 +16520,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.29</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -16529,6 +16685,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -16550,6 +16710,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -17113,11 +17275,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.30</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -17275,6 +17439,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -17296,6 +17464,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -17857,11 +18027,13 @@
 			<key>Name</key>
 			<string>gpp@10.1.3.36</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -18020,6 +18192,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -18041,6 +18217,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -18602,11 +18780,13 @@
 			<key>Name</key>
 			<string>root@10.1.2.57</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -18764,6 +18944,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -18785,6 +18969,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -19346,11 +19532,13 @@
 			<key>Name</key>
 			<string>root@10.1.3.37</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -19508,6 +19696,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -19529,6 +19721,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -20090,11 +20284,13 @@
 			<key>Name</key>
 			<string>root@10.1.3.51</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -20252,6 +20448,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -20273,6 +20473,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -20834,11 +21036,13 @@
 			<key>Name</key>
 			<string>root@10.1.3.72</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -20996,6 +21200,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -21017,6 +21225,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -21578,11 +21788,13 @@
 			<key>Name</key>
 			<string>root@10.1.3.76</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -21740,6 +21952,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -21761,6 +21977,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -22325,6 +22543,8 @@
 			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
 			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
@@ -22484,6 +22704,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -22505,6 +22729,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -23068,11 +23294,13 @@
 			<key>Name</key>
 			<string>tomcat@10.1.1.97</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -23230,6 +23458,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -23251,6 +23483,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -23853,11 +24087,13 @@
 			<key>Name</key>
 			<string>web@moonfruit.top</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -24016,6 +24252,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -24037,6 +24277,8 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
+			<true/>
+			<key>ASCII Ligatures</key>
 			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
@@ -24598,11 +24840,13 @@
 			<key>Name</key>
 			<string>zoo@10.1.3.131</string>
 			<key>Non Ascii Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
+			<key>Non-ASCII Ligatures</key>
+			<true/>
 			<key>Normal Font</key>
-			<string>DroidSansMonoForPowerline 13</string>
+			<string>DroidSansMonoForPowerline 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -24760,6 +25004,10 @@
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -25527,6 +25775,10 @@
 			<real>0.17012296617031097</real>
 			<key>Triggers</key>
 			<array/>
+			<key>Unicode Normalization</key>
+			<integer>3</integer>
+			<key>Unicode Version</key>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -25556,7 +25808,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>98917B37-D8E6-40C0-AB9E-DE70D22C3307</string>
 	<key>NoSyncLastTipTime</key>
-	<real>525665711.31634903</real>
+	<real>526357519.162781</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -25582,6 +25834,13 @@
 		<string>0011</string>
 		<string>0012</string>
 		<string>0013</string>
+		<string>0014</string>
+		<string>0015</string>
+		<string>0016</string>
+		<string>0017</string>
+		<string>0018</string>
+		<string>0019</string>
+		<string>0020</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
@@ -25653,7 +25912,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-08-29T13:44:01Z</date>
+	<date>2017-09-05T16:25:41Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>

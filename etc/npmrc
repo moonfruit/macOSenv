@@ -1,0 +1,2 @@
+#proxy=http://dkmoonfruit:QAZwsxEDC@localhost:9900/
+registry=http://10.1.2.32/nexus/repository/npm

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>iTerm</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>1A8EDE92-ED9F-49AB-A7C1-1FBCB51A5A30</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B0F5D292-8992-4CB5-91D4-9EBBD710CBE9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>40A7920F-8611-4ACA-A649-345BA1E4E3C7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3F1CA37C-CEFD-4A76-B02E-62F1C59D7DA7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>MoonFruit</string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>iTerm Tools</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  
+  tell application "Finder"
+    set pathList to (quoted form of POSIX path of (folder of the front window as alias))
+    set command to "clear; cd " &amp; pathList
+  end tell
+  
+  tell application "System Events"
+    -- some versions might identify as "iTerm2" instead of "iTerm"
+    set isRunning to (exists (processes where name is "iTerm")) or (exists (processes where name is "iTerm2"))
+  end tell
+  
+  tell application "iTerm"
+    activate
+    set hasNoWindows to ((count of windows) is 0)
+    if isRunning and hasNoWindows then
+      create window with default profile
+    end if
+    select first window
+    
+    tell the first window
+      if isRunning and hasNoWindows is false then
+        create tab with default profile
+      end if
+      delay 0.5
+      tell current session to write text command
+    end tell
+  end tell
+  
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>B0F5D292-8992-4CB5-91D4-9EBBD710CBE9</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>fi</string>
+				<key>subtext</key>
+				<string>Open current Finder directory in iTerm</string>
+				<key>text</key>
+				<string>Finder → iTerm</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>1A8EDE92-ED9F-49AB-A7C1-1FBCB51A5A30</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  tell application "iTerm"
+    tell the current session of current window
+      write text "open -a Finder ./"
+    end tell
+  end tell
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>3F1CA37C-CEFD-4A76-B02E-62F1C59D7DA7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>if</string>
+				<key>subtext</key>
+				<string>Open current iTerm directory in Finder</string>
+				<key>text</key>
+				<string>iTerm → Finder</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>40A7920F-8611-4ACA-A649-345BA1E4E3C7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>iTerm Tools</string>
+	<key>uidata</key>
+	<dict>
+		<key>1A8EDE92-ED9F-49AB-A7C1-1FBCB51A5A30</key>
+		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
+			<key>ypos</key>
+			<integer>10</integer>
+		</dict>
+		<key>3F1CA37C-CEFD-4A76-B02E-62F1C59D7DA7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>180</integer>
+			<key>ypos</key>
+			<integer>130</integer>
+		</dict>
+		<key>40A7920F-8611-4ACA-A649-345BA1E4E3C7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
+			<key>ypos</key>
+			<integer>130</integer>
+		</dict>
+		<key>B0F5D292-8992-4CB5-91D4-9EBBD710CBE9</key>
+		<dict>
+			<key>xpos</key>
+			<integer>180</integer>
+			<key>ypos</key>
+			<integer>10</integer>
+		</dict>
+	</dict>
+	<key>version</key>
+	<string></string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
