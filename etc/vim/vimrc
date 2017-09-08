@@ -137,7 +137,9 @@ set undodir=/tmp
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>
-autocmd FileType * nested :call tagbar#autoopen(0)
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+"autocmd FileType * nested :call tagbar#autoopen(0)
+"autocmd BufEnter * nested :call tagbar#autoopen(0)
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
 	\ 'kinds'     : [

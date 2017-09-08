@@ -1,0 +1,10 @@
+#!/bin/bash
+if ! /usr/local/opt/sshpass/bin/sshpass "$@"; then
+	while [[ $# -gt 0 ]]; do
+		if [[ "$1" = "ssh" ]]; then
+			break
+		fi
+		shift
+	done
+	exec "$@"
+fi

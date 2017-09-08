@@ -4,5 +4,7 @@
 <dict>
 	<key>ignoreHistory</key>
 	<false/>
+	<key>ignoreMessages</key>
+	<false/>
 </dict>
 </plist>
