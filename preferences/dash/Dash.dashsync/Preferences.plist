@@ -355,7 +355,7 @@
 			<key>net.java.dev.jna:jna</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:33Z</date>
+				<date>2017-09-14T10:27:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -411,7 +411,7 @@
 			<key>org.apache.poi:poi</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:19Z</date>
+				<date>2017-09-14T10:27:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -425,7 +425,7 @@
 			<key>org.apache.poi:poi-ooxml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:23Z</date>
+				<date>2017-09-14T10:26:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -579,7 +579,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-11T03:29:18Z</date>
+				<date>2017-09-13T10:27:22Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -593,7 +593,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-11T03:29:23Z</date>
+				<date>2017-09-13T10:27:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -635,7 +635,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:17Z</date>
+				<date>2017-09-13T10:27:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
