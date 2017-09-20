@@ -37,3 +37,6 @@
 [submodule "package/WeChatTweak"]
 	path = package/WeChatTweak
 	url = https://github.com/Sunnyyoung/WeChatTweak-macOS.git
+[submodule "package/pam-touchID"]
+	path = package/pam-touchID
+	url = git@github.com:moonfruit/pam-touchID.git
