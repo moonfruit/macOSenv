@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.li-xinyang</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>264A09D9-DE34-403A-9524-C67F6525811D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>67071633-4101-418F-A877-AFCBE314D38C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>li-xinyang</string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>NeteaseMusicController</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>set query to "{query}"
+
+set PAUSE to "pause"
+set PAUSE_SHORT to "p"
+set NEXT to "next"
+set NEXT_SHORT to "nx"
+set PREVIOUS to "previous"
+set PREVIOUS_SHORT to "pr"
+set LOVE to "love"
+set LOVE_SHORT to "lv"
+set VOLUME_UP to "volumeup"
+set VOLUME_DOWN to "volumedown"
+set VOLUME_UP_SHORT to "vu"
+set VOLUME_DOWN_SHORT to "vd"
+
+
+if query is equal to PAUSE or query is equal to PAUSE_SHORT then
+  tell application "System Events"
+  	key code 18 using {command down, option down, control down, shift down}
+  end tell
+else if query is equal to "" then
+  tell application "System Events"
+  	key code 18 using {command down, option down, control down, shift down}
+  end tell
+else if query is equal to NEXT or query is equal to NEXT_SHORT then
+  tell application "System Events"
+    key code 20 using {command down, option down, control down, shift down}
+  end tell
+else if query is equal to PREVIOUS or query is equal to PREVIOUS_SHORT then
+  tell application "System Events"
+    key code 19 using {command down, option down, control down, shift down}
+  end tell
+else if query is equal to LOVE or query is equal to LOVE_SHORT then
+  tell application "System Events"
+  	key code 22 using {command down, option down, control down, shift down}
+  end tell
+else if query is equal to VOLUME_UP or query is equal to VOLUME_UP_SHORT then
+  tell application "System Events"
+    key code 21 using {command down, option down, control down, shift down}
+  end tell
+else if query is equal to VOLUME_DOWN or query is equal to VOLUME_DOWN_SHORT then
+  tell application "System Events"
+    key code 23 using {command down, option down, control down, shift down}
+  end tell
+end if</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>67071633-4101-418F-A877-AFCBE314D38C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>nm</string>
+				<key>subtext</key>
+				<string>[nx-&gt;next][pr-&gt;previous][vu-&gt;volumnUp][vd-&gt;volumnDown][lv-&gt;Love]</string>
+				<key>text</key>
+				<string>Netease Music Controller</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>264A09D9-DE34-403A-9524-C67F6525811D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>The MIT License (MIT)
+
+Copyright (c) 2015 Li Xinyang
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</string>
+	<key>uidata</key>
+	<dict>
+		<key>264A09D9-DE34-403A-9524-C67F6525811D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<real>180</real>
+		</dict>
+		<key>67071633-4101-418F-A877-AFCBE314D38C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>500</integer>
+			<key>ypos</key>
+			<real>180</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://li-xinyang.com</string>
+</dict>
+</plist>

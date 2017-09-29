@@ -7,6 +7,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	pager = less -x5,9
+	quotepath = false
 
 [alias]
 	br = branch
@@ -31,11 +32,11 @@
 [credential]
 	helper = osxkeychain
 
-[url "persistent-https"]
-	insteadof = https
+#[url "persistent-https"]
+#	insteadof = https
 
-[url "persistent-http"]
-	insteadof = http
+#[url "persistent-http"]
+#	insteadof = http
 
 [protocol "persistent-https"]
 	allow = always
