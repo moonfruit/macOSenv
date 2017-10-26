@@ -13,7 +13,7 @@ kilo() {
 }
 
 once() {
-	proxy "$1" curl --connect-timeout 10 http://sf.testmy.net/SmarTest/down 2>&1 >/dev/null | tee "$TEMP"
+	proxy "$1" curl --connect-timeout 5 --max-time 25 http://sf.testmy.net/SmarTest/down 2>&1 >/dev/null | tee "$TEMP"
 	TIME=$(tail -1 "$TEMP" | sed 's/.*\r//' | awk '{print $7}')
 }
 

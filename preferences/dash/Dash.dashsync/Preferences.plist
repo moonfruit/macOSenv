@@ -159,7 +159,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-08T09:15:23Z</date>
+				<date>2017-10-14T04:35:03Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -187,7 +187,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-08T09:15:08Z</date>
+				<date>2017-10-16T04:15:42Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -201,7 +201,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-28T03:37:02Z</date>
+				<date>2017-10-13T02:23:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -285,7 +285,7 @@
 			<key>commons-codec:commons-codec</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:44Z</date>
+				<date>2017-10-21T10:05:53Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -299,7 +299,7 @@
 			<key>commons-io:commons-io</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:50Z</date>
+				<date>2017-10-21T10:05:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -322,20 +322,6 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>commons-net:commons-net</string>
-				</dict>
-			</dict>
-			<key>javax.servlet:javax.servlet-api</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-29T09:44:31Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>javax.servlet:javax.servlet-api</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>javax.servlet:javax.servlet-api</string>
 				</dict>
 			</dict>
 			<key>log4j:log4j</key>
@@ -397,7 +383,7 @@
 			<key>org.apache.commons:commons-vfs2</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:03Z</date>
+				<date>2017-10-10T02:36:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -579,7 +565,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-13T10:27:22Z</date>
+				<date>2017-10-10T02:35:43Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -593,7 +579,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-13T10:27:26Z</date>
+				<date>2017-10-10T02:35:47Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -703,6 +689,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>commons-dbcp:commons-dbcp</string>
+				</dict>
+			</dict>
+			<key>javax.servlet:javax.servlet-api</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-15T04:16:11Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>javax.servlet:javax.servlet-api</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>javax.servlet:javax.servlet-api</string>
 				</dict>
 			</dict>
 			<key>org.eclipse.jetty.aggregate:jetty-all</key>
@@ -929,6 +929,8 @@
 			<string>python:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Groovy/Groovy.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/DocSets/Java_EE8/Java EE8.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Java_SE8/Java.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Man_Pages/Man Pages.docset</key>
@@ -974,6 +976,8 @@
 			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonscollections4/ApacheCommonsCollections.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonslang3/ApacheCommonsLang.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonsvfs2/ApacheCommonsVFS.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonsvfs2/ApacheCommonsVFSCore.docset</key>
 			<string>java:</string>
@@ -1059,10 +1063,20 @@
 				<key>date</key>
 				<date>2017-08-07T14:46:03Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Java_EE8.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-15T04:15:01Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Java_SE8.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:22:28Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_SE9.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-24T14:04:23Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Lua_5.3.xml</key>
 			<dict>
@@ -1079,6 +1093,26 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:08Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/MongoDB.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-10T02:39:32Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/MySQL.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-10T02:39:33Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Nginx.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-10T02:40:06Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/NodeJS.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-10T02:39:54Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Perl.xml</key>
 			<dict>
 				<key>date</key>
@@ -1094,6 +1128,11 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:09Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Redis.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-10T02:40:31Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Ruby_2.xml</key>
 			<dict>
 				<key>date</key>
@@ -1103,6 +1142,16 @@
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:20:07Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/SQLite.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-10T02:40:56Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Scala.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-10-10T02:40:52Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Spring_Framework.xml</key>
 			<dict>
@@ -1152,20 +1201,10 @@
 				<key>date</key>
 				<date>2015-07-03T07:28:41Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/MySQL.xml</key>
+			<key>http://kapeli.com/feeds/Vim.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2016-08-07T11:23:08Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/NodeJS.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2015-09-07T08:51:33Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/SQLite.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2016-08-07T11:24:17Z</date>
+				<date>2017-10-10T02:41:11Z</date>
 			</dict>
 		</dict>
 	</dict>

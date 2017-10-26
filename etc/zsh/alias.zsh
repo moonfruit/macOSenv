@@ -1,3 +1,6 @@
+# export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+
 alias ls='ls -FGh'
 
 alias ll='ls -l'
