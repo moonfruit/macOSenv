@@ -1,4 +1,18 @@
-#!/usr/bin/osascript
-on run args
-	set the clipboard to POSIX file (POSIX path of ((POSIX file (first item of args)) as alias))
-end run
+#!/bin/bash
+
+FILE=$1
+if [[ $FILE == "" || ! -r $FILE ]]; then
+	echo "$(basename "$0") <file>"
+	exit 1
+fi
+
+absname() {
+	cd "$(dirname "$1")" || return
+	echo "$(pwd)/$(basename "$1")"
+}
+
+exec osascript \
+	-e 'on run args' \
+	-e 'set the clipboard to POSIX file (first item of args)' \
+	-e end \
+	"$(absname "$FILE")"

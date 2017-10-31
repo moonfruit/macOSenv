@@ -8,6 +8,7 @@
 	excludesfile = ~/.gitignore
 	pager = less -x5,9
 	quotepath = false
+	autocrlf = input
 
 [alias]
 	br = branch
