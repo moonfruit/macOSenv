@@ -37,6 +37,8 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -44,7 +46,7 @@
 				<key>escaping</key>
 				<integer>103</integer>
 				<key>keyword</key>
-				<string>wc</string>
+				<string>wechat</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
