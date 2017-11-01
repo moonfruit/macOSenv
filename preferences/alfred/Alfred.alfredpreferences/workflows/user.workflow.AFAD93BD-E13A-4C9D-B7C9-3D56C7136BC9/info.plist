@@ -95,7 +95,7 @@ end alfred_script</string>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>fi</string>
+				<string>iterm1</string>
 				<key>subtext</key>
 				<string>Open current Finder directory in iTerm</string>
 				<key>text</key>
@@ -137,7 +137,7 @@ end alfred_script</string>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>if</string>
+				<string>iterm2</string>
 				<key>subtext</key>
 				<string>Open current iTerm directory in Finder</string>
 				<key>text</key>

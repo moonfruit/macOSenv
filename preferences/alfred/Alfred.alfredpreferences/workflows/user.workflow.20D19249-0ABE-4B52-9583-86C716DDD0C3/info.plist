@@ -35,6 +35,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>net</string>
+				<key>subtext</key>
+				<string>[nx-&gt;next][pr-&gt;previous][vu-&gt;volumnUp][vd-&gt;volumnDown][lv-&gt;Love]</string>
+				<key>text</key>
+				<string>Netease Music Controller</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>264A09D9-DE34-403A-9524-C67F6525811D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -98,27 +119,6 @@ end if</string>
 			<string>67071633-4101-418F-A877-AFCBE314D38C</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>nm</string>
-				<key>subtext</key>
-				<string>[nx-&gt;next][pr-&gt;previous][vu-&gt;volumnUp][vd-&gt;volumnDown][lv-&gt;Love]</string>
-				<key>text</key>
-				<string>Netease Music Controller</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>264A09D9-DE34-403A-9524-C67F6525811D</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
