@@ -1,5 +1,5 @@
 export JAVA_HOME=`/usr/libexec/java_home`
-export JRE_HOME="$JAVA_HOME/jre"
+# export JRE_HOME="$JAVA_HOME/jre"
 
 export MAVEN_OPTS="-Xss2m"
 
