@@ -198,10 +198,24 @@
 					<string>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</string>
 				</dict>
 			</dict>
+			<key>com.github.ben-manes.caffeine:caffeine</key>
+			<dict>
+				<key>date</key>
+				<date>2017-11-23T09:52:05Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.github.ben-manes.caffeine:caffeine</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.github.ben-manes.caffeine:caffeine</string>
+				</dict>
+			</dict>
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-10T08:37:17Z</date>
+				<date>2017-11-23T09:28:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -565,7 +579,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-10T02:35:43Z</date>
+				<date>2017-11-29T02:16:00Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -579,7 +593,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-10T02:35:47Z</date>
+				<date>2017-11-29T02:16:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -621,7 +635,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-13T10:27:26Z</date>
+				<date>2017-11-29T02:17:53Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -635,7 +649,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:18:00Z</date>
+				<date>2017-11-29T02:14:48Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -649,7 +663,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:50Z</date>
+				<date>2017-11-29T02:16:07Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -663,7 +677,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:48Z</date>
+				<date>2017-11-29T02:16:54Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>

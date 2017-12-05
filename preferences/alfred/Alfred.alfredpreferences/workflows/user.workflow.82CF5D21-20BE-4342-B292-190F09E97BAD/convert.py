@@ -19,6 +19,7 @@ from pint import UnitRegistry, UndefinedUnitError, DimensionalityError
 
 from workflow import Workflow3, ICON_WARNING, ICON_INFO
 from workflow.background import run_in_background, is_running
+from workflow.update import Version
 from config import (
     bootstrap,
     DEFAULT_UNIT_DEFINITIONS,
@@ -32,6 +33,8 @@ from config import (
     DEFAULT_SETTINGS,
     HELP_URL,
     ICON_UPDATE,
+    NOKEY_FILENAME,
+    OPENX_APP_KEY,
     THOUSANDS_SEPARATOR,
     UPDATE_SETTINGS,
 )
@@ -42,6 +45,76 @@ log = None
 # Pint objects
 ureg = None
 # Q = ureg.Quantity
+
+
+def unit_is_currency(unit):
+    """Return ``True`` if specified unit is a fiat currency."""
+    from config import CURRENCIES
+    return unit.upper() in CURRENCIES
+
+
+def open_currency_instructions():
+    """Magic action to open help in browser."""
+    import webbrowser
+    webbrowser.open('https://github.com/deanishe/alfred-convert#conversions')
+    return 'Opening instructions in browser...'
+
+
+def error_if_currency(unit):
+    """Show an error currency conversion isn't set up.
+
+    Detect whether input is a currency, and show an error if it is and
+    there's no API key for exchange rates.
+    """
+    if unit_is_currency(unit):
+        log.error(
+            "[parser] unit %s is a fiat currency, but exchange "
+            "rates aren't configured", unit)
+
+        show_currency_help()
+        sys.exit(0)
+
+
+def show_currency_help():
+    """Show a message in Alfred telling user to set ``APP_KEY``."""
+    wf.add_item('Set APP_KEY to convert currencies',
+                'Action this item for instructions',
+                autocomplete='workflow:appkey',
+                icon=ICON_WARNING)
+
+    wf.send_feedback()
+
+
+def handle_update(wf):
+    """Clear cache on update.
+
+    Delete cached data if last-run version used a different format,
+    or if user has just added the ``APP_KEY`` for fiat currency
+    exchange rates.
+
+    """
+    nokey = wf.cachefile(NOKEY_FILENAME)
+    clear = False
+
+    # Clear cache if previous version was old
+    lv = wf.last_version_run
+    log.debug('version=%s, last_version=%s', wf.version, lv)
+    if wf.version > Version('3.0') and lv < Version('3.1'):
+        log.debug('clearing cache: saved data is incompatible')
+        clear = True
+
+    if OPENX_APP_KEY:
+        if os.path.exists(nokey):
+            os.unlink(nokey)
+            log.debug('clearing cache: APP_KEY was set')
+            clear = True
+    else:
+        if not os.path.exists(nokey):
+            open(nokey, 'wb').write('')
+
+    if clear:
+        wf.cache_data(CURRENCY_CACHE_NAME, None)
+        log.debug('cleared old cached currencies')
 
 
 class NoToUnits(Exception):
@@ -58,25 +131,36 @@ class Input(object):
         self.to_unit = to_unit
 
     def __repr__(self):
+        """Code-like representation of `Input`."""
         return ('Input(number={!r}, dimensionality={!r}, '
                 'from_unit={!r}, to_unit={!r})').format(
-                    self.number,
-                    self.dimensionality, self.from_unit, self.to_unit)
+                    self.number, self.dimensionality, self.from_unit,
+                    self.to_unit)
 
     def __str__(self):
+        """Printable representation of `Input`."""
         return self.__repr__()
 
 
 class Formatter(object):
-    """Format a number."""
+    """Format a number.
+
+    Attributes:
+        decimal_places (int): Number of decimal places in formatted numbers
+        decimal_separator (str): Character to use as decimal separator
+        thousands_separator (str): Character to use as thousands separator
+
+    """
 
     def __init__(self, decimal_places=2, decimal_separator='.',
                  thousands_separator=''):
+        """Create a new `Formatter`."""
         self.decimal_places = decimal_places
         self.decimal_separator = decimal_separator
         self.thousands_separator = thousands_separator
 
     def formatted(self, n, unit=None):
+        """Format number with thousands and decimal separators."""
         sep = u''
         if self.thousands_separator:
             sep = u','
@@ -109,6 +193,7 @@ class Conversion(object):
 
     def __init__(self, from_number, from_unit, to_number, to_unit,
                  dimensionality):
+        """Create a new `Conversion`."""
         self.from_number = from_number
         self.from_unit = from_unit
         self.to_number = to_number
@@ -116,11 +201,13 @@ class Conversion(object):
         self.dimensionality = dimensionality
 
     def __str__(self):
+        """Pretty string representation."""
         return u'{:f} {} = {:f} {} {}'.format(
             self.from_number, self.from_unit, self.to_number, self.to_unit,
             self.dimensionality).encode('utf-8')
 
     def __repr__(self):
+        """Code-like representation."""
         return ('Conversion(from_number={!r}, from_unit={!r}, '
                 'to_number={!r}, to_unit={!r}, dimensionality={!r}').format(
                     self.from_number, self.from_unit, self.to_number,
@@ -130,22 +217,47 @@ class Conversion(object):
 class Converter(object):
     """Parse query and convert.
 
+    Parses user input into an `Input` object, then converts this into
+    one or more `Conversion` objects.
+
     Attributes:
+        decimal_separator (str): Decimal separator character in input.
         defaults (defaults.Defaults): Default units for conversions.
+        thousands_separator (str): Thousands separator character in input.
 
     """
 
-    def __init__(self, defaults):
+    def __init__(self, defaults, decimal_separator='.',
+                 thousands_separator=','):
         """Create new `Converter`.
 
         Args:
             defaults (defaults.Defaults): Default units for conversions.
+            decimal_separator (str, optional): Decimal separator character
+                in query.
+            thousands_separator (str, optional): Thousands separator character
+                in query.
 
         """
         self.defaults = defaults
+        self.decimal_separator = decimal_separator
+        self.thousands_separator = thousands_separator
 
     def convert(self, i):
-        """Convert ``Input``."""
+        """Convert `Input`.
+
+        Args:
+            i (Input): Parsed user query
+
+        Returns:
+            list: Sequence of `Conversion` objects
+
+        Raises:
+            NoToUnits: Raised if user hasn't specified a destination unit
+                or there are no default units for the given dimensionality
+            ValueError: Raised if a unit is unknown
+
+        """
         if i.to_unit is not None:
             units = [i.to_unit]
         else:
@@ -158,63 +270,168 @@ class Converter(object):
         results = []
         qty = ureg.Quantity(i.number, i.from_unit)
         for u in units:
-            to_unit = ureg.Quantity(1, u)
+            try:
+                to_unit = ureg.Quantity(1, u)
+            except UndefinedUnitError:
+                error_if_currency(u)
+                raise ValueError('Unknown unit: {}'.format(u))
+
             conv = qty.to(to_unit)
-            log.debug('%s -> %s = %s', i.from_unit, u, conv)
+            log.debug('[convert] %s -> %s = %s', i.from_unit, u, conv)
             results.append(Conversion(i.number, i.from_unit,
                                       conv.magnitude, u, i.dimensionality))
 
         return results
 
     def parse(self, query):
-        """Parse user query into `Input`."""
-        # Parse number from start of query
-        qty = []
-        for c in query:
-            if c in '1234567890.,':
-                qty.append(c)
-            else:
-                break
-        if not len(qty):
-            raise ValueError('Start your query with a number')
+        """Parse user query into `Input`.
 
-        tail = query[len(qty):].strip()
-        qty = float(''.join(qty))
+        Args:
+            query (str): User query
+
+        Returns:
+            Input: Parsed query
+
+        Raises:
+            ValueError: Raised if query is invalid
+
+        """
+        ctx, query = self.parse_context(query)
+        qty, tail = self.parse_quantity(query)
+
+        # Show error message for invalid input
+        if qty is None:
+            if ctx:
+                raise ValueError('No quantity')
+
+            raise ValueError('Start your query with a number')
 
         if not len(tail):
             raise ValueError('No units specified')
 
-        log.debug('quantity : %s tail : %s', qty, tail)
+        log.debug('[parser] quantity=%s, tail=%s', qty, tail)
 
-        # Try to parse rest of query into a pair of units
-        from_unit = to_unit = None
-        units = [s.strip() for s in tail.split()]
-        from_unit = units[0]
-        if len(units) > 1:
-            to_unit = units[1]
-        if len(units) > 2:
-            raise ValueError('More than 2 units specified')
+        # Parse query into pint.Quantity objects
+        from_unit, to_unit = self.parse_units(tail, qty)
 
-        try:
-            from_unit = ureg.Quantity(qty, from_unit)
-        except UndefinedUnitError:
-            raise ValueError('Unknown unit: ' + from_unit)
-
-        if to_unit:
-            try:
-                to_unit = ureg.Quantity(1, to_unit)
-            except UndefinedUnitError:
-                raise ValueError('Unknown unit: ' + to_unit)
-
+        # Create `Input` from parsed query
         tu = None
         if to_unit:
             tu = unicode(to_unit.units)
         i = Input(from_unit.magnitude, unicode(from_unit.dimensionality),
                   unicode(from_unit.units), tu)
 
-        log.debug(i)
+        log.debug('[parser] %s', i)
 
         return i
+
+    def parse_context(self, query):
+        """Extract and set context.
+
+        Args:
+            query (str): User input
+
+        Returns:
+            (list/str, str): Parsed or empty context and rest of query
+
+        Raises:
+            ValueError: Raised if supplied context is invalid
+
+        """
+        ctx = []
+        for c in query:
+            if c in 'abcdefghijklmnopqrstuvwxyz':
+                ctx.append(c)
+            else:
+                break
+
+        if ctx:
+            ctx = ''.join(ctx)
+            try:
+                ureg.enable_contexts(ctx)
+            except KeyError:
+                raise ValueError('Unknown context: {}'.format(ctx))
+
+            log.debug('[parser] context=%s', ctx)
+            query = query[len(ctx):].strip()
+
+        return ctx, query
+
+    def parse_quantity(self, query):
+        """Extract quantity from query.
+
+        Args:
+            query (str): (Partial) user query
+
+        Returns:
+            (float, str): Quantity and remainder of query
+
+        """
+        qty = []
+        qtychars = ('1234567890' + self.thousands_separator +
+                    self.decimal_separator)
+        for c in query:
+            if c in qtychars:
+                if c == self.thousands_separator:
+                    log.debug('ignored thousands separator "%s"', c)
+                    # Append an empty string so qty length is correct
+                    qty.append('')
+                elif c == self.decimal_separator:
+                    qty.append('.')
+                else:
+                    qty.append(c)
+            else:
+                break
+        if not len(qty):
+            return None, ''
+
+        tail = query[len(qty):].strip()
+        qty = float(''.join(qty))
+
+        return qty, tail
+
+    def parse_units(self, query, qty=1):
+        """Extract from and (optional) to units from query.
+
+        Args:
+            query (str): (Partial) user input
+            qty (int, optional): Quantity of from units
+
+        Returns:
+            (pint.Quantity, pint.Quantity): From and to quantities. To
+                quantity is initialised with ``1``.
+
+        Raises:
+            ValueError: Raised if a unit is unknown, or more than 2 units
+                are specified.
+
+        """
+        from_unit = to_unit = None
+        units = [s.strip() for s in query.split()]
+        from_unit = units[0]
+        log.debug('[parser] from_unit=%s', from_unit)
+
+        if len(units) > 1:
+            to_unit = units[1]
+            log.debug('[parser] to_unit=%s', to_unit)
+        if len(units) > 2:
+            raise ValueError('More than 2 units specified')
+
+        # Validate units
+        try:
+            from_unit = ureg.Quantity(qty, from_unit)
+        except UndefinedUnitError:
+            error_if_currency(from_unit)
+            raise ValueError('Unknown unit: ' + from_unit)
+
+        if to_unit:
+            try:
+                to_unit = ureg.Quantity(1, to_unit)
+            except UndefinedUnitError:
+                error_if_currency(to_unit)
+                raise ValueError('Unknown unit: ' + to_unit)
+
+        return from_unit, to_unit
 
 
 def format_number(n):
@@ -257,12 +474,12 @@ def register_exchange_rates(exchange_rates):
         exchange_rates (dict): `{symbol: rate}` mapping of currencies.
 
     """
-    # EUR will be the baseline currency. All exchange rates are
-    # defined relative to the euro
-    ureg.define('EUR = [currency] = eur')
+    # USD will be the baseline currency. All exchange rates are
+    # defined relative to the US dollar
+    ureg.define('USD = [currency] = usd')
 
     for abbr, rate in exchange_rates.items():
-        definition = '{} = eur / {}'.format(abbr, rate)
+        definition = '{} = usd / {}'.format(abbr, rate)
 
         try:
             ureg.Quantity(1, abbr)
@@ -287,7 +504,7 @@ def convert(query):
     results = None
 
     defs = Defaults(wf)
-    c = Converter(defs)
+    c = Converter(defs, DECIMAL_SEPARATOR, THOUSANDS_SEPARATOR)
 
     try:
         i = c.parse(query)
@@ -298,7 +515,7 @@ def convert(query):
     else:
         try:
             results = c.convert(i)
-            log.debug('results=%r', results)
+            # log.debug('results=%r', results)
         except NoToUnits:
             log.critical(u'No to_units (or defaults) for %s', i.dimensionality)
             error = u'No destination units (or defaults) for {}'.format(
@@ -308,6 +525,10 @@ def convert(query):
             log.critical(u'invalid conversion (%s): %s', query, err)
             error = u"Can't convert from {} {} to {} {}".format(
                 err.units1, err.dim1, err.units2, err.dim2)
+
+        except KeyError as err:
+            log.critical(u'invalid context (%s): %s', i.context, err)
+            error = u'Unknown context: {}'.format(i.context)
 
     if not error and not results:
         error = 'Conversion input not understood'
@@ -360,12 +581,15 @@ def main(wf):
     ureg = UnitRegistry(wf.decode(DEFAULT_UNIT_DEFINITIONS))
     ureg.default_format = 'P'
 
+    wf.magic_arguments['appkey'] = open_currency_instructions
+
     if not len(wf.args):
         return
 
     query = wf.args[0]  # .lower()
     log.debug('query : %s', query)
 
+    handle_update(wf)
     # Create data files if necessary
     bootstrap(wf)
 

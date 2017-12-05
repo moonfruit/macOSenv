@@ -193,7 +193,11 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>[[ -d /Volumes/Transcend ]] &amp;&amp; exit
+				<string>if [[ -d /Volumes/Transcend ]]; then
+	echo "Transcend has already been mounted"
+	exit 1
+fi
+
 diskutil mount Transcend 2&gt;&amp;1</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
@@ -276,7 +280,11 @@ diskutil mount Transcend 2&gt;&amp;1</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>[[ ! -d /Volumes/Transcend ]] &amp;&amp; exit
+				<string>if [[ ! -d /Volumes/Transcend ]]; then
+	echo "Transcend has already been removed"
+	exit 1
+fi
+
 diskutil unmount Transcend 2&gt;&amp;1</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
