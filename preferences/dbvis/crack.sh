@@ -3,9 +3,6 @@ LIB=/Applications/DbVisualizer.app/Contents/java/app/lib
 JAR=$LIB/dbvis.jar
 BAK=$JAR.bak
 
-if [[ ! -f $BAK ]]; then
-	mv $JAR $BAK
-fi
-
+mv $JAR $BAK
 cp $BAK $JAR
 jar uvf $JAR dbvis.puk

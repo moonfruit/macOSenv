@@ -1,19 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 TEMP=/tmp/$(basename "$0").$$.tmp
 
 kilo() {
 	N=$1
-	if [[ $N == *k ]]; then
-		N=$(echo "$N" | sed 's/k$//')
+	if [[ -z $N ]]; then
+		N=0
+	elif [[ $N == *k ]]; then
+		N=${N/%k/}
 	else
-		N=$(($N / 1024))
+		N=$((N / 1024))
 	fi
 	echo $N
 }
 
 once() {
-	proxy "$1" curl --connect-timeout 5 --max-time 25 http://sf.testmy.net/SmarTest/down 2>&1 >/dev/null | tee "$TEMP"
+	proxy "$1" curl --connect-timeout 5 --max-time 30 http://sf.testmy.net/SmarTest/down 2>&1 >/dev/null | tee "$TEMP"
 	TIME=$(tail -1 "$TEMP" | sed 's/.*\r//' | awk '{print $7}')
 }
 
@@ -31,11 +33,11 @@ test_one() {
 			echo "Error: Network blocked"
 			return
 		fi
-		SUM=$(($SUM + $(kilo "$TIME")))
-		I=$(($I + 1))
+		SUM=$((SUM + $(kilo "$TIME")))
+		I=$((I + 1))
 	done
 	
-	AVG=$(($SUM / $I))
+	AVG=$((SUM / I))
 	echo "Average Speed: ${AVG} k/s"
 }
 
@@ -60,7 +62,7 @@ fi
 PORT=9900
 while [[ $PORT -lt 9915 ]]; do
 	test_port $PORT
-	PORT=$(($PORT + 1))
+	PORT=$((PORT + 1))
 	echo
 done
 test_port 1080

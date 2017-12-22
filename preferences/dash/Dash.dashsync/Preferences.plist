@@ -159,7 +159,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-14T04:35:03Z</date>
+				<date>2017-12-10T08:01:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -173,7 +173,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-08T09:15:52Z</date>
+				<date>2017-12-21T02:58:29Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -215,7 +215,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-23T09:28:13Z</date>
+				<date>2017-12-22T02:05:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -439,7 +439,7 @@
 			<key>org.eclipse.jetty:jetty-server</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:57Z</date>
+				<date>2017-12-21T02:54:57Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -453,7 +453,7 @@
 			<key>org.eclipse.jetty:jetty-servlet</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:01Z</date>
+				<date>2017-12-21T02:58:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -467,7 +467,7 @@
 			<key>org.eclipse.jetty:jetty-util</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:04Z</date>
+				<date>2017-12-22T02:05:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1117,11 +1117,6 @@
 				<key>date</key>
 				<date>2017-10-10T02:39:33Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Nginx.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-10T02:40:06Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/NodeJS.xml</key>
 			<dict>
 				<key>date</key>
@@ -1150,7 +1145,7 @@
 			<key>http://kapeli.com/feeds/Ruby_2.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:21:38Z</date>
+				<date>2017-12-19T08:51:26Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/SQLAlchemy.xml</key>
 			<dict>
@@ -1214,6 +1209,11 @@
 			<dict>
 				<key>date</key>
 				<date>2015-07-03T07:28:41Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Nginx.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2017-12-19T08:47:54Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Vim.xml</key>
 			<dict>

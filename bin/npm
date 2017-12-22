@@ -1,0 +1,30 @@
+#!/bin/bash
+
+NPM="/usr/local/bin/npm"
+
+npm_install() {
+	if ! diff package.json node_modules/package.json >/dev/null 2>&1; then
+		"$NPM" install
+		result=$?
+		if [[ $result = 0 ]]; then
+			cp package.json node_modules/package.json
+			return $result
+		fi
+
+	else
+		S="\033["
+		E="m"
+		RESET="${S}0${E}"
+		NPM="${S}37;1${E}"
+		WARN="${S}30;43${E}"
+
+		echo -e "${NPM}npm${RESET} ${WARN}WARN${RESET} Use previous installed node_modules"
+	fi
+}
+
+if [[ $# = 1 && $1 = install && -f package.json ]]; then
+	npm_install
+
+else
+	exec "$NPM" "$@"
+fi
