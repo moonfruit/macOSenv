@@ -1,3 +1,6 @@
+# for zmv
+autoload -U zmv
+
 # for GPP
 export APP_HOME="$WORKSPACE/gpp"
 export NODE_ID="YY"

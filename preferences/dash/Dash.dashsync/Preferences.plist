@@ -159,7 +159,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-10T08:01:26Z</date>
+				<date>2017-12-24T06:45:23Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -173,7 +173,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-21T02:58:29Z</date>
+				<date>2017-12-24T06:45:50Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -187,7 +187,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-16T04:15:42Z</date>
+				<date>2017-12-24T06:45:22Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -201,7 +201,7 @@
 			<key>com.github.ben-manes.caffeine:caffeine</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-23T09:52:05Z</date>
+				<date>2017-12-28T06:45:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -355,7 +355,7 @@
 			<key>net.java.dev.jna:jna</key>
 			<dict>
 				<key>date</key>
-				<date>2017-09-14T10:27:26Z</date>
+				<date>2017-12-28T06:45:35Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -851,6 +851,26 @@
 					<string>Bottle</string>
 				</dict>
 			</dict>
+			<key>Kotlin</key>
+			<dict>
+				<key>date</key>
+				<date>2017-12-25T03:12:50Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Kotlin#readme</string>
+					<key>authorLinkText</key>
+					<string>Marcel Jackwerth</string>
+					<key>name</key>
+					<string>Kotlin</string>
+					<key>platform</key>
+					<string>usercontribKotlin</string>
+					<key>uniqueIdentifier</key>
+					<string>Kotlin</string>
+				</dict>
+			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
@@ -962,6 +982,8 @@
 			<key>~/Library/Application Support/Dash/Java DocSets/comfasterxmljacksoncorejacksondatabind/jacksondatabind.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comfasterxmljacksondataformatjacksondataformatxml/JacksondataformatXML.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/comgithubbenmanescaffeinecaffeine/Caffeinecache.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comgoogleguavaguava/GuavaGoogleCoreLibrariesforJava.docset</key>
 			<string>java:</string>
