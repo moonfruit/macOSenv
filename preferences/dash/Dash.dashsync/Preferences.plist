@@ -6,6 +6,22 @@
 	<dict>
 		<key>installed</key>
 		<dict>
+			<key>ASCII_Tables</key>
+			<dict>
+				<key>date</key>
+				<date>2018-01-02T06:40:30Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>ASCII Tables</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>ASCII_Tables</string>
+				</dict>
+			</dict>
 			<key>LLDB_Commands</key>
 			<dict>
 				<key>date</key>
