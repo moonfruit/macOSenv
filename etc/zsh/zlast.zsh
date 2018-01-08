@@ -14,7 +14,7 @@ eval "$(env | grep _HOME | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
 
 # for PATH
 USER_PYTHON_HOME="/Users/moon/Library/Python/2.7"
-export PATH="/opt/subversion/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$ENV/bin:$USER_PYTHON_HOME/bin:$PATH"
 
 # catalog
