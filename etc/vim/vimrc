@@ -121,7 +121,10 @@ set statusline=%f\ %1*%m%*%<%h%w%r%y%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}\ %
 
 " undo
 set undofile
-set undodir=/tmp
+set undodir=/tmp/vim
+if !isdirectory(&undodir)
+    silent! call mkdir(&undodir, "p")
+endif
 
 " taglist
 "if executable("ctags") && ! &diff
