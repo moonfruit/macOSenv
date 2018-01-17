@@ -15,14 +15,14 @@ kilo() {
 }
 
 once() {
-	proxy "$1" curl --connect-timeout 5 --max-time 30 http://sf.testmy.net/SmarTest/down 2>&1 >/dev/null | tee "$TEMP"
+	proxy "$1" curl --connect-timeout 5 -m 30 -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
 	TIME=$(tail -1 "$TEMP" | sed 's/.*\r//' | awk '{print $7}')
 }
 
 test_one() {
 	TOTAL=$2
 	if [[ -z "$TOTAL" ]]; then
-		TOTAL=2
+		TOTAL=1
 	fi
 
 	SUM=0

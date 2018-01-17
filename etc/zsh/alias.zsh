@@ -29,11 +29,11 @@ alias sl='sl -e'
 alias LS='sl'
 alias ls-='sl'
 
-vman() {
-    env PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
--c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
--c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\"" man $*
-}
+# vman() {
+#    env PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+# vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+# -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+# -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\"" man $*
+# }
 
-function dmalloc { eval `command dmalloc -b "$@"`; }
+# function dmalloc { eval `command dmalloc -b "$@"`; }

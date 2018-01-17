@@ -56,13 +56,14 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(ant colored-man-pages extract git mvn npm
+plugins=(colored-man-pages cp django extract git gem gradle mvn pip
          history-substring-search zsh-syntax-highlighting
-         macos yy)
+         docker macos yy)
 
-ZDOTDIR="${HOME}/.zsh"
-HISTFILE="${ZDOTDIR:-${HOME}}/history.txt"
-ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/compdump.zsh"
+ZDOTDIR="$HOME/.zsh"
+HISTFILE="$ZDOTDIR/history.txt"
+ZSH_COMPDUMP="$ZDOTDIR/compdump.zsh"
+ZSH_CACHE_DIR="$ZDOTDIR/cache"
 
 source $ZSH/oh-my-zsh.sh
 #source $ZSH_CUSTOM/themes/crack.zsh

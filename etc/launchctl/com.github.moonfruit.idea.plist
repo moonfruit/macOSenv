@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>local.job</string>
+	<string>com.github.moonfruit.idea</string>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>Nice</key>
+	<integer>2</integer>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/Users/moon/Documents/Environment/bin/ideaServer</string>

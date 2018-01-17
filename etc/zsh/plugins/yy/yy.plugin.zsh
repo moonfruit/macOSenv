@@ -7,7 +7,7 @@ compdef _git gau=git-add
 alias grpo='git remote prune origin'
 
 # autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 #autoload -U compinit && compinit -u
 
 # proxy
