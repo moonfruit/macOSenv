@@ -56,7 +56,7 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(colored-man-pages cp django extract git gem gradle mvn pip
+plugins=(colored-man-pages cp django extract git gem gradle httpie mvn pip redis-cli
          history-substring-search zsh-syntax-highlighting
          docker macos yy)
 
