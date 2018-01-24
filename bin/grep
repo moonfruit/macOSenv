@@ -1,2 +1,8 @@
-#!/bin/sh
-exec /usr/local/bin/grep -E --color=auto -dskip --exclude-dir=.cvs --exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg "$@"
+#!/bin/bash
+DEFAULT=-E
+for ARG in "$@"; do
+	if [[ "$ARG" == -[EFGP]* ]]; then
+		DEFAULT=
+	fi
+done
+exec /usr/local/bin/grep $DEFAULT --color=auto -dskip --exclude-dir={.bzr,CVS,.git,.hg,.svn} "$@"
