@@ -168,6 +168,8 @@
 		<key>uninstalled</key>
 		<dict/>
 	</dict>
+	<key>DHHighlightedWebViewTextSizeMultiplier</key>
+	<real>1</real>
 	<key>DHJavaRepo</key>
 	<dict>
 		<key>installed</key>
@@ -887,6 +889,26 @@
 					<string>Kotlin</string>
 				</dict>
 			</dict>
+			<key>Zsh</key>
+			<dict>
+				<key>date</key>
+				<date>2018-01-19T03:44:25Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Zsh#readme</string>
+					<key>authorLinkText</key>
+					<string>Zhiming Wang</string>
+					<key>name</key>
+					<string>Zsh</string>
+					<key>platform</key>
+					<string>usercontribZsh</string>
+					<key>uniqueIdentifier</key>
+					<string>Zsh</string>
+				</dict>
+			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
@@ -1090,6 +1112,11 @@
 				<key>date</key>
 				<date>2017-08-06T11:18:59Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Bash.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-01-19T03:44:13Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Bootstrap_4.xml</key>
 			<dict>
 				<key>date</key>
@@ -1195,11 +1222,6 @@
 				<key>date</key>
 				<date>2017-10-10T02:40:56Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Scala.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-10T02:40:52Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Spring_Framework.xml</key>
 			<dict>
 				<key>date</key>
@@ -1213,11 +1235,6 @@
 		</dict>
 		<key>uninstalled</key>
 		<dict>
-			<key>http://kapeli.com/feeds/Bash.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2015-09-07T08:50:03Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Bootstrap_3.xml</key>
 			<dict>
 				<key>date</key>
@@ -1252,6 +1269,11 @@
 			<dict>
 				<key>date</key>
 				<date>2017-12-19T08:47:54Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Scala.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-01-19T03:45:02Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Vim.xml</key>
 			<dict>

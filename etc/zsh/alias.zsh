@@ -6,7 +6,7 @@ alias ls='ls -FGh'
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ll'
-alias tree='tree -F'
+alias tree='tree -NF'
 
 alias cp='cp -i'
 alias mv='mv -i'
