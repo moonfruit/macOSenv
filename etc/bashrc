@@ -1,13 +1,20 @@
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-  . /usr/local/share/bash-completion/bash_completion
+#!/usr/bin/env bash
+# shellcheck disable=SC1091
+if [[ "${BASH_VERSINFO[0]}" -ge 4 && "${BASH_VERSINFO[1]}" -ge 1 ]]; then
+	if [[ -f /usr/local/share/bash-completion/bash_completion ]]; then
+		. /usr/local/share/bash-completion/bash_completion
+	fi
+else
+	[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
 fi
 
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
-if brew command command-not-found-init > /dev/null; then
-  eval "$(brew command-not-found-init)";
+# if brew command command-not-found-init > /dev/null; then
+	# eval "$(brew command-not-found-init)";
+# fi
+if [[ -f /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh ]]; then
+	. /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
 fi
 
-export PATH="~/Documents/Environment/bin:~/Library/Python/2.7/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/Documents/Environment/bin:$HOME/Library/Python/2.7/bin:$PATH"
