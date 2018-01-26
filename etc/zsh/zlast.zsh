@@ -23,6 +23,9 @@ export XML_CATALOG_FILES="$ENV/package/vim/XMLCatalog/catalog.xml"
 # if brew command command-not-found-init > /dev/null 2>&1; then
 #	eval "$(brew command-not-found-init)"
 # fi
+if [[ -f /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh ]]; then
+	. /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+fi
 
 # dylink "$DYLD_FALLBACK_LIBRARY_PATH"
 archey -o

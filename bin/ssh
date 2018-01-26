@@ -1,12 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 /usr/bin/ssh "$@" || exit
 
 for VAR in "$@"; do
     if [[ "$VAR" == *@* ]]; then
-		USER_HOST="$VAR"
 		break
 	fi
 done
 
 SAVE=$HOME/.ssh/save_hosts
-grep "^$VAR$" "$SAVE" >/dev/null 2>&1 || echo "$VAR" >>"$SAVE"
+grep -Fxq "$VAR" "$SAVE" || echo "$VAR" >>"$SAVE"
