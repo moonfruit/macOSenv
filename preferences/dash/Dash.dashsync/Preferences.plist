@@ -177,7 +177,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-24T06:45:23Z</date>
+				<date>2018-01-25T02:18:54Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -205,7 +205,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-24T06:45:22Z</date>
+				<date>2018-01-25T02:18:53Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -667,7 +667,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-29T02:14:48Z</date>
+				<date>2018-01-26T02:19:21Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -681,7 +681,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-29T02:16:07Z</date>
+				<date>2018-01-26T02:19:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -695,7 +695,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-29T02:16:54Z</date>
+				<date>2018-01-26T02:19:28Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1269,6 +1269,11 @@
 			<dict>
 				<key>date</key>
 				<date>2017-12-19T08:47:54Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Ruby.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-01-26T02:20:49Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Scala.xml</key>
 			<dict>

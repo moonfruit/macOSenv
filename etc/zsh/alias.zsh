@@ -29,6 +29,8 @@ alias sl='sl -e'
 alias LS='sl'
 alias ls-='sl'
 
+unalias grep
+
 # vman() {
 #    env PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
 # vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
