@@ -597,7 +597,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-29T02:16:00Z</date>
+				<date>2018-01-31T04:24:49Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -611,7 +611,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-29T02:16:33Z</date>
+				<date>2018-01-31T04:25:18Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>

@@ -6,14 +6,13 @@ if echo "$1" | grep '^[0-9]+$' >/dev/null 2>&1; then
 	shift
 fi
 
-if [[ $port = 1080 ]]; then
+if [[ $port == 1080 || $port == 98[0-9][0-9] ]]; then
 	exec proxychains4 -q "$@"
 fi
 
 if [[ $port -gt 0 ]]; then
 	export http_proxy="http://dkmoonfruit:QAZwsxEDC@127.0.0.1:$port"
 	export https_proxy="$http_proxy"
-	export no_proxy=10.1.2.32
 fi
 
 exec "$@"

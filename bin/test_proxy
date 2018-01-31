@@ -66,4 +66,5 @@ while [[ $PORT -lt 9915 ]]; do
 	echo
 done
 test_port 1080
+echo
 test_port 0
