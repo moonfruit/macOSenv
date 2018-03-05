@@ -1,17 +1,31 @@
 #!/bin/bash
 
-port=9900
-if echo "$1" | grep '^[0-9]+$' >/dev/null 2>&1; then
-	port="$1"
+if echo "$1" | grep -Exq '[0-9]+|http:.*|gingkoo'; then
+	if [[ "$1" == gingkoo ]]; then
+		port=http://10.1.2.12:8118
+	else
+		port="$1"
+	fi
 	shift
+
+else
+	port=9900
 fi
 
 if [[ $port == 1080 || $port == 98[0-9][0-9] ]]; then
 	exec proxychains4 -q "$@"
 fi
 
-if [[ $port -gt 0 ]]; then
+if [[ $port == http:* ]]; then
+	export http_proxy="$port"
+	export https_proxy="$http_proxy"
+
+elif [[ $port == 99[0-9][0-9] ]]; then
 	export http_proxy="http://dkmoonfruit:QAZwsxEDC@127.0.0.1:$port"
+	export https_proxy="$http_proxy"
+
+else
+	export http_proxy="http://127.0.0.1:$port"
 	export https_proxy="$http_proxy"
 fi
 

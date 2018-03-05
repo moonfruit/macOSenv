@@ -16,7 +16,7 @@ kilo() {
 
 once() {
 	proxy "$1" curl --connect-timeout 5 -m 30 -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
-	TIME=$(tail -1 "$TEMP" | sed 's/.*\r//' | awk '{print $7}')
+	TIME=$(grep -v '^curl:' "$TEMP" | tail -1 | sed 's/.*\r//' | awk '{print $7}')
 }
 
 test_one() {
@@ -42,7 +42,7 @@ test_one() {
 }
 
 test_port() {
-	if [[ "$1" -le 0 ]]; then
+	if [[ "$1" == 0 ]]; then
 		DISPLAY="DIRECT"
 	else
 		DISPLAY="$1"
@@ -66,5 +66,7 @@ while [[ $PORT -lt 9915 ]]; do
 	echo
 done
 test_port 1080
+echo
+test_port gingkoo
 echo
 test_port 0

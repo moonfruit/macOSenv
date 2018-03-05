@@ -191,7 +191,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-24T06:45:50Z</date>
+				<date>2018-02-12T01:11:40Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -219,7 +219,7 @@
 			<key>com.github.ben-manes.caffeine:caffeine</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-28T06:45:26Z</date>
+				<date>2018-02-23T08:58:29Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -233,7 +233,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-22T02:05:30Z</date>
+				<date>2018-02-02T04:24:11Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -247,7 +247,7 @@
 			<key>com.google.inject:guice</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:37Z</date>
+				<date>2018-03-01T04:41:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -261,7 +261,7 @@
 			<key>com.google.zxing:core</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-27T10:12:54Z</date>
+				<date>2018-02-01T04:24:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -275,7 +275,7 @@
 			<key>com.google.zxing:javase</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-27T10:13:43Z</date>
+				<date>2018-02-01T04:24:12Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -289,7 +289,7 @@
 			<key>com.itextpdf:itextpdf</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-29T09:49:57Z</date>
+				<date>2018-02-01T04:24:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -653,7 +653,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2017-11-29T02:17:53Z</date>
+				<date>2018-03-01T04:42:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -667,7 +667,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-26T02:19:21Z</date>
+				<date>2018-03-01T04:41:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -681,7 +681,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-26T02:19:26Z</date>
+				<date>2018-03-01T04:42:21Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -695,7 +695,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-26T02:19:28Z</date>
+				<date>2018-03-01T04:42:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1111,6 +1111,11 @@
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:18:59Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Apple_API_Reference.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-02-23T09:02:34Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Bash.xml</key>
 			<dict>
