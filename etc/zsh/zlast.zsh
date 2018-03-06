@@ -28,4 +28,7 @@ if [[ -f /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/ha
 fi
 
 # dylink "$DYLD_FALLBACK_LIBRARY_PATH"
-archey -o
+
+if [[ $TERM_PROGRAM == iTerm.app ]]; then
+	archey -o
+fi
