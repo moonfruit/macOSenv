@@ -457,7 +457,7 @@
 			<key>org.eclipse.jetty:jetty-server</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-13T08:21:21Z</date>
+				<date>2018-03-07T02:06:36Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -471,7 +471,7 @@
 			<key>org.eclipse.jetty:jetty-servlet</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-13T08:21:04Z</date>
+				<date>2018-03-07T02:06:15Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -485,7 +485,7 @@
 			<key>org.eclipse.jetty:jetty-util</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-13T08:21:10Z</date>
+				<date>2018-03-07T02:06:18Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
