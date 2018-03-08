@@ -22,6 +22,22 @@
 					<string>ASCII_Tables</string>
 				</dict>
 			</dict>
+			<key>GDB</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-08T03:01:04Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>GDB</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>GDB</string>
+				</dict>
+			</dict>
 			<key>LLDB_Commands</key>
 			<dict>
 				<key>date</key>
@@ -54,6 +70,22 @@
 					<string>LLDB_to_GDB_Command_Map</string>
 				</dict>
 			</dict>
+			<key>Visual_Studio_Code</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-07T08:02:47Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>Visual Studio Code</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>Visual_Studio_Code</string>
+				</dict>
+			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
@@ -73,6 +105,54 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>Bash_Shortcuts</string>
+				</dict>
+			</dict>
+			<key>IntelliJ_Shortcuts</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-07T08:03:51Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>IntelliJ Shortcuts</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>IntelliJ_Shortcuts</string>
+				</dict>
+			</dict>
+			<key>Sublime_Text_3</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-07T08:03:56Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>Sublime Text 3</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>Sublime_Text_3</string>
+				</dict>
+			</dict>
+			<key>Vim</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-07T08:03:57Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>Vim</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>Vim</string>
 				</dict>
 			</dict>
 			<key>Xcode_Shortcuts</key>
@@ -101,6 +181,27 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>Xcode_Shortcuts</string>
+				</dict>
+			</dict>
+			<key>iTerm2</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-07T08:03:51Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array>
+						<string>terminal</string>
+						<string>shell</string>
+						<string>bash</string>
+						<string>zsh</string>
+					</array>
+					<key>name</key>
+					<string>iTerm2</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>iTerm2</string>
 				</dict>
 			</dict>
 			<key>tmux</key>
