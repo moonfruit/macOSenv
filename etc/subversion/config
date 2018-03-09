@@ -91,7 +91,7 @@ merge-tool-cmd = /Users/moon/Documents/Environment/bin/ideasvn
 global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo
    *.rej *~ #*# .#* .*.swp .DS_Store *.dylib *.luac *.class
    *.swp .git .hg CVS .gitignore *.tmp afiedt.buf *.iml *.log
-   ~$*.xls? ~$*.doc?
+   ~$*.xls? ~$*.doc? Thumbs.db
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1
 ### Set use-commit-times to make checkout/update/switch/revert

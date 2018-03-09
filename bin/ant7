@@ -1,0 +1,2 @@
+#!/bin/sh
+env JAVA_HOME="$(java_home -v 1.7)" /usr/local/opt/ant@1.9/bin/ant "$@"
