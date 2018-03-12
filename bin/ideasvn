@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/local/bin/idea merge "$3" "$2" "$1" "$4"
+exec /usr/local/bin/idea merge "$3" "$2" "$1" "$4"

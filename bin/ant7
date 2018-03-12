@@ -1,2 +1,4 @@
 #!/bin/sh
-env JAVA_HOME="$(java_home -v 1.7)" /usr/local/opt/ant@1.9/bin/ant "$@"
+JAVA_HOME="$(java_home -v 1.7)"
+export JAVA_HOME
+exec /usr/local/opt/ant@1.9/bin/ant "$@"

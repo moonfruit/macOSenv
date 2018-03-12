@@ -3,6 +3,9 @@ export EDITOR='vim'
 unset GREP_OPTIONS
 unset GREP_COLOR
 
+# catalog
+export XML_CATALOG_FILES="$ENV/package/vim/XMLCatalog/catalog.xml"
+
 # for zsh
 DEFAULT_USER="moon"
 

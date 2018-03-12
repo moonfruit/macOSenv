@@ -1,2 +1,2 @@
 #!/bin/bash
-open "dash://man:$1"
+exec open "dash://man:$1"

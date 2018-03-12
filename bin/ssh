@@ -2,7 +2,7 @@
 /usr/bin/ssh "$@" || exit
 
 for VAR in "$@"; do
-    if [[ "$VAR" == *@* ]]; then
+	if [[ "$VAR" == *@* ]]; then
 		break
 	fi
 done
