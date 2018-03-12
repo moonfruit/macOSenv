@@ -1,9 +1,11 @@
+#!/bin/bash
+
 # for GPP
 export APP_HOME="$WORKSPACE/gpp"
 export NODE_ID="YY"
 
 if [[ -f "$APP_HOME/etc/bashrc" ]]; then
-	NOCD=1 source "$APP_HOME/etc/bashrc"
+	NOCD=1 . "$APP_HOME/etc/bashrc"
 fi
 
 # for PATH

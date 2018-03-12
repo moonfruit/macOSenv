@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export JAVA_HOME=`/usr/libexec/java_home`
 
 export MAVEN_OPTS="-Xss2m"

@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -59,9 +61,10 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(colored-man-pages cp django extract git gem gradle httpie mvn pip redis-cli
+plugins=(colored-man-pages cp django docker extract git gem gradle httpie macos
+         mvn pip redis-cli
          history-substring-search zsh-syntax-highlighting
-         docker macos yy)
+         yy)
 
 ZDOTDIR="$HOME/.zsh"
 HISTFILE="$ZDOTDIR/history.txt"

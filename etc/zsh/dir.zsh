@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 export DOWNLOAD="$HOME/Downloads"
 hash -d DOWNLOAD="$DOWNLOAD"
 

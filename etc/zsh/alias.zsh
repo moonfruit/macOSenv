@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
@@ -39,3 +41,9 @@ unalias grep
 # }
 
 # function dmalloc { eval `command dmalloc -b "$@"`; }
+
+# git
+alias gau='git add -u'
+compdef _git gau=git-add
+
+alias grpo='git remote prune origin'

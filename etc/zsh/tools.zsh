@@ -1,5 +1,17 @@
+#!/usr/bin/env zsh
+
+local script
+
 # for thefuck
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
+
+# for autojump
+script=/usr/local/etc/profile.d/autojump.sh
+[[ -f "$script" ]] && . "$script"
+
+# for autoenv
+# script=/usr/local/opt/autoenv/activate.sh
+# [[ -f "$script" ]] && . "$script"
 
 # for zmv
 autoload -U zmv
@@ -8,7 +20,5 @@ autoload -U zmv
 # if brew command command-not-found-init > /dev/null 2>&1; then
 #	eval "$(brew command-not-found-init)"
 # fi
-local handler=/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
-if [[ -f "$handler" ]]; then
-	. "$handler"
-fi
+script=/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+[[ -f "$script" ]] && . "$script"

@@ -1,4 +1,4 @@
-(($+commands[go])) || return
+#!/usr/bin/env zsh
 
 export GOPATH="$WORKSPACE/go"
 hash -d GOPATH="$GOPATH"

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # tools
 export EDITOR='vim'
 unset GREP_OPTIONS
