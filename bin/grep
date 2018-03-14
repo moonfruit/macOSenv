@@ -1,8 +1,10 @@
 #!/bin/bash
+GREP=/usr/local/bin/ggrep
 DEFAULT=-E
 for ARG in "$@"; do
-	if [[ "$ARG" == -[EFGP]* ]]; then
+	if echo "$ARG" | "$GREP" -Gxq '\-[a-zA-Z]*[EFGP].*'; then
 		DEFAULT=
+		break
 	fi
 done
-exec /usr/local/bin/grep $DEFAULT --color=auto -dskip --exclude-dir={.bzr,CVS,.git,.hg,.svn} "$@"
+exec "$GREP" $DEFAULT --color=auto -dskip --exclude-dir={.bzr,CVS,.git,.hg,.svn} "$@"

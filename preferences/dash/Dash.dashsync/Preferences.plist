@@ -611,20 +611,6 @@
 					<string>org.freemarker:freemarker</string>
 				</dict>
 			</dict>
-			<key>org.jetbrains:annotations</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:17:25Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.jetbrains:annotations</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.jetbrains:annotations</string>
-				</dict>
-			</dict>
 			<key>org.mybatis:mybatis</key>
 			<dict>
 				<key>date</key>
@@ -642,7 +628,7 @@
 			<key>org.mybatis:mybatis-spring</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:54Z</date>
+				<date>2018-03-14T03:08:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -852,6 +838,20 @@
 					<string>org.eclipse.jetty.aggregate:jetty-all</string>
 				</dict>
 			</dict>
+			<key>org.jetbrains:annotations</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-14T08:10:03Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.jetbrains:annotations</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.jetbrains:annotations</string>
+				</dict>
+			</dict>
 			<key>org.springframework.security:spring-security-core-tiger</key>
 			<dict>
 				<key>date</key>
@@ -1038,10 +1038,32 @@
 					<string>Apache_Commons_Collections</string>
 				</dict>
 			</dict>
+			<key>Bitcoin</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-14T08:19:45Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array>
+						<string>Bitcoin.org</string>
+					</array>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Bitcoin#readme</string>
+					<key>authorLinkText</key>
+					<string>Jerzy Kozera</string>
+					<key>name</key>
+					<string>Bitcoin</string>
+					<key>platform</key>
+					<string>usercontribBitcoin</string>
+					<key>uniqueIdentifier</key>
+					<string>Bitcoin</string>
+				</dict>
+			</dict>
 			<key>Guava</key>
 			<dict>
 				<key>date</key>
-				<date>2015-11-26T10:03:52Z</date>
+				<date>2018-03-14T08:09:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
