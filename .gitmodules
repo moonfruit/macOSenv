@@ -1,36 +1,36 @@
 [submodule "package/zsh/zsh-syntax-highlighting"]
 	path = package/zsh/zsh-syntax-highlighting
-	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "package/zsh/oh-my-zsh"]
 	path = package/zsh/oh-my-zsh
-	url = git@github.com:robbyrussell/oh-my-zsh.git
+	url = https://github.com/robbyrussell/oh-my-zsh.git
 [submodule "package/solarized"]
 	path = package/solarized
-	url = git@github.com:altercation/solarized.git
+	url = https://github.com/altercation/solarized.git
 [submodule "package/pac"]
 	path = package/pac
 	url = git@git.coding.net:moonfruit/pac.git
 [submodule "package/vim/vimcdoc"]
 	path = package/vim/vimcdoc
-	url = git@github.com:vimcn/vimcdoc.git
+	url = https://github.com/vimcn/vimcdoc.git
 [submodule "package/vim/pathogen"]
 	path = package/vim/pathogen
-	url = git@github.com:tpope/vim-pathogen.git
+	url = https://github.com/tpope/vim-pathogen.git
 [submodule "package/vim/syntastic"]
 	path = package/vim/syntastic
-	url = git@github.com:scrooloose/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule "package/vim/YouCompleteMe"]
 	path = package/vim/YouCompleteMe
-	url = git@github.com:Valloric/YouCompleteMe.git
+	url = https://github.com/Valloric/YouCompleteMe.git
 [submodule "package/vim/tagbar"]
 	path = package/vim/tagbar
-	url = git@github.com:majutsushi/tagbar.git
+	url = https://github.com/majutsushi/tagbar.git
 [submodule "package/vim/XMLCatalog"]
 	path = package/vim/XMLCatalog
 	url = git@github.com:moonfruit/XMLCatalog.git
 [submodule "package/BaiduExporter"]
 	path = package/BaiduExporter
-	url = git@github.com:acgotaku/BaiduExporter.git
+	url = https://github.com/acgotaku/BaiduExporter.git
 [submodule "package/SublimeClang"]
 	path = package/SublimeClang
 	url = https://github.com/quarnster/SublimeClang.git
