@@ -7,17 +7,20 @@ TMP=/tmp/$NAME.$$
 mkdir -p "$TMP"
 cd "$TMP" || exit 1
 
+copy() {
+    DEST="$2/$(basename "$1")"
+    if ! diff "$1" "$DEST"; then
+        cp "$1" "$DEST"
+    fi
+}
+
 wget https://iterm2.com/shell_integration/zsh -O item.zsh
-if ! diff item.zsh "$ENV/etc/zsh/item.zsh"; then
-    cp item.zsh "$ENV/etc/zsh/item.zsh"
-fi
+copy item.zsh "$ENV/etc/zsh"
 
 UTILS=(imgcat imgls it2attention it2check it2copy it2dl it2getvar it2setcolor it2setkeylabel it2ul it2universion)
 for UTIL in "${UTILS[@]}"; do
     wget "https://iterm2.com/utilities/$UTIL"
-    if ! diff "$UTIL" "$ENV/bin/$UTIL"; then
-        cp "$UTIL" "$ENV/bin/$UTIL"
-    fi
+    copy "$UTIL" "$ENV/bin"
 done
 
 rm -fr "$TMP"
