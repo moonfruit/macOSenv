@@ -8,4 +8,5 @@ augroup filetypedetect
 	au! BufNewFile,BufRead *.ec setf esqlc
 	au! BufNewFile,BufRead *.ini setf myini
 	au! BufNewFile,BufRead *.log setf mylog
+	au! BufNewFile,BufRead *.proto setf proto
 augroup END

@@ -1,0 +1,1 @@
+/usr/local/opt/protobuf/share/doc/protobuf/editors/proto.vim
