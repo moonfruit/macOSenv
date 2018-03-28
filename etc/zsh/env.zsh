@@ -11,18 +11,8 @@ export XML_CATALOG_FILES="$ENV/package/vim/XMLCatalog/catalog.xml"
 # for zsh
 DEFAULT_USER="moon"
 
-# for env
-# ldpath() {
-#     case $(uname -s) in
-#         AIX)
-#             export LIBPATH="${LIBPATH:-.}:$1"
-#             ;;
-#         Darwin)
-#             export DYLD_FALLBACK_LIBRARY_PATH="${DYLD_FALLBACK_LIBRARY_PATH:-.}:$1"
-#             ;;
-#         Linux)
-#             export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-.}:$1"
-#             ;;
-#     esac
-# }
-# ldpath "$ENV/lib"
+# for proxy
+if [[ -z "$no_proxy" ]]; then
+	printf -v no_proxy '%s,' 10.1.2.{1..255}
+	export no_proxy="localhost,127.0.0.1,${no_proxy}192.168.1.1,192.168.7.1"
+fi

@@ -251,7 +251,22 @@
 	<key>DHGoRepo</key>
 	<dict>
 		<key>installed</key>
-		<dict/>
+		<dict>
+			<key>google.golang.org/grpc</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-28T01:47:58Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>google.golang.org/grpc</string>
+					<key>platform</key>
+					<string>godoc</string>
+					<key>uniqueIdentifier</key>
+					<string>google.golang.org/grpc</string>
+				</dict>
+			</dict>
+		</dict>
 		<key>uninstalled</key>
 		<dict/>
 	</dict>
@@ -278,7 +293,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-25T02:18:54Z</date>
+				<date>2018-03-28T01:48:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -292,7 +307,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2018-02-12T01:11:40Z</date>
+				<date>2018-03-28T01:45:52Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +321,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-25T02:18:53Z</date>
+				<date>2018-03-28T01:48:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -357,48 +372,6 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>com.google.inject:guice</string>
-				</dict>
-			</dict>
-			<key>com.google.zxing:core</key>
-			<dict>
-				<key>date</key>
-				<date>2018-02-01T04:24:06Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>com.google.zxing:core</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>com.google.zxing:core</string>
-				</dict>
-			</dict>
-			<key>com.google.zxing:javase</key>
-			<dict>
-				<key>date</key>
-				<date>2018-02-01T04:24:12Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>com.google.zxing:javase</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>com.google.zxing:javase</string>
-				</dict>
-			</dict>
-			<key>com.itextpdf:itextpdf</key>
-			<dict>
-				<key>date</key>
-				<date>2018-02-01T04:24:17Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>com.itextpdf:itextpdf</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>com.itextpdf:itextpdf</string>
 				</dict>
 			</dict>
 			<key>commons-beanutils:commons-beanutils</key>
@@ -527,76 +500,6 @@
 					<string>org.apache.commons:commons-vfs2</string>
 				</dict>
 			</dict>
-			<key>org.apache.poi:poi</key>
-			<dict>
-				<key>date</key>
-				<date>2017-09-14T10:27:02Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.apache.poi:poi</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.apache.poi:poi</string>
-				</dict>
-			</dict>
-			<key>org.apache.poi:poi-ooxml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-09-14T10:26:58Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.apache.poi:poi-ooxml</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.apache.poi:poi-ooxml</string>
-				</dict>
-			</dict>
-			<key>org.eclipse.jetty:jetty-server</key>
-			<dict>
-				<key>date</key>
-				<date>2018-03-07T02:06:36Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.eclipse.jetty:jetty-server</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.eclipse.jetty:jetty-server</string>
-				</dict>
-			</dict>
-			<key>org.eclipse.jetty:jetty-servlet</key>
-			<dict>
-				<key>date</key>
-				<date>2018-03-07T02:06:15Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.eclipse.jetty:jetty-servlet</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.eclipse.jetty:jetty-servlet</string>
-				</dict>
-			</dict>
-			<key>org.eclipse.jetty:jetty-util</key>
-			<dict>
-				<key>date</key>
-				<date>2018-03-07T02:06:18Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.eclipse.jetty:jetty-util</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.eclipse.jetty:jetty-util</string>
-				</dict>
-			</dict>
 			<key>org.freemarker:freemarker</key>
 			<dict>
 				<key>date</key>
@@ -637,34 +540,6 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.mybatis:mybatis-spring</string>
-				</dict>
-			</dict>
-			<key>org.quartz-scheduler:quartz</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:17:40Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.quartz-scheduler:quartz</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.quartz-scheduler:quartz</string>
-				</dict>
-			</dict>
-			<key>org.quartz-scheduler:quartz-jobs</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:17:05Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.quartz-scheduler:quartz-jobs</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.quartz-scheduler:quartz-jobs</string>
 				</dict>
 			</dict>
 			<key>org.slf4j:slf4j-api</key>
@@ -796,6 +671,48 @@
 		</dict>
 		<key>uninstalled</key>
 		<dict>
+			<key>com.google.zxing:core</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:30:54Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.google.zxing:core</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.google.zxing:core</string>
+				</dict>
+			</dict>
+			<key>com.google.zxing:javase</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:30:53Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.google.zxing:javase</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.google.zxing:javase</string>
+				</dict>
+			</dict>
+			<key>com.itextpdf:itextpdf</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:30:15Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.itextpdf:itextpdf</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.itextpdf:itextpdf</string>
+				</dict>
+			</dict>
 			<key>commons-dbcp:commons-dbcp</key>
 			<dict>
 				<key>date</key>
@@ -824,6 +741,34 @@
 					<string>javax.servlet:javax.servlet-api</string>
 				</dict>
 			</dict>
+			<key>org.apache.poi:poi</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:29:05Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.apache.poi:poi</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.apache.poi:poi</string>
+				</dict>
+			</dict>
+			<key>org.apache.poi:poi-ooxml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:29:08Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.apache.poi:poi-ooxml</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.apache.poi:poi-ooxml</string>
+				</dict>
+			</dict>
 			<key>org.eclipse.jetty.aggregate:jetty-all</key>
 			<dict>
 				<key>date</key>
@@ -838,6 +783,48 @@
 					<string>org.eclipse.jetty.aggregate:jetty-all</string>
 				</dict>
 			</dict>
+			<key>org.eclipse.jetty:jetty-server</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:29:29Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.eclipse.jetty:jetty-server</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.eclipse.jetty:jetty-server</string>
+				</dict>
+			</dict>
+			<key>org.eclipse.jetty:jetty-servlet</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:29:37Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.eclipse.jetty:jetty-servlet</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.eclipse.jetty:jetty-servlet</string>
+				</dict>
+			</dict>
+			<key>org.eclipse.jetty:jetty-util</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:29:41Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.eclipse.jetty:jetty-util</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.eclipse.jetty:jetty-util</string>
+				</dict>
+			</dict>
 			<key>org.jetbrains:annotations</key>
 			<dict>
 				<key>date</key>
@@ -850,6 +837,34 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.jetbrains:annotations</string>
+				</dict>
+			</dict>
+			<key>org.quartz-scheduler:quartz</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:30:30Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.quartz-scheduler:quartz</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.quartz-scheduler:quartz</string>
+				</dict>
+			</dict>
+			<key>org.quartz-scheduler:quartz-jobs</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-23T01:30:38Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.quartz-scheduler:quartz-jobs</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.quartz-scheduler:quartz-jobs</string>
 				</dict>
 			</dict>
 			<key>org.springframework.security:spring-security-core-tiger</key>
@@ -1120,6 +1135,10 @@
 		<dict>
 			<key>~/Library/Application Support/Dash/Cheat Sheets/LLDB to GDB Command Map/LLDB_to_GDB_Command_Map.docset</key>
 			<string>lldb:</string>
+			<key>~/Library/Application Support/Dash/DocSets/Boost/Boost.docset</key>
+			<string>cpp:</string>
+			<key>~/Library/Application Support/Dash/DocSets/C/C.docset</key>
+			<string>cpp:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Django/Django.docset</key>
 			<string>python:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Groovy/Groovy.docset</key>
@@ -1138,6 +1157,8 @@
 			<string>python:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Spring_Framework/Spring Framework.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Go DocSets/google.golang.org grpc/GoDoc.docset</key>
+			<string>go:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comfasterxmljacksoncorejacksonannotations/Jacksonannotations.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comfasterxmljacksoncorejacksondatabind/jacksondatabind.docset</key>
@@ -1245,10 +1266,25 @@
 				<key>date</key>
 				<date>2018-01-19T03:44:13Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Boost.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-26T02:39:57Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Bootstrap_4.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:17:11Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/C++.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-26T02:39:35Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/C.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-03-26T02:39:21Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Django.xml</key>
 			<dict>

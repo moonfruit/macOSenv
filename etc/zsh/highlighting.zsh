@@ -1,4 +1,8 @@
-#!/usr/bin/env zsh
+#!/bin/bash
+
+if [[ $TERM_PROGRAM != iTerm.app ]]; then
+    return
+fi
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
