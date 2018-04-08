@@ -15,8 +15,6 @@
 		<string>/Users/moon/Documents/Environment/bin/ideaServer</string>
 		<string>-l</string>
 		<string>127.0.0.1</string>
-		<string>-p</string>
-		<string>7999</string>
 		<string>-u</string>
 		<string>moonfruit</string>
 	</array>
