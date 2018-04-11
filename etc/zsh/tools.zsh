@@ -9,9 +9,8 @@ local script
 script=/usr/local/etc/profile.d/autojump.sh
 [[ -f "$script" ]] && . "$script"
 
-# for autoenv
-# script=/usr/local/opt/autoenv/activate.sh
-# [[ -f "$script" ]] && . "$script"
+# for direnv
+eval "$(direnv hook zsh)"
 
 # for zmv
 autoload -U zmv
