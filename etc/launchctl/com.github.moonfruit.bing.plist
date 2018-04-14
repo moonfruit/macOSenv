@@ -8,8 +8,15 @@
 	<true/>
 	<key>Nice</key>
 	<integer>1</integer>
-	<key>Program</key>
-	<string>/Users/moon/Documents/Environment/package/bing-wallpaper/bing-wallpaper.sh</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/python3</string>
+		<string>/Users/moon/Documents/Workspace/python/bingwallpaper/bing.py</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/Users/moon/Documents/Workspace/python/bingwallpaper/bing.log</string>
+	<key>StandardOutPath</key>
+	<string>/Users/moon/Documents/Workspace/python/bingwallpaper/bing.log</string>
 	<key>StartCalendarInterval</key>
 	<dict>
 		<key>Hour</key>
@@ -17,5 +24,7 @@
 		<key>Minute</key>
 		<integer>0</integer>
 	</dict>
+	<key>WorkingDirectory</key>
+	<string>/Users/moon/Pictures/bing-wallpapers/</string>
 </dict>
 </plist>

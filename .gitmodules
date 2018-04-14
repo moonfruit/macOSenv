@@ -40,6 +40,3 @@
 [submodule "package/pam-touchID"]
 	path = package/pam-touchID
 	url = git@github.com:moonfruit/pam-touchID.git
-[submodule "package/bing-wallpaper"]
-	path = package/bing-wallpaper
-	url = https://github.com/thejandroman/bing-wallpaper.git
