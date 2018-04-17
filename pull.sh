@@ -1,4 +1,10 @@
-#!/bin/sh
+#!/bin/bash
+
+if [[ $1 == gc ]]; then
+	GC=git gc
+else
+	GC=true
+fi
 
 DIR=$(pwd)
 grep submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | \
@@ -6,4 +12,5 @@ grep submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | \
 		echo "-------- $MODULE --------"
 		cd "$DIR/$MODULE" || exit
 		git pull
+		$GC
 	done
