@@ -1,2 +1,3 @@
 .vscode
 *.sublime-workspace
+/bin/zoo
