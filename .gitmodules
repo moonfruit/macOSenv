@@ -40,3 +40,6 @@
 [submodule "package/pam-touchID"]
 	path = package/pam-touchID
 	url = git@github.com:moonfruit/pam-touchID.git
+[submodule "package/vim/kotlin-vim"]
+	path = package/vim/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim.git

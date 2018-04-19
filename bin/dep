@@ -1,0 +1,4 @@
+#!/bin/sh
+export http_proxy=http://dkmoonfruit:QAZwsxEDC@127.0.0.1:9900
+export https_proxy=$http_proxy
+exec /usr/local/bin/dep "$@"

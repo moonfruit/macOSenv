@@ -1,0 +1,244 @@
+tap "homebrew/command-not-found"
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "caskroom/drivers"
+tap "caskroom/versions"
+tap "caskroom/cask"
+cask "java"
+cask "osxfuse"
+cask "caskroom/versions/java8"
+# Java build tool
+brew "ant"
+# Java build tool
+brew "ant@1.9"
+# Graphical system information display for macOS
+brew "archey"
+# Download with resuming and segmented downloading
+brew "aria2", args: ["with-libssh2"]
+# Shell extension to jump to frequently used directories
+brew "autojump"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# Programmable completion for Bash 4.1+
+brew "bash-completion@2"
+# Bash shell debugger
+brew "bashdb"
+# Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
+brew "clang-format"
+# Cross-platform make
+brew "cmake"
+# Color-highlighted diff(1) output
+brew "colordiff"
+# Subversion output colorizer
+brew "colorsvn"
+# Open source clone of Theme Hospital
+brew "corsixth"
+# Reimplementation of ctags(1)
+brew "ctags"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl", args: ["with-c-ares", "with-gssapi", "with-libssh2", "with-nghttp2"]
+# Go dependency management tool
+brew "dep"
+# Advanced df-like disk information utility
+brew "di"
+# Load/unload environment variables based on $PWD
+brew "direnv"
+# Debug versions of system memory management routines
+brew "dmalloc"
+# Banner-like program prints strings as ASCII art
+brew "figlet"
+# Utility to determine file types
+brew "file-formula"
+# Collection of GNU find, xargs, and locate
+brew "findutils"
+# GNU awk utility
+brew "gawk"
+# Official Go implementation of the Ethereum protocol
+brew "geth"
+# Distributed revision control system
+brew "git", args: ["with-blk-sha1", "with-gettext", "with-pcre2", "with-persistent-https"]
+# Simplified Go project management, dependency management, and vendoring
+brew "glide"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
+# GNU version of the tar archiving utility
+brew "gnu-tar"
+# Tag generator for Go, compatible with ctags
+brew "gotags"
+# Go vendor tool that works with the standard vendor file
+brew "govendor"
+# Build system based on the Groovy language
+brew "gradle"
+# Graph visualization software from AT&T and Bell Labs
+brew "graphviz"
+# GNU grep, egrep and fgrep
+brew "grep"
+# Interpreted, interactive, object-oriented programming language
+brew "python"
+# User-friendly cURL replacement (command-line HTTP client)
+brew "httpie"
+# Display an interface's bandwidth usage
+brew "iftop"
+# Calculate various network masks, etc. from a given IP address
+brew "ipcalc"
+# Peer-to-peer hypermedia protocol
+brew "ipfs"
+# malloc implementation emphasizing fragmentation avoidance
+brew "jemalloc"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Key-value storage library with ordered mapping
+brew "leveldb"
+# Sophisticated file transfer program
+brew "lftp"
+# High performance, distributed memory object caching system
+brew "memcached"
+# C and C++ client library to the memcached server
+brew "libmemcached"
+# GUI for vim, made for macOS
+brew "macvim", args: ["with-lua", "with-override-system-vim", "without-cscope"]
+# Drop-in replacement for MySQL
+brew "mariadb"
+# Mac App Store command-line interface
+brew "mas"
+# Java-based project management
+brew "maven"
+# Platform built on V8 to build network applications
+brew "node"
+# Collection of macOS command-line utilities
+brew "osxutils"
+# 7-Zip (high compression file archiver) implementation
+brew "p7zip"
+# Shell command parallelization utility
+brew "parallel"
+# Perl compatible regular expressions library with a new API
+brew "pcre2"
+# Parallel gzip
+brew "pigz"
+# Advanced filtering web proxy
+brew "privoxy", restart_service: true
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
+# Hook preloader
+brew "proxychains-ng"
+# Show ps output as a tree
+brew "pstree"
+# Parse HTML at the command-line
+brew "pup"
+# Monitor data's progress through a pipe
+brew "pv"
+# Treat text as a database
+brew "q"
+# GNU revision control system
+brew "rcs"
+# Persistent key-value database, with built-in net interface
+brew "redis"
+# Readline wrapper: adds readline support to tools that lack it
+brew "rlwrap"
+# Powerful, clean, object-oriented scripting language
+brew "ruby"
+# Libev port of shadowsocks
+brew "shadowsocks-libev", restart_service: true
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
+# Add a public key to a remote machine's authorized_keys file
+brew "ssh-copy-id"
+# File system client based on SSH File Transfer Protocol
+brew "sshfs"
+brew "sshpass"
+# SSL tunneling program
+brew "stunnel"
+# Version control system designed to be a better CVS
+brew "subversion"
+# Tiny C compiler
+brew "tcc"
+# User interface to the TELNET protocol (built from macOS Sierra sources)
+brew "telnet"
+# Send macOS User Notifications from the command-line
+brew "terminal-notifier"
+# Programatically correct mistyped console commands
+brew "thefuck"
+# Framework for scalable cross-language services development
+brew "thrift"
+# Implementation of Java Servlet and JavaServer Pages
+brew "tomcat"
+# Lets Tomcat use some native resources for performance
+brew "tomcat-native"
+# Implementation of Java Servlet and JavaServer Pages
+brew "tomcat@8"
+# CLI tool that moves files or folder to the trash
+brew "trash"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Internet file retriever
+brew "wget"
+# UNIX shell (command interpreter)
+brew "zsh"
+cask "alfred"
+cask "aliwangwang"
+cask "angry-ip-scanner"
+cask "appcode"
+cask "avibrazil-rdm"
+cask "baidunetdisk"
+cask "bartender"
+cask "calibre"
+cask "cleanmymac"
+cask "clion"
+cask "dash"
+cask "datagrip"
+cask "dbvisualizer"
+cask "discord"
+cask "docker"
+cask "ethereum-wallet"
+cask "flash-npapi"
+cask "flash-ppapi"
+cask "fliqlo"
+cask "goland"
+cask "hstracker"
+cask "iina"
+cask "intellij-idea"
+cask "istat-menus"
+cask "keystore-explorer"
+cask "kitematic"
+cask "lantern"
+cask "launchcontrol"
+cask "macdown"
+cask "mat"
+cask "mist"
+cask "neteasemusic"
+cask "openemu"
+cask "postman"
+cask "pycharm"
+cask "qq"
+cask "qqmusic"
+cask "rar"
+cask "robo-3t"
+cask "rubymine"
+cask "sourcetree"
+cask "steam"
+cask "teamviewer"
+cask "thunder"
+cask "tickeys"
+cask "tunnelblick"
+cask "visual-studio-code"
+cask "vmware-fusion"
+cask "wechatwebdevtools"
+cask "xbox360-controller-driver"
+cask "xmrouter"
+cask "caskroom/versions/google-chrome-dev"
+cask "caskroom/versions/sublime-text-dev"
+mas "Bear", id: 1091189122
+mas "DwellClick", id: 402414007
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Joystick Mapper", id: 528183797
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Reeder", id: 880001334
+mas "Snappy", id: 512617038
+mas "SplitScreen", id: 453757310
+mas "The Unarchiver", id: 425424353
+mas "Things3", id: 904280696
+mas "WeChat", id: 836500024

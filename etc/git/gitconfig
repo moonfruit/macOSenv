@@ -33,11 +33,11 @@
 [credential]
 	helper = osxkeychain
 
-[url "persistent-https"]
-	insteadof = https
+#[url "persistent-https"]
+#	insteadof = https
 
-[url "persistent-http"]
-	insteadof = http
+#[url "persistent-http"]
+#	insteadof = http
 
 [protocol "persistent-https"]
 	allow = always
@@ -45,14 +45,19 @@
 [protocol "persistent-http"]
 	allow = always
 
+[difftool "vim"]
+	cmd = vimdiff "$LOCAL" "$REMOTE"
+
 [mergetool "idea"]
 	cmd = /usr/local/bin/idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 
 [difftool "idea"]
 	cmd = /usr/local/bin/idea diff "$LOCAL" "$REMOTE"
 
-[difftool "vim"]
-	cmd = vimdiff "$LOCAL" "$REMOTE"
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
 
-[merge]
-	tool = idea
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
