@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+if [[ $# -lt 2 ]]; then
+    echo "$(basename "$0") bridge@host1 target@host2" >&2
+    exit 1
+fi
+
+BRIDGE=$1
+TARGET=$2
+
+array=(${TARGET//@/ })
+TARGET_USER=${array[0]}
+TARGET_HOST=${array[1]}
+
+DATABASE="$HOME/.ssh/bridge.db"
+if [[ ! -f "$DATABASE" ]]; then
+    sqlite3 "$DATABASE" 'create table ssh (ssh primary key, port, pid)'
+fi
+
+RESULT=$(sqlite3 "$DATABASE" "select port, pid from ssh where ssh = '$TARGET'")
+if [[ -n $RESULT ]]; then
+    array=(${RESULT//|/ })
+    PORT=${array[0]}
+    PID=$(lsof -nPiTCP -sTCP:LISTEN | grep ":$PORT" | awk '{print $2}')
+    if [[ $PID != "${array[1]}" ]]; then
+        sqlite3 "$DATABASE" "delete from ssh where ssh = '$TARGET'"
+        PORT=
+    fi
+fi
+
+if [[ -z $PORT ]]; then
+    USED_PORTS=($(lsof -nPiTCP -sTCP:LISTEN | awk '{print $9}' | sed '1d;s/.*://' | sort -nru))
+
+    for PORT in {22001..22099}; do
+        for port in "${USED_PORTS[@]}"; do
+            [[ "$port" == "$PORT" ]] && continue 2
+        done
+        break
+    done
+
+    ssh -L "127.0.0.1:$PORT:$TARGET_HOST:22" "$BRIDGE" true
+    PID=$(lsof -nPiTCP -sTCP:LISTEN | grep ":$PORT" | awk '{print $2}')
+    sqlite3 "$DATABASE" "replace into ssh values ('$TARGET', $PORT, $PID)"
+fi
+
+exec ssh -p "$PORT" "$TARGET_USER@127.0.0.1"
