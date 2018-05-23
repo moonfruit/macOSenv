@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.github.moonfruit.bing</string>
+	<string>moonfruit.bing</string>
 	<key>LowPriorityIO</key>
 	<true/>
 	<key>Nice</key>

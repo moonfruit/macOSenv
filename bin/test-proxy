@@ -59,12 +59,13 @@ if [[ $# -gt 0 ]]; then
 	exit
 fi
 
-PORT=9900
-while [[ $PORT -lt 9915 ]]; do
+for PORT in {9900..9914}; do
 	test_port $PORT
 	PORT=$((PORT + 1))
 	echo
 done
+test_port 9999
+echo
 test_port 1080
 echo
 test_port gingkoo
