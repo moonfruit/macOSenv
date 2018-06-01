@@ -17,6 +17,7 @@ kilo() {
 once() {
 	proxy "$1" curl --connect-timeout 5 -m 30 -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
 	TIME=$(grep -v '^curl:' "$TEMP" | tail -1 | sed 's/.*\r//' | awk '{print $7}')
+	rm -f "$TEMP"
 }
 
 test_one() {
@@ -36,7 +37,7 @@ test_one() {
 		SUM=$((SUM + $(kilo "$TIME")))
 		I=$((I + 1))
 	done
-	
+
 	AVG=$((SUM / I))
 	echo "Average Speed: ${AVG} k/s"
 }
