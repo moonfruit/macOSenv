@@ -5,7 +5,8 @@ GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
 
 echo "$GREEN==>$RESET ${BOLD}Updating Homebrew$RESET"
-proxy brew update -v
+proxy brew update --preinstall -v
+export HOMEBREW_AUTO_UPDATE_CHECKE=1
 
 OUTDATED=$(brew outdated)
 if [[ -z $OUTDATED ]]; then
