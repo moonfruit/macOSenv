@@ -43,3 +43,6 @@
 [submodule "package/vim/kotlin-vim"]
 	path = package/vim/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim.git
+[submodule "package/vim/vim-solidity"]
+	path = package/vim/vim-solidity
+	url = https://github.com/tomlion/vim-solidity.git
