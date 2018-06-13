@@ -9,13 +9,15 @@ if [[ -f "$APP_HOME/etc/bashrc" ]]; then
 fi
 
 # for PATH
-USER_PYTHON_HOME="/Users/moon/Library/Python/2.7"
+# USER_PYTHON_HOME="/Users/moon/Library/Python/2.7"
+# export PATH="$USER_PYTHON_HOME/bin:$PATH"
+
 PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/file-formula/bin:$PATH"
 PATH="/usr/local/opt/curl/bin:$PATH"
-export PATH="$ENV/bin:$USER_PYTHON_HOME/bin:$PATH"
+export PATH="$ENV/bin:$PATH"
 
 # Auto hash XXOO_HOME
 eval "$(env | grep _HOME | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"

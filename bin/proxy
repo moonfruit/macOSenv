@@ -12,6 +12,8 @@ else
 	port=9900
 fi
 
+export proxy=1
+
 if [[ $port == 1080 || $port == 98[0-9][0-9] ]]; then
 	exec proxychains4 -q "$@"
 fi

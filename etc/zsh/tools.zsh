@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+unalias pip
+
 local script
 
 # for thefuck

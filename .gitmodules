@@ -46,3 +46,6 @@
 [submodule "package/vim/vim-solidity"]
 	path = package/vim/vim-solidity
 	url = https://github.com/tomlion/vim-solidity.git
+[submodule "package/vim/vim-wasm"]
+	path = package/vim/vim-wasm
+	url = https://github.com/rhysd/vim-wasm.git
