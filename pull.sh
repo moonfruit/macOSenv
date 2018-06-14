@@ -11,7 +11,7 @@ else
 fi
 
 DIR=$(pwd)
-grep submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | \
+grep submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | sort | \
 	while read -r MODULE; do
 		echo "-------- $MODULE --------"
 		cd "$DIR/$MODULE" || exit
