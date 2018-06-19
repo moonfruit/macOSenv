@@ -3,9 +3,12 @@
 
 for VAR in "$@"; do
 	if [[ "$VAR" == *@* ]]; then
+		FOUND=1
 		break
 	fi
 done
+
+[[ -z $FOUND ]] && exit
 
 SAVE=$HOME/.ssh/save_hosts
 grep -Fxq "$VAR" "$SAVE" || echo "$VAR" >>"$SAVE"

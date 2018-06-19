@@ -4,8 +4,13 @@ BOLD=$(tput bold)
 GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
 
+PREINSTALL=--preinstall
+if [[ "$1" = "--force" ]]; then
+	PREINSTALL=
+fi
+
 echo "$GREEN==>$RESET ${BOLD}Updating Homebrew$RESET"
-proxy brew update --preinstall -v
+proxy brew update $PREINSTALL -v
 export HOMEBREW_AUTO_UPDATE_CHECKE=1
 
 OUTDATED=$(brew outdated)
