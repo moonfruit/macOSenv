@@ -4,6 +4,11 @@ unalias pip
 
 local script
 
+# for dmalloc
+function dmalloc {
+	eval "$(command dmalloc -b "$@")"
+}
+
 # for thefuck
 # eval $(thefuck --alias)
 

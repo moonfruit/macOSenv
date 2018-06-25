@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ -z "$PROXY_ENABLED" ]] && proxy >/dev/null 2>&1; then
+	exec proxy "$0" "$@"
+fi
+
 BOLD=$(tput bold)
 GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
@@ -10,7 +14,7 @@ if [[ "$1" = "--force" ]]; then
 fi
 
 echo "$GREEN==>$RESET ${BOLD}Updating Homebrew$RESET"
-proxy brew update $PREINSTALL -v
+brew update $PREINSTALL -v
 export HOMEBREW_AUTO_UPDATE_CHECKE=1
 
 OUTDATED=$(brew outdated)
@@ -18,7 +22,7 @@ if [[ -z $OUTDATED ]]; then
 	exit 0
 fi
 
-if proxy brew upgrade; then
+if brew upgrade; then
 	echo "$GREEN==>$RESET ${BOLD}Cleanup Homebrew$RESET"
 	brew cleanup -s
 fi

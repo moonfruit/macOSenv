@@ -39,6 +39,9 @@
 #[url "persistent-http"]
 #	insteadof = http
 
+[url "https://github.com/"]
+	insteadOf = git://github.com/
+
 [protocol "persistent-https"]
 	allow = always
 

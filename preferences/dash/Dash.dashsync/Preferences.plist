@@ -252,10 +252,24 @@
 	<dict>
 		<key>installed</key>
 		<dict>
+			<key>golang.org/x/crypto</key>
+			<dict>
+				<key>date</key>
+				<date>2018-06-23T03:33:32Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>golang.org/x/crypto</string>
+					<key>platform</key>
+					<string>godoc</string>
+					<key>uniqueIdentifier</key>
+					<string>golang.org/x/crypto</string>
+				</dict>
+			</dict>
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2018-06-19T03:33:29Z</date>
+				<date>2018-06-23T03:33:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1157,6 +1171,8 @@
 			<string>python:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Spring_Framework/Spring Framework.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Go DocSets/golang.org x crypto/GoDoc.docset</key>
+			<string>go:</string>
 			<key>~/Library/Application Support/Dash/Go DocSets/google.golang.org grpc/GoDoc.docset</key>
 			<string>go:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comfasterxmljacksoncorejacksonannotations/Jacksonannotations.docset</key>
