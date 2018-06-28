@@ -48,14 +48,23 @@
 [protocol "persistent-http"]
 	allow = always
 
-[difftool "vim"]
-	cmd = vimdiff "$LOCAL" "$REMOTE"
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
 
 [mergetool "idea"]
-	cmd = /usr/local/bin/idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+	cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 
 [difftool "idea"]
-	cmd = /usr/local/bin/idea diff "$LOCAL" "$REMOTE"
+	cmd = idea diff "$LOCAL" "$REMOTE"
+
+[mergetool "goland"]
+	cmd = goland merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+
+[difftool "goland"]
+	cmd = goland diff "$LOCAL" "$REMOTE"
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
