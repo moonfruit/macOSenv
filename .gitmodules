@@ -46,3 +46,6 @@
 [submodule "package/vim/vim-wasm"]
 	path = package/vim/vim-wasm
 	url = https://github.com/rhysd/vim-wasm.git
+[submodule "package/vim/vimcdoc"]
+	path = package/vim/vimcdoc
+	url = https://github.com/yianwillis/vimcdoc.git
