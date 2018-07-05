@@ -175,7 +175,7 @@ let g:tagbar_type_go = {
 " let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib"
 
 " couque
-command Bash ConqueTerm bash
+" command Bash ConqueTerm bash
 
 " pyflakes
 " let python_highlight_all=1
@@ -227,3 +227,7 @@ function s:xxd()
 endfunction
 
 nmap <silent> <F3> :call <SID>xxd()<CR>
+
+if has('python3')
+  silent! python3 1
+endif
