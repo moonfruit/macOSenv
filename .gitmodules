@@ -10,9 +10,6 @@
 [submodule "package/pac"]
 	path = package/pac
 	url = git@git.coding.net:moonfruit/pac.git
-[submodule "package/vim/vimcdoc"]
-	path = package/vim/vimcdoc
-	url = https://github.com/vimcn/vimcdoc.git
 [submodule "package/vim/pathogen"]
 	path = package/vim/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
