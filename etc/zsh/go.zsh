@@ -5,4 +5,7 @@ hash -d GOPATH="$GOPATH"
 
 export PATH="$GOPATH/bin:$PATH"
 
-export MYGO_HOME="$GOPATH/src/github.com/moonfruit"
+export GO_MOON="$GOPATH/src/github.com/moonfruit"
+hash -d GO_MOON="$GO_MOON"
+export GO_PENTA="$GOPATH/src/github.com/pentaglobal"
+hash -d GO_PENTA="$GO_PENTA"
