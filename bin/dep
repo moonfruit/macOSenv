@@ -1,7 +1,11 @@
 #!/bin/bash
-export http_proxy=http://dkmoonfruit:QAZwsxEDC@127.0.0.1:9900
-export https_proxy=$http_proxy
+
+if [[ -z "$PROXY_ENABLED" ]] && proxy >/dev/null 2>&1; then
+	exec proxy "$0" "$@"
+fi
+
 if [[ $1 == ensure ]]; then
 	VERBOSE=-v
 fi
+
 exec /usr/local/bin/dep "$@" $VERBOSE
