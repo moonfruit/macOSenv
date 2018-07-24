@@ -65,6 +65,8 @@ for PORT in {9900..9914}; do
 	PORT=$((PORT + 1))
 	echo
 done
+test_port 9990
+echo
 test_port 9999
 echo
 test_port 1080
