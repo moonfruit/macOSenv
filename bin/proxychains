@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if echo "$1" | grep -Exq '[0-9]+'; then
+	port="$1"
+	shift
+else
+	port="1080"
+fi
+
+if [[ $# == 0 ]]; then
+	exit
+fi
+
+if [[ $port == 0 ]]; then
+	exec "$@"
+fi
+
+exec proxychains4 -q -f <(cat <<END
+strict_chain
+
+quiet_mode
+
+proxy_dns
+remote_dns_subnet 224
+
+tcp_read_time_out 15000
+tcp_connect_time_out 8000
+
+localnet 127.0.0.0/255.0.0.0
+localnet 10.0.0.0/255.0.0.0
+localnet 172.16.0.0/255.240.0.0
+localnet 192.168.0.0/255.255.0.0
+
+[ProxyList]
+socks5 127.0.0.1 $port
+END
+) "$@"

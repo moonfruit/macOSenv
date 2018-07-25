@@ -12,10 +12,14 @@ else
 	port=9900
 fi
 
+if [[ $port == 0 ]]; then
+	exec "$@"
+fi
+
 export PROXY_ENABLED=1
 
 if [[ $port == 1080 || $port == 98[0-9][0-9] ]]; then
-	exec proxychains4 -q "$@"
+	exec proxychains "$port" "$@"
 fi
 
 if [[ $port == http:* ]]; then

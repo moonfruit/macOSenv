@@ -52,30 +52,46 @@ test_port() {
 	test_one "$1"
 }
 
-if [[ $# -gt 0 ]]; then
+test_http() {
+	for PORT in {9900..9914}; do
+		test_port $PORT
+		PORT=$((PORT + 1))
+		echo
+	done
+	test_port 9990
+	echo
+	test_port 9999
+	echo
+	test_port gingkoo
+	echo
+	test_port 0
+}
+
+test_socks() {
+	test_port 1080
+	echo
+
+	for PORT in {9801..9814}; do
+		test_port $PORT
+		PORT=$((PORT + 1))
+		echo
+	done
+
+	test_port 0
+}
+
+if [[ $1 == http ]]; then
+	test_http
+
+elif [[ $1 == socks ]]; then
+	test_socks
+
+elif [[ $# -gt 0 ]]; then
 	while [[ $# -gt 0 ]]; do
 		test_port "$1"
 		shift
 	done
-	exit
-fi
 
-for PORT in {9801..9814}; do
-	test_port $PORT
-	PORT=$((PORT + 1))
-	echo
-done
-test_port 1080
-echo
-for PORT in {9900..9914}; do
-	test_port $PORT
-	PORT=$((PORT + 1))
-	echo
-done
-test_port 9990
-echo
-test_port 9999
-echo
-test_port gingkoo
-echo
-test_port 0
+else
+	test_http
+fi
