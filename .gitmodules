@@ -24,7 +24,7 @@
 	url = https://github.com/majutsushi/tagbar.git
 [submodule "package/vim/XMLCatalog"]
 	path = package/vim/XMLCatalog
-	url = git@github.com:moonfruit/XMLCatalog.git
+	url = https://github.com/moonfruit/XMLCatalog.git
 [submodule "package/BaiduExporter"]
 	path = package/BaiduExporter
 	url = https://github.com/acgotaku/BaiduExporter.git
@@ -36,7 +36,7 @@
 	url = https://github.com/Sunnyyoung/WeChatTweak-macOS.git
 [submodule "package/pam-touchID"]
 	path = package/pam-touchID
-	url = git@github.com:moonfruit/pam-touchID.git
+	url = https://github.com/moonfruit/pam-touchID.git
 [submodule "package/vim/kotlin-vim"]
 	path = package/vim/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim.git
