@@ -30,7 +30,7 @@
 	url = https://github.com/acgotaku/BaiduExporter.git
 [submodule "package/SublimeClang"]
 	path = package/SublimeClang
-	url = https://github.com/quarnster/SublimeClang.git
+	url = https://github.com/moonfruit/SublimeClang.git
 [submodule "package/WeChatTweak"]
 	path = package/WeChatTweak
 	url = https://github.com/Sunnyyoung/WeChatTweak-macOS.git
