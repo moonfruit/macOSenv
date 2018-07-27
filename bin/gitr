@@ -1,0 +1,9 @@
+#!/bin/bash
+DIR=$(pwd)
+find . -name ".git" | while read -r GIT; do
+	GIT=$(dirname "$GIT")
+	cd "$GIT" || exit 1
+	echo "-------- $GIT --------"
+	git "$@"
+	cd "$DIR" || exit 1
+done

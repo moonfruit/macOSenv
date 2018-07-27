@@ -403,7 +403,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-2071 669 606 469 -2560 458 2560 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1584 697 918 512 -2560 458 2560 1440 </string>
+	<string>-1710 1086 796 486 -2560 458 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>-1810 908 1066 537 -2560 458 2560 1440 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
@@ -32240,7 +32240,7 @@
 	<key>OpenBookmark</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
-	<true/>
+	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
 	<key>PMPrintingExpandedStateForPrint2</key>
@@ -32305,7 +32305,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-07-18T19:20:30Z</date>
+	<date>2018-07-25T07:44:12Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
