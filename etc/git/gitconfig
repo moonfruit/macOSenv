@@ -6,7 +6,7 @@
 
 [core]
 	excludesfile = ~/.gitignore
-	pager = less -x5,9
+	pager = less -XRF -x5,9
 	quotepath = false
 	autocrlf = input
 
