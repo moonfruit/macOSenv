@@ -255,7 +255,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-08-01T09:44:25Z</date>
+				<date>2018-08-04T09:44:27Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -269,7 +269,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2018-08-01T09:44:25Z</date>
+				<date>2018-08-04T09:44:29Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -363,7 +363,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2018-05-30T08:19:50Z</date>
+				<date>2018-08-02T09:49:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
