@@ -43,7 +43,5 @@ unalias grep
 # function dmalloc { eval `command dmalloc -b "$@"`; }
 
 # git
-alias gau='git add -u'
-compdef _git gau=git-add
-
+alias gbD='git branch -D'
 alias grpo='git remote prune origin'

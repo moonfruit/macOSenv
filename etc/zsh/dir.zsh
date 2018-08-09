@@ -1,7 +1,16 @@
 #!/usr/bin/env zsh
 
-export DOWNLOAD="$HOME/Downloads"
-hash -d DOWNLOAD="$DOWNLOAD"
+export DESKTOP="$HOME/Desktop"
+hash -d DESKTOP="$DESKTOP"
+
+export DOCUMENTS="$HOME/Documents"
+hash -d DOCUMENTS="$DOCUMENTS"
+
+export LIBRARY="$HOME/Library"
+hash -d LIBRARY="$LIBRARY"
+
+export DOWNLOADS="$HOME/Downloads"
+hash -d DOWNLOADS="$DOWNLOADS"
 
 export WORKSPACE="$HOME/Documents/Workspace"
 hash -d WORKSPACE="$WORKSPACE"

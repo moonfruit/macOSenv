@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-PYTHON=python3
-if ! hash "$PYTHON" >/dev/null 2>&1; then
-    PYTHON=python
-fi
-exec "$PYTHON" "$@"
