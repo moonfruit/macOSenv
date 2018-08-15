@@ -403,7 +403,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-2071 669 606 469 -2560 458 2560 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1710 1086 796 486 -2560 458 2560 1440 </string>
+	<string>-1710 1009 796 486 -2560 458 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>-1810 908 1066 537 -2560 458 2560 1440 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
@@ -12194,28 +12194,7 @@
 			<key>Transparency</key>
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
-			<array>
-				<dict>
-					<key>action</key>
-					<string>MuteCoprocessTrigger</string>
-					<key>parameter</key>
-					<string>/Users/moon/Documents/Environment/bin/iterm2-send-zmodem.sh</string>
-					<key>partial</key>
-					<true/>
-					<key>regex</key>
-					<string>rz waiting to receive.\*\*B0100</string>
-				</dict>
-				<dict>
-					<key>action</key>
-					<string>MuteCoprocessTrigger</string>
-					<key>parameter</key>
-					<string>/Users/moon/Documents/Environment/bin/iterm2-recv-zmodem.sh</string>
-					<key>partial</key>
-					<true/>
-					<key>regex</key>
-					<string>\*\*B00000000000000</string>
-				</dict>
-			</array>
+			<array/>
 			<key>Unicode Normalization</key>
 			<integer>3</integer>
 			<key>Unicode Version</key>
@@ -13010,28 +12989,7 @@
 			<key>Transparency</key>
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
-			<array>
-				<dict>
-					<key>action</key>
-					<string>MuteCoprocessTrigger</string>
-					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
-					<key>partial</key>
-					<true/>
-					<key>regex</key>
-					<string>rz waiting to receive.\*\*B0100</string>
-				</dict>
-				<dict>
-					<key>action</key>
-					<string>MuteCoprocessTrigger</string>
-					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
-					<key>partial</key>
-					<true/>
-					<key>regex</key>
-					<string>\*\*B00000000000000</string>
-				</dict>
-			</array>
+			<array/>
 			<key>Unicode Normalization</key>
 			<integer>3</integer>
 			<key>Unicode Version</key>
@@ -32085,28 +32043,7 @@
 			<key>Transparency</key>
 			<real>0.06105538085103035</real>
 			<key>Triggers</key>
-			<array>
-				<dict>
-					<key>action</key>
-					<string>MuteCoprocessTrigger</string>
-					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
-					<key>partial</key>
-					<true/>
-					<key>regex</key>
-					<string>rz waiting to receive.\*\*B0100</string>
-				</dict>
-				<dict>
-					<key>action</key>
-					<string>MuteCoprocessTrigger</string>
-					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
-					<key>partial</key>
-					<true/>
-					<key>regex</key>
-					<string>\*\*B00000000000000</string>
-				</dict>
-			</array>
+			<array/>
 			<key>Unicode Normalization</key>
 			<integer>3</integer>
 			<key>Unicode Version</key>
@@ -32305,7 +32242,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-07-25T07:44:12Z</date>
+	<date>2018-08-14T11:41:35Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -32377,7 +32314,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.2.0beta7</string>
+	<string>3.2.0beta9</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
