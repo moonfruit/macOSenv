@@ -3,5 +3,5 @@
 *.sublime-workspace
 
 /bin/zoo
-/etc/zsh/private.zsh
+/etc/private.txt
 /package/goproxy

@@ -49,3 +49,6 @@
 [submodule "package/vim/vimcdoc"]
 	path = package/vim/vimcdoc
 	url = https://github.com/yianwillis/vimcdoc.git
+[submodule "package/yyscripts"]
+	path = package/yyscripts
+	url = https://github.com/moonfruit/yyscripts.git
