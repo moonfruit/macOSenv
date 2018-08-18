@@ -1,4 +1,7 @@
-.vscode
+.*
+!.git*
 *.sublime-workspace
+
 /bin/zoo
+/etc/zsh/private.zsh
 /package/goproxy
