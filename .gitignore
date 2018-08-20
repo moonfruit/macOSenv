@@ -4,3 +4,4 @@
 
 /bin/zoo
 /etc/private.txt
+/etc/shadowsocks-libev.json
