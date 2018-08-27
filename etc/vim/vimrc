@@ -227,7 +227,3 @@ function s:xxd()
 endfunction
 
 nmap <silent> <F3> :call <SID>xxd()<CR>
-
-if has('python3')
-  silent! python3 1
-endif
