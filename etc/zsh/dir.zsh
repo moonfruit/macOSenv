@@ -12,7 +12,7 @@ hash -d LIBRARY="$LIBRARY"
 export DOWNLOADS="$HOME/Downloads"
 hash -d DOWNLOADS="$DOWNLOADS"
 
-export WORKSPACE="$HOME/Documents/Workspace"
+export WORKSPACE="$HOME/Workspace.localized"
 hash -d WORKSPACE="$WORKSPACE"
 
 export RESOURCES="$HOME/Resources.localized"

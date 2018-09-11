@@ -4,7 +4,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ENV="$HOME/Documents/Environment"
+export ENV="$HOME/Workspace.localized/env"
 hash -d ENV="$ENV"
 export ZSH="$ENV/package/zsh/oh-my-zsh"
 

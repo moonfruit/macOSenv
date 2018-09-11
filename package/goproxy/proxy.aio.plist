@@ -5,9 +5,9 @@
 	<key>EnvironmentVariables</key>
 	<dict>
 		<key>ENV</key>
-		<string>/Users/moon/Documents/Environment</string>
+		<string>/Users/moon/Workspace.localized/env</string>
 		<key>YY_PASSWORD</key>
-		<string>/Users/moon/Documents/Environment/etc/private.txt</string>
+		<string>/Users/moon/Workspace.localized/env/etc/private.txt</string>
 	</dict>
 	<key>KeepAlive</key>
 	<false/>
@@ -16,12 +16,12 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/bash</string>
-		<string>/Users/moon/Documents/Environment/package/goproxy/proxy.sh</string>
+		<string>/Users/moon/Workspace.localized/env/package/goproxy/proxy.sh</string>
 		<string>proxy.aio.conf</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>WorkingDirectory</key>
-	<string>/Users/moon/Documents/Environment/package/goproxy/</string>
+	<string>/Users/moon/Workspace.localized/env/package/goproxy/</string>
 </dict>
 </plist>

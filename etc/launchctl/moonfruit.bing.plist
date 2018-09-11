@@ -11,12 +11,12 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/python3</string>
-		<string>/Users/moon/Documents/Workspace/python/bingwallpaper/bing.py</string>
+		<string>/Users/moon/Workspace.localized/python/bingwallpaper/bing.py</string>
 	</array>
 	<key>StandardErrorPath</key>
-	<string>/Users/moon/Documents/Workspace/python/bingwallpaper/bing.log</string>
+	<string>/Users/moon/Workspace.localized/python/bingwallpaper/bing.log</string>
 	<key>StandardOutPath</key>
-	<string>/Users/moon/Documents/Workspace/python/bingwallpaper/bing.log</string>
+	<string>/Users/moon/Workspace.localized/python/bingwallpaper/bing.log</string>
 	<key>StartCalendarInterval</key>
 	<dict>
 		<key>Hour</key>

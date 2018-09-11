@@ -9,10 +9,10 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/python3</string>
-		<string>/Users/moon/Documents/Environment/package/yyscripts/shadowsocks.py</string>
-		<string>/Users/moon/Documents/Environment/etc/shadowsocks/shadowsocks.csv</string>
+		<string>/Users/moon/Workspace.localized/env/package/yyscripts/shadowsocks.py</string>
+		<string>/Users/moon/Workspace.localized/env/etc/shadowsocks/shadowsocks.csv</string>
 		<string>--password</string>
-		<string>/Users/moon/Documents/Environment/etc/private.txt</string>
+		<string>/Users/moon/Workspace.localized/env/etc/private.txt</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

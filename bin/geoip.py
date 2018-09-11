@@ -1,1 +1,1 @@
-/Users/moon/Documents/Workspace/python/geoip/geoip.py
+../../python/geoip/geoip.py

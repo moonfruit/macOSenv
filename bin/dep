@@ -6,6 +6,13 @@ fi
 
 if [[ $1 == ensure ]]; then
 	VERBOSE=-v
-fi
+	if /usr/local/bin/dep "$@" $VERBOSE; then
+		RESULT=success
+	else
+		RESULT=failure
+	fi
+	terminal-notifier -message "\`dep\` end -- $RESULT"
 
-exec /usr/local/bin/dep "$@" $VERBOSE
+else
+	exec /usr/local/bin/dep "$@" $VERBOSE
+fi

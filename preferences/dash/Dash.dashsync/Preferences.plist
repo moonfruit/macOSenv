@@ -255,7 +255,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-08-26T12:50:55Z</date>
+				<date>2018-09-10T03:41:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -269,7 +269,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2018-08-28T12:53:00Z</date>
+				<date>2018-09-11T09:09:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -573,7 +573,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2018-07-27T02:39:27Z</date>
+				<date>2018-09-11T09:09:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -587,7 +587,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2018-07-27T02:39:27Z</date>
+				<date>2018-09-11T09:09:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -629,7 +629,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2018-07-28T02:39:36Z</date>
+				<date>2018-09-11T09:09:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -643,7 +643,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2018-07-28T02:39:22Z</date>
+				<date>2018-09-11T09:09:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -657,7 +657,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2018-07-28T02:39:30Z</date>
+				<date>2018-09-11T09:09:09Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -671,7 +671,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2018-07-28T02:39:29Z</date>
+				<date>2018-09-11T09:09:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
