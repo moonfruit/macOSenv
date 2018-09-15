@@ -324,7 +324,7 @@
 	<key>NSFontPanelAttributes</key>
 	<string>1, 4</string>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/Downloads</string>
+	<string>~/Workspace.localized/env/preferences/iterm</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
@@ -405,7 +405,7 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>-1710 1009 796 486 -2560 458 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1810 908 1066 537 -2560 458 2560 1440 </string>
+	<string>0 621 1680 429 0 0 1680 1050 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_550B3BC4-9D90-4016-B342-242B82E83738</key>
@@ -32220,11 +32220,11 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/moon/Documents/Environment/preferences/iterm</string>
+	<string>/Users/moon/Workspace.localized/env/preferences/iterm</string>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
-	<false/>
+	<true/>
 	<key>QuitWhenAllWindowsClosed</key>
 	<false/>
 	<key>RightCommand</key>
@@ -32242,7 +32242,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-08-14T11:41:35Z</date>
+	<date>2018-09-10T06:26:52Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>

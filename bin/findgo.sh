@@ -18,4 +18,4 @@ find "$DIR" -not \( \
 		-not -name "." -name ".*" -o \
 		-name 'vendor' \
 	\) -prune \
-	\) -name "*.go" "${FLAGS[@]}"
+\) -name "*.go" "${FLAGS[@]}"

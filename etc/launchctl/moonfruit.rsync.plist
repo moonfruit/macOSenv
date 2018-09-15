@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>WORKSPACE</key>
+		<string>/Users/moon/Workspace.localized</string>
+	</dict>
+	<key>Label</key>
+	<string>local.job</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/bash</string>
+		<string>/Users/moon/Workspace.localized/env/bin/rsync-workspace.sh</string>
+		<string>/Users/moon/Documents</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.rsync.stdout</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.rsync.stdout</string>
+	<key>StartCalendarInterval</key>
+	<array>
+		<dict>
+			<key>Hour</key>
+			<integer>2</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+			<key>Weekday</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>2</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+			<key>Weekday</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>2</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+			<key>Weekday</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>2</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+			<key>Weekday</key>
+			<integer>4</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>2</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+			<key>Weekday</key>
+			<integer>5</integer>
+		</dict>
+	</array>
+</dict>
+</plist>
