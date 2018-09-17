@@ -33,6 +33,7 @@ ARGS+=(
 	"--exclude=*.pyc"
 	"--exclude=__pycache__/"
 	"--exclude=node_modules/"
+	"--exclude=Medis-darwin-x64/"
 	"--exclude=/go/bin/"
 	"--exclude=/go/pkg/"
 )
