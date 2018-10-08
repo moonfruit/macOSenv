@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # lang
-unset LC_CTYPE
 export LANG="zh_CN.UTF-8"
 
 # tools
