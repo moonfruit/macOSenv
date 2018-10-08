@@ -11,7 +11,7 @@ ARGS=(-aXh --delete --delete-excluded)
 if [[ -t 1 ]]; then
 	ARGS+=("--info=stats3,progress2")
 else
-	ARGS+=(-v "--info=stats3")
+	ARGS+=(-v --stats)
 fi
 
 ARGS+=(
@@ -38,4 +38,6 @@ ARGS+=(
 	"--exclude=/go/pkg/"
 )
 
+echo "-------- Rsync Start at $(date) --------"
 "$RSYNC" "${ARGS[@]}" "$WORKSPACE" "$DEST"
+echo "-------- Rsync End at $(date) --------"

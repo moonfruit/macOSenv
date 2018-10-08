@@ -8,7 +8,7 @@
 		<string>/Users/moon/Workspace.localized</string>
 	</dict>
 	<key>Label</key>
-	<string>local.job</string>
+	<string>moonfruit.rsync</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/bash</string>
