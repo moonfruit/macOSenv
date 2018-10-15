@@ -16,7 +16,7 @@ PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/file-formula/bin:$PATH"
-PATH="/usr/local/opt/curl/bin:$PATH"
+# PATH="/usr/local/opt/curl/bin:$PATH"
 export PATH="$ENV/bin:$PATH"
 
 # Auto hash XXOO_HOME

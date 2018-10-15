@@ -6,27 +6,27 @@ import sys
 import time
 
 SYSTEM_FLAGS = {
-    'Darwin': {
-        'cc': [
-            '-nostdinc',
-            '-isystem', '/usr/local/include',
-            '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include',
-            '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
-            '-isystem', '/usr/include',
-            '-F', '/System/Library/Frameworks',
-            '-F', '/Library/Frameworks'
-        ],
-        'c++': [
-            '-nostdinc',
-            '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1',
-            '-isystem', '/usr/local/include',
-            '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include',
-            '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
-            '-isystem', '/usr/include',
-            '-F', '/System/Library/Frameworks',
-            '-F', '/Library/Frameworks'
-        ]
-    }
+    # 'Darwin': {
+    #     'cc': [
+    #         '-nostdinc',
+    #         '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include',
+    #         '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
+    #         '-isystem', '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include',
+    #         '-F', '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks',
+    #         '-F', '/System/Library/Frameworks',
+    #         '-F', '/Library/Frameworks'
+    #     ],
+    #     'c++': [
+    #         '-nostdinc',
+    #         '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1',
+    #         '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include',
+    #         '-isystem', '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
+    #         '-isystem', '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include',
+    #         '-F', '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks',
+    #         '-F', '/System/Library/Frameworks',
+    #         '-F', '/Library/Frameworks'
+    #     ]
+    # }
 }
 
 
@@ -85,10 +85,13 @@ def rewrite(name, arguments):
             return None
         elif item == '-c':
             flag_c = True
-        result.append(item)
+        else:
+            result.append(item)
 
     if not flag_c:
         return None
+
+    result.insert(1, '-c')
 
     flags = SYSTEM_FLAGS.get(platform.system())
     if flags:
