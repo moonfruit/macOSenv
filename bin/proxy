@@ -36,7 +36,7 @@ else
 fi
 
 if [[ -z "$no_proxy" ]]; then
-	printf -v no_proxy '%s,' 10.1.2.{1..255}
+	printf -v no_proxy '%s,' 10.1.{1..2}.{1..254}
 	export no_proxy="localhost,127.0.0.1,${no_proxy}172.16.64.1,172.16.98.1,192.168.1.1,192.168.7.1"
 fi
 
