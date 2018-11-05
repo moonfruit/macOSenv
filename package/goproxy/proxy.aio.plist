@@ -10,7 +10,7 @@
 		<string>/Users/moon/Workspace.localized/env/etc/private.txt</string>
 	</dict>
 	<key>KeepAlive</key>
-	<false/>
+	<true/>
 	<key>Label</key>
 	<string>moonfruit.goproxy.aio</string>
 	<key>ProgramArguments</key>

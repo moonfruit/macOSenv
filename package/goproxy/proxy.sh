@@ -10,3 +10,7 @@ AUTH="${DIR}/proxy.auth"
 AUTH=$("$ENV/bin/crypto.py" decrypt "$(cat "$AUTH")")
 
 exec "$PROXY" @<(sed 's/<AUTH>/'"$AUTH"'/' "$1")
+
+#TEMP=$(mktemp -t proxy)
+#sed 's/<AUTH>/'"$AUTH"'/' "$1" >"$TEMP"
+#exec "$PROXY" "@$TEMP"

@@ -255,7 +255,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-23T03:42:02Z</date>
+				<date>2018-10-31T01:51:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -269,7 +269,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-23T03:42:03Z</date>
+				<date>2018-10-31T01:51:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -377,7 +377,7 @@
 			<key>com.google.inject:guice</key>
 			<dict>
 				<key>date</key>
-				<date>2018-09-21T10:06:21Z</date>
+				<date>2018-10-30T01:50:59Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -629,7 +629,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-16T03:21:59Z</date>
+				<date>2018-10-30T01:51:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>

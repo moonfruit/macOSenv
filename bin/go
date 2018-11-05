@@ -1,0 +1,3 @@
+#!/bin/bash
+GO=/usr/local/bin/go
+$GO "$@" 2> >(grep -v 'ld: warning: text-based stub file' >&2)

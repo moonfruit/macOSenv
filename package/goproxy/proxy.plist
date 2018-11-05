@@ -2,8 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>ENV</key>
+		<string>/Users/moon/Workspace.localized/env</string>
+	</dict>
 	<key>KeepAlive</key>
-	<false/>
+	<true/>
 	<key>Label</key>
 	<string>moonfruit.goproxy</string>
 	<key>ProgramArguments</key>

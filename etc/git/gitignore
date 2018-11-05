@@ -6,7 +6,8 @@ tags
 .git
 .hg
 CVS
-*.[oa]
+*.o
+#*.a
 *.so
 *.dylib
 *.luac
