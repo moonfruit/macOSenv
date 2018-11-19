@@ -41,7 +41,3 @@ unalias grep
 # }
 
 # function dmalloc { eval `command dmalloc -b "$@"`; }
-
-# git
-alias gbD='git branch -D'
-alias grpo='git remote prune origin'

@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-07T07:29:46Z</date>
+				<date>2018-11-16T03:01:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-07T07:29:45Z</date>
+				<date>2018-11-16T03:01:01Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2018-09-19T10:06:06Z</date>
+				<date>2018-11-16T03:02:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -498,7 +498,7 @@
 			<key>net.java.dev.jna:jna</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-08T07:33:17Z</date>
+				<date>2018-11-16T03:01:10Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -610,7 +610,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-16T03:21:58Z</date>
+				<date>2018-11-08T07:30:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -624,7 +624,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-16T03:21:57Z</date>
+				<date>2018-11-08T07:30:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>

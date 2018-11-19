@@ -14,6 +14,7 @@ else
 	ARGS+=(-v --stats)
 fi
 
+ROOT=$(basename "$WORKSPACE")
 ARGS+=(
 	"--exclude=.DS_Store"
 	"--exclude=Thumbs.db"
@@ -28,14 +29,23 @@ ARGS+=(
 	"--exclude=*.dylib"
 	"--exclude=*.class"
 	"--exclude=*.jar"
-	"--exclude=target/"
 	"--exclude=*.luac"
 	"--exclude=*.pyc"
 	"--exclude=__pycache__/"
-	"--exclude=node_modules/"
+	"--exclude=.tmp/"
+	"--exclude=build/"
+    "--exclude=target/"
 	"--exclude=Medis-darwin-x64/"
-	"--exclude=/go/bin/"
-	"--exclude=/go/pkg/"
+	"--exclude=.svn/"
+	"--exclude=node_modules/"
+	"--exclude=vendor/"
+	"--exclude=/$ROOT/go/bin/"
+	"--exclude=/$ROOT/go/pkg/"
+	"--include=/$ROOT/go/src/"
+	"--include=/$ROOT/go/src/github.com/"
+	"--include=/$ROOT/go/src/github.com/moonfruit/***"
+	"--include=/$ROOT/go/src/github.com/pentaglobal/***"
+	"--exclude=/$ROOT/go/src/**"
 )
 
 echo "-------- Rsync Start at $(date) --------"
