@@ -10,6 +10,10 @@
 	<integer>1</integer>
 	<key>Program</key>
 	<string>/Users/moon/Workspace.localized/env/bin/brew-pull.sh</string>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.brew.update.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.brew.update.stdout</string>
 	<key>StartCalendarInterval</key>
 	<array>
 		<dict>

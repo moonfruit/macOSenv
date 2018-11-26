@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-16T03:01:02Z</date>
+				<date>2018-11-22T06:28:43Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-16T03:01:01Z</date>
+				<date>2018-11-22T06:28:42Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -400,7 +400,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-19T03:22:04Z</date>
+				<date>2018-11-20T06:28:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -666,7 +666,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-30T01:51:02Z</date>
+				<date>2018-11-22T06:28:56Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
