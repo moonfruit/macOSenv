@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-22T06:28:43Z</date>
+				<date>2018-12-05T01:57:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-22T06:28:42Z</date>
+				<date>2018-11-30T08:22:42Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-16T03:02:19Z</date>
+				<date>2018-11-27T07:55:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -610,7 +610,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-08T07:30:06Z</date>
+				<date>2018-11-28T07:56:11Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -624,7 +624,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-08T07:30:06Z</date>
+				<date>2018-11-28T07:56:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -666,7 +666,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-22T06:28:56Z</date>
+				<date>2018-11-29T07:55:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -680,7 +680,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-17T03:21:55Z</date>
+				<date>2018-11-29T07:55:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -694,7 +694,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-17T03:22:00Z</date>
+				<date>2018-11-29T07:55:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-17T03:22:03Z</date>
+				<date>2018-11-29T07:55:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1039,7 +1039,7 @@
 			<key>Kotlin</key>
 			<dict>
 				<key>date</key>
-				<date>2017-12-25T03:12:50Z</date>
+				<date>2018-11-27T07:55:10Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
