@@ -9,7 +9,8 @@ if echo "$1" | grep -Exq '[0-9]+|http:.*|gingkoo'; then
 	shift
 
 else
-	port=9900
+	port=http://10.1.2.12:8118
+	#port=9900
 fi
 
 if [[ $port == 0 ]]; then

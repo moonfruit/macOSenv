@@ -15,7 +15,7 @@ fi
 
 echo "$GREEN==>$RESET ${BOLD}Updating Homebrew$RESET"
 brew update $PREINSTALL -v
-export HOMEBREW_AUTO_UPDATE_CHECKE=1
+export HOMEBREW_AUTO_UPDATE_CHECKED=1
 
 OUTDATED=$(brew outdated)
 if [[ -z $OUTDATED ]]; then

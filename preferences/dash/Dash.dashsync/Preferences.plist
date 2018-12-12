@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-12-05T01:57:33Z</date>
+				<date>2018-12-12T01:36:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -966,29 +966,6 @@
 	<dict>
 		<key>installed</key>
 		<dict>
-			<key>Apache_Ant</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:18:32Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array>
-						<string>ant</string>
-						<string>apache ant</string>
-					</array>
-					<key>authorLinkHref</key>
-					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Apache_Ant#readme</string>
-					<key>authorLinkText</key>
-					<string>Nathan Jones</string>
-					<key>name</key>
-					<string>Apache Ant</string>
-					<key>platform</key>
-					<string>usercontribApache_Ant</string>
-					<key>uniqueIdentifier</key>
-					<string>Apache_Ant</string>
-				</dict>
-			</dict>
 			<key>Beautiful_Soup</key>
 			<dict>
 				<key>date</key>
@@ -1036,49 +1013,32 @@
 					<string>Bottle</string>
 				</dict>
 			</dict>
-			<key>Kotlin</key>
-			<dict>
-				<key>date</key>
-				<date>2018-11-27T07:55:10Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>authorLinkHref</key>
-					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Kotlin#readme</string>
-					<key>authorLinkText</key>
-					<string>Marcel Jackwerth</string>
-					<key>name</key>
-					<string>Kotlin</string>
-					<key>platform</key>
-					<string>usercontribKotlin</string>
-					<key>uniqueIdentifier</key>
-					<string>Kotlin</string>
-				</dict>
-			</dict>
-			<key>Zsh</key>
-			<dict>
-				<key>date</key>
-				<date>2018-01-19T03:44:25Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>authorLinkHref</key>
-					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Zsh#readme</string>
-					<key>authorLinkText</key>
-					<string>Zhiming Wang</string>
-					<key>name</key>
-					<string>Zsh</string>
-					<key>platform</key>
-					<string>usercontribZsh</string>
-					<key>uniqueIdentifier</key>
-					<string>Zsh</string>
-				</dict>
-			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
+			<key>Apache_Ant</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:04:29Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array>
+						<string>ant</string>
+						<string>apache ant</string>
+					</array>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Apache_Ant#readme</string>
+					<key>authorLinkText</key>
+					<string>Nathan Jones</string>
+					<key>name</key>
+					<string>Apache Ant</string>
+					<key>platform</key>
+					<string>usercontribApache_Ant</string>
+					<key>uniqueIdentifier</key>
+					<string>Apache_Ant</string>
+				</dict>
+			</dict>
 			<key>Apache_Commons_Collections</key>
 			<dict>
 				<key>date</key>
@@ -1149,6 +1109,26 @@
 					<string>Guava</string>
 				</dict>
 			</dict>
+			<key>Kotlin</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:01:01Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Kotlin#readme</string>
+					<key>authorLinkText</key>
+					<string>Kevin Cianfarini</string>
+					<key>name</key>
+					<string>Kotlin</string>
+					<key>platform</key>
+					<string>usercontribKotlin</string>
+					<key>uniqueIdentifier</key>
+					<string>Kotlin</string>
+				</dict>
+			</dict>
 			<key>POI</key>
 			<dict>
 				<key>date</key>
@@ -1170,6 +1150,26 @@
 					<string>usercontribPOI</string>
 					<key>uniqueIdentifier</key>
 					<string>POI</string>
+				</dict>
+			</dict>
+			<key>Zsh</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:03:51Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Zsh#readme</string>
+					<key>authorLinkText</key>
+					<string>Zhiming Wang</string>
+					<key>name</key>
+					<string>Zsh</string>
+					<key>platform</key>
+					<string>usercontribZsh</string>
+					<key>uniqueIdentifier</key>
+					<string>Zsh</string>
 				</dict>
 			</dict>
 		</dict>
@@ -1246,6 +1246,8 @@
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonscollections4/ApacheCommonsCollections.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonscollections4/commonscollections4.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonslang3/ApacheCommonsLang.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgapachecommonscommonsvfs2/ApacheCommonsVFS.docset</key>
@@ -1319,30 +1321,20 @@
 				<key>date</key>
 				<date>2018-01-19T03:44:13Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Boost.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-03-26T02:39:57Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Bootstrap_4.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:17:11Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/C++.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-03-26T02:39:35Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/C.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-03-26T02:39:21Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Django.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2018-03-12T05:45:35Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Docker.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:01:29Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Go.xml</key>
 			<dict>
@@ -1354,25 +1346,15 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:08Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/JavaScript.xml</key>
+			<key>http://kapeli.com/feeds/Java_SE11.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-07T14:46:03Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Java_EE8.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-15T04:15:01Z</date>
+				<date>2018-12-07T09:56:50Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE8.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:22:28Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Java_SE9.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-24T14:04:23Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Lua_5.3.xml</key>
 			<dict>
@@ -1384,31 +1366,6 @@
 				<key>date</key>
 				<date>2017-08-06T11:17:13Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Markdown.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:20:08Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/MongoDB.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-10T02:39:32Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/MySQL.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-10T02:39:33Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/NodeJS.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-10T02:39:54Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Perl.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:18:07Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Python_2.xml</key>
 			<dict>
 				<key>date</key>
@@ -1419,15 +1376,10 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:09Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Redis.xml</key>
+			<key>http://kapeli.com/feeds/Rust.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-10T02:40:31Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Ruby_2.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-12-19T08:51:26Z</date>
+				<date>2018-12-07T09:48:39Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/SQLAlchemy.xml</key>
 			<dict>
@@ -1444,18 +1396,28 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:32Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/jQuery.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:20:09Z</date>
-			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
+			<key>http://kapeli.com/feeds/Boost.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T09:56:07Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Bootstrap_3.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2015-09-07T08:49:31Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/C++.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T09:56:04Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/C.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T09:56:03Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/CMake.xml</key>
 			<dict>
@@ -1477,30 +1439,90 @@
 				<key>date</key>
 				<date>2015-09-07T08:50:14Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/JavaScript.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:17Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_EE8.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T09:56:29Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Java_SE6.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2015-07-03T07:28:41Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_SE9.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T09:56:28Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Markdown.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:24Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/MongoDB.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:28Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/MySQL.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:29Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Nginx.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-12-19T08:47:54Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/NodeJS.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:32Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Perl.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:34Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Redis.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:39Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Ruby.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2018-01-26T02:20:49Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Ruby_2.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:02:50Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Scala.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2018-01-19T03:45:02Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Swift.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:03:45Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Vim.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-10-10T02:41:11Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/jQuery.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2018-12-07T10:00:36Z</date>
 			</dict>
 		</dict>
 	</dict>
