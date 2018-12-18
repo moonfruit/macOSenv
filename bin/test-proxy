@@ -48,21 +48,36 @@ test_port() {
 	else
 		DISPLAY="$1"
 	fi
+	if [[ -n "$2" ]]; then
+		DISPLAY="$DISPLAY aka $2"
+	fi
 	echo "-------- $DISPLAY --------"
 	test_one "$1"
 }
 
 test_http() {
-	for PORT in {9900..9914}; do
+	CONF=/usr/local/etc/stunnel/stunnel.conf
+	if [[ -r $CONF ]]; then
+		AKA=$(grep -A1 'accept\s*=\s*9900' $CONF | sed -En 's/connect\s*=\s*aio([0-9]+).*/\1/p')
+		AKA=$(printf "99%02d" "$AKA")
+	fi
+	test_port 9900 "$AKA"
+	echo
+#	for PORT in {9901..9905}; do
+#		test_port $PORT
+#		PORT=$((PORT + 1))
+#		echo
+#	done
+	for PORT in {9906..9914}; do
 		test_port $PORT
 		PORT=$((PORT + 1))
 		echo
 	done
-	test_port 9990
+	test_port 9990 9900
 	echo
-	test_port 9999
+	test_port 9999 https://moonfruit.top:8443
 	echo
-	test_port gingkoo
+	test_port gingkoo http://10.1.2.12:8118
 	echo
 	test_port 0
 }
