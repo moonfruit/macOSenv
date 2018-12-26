@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-12-15T01:36:11Z</date>
+				<date>2018-12-26T01:53:55Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2018-09-19T10:06:01Z</date>
+				<date>2018-12-25T01:53:54Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-27T07:55:20Z</date>
+				<date>2018-12-25T01:53:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2018-09-19T10:06:01Z</date>
+				<date>2018-12-25T01:53:53Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -498,7 +498,7 @@
 			<key>net.java.dev.jna:jna</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-16T03:01:10Z</date>
+				<date>2018-12-25T01:54:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
