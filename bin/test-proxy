@@ -68,15 +68,29 @@ test_http() {
 #		PORT=$((PORT + 1))
 #		echo
 #	done
-	for PORT in {9906..9914}; do
+	for PORT in {9906..9907}; do
+		test_port $PORT
+		PORT=$((PORT + 1))
+		echo
+	done
+#	for PORT in {9908..9909}; do
+#		test_port $PORT
+#		PORT=$((PORT + 1))
+#		echo
+#	done
+	for PORT in {9910..9914}; do
 		test_port $PORT
 		PORT=$((PORT + 1))
 		echo
 	done
 	test_port 9990 9900
 	echo
-	test_port 9999 https://moonfruit.top:8443
+	test_port 9988 https://moonfruit.top:8443
 	echo
+	test_port 9998 ssh://moonfruit.top
+	echo
+#	test_port 9999 sps://moonfruit.top
+#	echo
 	test_port gingkoo http://10.1.2.12:8118
 	echo
 	test_port 0

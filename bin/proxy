@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if echo "$1" | grep -Exq '[0-9]+|http:.*|gingkoo'; then
+if echo "$1" | grep -Exq '[0-9]+|https?:.*|gingkoo'; then
 	if [[ "$1" == gingkoo ]]; then
 		port=http://10.1.2.12:8118
 	else
@@ -23,7 +23,7 @@ if [[ $port == 1080 || $port == 98[0-9][0-9] ]]; then
 	exec proxychains "$port" "$@"
 fi
 
-if [[ $port == http:* ]]; then
+if [[ $port =~ https?:.* ]]; then
 	export http_proxy="$port"
 	export https_proxy="$http_proxy"
 

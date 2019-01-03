@@ -397,19 +397,19 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-1067 994 544 77 -2560 468 2560 1440 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
-	<string>-735 989 735 382 -2560 450 2560 1440 </string>
+	<string>-1816 739 735 382 -2560 503 2560 1440 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>-1588 1407 616 174 -2560 458 2560 1440 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-1590 1130 620 392 -2560 344 2560 1440 </string>
+	<string>-1590 1289 620 392 -2560 503 2560 1440 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-2071 679 606 469 -2560 468 2560 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1710 1238 918 514 -2560 450 2560 1440 </string>
+	<string>-1710 1357 770 429 -2560 503 2560 1440 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>127 443 592 584 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1810 900 1066 537 -2560 450 2560 1417 </string>
+	<string>-2560 953 1066 537 -2560 503 2560 1440 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_550B3BC4-9D90-4016-B342-242B82E83738</key>
@@ -16705,6 +16705,8 @@
 	<integer>0</integer>
 	<key>NoSyncHaveRequestedFullDiskAccess</key>
 	<true/>
+	<key>NoSyncHaveUsedCopyMode</key>
+	<true/>
 	<key>NoSyncHaveWarnedAboutIncompatibleSoftware</key>
 	<true/>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
@@ -16873,7 +16875,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-11-23T08:34:11Z</date>
+	<date>2019-01-02T02:55:22Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>

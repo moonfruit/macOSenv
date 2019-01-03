@@ -9,7 +9,7 @@ GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
 
 PREINSTALL=--preinstall
-if [[ "$1" = "--force" ]]; then
+if [[ $1 = "--force" || $1 = "-f" ]]; then
 	PREINSTALL=
 fi
 
