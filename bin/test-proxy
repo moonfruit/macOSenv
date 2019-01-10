@@ -58,8 +58,11 @@ test_port() {
 test_http() {
 	CONF=/usr/local/etc/stunnel/stunnel.conf
 	if [[ -r $CONF ]]; then
-		AKA=$(grep -A1 'accept\s*=\s*9900' $CONF | sed -En 's/connect\s*=\s*aio([0-9]+).*/\1/p')
-		AKA=$(printf "99%02d" "$AKA")
+		AKA=$(grep -A2 'accept\s*=\s*9900' $CONF | sed -En 's/^connect\s*=\s*(.*)/\1/p')
+		if [[ $AKA = aio* ]]; then
+			AKA=$(echo "$AKA" | sed -En 's/aio([0-9]+).*/\1/p')
+			AKA=$(printf "99%02d" "$AKA")
+		fi
 	fi
 	test_port 9900 "$AKA"
 	echo

@@ -79,14 +79,28 @@ def is_cleanup(commands_file):
 def rewrite(name, arguments):
     result = []
     flag_c = False
+    flag_d = False
 
     for item in _rewrite(arguments):
-        if item.startswith("__REVISION__="):
+        if item.startswith('__REVISION__='):
             return None
+
+        elif flag_d:
+            flag_d = False
+            if (item.startswith('SYSTEM_NAME=')
+                    or item.startswith('MODULE_NAME=')):
+                continue
+            result.append('-D')
+
         elif item == '-c':
             flag_c = True
-        else:
-            result.append(item)
+            continue
+
+        elif item == '-D':
+            flag_d = True
+            continue
+
+        result.append(item)
 
     if not flag_c:
         return None

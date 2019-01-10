@@ -1,1 +1,13 @@
-/usr/local/bin/colorsvn
+#!/bin/bash
+if [[ $1 == "-l" || $1 == "--lang" ]]; then
+	shift
+else
+	export LANG=C
+fi
+
+SVN=/usr/local/bin/svn
+if [[ ! -x $SVN ]]; then
+	SVN=svn
+fi
+
+exec "$SVN" "$@"
