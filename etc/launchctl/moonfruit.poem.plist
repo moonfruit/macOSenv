@@ -14,9 +14,9 @@
 		<string>/Users/moon/Workspace.localized/python/thepoemforyou/thepoemforyou.py</string>
 	</array>
 	<key>StandardErrorPath</key>
-	<string>/Users/moon/Workspace.localized/python/thepoemforyou/thepoemforyou.log</string>
+	<string>/tmp/moonfruit.poem.stderr</string>
 	<key>StandardOutPath</key>
-	<string>/Users/moon/Workspace.localized/python/thepoemforyou/thepoemforyou.log</string>
+	<string>/tmp/moonfruit.poem.stdout</string>
 	<key>StartCalendarInterval</key>
 	<dict>
 		<key>Hour</key>

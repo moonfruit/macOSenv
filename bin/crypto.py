@@ -1,1 +1,1 @@
-../package/yyscripts/crypto.py
+../package/yyscripts/wrapper.sh

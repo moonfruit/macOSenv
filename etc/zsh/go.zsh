@@ -3,7 +3,7 @@
 export GOPATH="$WORKSPACE/go"
 hash -d GOPATH="$GOPATH"
 
-export PATH="$GOPATH/bin:$PATH"
+export PATH="$GOPATH/bin:/usr/local/opt/go/libexec/misc/wasm:$PATH"
 
 export GO_MOON="$GOPATH/src/github.com/moonfruit"
 hash -d GO_MOON="$GO_MOON"
