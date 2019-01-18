@@ -1,20 +1,17 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091
-if [[ "${BASH_VERSINFO[0]}" -ge 4 && "${BASH_VERSINFO[1]}" -ge 1 ]]; then
-	if [[ -f /usr/local/share/bash-completion/bash_completion ]]; then
-		. /usr/local/share/bash-completion/bash_completion
-	fi
-else
-	[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
-fi
+# shellcheck disable=SC1090
 
-[[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
+SCRIPT=/usr/local/etc/profile.d/bash_completion.sh
+[[ -r $SCRIPT ]] && . $SCRIPT
 
-# if brew command command-not-found-init > /dev/null; then
-	# eval "$(brew command-not-found-init)";
-# fi
-if [[ -f /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh ]]; then
-	. /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
-fi
+SCRIPT=/usr/local/etc/profile.d/autojump.sh
+[[ -r $SCRIPT ]] && . $SCRIPT
 
-export PATH="$HOME/Documents/Environment/bin:$HOME/Library/Python/2.7/bin:$PATH"
+#if brew command command-not-found-init > /dev/null; then
+#	eval "$(brew command-not-found-init)";
+#fi
+SCRIPT=/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+[[ -r $SCRIPT ]] && . $SCRIPT
+
+export ENV="$HOME/Workspace.localized/env"
+export PATH="$ENV/bin:$PATH"

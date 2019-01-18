@@ -26,8 +26,8 @@ autoload -U zmv
 export HOMEBREW_AUTO_UPDATE_SECS=21600
 
 # brew command-not-found (too slow)
-# if brew command command-not-found-init > /dev/null 2>&1; then
+#if brew command command-not-found-init > /dev/null; then
 #	eval "$(brew command-not-found-init)"
-# fi
+#fi
 script=/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
 [[ -f "$script" ]] && . "$script"

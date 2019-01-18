@@ -90,8 +90,8 @@ test_http() {
 	echo
 	test_port 9988 https://moonfruit.top:8443
 	echo
-	test_port 9998 ssh://moonfruit.top
-	echo
+#	test_port 9998 ssh://moonfruit.top
+#	echo
 #	test_port 9999 sps://moonfruit.top
 #	echo
 	test_port gingkoo http://10.1.2.12:8118
