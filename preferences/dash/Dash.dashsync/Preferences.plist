@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2018-12-27T01:53:55Z</date>
+				<date>2019-01-25T06:05:23Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -568,7 +568,7 @@
 			<key>org.mybatis:mybatis</key>
 			<dict>
 				<key>date</key>
-				<date>2018-03-12T01:29:38Z</date>
+				<date>2019-01-22T01:58:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -582,7 +582,7 @@
 			<key>org.mybatis:mybatis-spring</key>
 			<dict>
 				<key>date</key>
-				<date>2018-03-14T03:08:14Z</date>
+				<date>2019-01-22T01:58:45Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
