@@ -16,7 +16,7 @@ PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/file-formula/bin:$PATH"
 # PATH="/usr/local/opt/curl/bin:$PATH"
 PATH="/usr/local/opt/ruby/bin:$PATH"
-PATH="/usr/local/lib/ruby/gems/2.5.0/bin:$PATH"
+PATH="/usr/local/lib/ruby/gems/2.6.0/bin:$PATH"
 export PATH="$ENV/bin:$PATH"
 
 # Auto hash XXOO_HOME
