@@ -18,11 +18,15 @@ brew update $PREINSTALL -v
 export HOMEBREW_AUTO_UPDATE_CHECKED=1
 
 OUTDATED=$(brew outdated)
-if [[ -z $OUTDATED ]]; then
-	exit 0
+if [[ -n $OUTDATED ]]; then
+	if brew upgrade; then
+		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
+		brew cleanup -s
+	fi
 fi
 
-if brew upgrade; then
-	echo "$GREEN==>$RESET ${BOLD}Cleanup Homebrew$RESET"
-	brew cleanup -s
+OUTDATED=$(brew cask outdated)
+if [[ -n $OUTDATED ]]; then
+	echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
+	echo "$OUTDATED"
 fi

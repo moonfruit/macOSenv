@@ -10,5 +10,9 @@
 	<string>/usr/local/bin/stunnel</string>
 	<key>RunAtLoad</key>
 	<true/>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.stunnel.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.stunnel.stdout</string>
 </dict>
 </plist>

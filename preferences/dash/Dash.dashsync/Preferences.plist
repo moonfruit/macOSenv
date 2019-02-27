@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-01-29T01:27:29Z</date>
+				<date>2019-02-27T02:12:28Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -386,7 +386,7 @@
 			<key>com.github.ben-manes.caffeine:caffeine</key>
 			<dict>
 				<key>date</key>
-				<date>2018-02-23T08:58:29Z</date>
+				<date>2019-02-27T02:12:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -442,7 +442,7 @@
 			<key>commons-codec:commons-codec</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-21T10:05:53Z</date>
+				<date>2019-02-21T02:50:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -512,7 +512,7 @@
 			<key>org.apache.commons:commons-collections4</key>
 			<dict>
 				<key>date</key>
-				<date>2018-07-12T08:13:01Z</date>
+				<date>2019-02-21T02:50:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -540,7 +540,7 @@
 			<key>org.apache.commons:commons-vfs2</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-10T02:36:41Z</date>
+				<date>2019-02-21T02:50:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -596,7 +596,7 @@
 			<key>org.slf4j:slf4j-api</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:50Z</date>
+				<date>2019-02-21T02:50:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -610,7 +610,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2019-01-16T06:12:48Z</date>
+				<date>2019-02-21T02:50:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -624,7 +624,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2019-01-16T06:12:55Z</date>
+				<date>2019-02-21T02:50:39Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -666,7 +666,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-01-16T06:12:57Z</date>
+				<date>2019-02-21T02:50:12Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -680,7 +680,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2019-01-16T06:12:49Z</date>
+				<date>2019-02-21T02:50:10Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -694,7 +694,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-01-16T06:12:54Z</date>
+				<date>2019-02-21T02:50:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2019-01-16T06:12:56Z</date>
+				<date>2019-02-21T02:50:40Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1196,8 +1196,10 @@
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Java_EE8/Java EE8.docset</key>
 			<string>java:</string>
-			<key>~/Library/Application Support/Dash/DocSets/Java_SE8/Java.docset</key>
+			<key>~/Library/Application Support/Dash/DocSets/Java_SE11/Java.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/DocSets/Java_SE8/Java.docset</key>
+			<string>java8:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Man_Pages/Man Pages.docset</key>
 			<string>man:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Python_2/Python 2.docset</key>
@@ -1306,16 +1308,6 @@
 	<dict>
 		<key>installed</key>
 		<dict>
-			<key>http://kapeli.com/feeds/AppleScript.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:18:59Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Apple_API_Reference.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-02-23T09:02:34Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Bash.xml</key>
 			<dict>
 				<key>date</key>
@@ -1330,11 +1322,6 @@
 			<dict>
 				<key>date</key>
 				<date>2018-03-12T05:45:35Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Docker.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-12-07T10:01:29Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Go.xml</key>
 			<dict>
@@ -1376,20 +1363,10 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:09Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Rust.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-12-07T09:48:39Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/SQLAlchemy.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:20:07Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/SQLite.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-10-10T02:40:56Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Spring_Framework.xml</key>
 			<dict>
@@ -1399,6 +1376,16 @@
 		</dict>
 		<key>uninstalled</key>
 		<dict>
+			<key>http://kapeli.com/feeds/AppleScript.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2019-02-27T05:59:09Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Apple_API_Reference.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2019-02-27T05:59:09Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Boost.xml</key>
 			<dict>
 				<key>date</key>
@@ -1428,6 +1415,11 @@
 			<dict>
 				<key>date</key>
 				<date>2015-09-07T08:50:07Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Docker.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2019-02-27T05:59:01Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Groovy_JDK.xml</key>
 			<dict>
@@ -1503,6 +1495,16 @@
 			<dict>
 				<key>date</key>
 				<date>2018-12-07T10:02:50Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Rust.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2019-02-27T05:59:47Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/SQLite.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2019-02-27T06:00:04Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Scala.xml</key>
 			<dict>
