@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shellcheck disable=SC2034,SC2154
 
 if [[ $TERM_PROGRAM != iTerm.app ]]; then
     return

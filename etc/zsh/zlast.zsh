@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # for GPP
 export APP_HOME="$WORKSPACE/gpp"
 export NODE_ID="YY"
 
 if [[ -f "$APP_HOME/etc/bashrc" ]]; then
+	# shellcheck disable=SC1090
 	NOCD=1 NOLANG=1 NOLUA=1 . "$APP_HOME/etc/bashrc"
 fi
 
@@ -20,7 +21,7 @@ PATH="/usr/local/opt/file-formula/bin:$PATH"
 export PATH="$ENV/bin:$PATH"
 
 # Auto hash XXOO_HOME
-eval "$(env | grep _HOME | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
+eval "$(env | grep '_HOME$' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
 
 # dylink "$DYLD_FALLBACK_LIBRARY_PATH"
 

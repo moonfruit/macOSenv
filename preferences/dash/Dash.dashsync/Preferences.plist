@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-02-27T02:12:28Z</date>
+				<date>2019-03-28T02:02:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -400,7 +400,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-20T06:28:41Z</date>
+				<date>2019-03-12T05:51:16Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -423,6 +423,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>com.google.inject:guice</string>
+				</dict>
+			</dict>
+			<key>com.squareup.okhttp3:okhttp</key>
+			<dict>
+				<key>date</key>
+				<date>2019-03-15T02:39:25Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.squareup.okhttp3:okhttp</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.squareup.okhttp3:okhttp</string>
 				</dict>
 			</dict>
 			<key>commons-beanutils:commons-beanutils</key>
@@ -551,6 +565,20 @@
 					<string>org.apache.commons:commons-vfs2</string>
 				</dict>
 			</dict>
+			<key>org.assertj:assertj-core</key>
+			<dict>
+				<key>date</key>
+				<date>2019-03-27T02:01:38Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.assertj:assertj-core</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.assertj:assertj-core</string>
+				</dict>
+			</dict>
 			<key>org.freemarker:freemarker</key>
 			<dict>
 				<key>date</key>
@@ -661,6 +689,34 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.springframework.batch:spring-batch-infrastructure</string>
+				</dict>
+			</dict>
+			<key>org.springframework.boot:spring-boot</key>
+			<dict>
+				<key>date</key>
+				<date>2019-03-20T09:43:46Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.springframework.boot:spring-boot</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.springframework.boot:spring-boot</string>
+				</dict>
+			</dict>
+			<key>org.springframework.boot:spring-boot-autoconfigure</key>
+			<dict>
+				<key>date</key>
+				<date>2019-03-22T01:50:50Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.springframework.boot:spring-boot-autoconfigure</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.springframework.boot:spring-boot-autoconfigure</string>
 				</dict>
 			</dict>
 			<key>org.springframework.integration:spring-integration-core</key>
@@ -1176,6 +1232,8 @@
 	</dict>
 	<key>DHWebViewIsDark</key>
 	<false/>
+	<key>actuallyDarkWebView</key>
+	<false/>
 	<key>annotationsAreShown</key>
 	<true/>
 	<key>bookmarks</key>
@@ -1240,6 +1298,8 @@
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/commonsnetcommonsnet/ApacheCommonsNet.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/comsquareupokhttp3okhttp/OkHttp.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/javaxservletjavaxservletapi/JavaServletAPI.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/log4jlog4j/ApacheLog4j.docset</key>
@@ -1287,6 +1347,10 @@
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbatchspringbatchcore/SpringBatchCore.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbatchspringbatchinfrastructure/SpringBatchInfrastructure.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringboot/SpringBoot.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringbootautoconfigure/SpringBootAutoConfigure.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkintegrationspringintegrationcore/SpringIntegrationCore.docset</key>
 			<string>java:</string>

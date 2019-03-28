@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # lang
 export LANG="zh_CN.UTF-8"
@@ -12,6 +12,7 @@ unset GREP_COLOR
 export XML_CATALOG_FILES="$ENV/package/vim/XMLCatalog/catalog.xml"
 
 # for zsh
+# shellcheck disable=SC2034
 DEFAULT_USER="moon"
 
 # for proxy

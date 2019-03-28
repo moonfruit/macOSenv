@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 export DESKTOP="$HOME/Desktop"
 hash -d DESKTOP="$DESKTOP"
