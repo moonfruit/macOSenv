@@ -15,6 +15,7 @@ grep submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | sort | \
 	while read -r MODULE; do
 		echo "-------- $MODULE --------"
 		cd "$DIR/$MODULE" || exit
+		git checkout master
 		git pull
 		$GC
 	done

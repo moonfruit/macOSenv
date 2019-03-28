@@ -12,7 +12,7 @@
 	shallow = true
 [submodule "package/pac"]
 	path = package/pac
-	url = git@git.coding.net:moonfruit/pac.git
+	url = https://git.dev.tencent.com/moonfruit/pac.git
 	shallow = true
 [submodule "package/vim/pathogen"]
 	path = package/vim/pathogen
@@ -37,10 +37,6 @@
 [submodule "package/BaiduExporter"]
 	path = package/BaiduExporter
 	url = https://github.com/acgotaku/BaiduExporter.git
-	shallow = true
-[submodule "package/SublimeClang"]
-	path = package/SublimeClang
-	url = https://github.com/moonfruit/SublimeClang.git
 	shallow = true
 [submodule "package/WeChatTweak"]
 	path = package/WeChatTweak
