@@ -1,0 +1,9 @@
+{
+    "Debug": false,
+    "ServeNodes": [
+        "localhost:9811"
+    ],
+    "ChainNodes": [
+        "ss://$algoPass@aio11.hhservers.com:19966"
+    ]
+}

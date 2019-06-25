@@ -27,8 +27,9 @@ if [[ $port =~ https?:.* ]]; then
 	export http_proxy="$port"
 	export https_proxy="$http_proxy"
 
-elif [[ $port == 99[0-8][0-9] ]]; then
-	export http_proxy="http://dkmoonfruit:QAZwsxEDC@127.0.0.1:$port"
+elif [[ $port == 9900 ]]; then
+	auth=$(crypto.py decrypt BuwwEbpxczjslVL4Y3AruywdBSQeX8MD4dZ5sYfdECztDAYpulxRFcyQdTJ8)
+	export http_proxy="http://$auth@127.0.0.1:$port"
 	export https_proxy="$http_proxy"
 
 else

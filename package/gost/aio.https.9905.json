@@ -1,0 +1,9 @@
+{
+    "Debug": false,
+    "ServeNodes": [
+        "localhost:9905"
+    ],
+    "ChainNodes": [
+        "https://$userPass@aio5.hhservers.com:443?secure=true"
+    ]
+}

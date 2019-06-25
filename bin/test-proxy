@@ -56,44 +56,19 @@ test_port() {
 }
 
 test_http() {
-	CONF=/usr/local/etc/stunnel/stunnel.conf
+	CONF=$ENV/etc/supervisor.d/supervisord.ini
 	if [[ -r $CONF ]]; then
-		AKA=$(grep -A2 'accept\s*=\s*9900' $CONF | sed -En 's/^connect\s*=\s*(.*)/\1/p')
-		if [[ $AKA = aio* ]]; then
-			AKA=$(echo "$AKA" | sed -En 's/aio([0-9]+).*/\1/p')
-			AKA=$(printf "99%02d" "$AKA")
-		fi
+		AKA=$(sed -n 's/command=.* \(.*\) .*9990/\1/p' "$CONF")
 	fi
-	test_port 9900 "$AKA"
+	test_port 9990 "$AKA"
 	echo
-	for PORT in {9901..9905}; do
+	for PORT in {9901..9914}; do
 		test_port $PORT
 		PORT=$((PORT + 1))
 		echo
 	done
-	for PORT in {9906..9907}; do
-		test_port $PORT
-		PORT=$((PORT + 1))
-		echo
-	done
-	for PORT in {9908..9909}; do
-		test_port $PORT
-		PORT=$((PORT + 1))
-		echo
-	done
-	for PORT in {9910..9914}; do
-		test_port $PORT
-		PORT=$((PORT + 1))
-		echo
-	done
-	test_port 9990 9900
+	test_port 9915 http2://moonfruit.top:8443
 	echo
-	test_port 9915 https://moonfruit.top:8443
-	echo
-#	test_port 9998 ssh://moonfruit.top
-#	echo
-#	test_port 9999 sps://moonfruit.top
-#	echo
 	test_port gingkoo http://10.1.2.12:8118
 	echo
 	test_port 0
@@ -105,7 +80,8 @@ test_ss() {
 		PORT=$((PORT + 1))
 		echo
 	done
-
+	test_port 9815 ss://moonfruit.top:8445
+	echo
 	test_port 0
 }
 
