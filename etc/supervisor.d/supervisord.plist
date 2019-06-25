@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Disabled</key>
+	<false/>
 	<key>EnvironmentVariables</key>
 	<dict>
 		<key>ENV</key>
@@ -10,18 +12,22 @@
 		<string>/Users/moon/Workspace.localized/env/etc/private.txt</string>
 	</dict>
 	<key>KeepAlive</key>
-	<true/>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
 	<key>Label</key>
-	<string>moonfruit.goproxy.aio</string>
+	<string>moonfruit.supervisord</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/bash</string>
-		<string>/Users/moon/Workspace.localized/env/package/goproxy/proxy.sh</string>
-		<string>proxy.aio.conf</string>
+		<string>/usr/local/bin/supervisord</string>
+		<string>-c</string>
+		<string>/usr/local/etc/supervisord.ini</string>
+		<string>--nodaemon</string>
 	</array>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>WorkingDirectory</key>
-	<string>/Users/moon/Workspace.localized/env/package/goproxy/</string>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.supervisord.err</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.supervisord.out</string>
 </dict>
 </plist>

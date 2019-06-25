@@ -66,21 +66,21 @@ test_http() {
 	fi
 	test_port 9900 "$AKA"
 	echo
-#	for PORT in {9901..9905}; do
-#		test_port $PORT
-#		PORT=$((PORT + 1))
-#		echo
-#	done
+	for PORT in {9901..9905}; do
+		test_port $PORT
+		PORT=$((PORT + 1))
+		echo
+	done
 	for PORT in {9906..9907}; do
 		test_port $PORT
 		PORT=$((PORT + 1))
 		echo
 	done
-#	for PORT in {9908..9909}; do
-#		test_port $PORT
-#		PORT=$((PORT + 1))
-#		echo
-#	done
+	for PORT in {9908..9909}; do
+		test_port $PORT
+		PORT=$((PORT + 1))
+		echo
+	done
 	for PORT in {9910..9914}; do
 		test_port $PORT
 		PORT=$((PORT + 1))
@@ -88,7 +88,7 @@ test_http() {
 	done
 	test_port 9990 9900
 	echo
-	test_port 9988 https://moonfruit.top:8443
+	test_port 9915 https://moonfruit.top:8443
 	echo
 #	test_port 9998 ssh://moonfruit.top
 #	echo
@@ -99,10 +99,7 @@ test_http() {
 	test_port 0
 }
 
-test_socks() {
-	test_port 1080
-	echo
-
+test_ss() {
 	for PORT in {9801..9814}; do
 		test_port $PORT
 		PORT=$((PORT + 1))
@@ -115,8 +112,8 @@ test_socks() {
 if [[ $1 == http ]]; then
 	test_http
 
-elif [[ $1 == socks ]]; then
-	test_socks
+elif [[ $1 == ss ]]; then
+	test_ss
 
 elif [[ $# -gt 0 ]]; then
 	while [[ $# -gt 0 ]]; do

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec "$(java_home -v 11)/bin/java" "$@"

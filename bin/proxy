@@ -19,7 +19,7 @@ fi
 
 export PROXY_ENABLED=1
 
-if [[ $port == 1080 || $port == 98[0-9][0-9] ]]; then
+if [[ $port == 1080 ]]; then
 	exec proxychains "$port" "$@"
 fi
 

@@ -8,11 +8,63 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>020DBF50-AF18-4B6A-8CD0-BAE16AA91485</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>18E84B45-31A5-4C19-B4B8-44E53411EAB7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>05141473-8AFB-4FE7-9BE7-BE2390C1B960</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>A9AE62AF-A95D-4DA2-A507-487B316182E7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>0D6847C2-EC38-4070-A41C-3B1F98C68A15</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>188BFBF3-4E7C-4259-AABB-C26738350A1B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>188BFBF3-4E7C-4259-AABB-C26738350A1B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>18E84B45-31A5-4C19-B4B8-44E53411EAB7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -85,7 +137,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Transcend Tools</string>
+	<string>External Disk Tools</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -216,44 +268,6 @@ diskutil mount Transcend 2&gt;&amp;1</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Transcend Tools</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string>'{query}', {allvars}</string>
-				<key>cleardebuggertext</key>
-				<false/>
-				<key>processoutputs</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.debug</string>
-			<key>uid</key>
-			<string>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
@@ -300,11 +314,166 @@ diskutil unmount Transcend 2&gt;&amp;1</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>External Disk Tools</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>sdmall</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Mount Volumes</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>0D6847C2-EC38-4070-A41C-3B1F98C68A15</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>VOLUMES=(Transcend SamsungT5)
+
+for VOL in "${VOLUMES[@]}"; do
+	if [[ ! -d "/Volumes/$VOL" ]]; then
+		MOUNT=1
+		diskutil mount "$VOL" 2&gt;&amp;1
+	fi
+done
+
+if [[ -z $MOUNT ]]; then
+	echo "Volumes has already been mounted"
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>188BFBF3-4E7C-4259-AABB-C26738350A1B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>sduall</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Unmount Volumes</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>020DBF50-AF18-4B6A-8CD0-BAE16AA91485</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>VOLUMES=(Transcend SamsungT5)
+
+for VOL in "${VOLUMES[@]}"; do
+	if [[ -d "/Volumes/$VOL" ]]; then
+		UNMOUNT=1
+		diskutil unmount "$VOL" 2&gt;&amp;1
+	fi
+done
+
+if [[ -z $UNMOUNT ]]; then
+	echo "Volumes has already been removed"
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>18E84B45-31A5-4C19-B4B8-44E53411EAB7</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>Transcend Tools</string>
 	<key>uidata</key>
 	<dict>
+		<key>020DBF50-AF18-4B6A-8CD0-BAE16AA91485</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>450</integer>
+		</dict>
 		<key>05141473-8AFB-4FE7-9BE7-BE2390C1B960</key>
 		<dict>
 			<key>xpos</key>
@@ -312,19 +481,40 @@ diskutil unmount Transcend 2&gt;&amp;1</string>
 			<key>ypos</key>
 			<integer>120</integer>
 		</dict>
+		<key>0D6847C2-EC38-4070-A41C-3B1F98C68A15</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>340</integer>
+		</dict>
+		<key>188BFBF3-4E7C-4259-AABB-C26738350A1B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>160</integer>
+			<key>ypos</key>
+			<integer>340</integer>
+		</dict>
+		<key>18E84B45-31A5-4C19-B4B8-44E53411EAB7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>160</integer>
+			<key>ypos</key>
+			<integer>450</integer>
+		</dict>
 		<key>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</key>
 		<dict>
 			<key>xpos</key>
-			<integer>370</integer>
+			<integer>420</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>280</integer>
 		</dict>
 		<key>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>310</integer>
+			<integer>340</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>310</integer>
 		</dict>
 		<key>8698E2A1-55A3-4788-9B9C-08915E91B54E</key>
 		<dict>

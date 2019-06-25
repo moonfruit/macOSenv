@@ -3,12 +3,12 @@
 # export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
-alias ls='ls -FGh'
+alias ls='exa -gF --time-style long-iso --git'
 
 alias ll='ls -l'
-alias la='ls -A'
+alias la='ls -a'
 alias l='ll'
-alias tree='tree -NF'
+alias tree='ls -T'
 
 alias cp='cp -i'
 alias mv='mv -i'

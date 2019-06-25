@@ -21,6 +21,10 @@ script=/usr/local/etc/profile.d/autojump.sh
 # for direnv
 eval "$(direnv hook zsh)"
 
+# for hstr
+# export HSTR_CONFIG=hicolor        # get more colors
+# bindkey -s "\C-r" "\eqhstr\n"     # bind hstr to Ctrl-r
+
 # for zmv
 autoload -U zmv
 

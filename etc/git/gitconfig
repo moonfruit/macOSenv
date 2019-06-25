@@ -49,10 +49,10 @@
 	allow = always
 
 [mergetool "vscode"]
-	cmd = code --wait $MERGED
+	cmd = code --wait "$MERGED"
 
 [difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
+	cmd = code --wait --diff "$LOCAL" "$REMOTE"
 
 [mergetool "idea"]
 	cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"

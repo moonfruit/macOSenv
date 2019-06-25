@@ -4,6 +4,8 @@
 <dict>
 	<key>ejectBlacklist</key>
 	<array>
+		<string>Macintosh HD</string>
+		<string>SamsungT5</string>
 		<string>Transcend</string>
 	</array>
 	<key>ejectKeywordEnabled</key>

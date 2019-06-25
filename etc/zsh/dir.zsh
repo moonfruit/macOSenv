@@ -29,3 +29,14 @@ hash -d JAVA_WORK="$JAVA_WORK"
 
 export TRANSCEND="/Volumes/Transcend"
 hash -d TRANSCEND="$TRANSCEND"
+
+# for gpp
+APP_HOME="$WORKSPACE/gpp"
+hash -d APP_HOME="$APP_HOME"
+hash -d GAL_HOME="$APP_HOME/gpp/fw/gal"
+hash -d GMQ_HOME="$APP_HOME/gpp/fw/gmq"
+hash -d GSE_HOME="$APP_HOME/gpp/fw/gse"
+hash -d GTELLER_HOME="$APP_HOME/gpp/apps/gteller"
+hash -d CNAPS_HOME="$APP_HOME/gpp/apps/cnaps"
+hash -d CIPS_HOME="$APP_HOME/gpp/apps/cips"
+hash -d YY_HOME="$APP_HOME/gpp/apps/yy"
