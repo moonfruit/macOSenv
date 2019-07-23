@@ -4,5 +4,7 @@
 <dict>
 	<key>keywordEnabled</key>
 	<false/>
+	<key>useGmail</key>
+	<true/>
 </dict>
 </plist>

@@ -14,8 +14,8 @@
 	<true/>
 	<key>emptytrashConfirm</key>
 	<true/>
-	<key>emptytrashKeywordEnabled</key>
-	<false/>
+	<key>lockConfirm</key>
+	<true/>
 	<key>lockKeywordEnabled</key>
 	<false/>
 	<key>logoutKeywordEnabled</key>

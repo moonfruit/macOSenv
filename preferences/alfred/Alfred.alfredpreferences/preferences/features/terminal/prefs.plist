@@ -25,7 +25,10 @@ end write_to_file
 on alfred_script(q)
 
 	-- Write the command to run to a file. This is done because Applescript quoting is impossible to get right, esp. for backslashes.
-	write_to_file(q &amp; return, POSIX file "/tmp/alfredscript", false)
+	set tmp_dir to path to temporary items as string from user domain
+	set applescript_alfred_file to tmp_dir &amp; "alfredscript"
+	set alfred_file to POSIX path of applescript_alfred_file
+	write_to_file(q &amp; return, applescript_alfred_file, false)
 
 	-- Create this file, which prevents iTerm2 from restoring a saved window arrangement.
 	do shell script "touch ~/Library/Application' Support/iTerm/quiet'"
@@ -38,17 +41,18 @@ on alfred_script(q)
 	-- 5. iTerm2 not running. Has windows to restore. Restores windows and then opens a new window for the Alfred command.
 
 	-- Compose a script. This is necessary because compiling in a 'tell application' command causes the app to be launched, which would happen prior to the creation of the quiet file.
-	set theScript to "tell application \"iTerm.app\"
-	try
+	set theScript to "tell application \"iTerm2.app\"
+    if (exists current window) then
+        tell current window to create tab with default profile
 		tell current session of current window
-			write contents of file \"/tmp/alfredscript\"
+			write contents of file \"" &amp; alfred_file &amp; "\"
 		end tell
-	on error
+    else
 		create window with default profile
 		tell current session of current window
-			write contents of file \"/tmp/alfredscript\"
+			write contents of file \"" &amp; alfred_file &amp; "\"
 		end tell
-	end try
+	end if
     activate
 end tell"
 
@@ -56,7 +60,7 @@ end tell"
 	run script theScript
 
 	-- Clean up
-	do shell script "rm -f ~/Library/Application' Support/iTerm/quiet' /tmp/alfredscript"
+--	do shell script "rm -f ~/Library/Application' Support/iTerm/quiet' /tmp/alfredscript"
 end alfred_script</string>
 </dict>
 </plist>

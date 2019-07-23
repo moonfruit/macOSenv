@@ -23,7 +23,6 @@
 	<key>showUserDefined</key>
 	<array>
 		<string>com.vmware.vm-package</string>
-		<string>net.daringfireball.markdown</string>
 	</array>
 </dict>
 </plist>
