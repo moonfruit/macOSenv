@@ -89,22 +89,6 @@
 					<string>LLDB_to_GDB_Command_Map</string>
 				</dict>
 			</dict>
-			<key>Visual_Studio_Code</key>
-			<dict>
-				<key>date</key>
-				<date>2018-07-07T02:24:38Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>name</key>
-					<string>Visual Studio Code</string>
-					<key>platform</key>
-					<string>cheatsheet</string>
-					<key>uniqueIdentifier</key>
-					<string>Visual_Studio_Code</string>
-				</dict>
-			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
@@ -190,6 +174,22 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>Vim</string>
+				</dict>
+			</dict>
+			<key>Visual_Studio_Code</key>
+			<dict>
+				<key>date</key>
+				<date>2019-07-02T08:38:00Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>Visual Studio Code</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>Visual_Studio_Code</string>
 				</dict>
 			</dict>
 			<key>Xcode_Shortcuts</key>
@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-06-25T08:40:20Z</date>
+				<date>2019-07-22T10:31:16Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-06-25T08:40:19Z</date>
+				<date>2019-07-22T10:31:15Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-05-22T01:57:18Z</date>
+				<date>2019-07-22T10:30:50Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2019-05-22T01:57:31Z</date>
+				<date>2019-07-22T10:33:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -540,7 +540,7 @@
 			<key>net.java.dev.jna:jna</key>
 			<dict>
 				<key>date</key>
-				<date>2019-04-30T03:16:59Z</date>
+				<date>2019-07-22T10:31:03Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -554,7 +554,7 @@
 			<key>org.apache.commons:commons-collections4</key>
 			<dict>
 				<key>date</key>
-				<date>2019-05-07T03:31:42Z</date>
+				<date>2019-07-10T03:28:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -582,7 +582,7 @@
 			<key>org.apache.commons:commons-vfs2</key>
 			<dict>
 				<key>date</key>
-				<date>2019-02-21T02:50:17Z</date>
+				<date>2019-07-17T13:15:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -624,7 +624,7 @@
 			<key>org.mybatis:mybatis</key>
 			<dict>
 				<key>date</key>
-				<date>2019-04-08T01:49:15Z</date>
+				<date>2019-07-15T12:45:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -638,7 +638,7 @@
 			<key>org.mybatis:mybatis-spring</key>
 			<dict>
 				<key>date</key>
-				<date>2019-04-08T01:49:14Z</date>
+				<date>2019-07-15T12:42:55Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -829,6 +829,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.springframework.security:spring-security-core</string>
+				</dict>
+			</dict>
+			<key>org.springframework.security:spring-security-crypto</key>
+			<dict>
+				<key>date</key>
+				<date>2019-06-26T03:44:27Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.springframework.security:spring-security-crypto</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.springframework.security:spring-security-crypto</string>
 				</dict>
 			</dict>
 			<key>org.springframework.security:spring-security-web</key>
@@ -1425,6 +1439,8 @@
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworksecurityspringsecurityconfig/springsecurityconfig.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworksecurityspringsecuritycore/springsecuritycore.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworksecurityspringsecuritycrypto/springsecuritycrypto.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworksecurityspringsecurityweb/springsecurityweb.docset</key>
 			<string>java:</string>

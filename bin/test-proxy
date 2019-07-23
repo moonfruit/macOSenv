@@ -56,11 +56,11 @@ test_port() {
 }
 
 test_http() {
-	CONF=$ENV/etc/supervisor.d/supervisord.ini
-	if [[ -r $CONF ]]; then
-		AKA=$(sed -n 's/command=.* \(.*\) .*9990/\1/p' "$CONF")
+	AKA=$ENV/package/gost/default.json
+	if [[ -L $AKA ]]; then
+		AKA=$(readlink "$AKA")
 	fi
-	test_port 9990 "$AKA"
+	test_port 9990 "$(basename "$AKA")"
 	echo
 	for PORT in {9901..9914}; do
 		test_port $PORT

@@ -30,6 +30,12 @@
 	pusha = push --recurse-submodules=on-demand
 	pulla = pull --recurse-submodules
 
+[gpg]
+	program = /usr/local/bin/gpg
+
+[commit]
+	gpgsign = true
+
 [credential]
 	helper = osxkeychain
 
