@@ -1,9 +1,0 @@
-{
-    "Debug": false,
-    "ServeNodes": [
-        "localhost:9915"
-    ],
-    "ChainNodes": [
-        "http2://$userPass@moonfruit.top:8443?secure=true&ca=ca.cer"
-    ]
-}

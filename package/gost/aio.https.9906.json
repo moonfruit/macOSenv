@@ -1,9 +1,0 @@
-{
-    "Debug": false,
-    "ServeNodes": [
-        "localhost:9906"
-    ],
-    "ChainNodes": [
-        "https://$userPass@aio6.hhservers.com:443?secure=true"
-    ]
-}

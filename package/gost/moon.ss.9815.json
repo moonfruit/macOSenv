@@ -1,9 +1,0 @@
-{
-    "Debug": false,
-    "ServeNodes": [
-        "localhost:9815"
-    ],
-    "ChainNodes": [
-        "ss://$moonAlgoPass@moonfruit.top:8445"
-    ]
-}

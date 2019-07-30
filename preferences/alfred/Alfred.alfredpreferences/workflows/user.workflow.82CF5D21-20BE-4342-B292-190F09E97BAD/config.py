@@ -1750,6 +1750,7 @@ CRYPTO_CURRENCIES = {
     u'ZUR': u'Zurcoin',
     u'ZXT': u'Zcrypt',
     u'ZYD': u'ZayedCoin',
+    u'PNT': u'Penta',
 }
 
 # ----------------------------------------------------------------------

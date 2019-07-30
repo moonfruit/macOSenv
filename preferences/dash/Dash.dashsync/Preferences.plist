@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-07-22T10:31:16Z</date>
+				<date>2019-07-30T03:17:54Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-07-22T10:31:15Z</date>
+				<date>2019-07-29T03:19:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2019-07-22T10:33:20Z</date>
+				<date>2019-07-29T03:19:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -470,7 +470,7 @@
 			<key>commons-codec:commons-codec</key>
 			<dict>
 				<key>date</key>
-				<date>2019-02-21T02:50:17Z</date>
+				<date>2019-07-25T06:33:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -596,7 +596,7 @@
 			<key>org.assertj:assertj-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-03-27T02:01:38Z</date>
+				<date>2019-07-30T03:25:03Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>

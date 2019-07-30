@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Disabled</key>
-	<true/>
+	<false/>
 	<key>EnvironmentVariables</key>
 	<dict>
 		<key>ENV</key>
@@ -17,17 +17,12 @@
 		<false/>
 	</dict>
 	<key>Label</key>
-	<string>moonfruit.supervisord</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>/usr/local/bin/supervisord</string>
-		<string>-c</string>
-		<string>/usr/local/etc/supervisord.ini</string>
-		<string>--nodaemon</string>
-	</array>
+	<string>moonfruit.gost</string>
+	<key>Program</key>
+	<string>/Users/moon/Workspace.localized/env/package/gost/gost.sh</string>
 	<key>StandardErrorPath</key>
-	<string>/tmp/moonfruit.supervisord.err</string>
+	<string>/tmp/moonfruit.gost.stderr</string>
 	<key>StandardOutPath</key>
-	<string>/tmp/moonfruit.supervisord.out</string>
+	<string>/tmp/moonfruit.gost.stdout</string>
 </dict>
 </plist>
