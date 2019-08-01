@@ -1,6 +1,6 @@
 {
     "strategy": "random",
-    "max_fails": 2,
+    "max_fails": 1,
     "fail_timeout": 21600,
     "nodes": [
 		"ss://aes-256-cfb:QAZwsxEDC@aio1.hhservers.com:19966",
