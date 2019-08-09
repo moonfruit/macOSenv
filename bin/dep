@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -z "$PROXY_ENABLED" ]] && proxy >/dev/null 2>&1; then
+if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 	exec proxy "$0" "$@"
 fi
 

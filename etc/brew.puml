@@ -4,6 +4,8 @@ skinparam usecase {
     BackgroundColor DarkSeaGreen
     BackgroundColor<< dep >> DarkGoldenRod
 }
+(adns) << dep >>
+(apache-spark)
 (apr) << dep >>
 (apr-util) << dep >>
 (apr-util)->(apr)
@@ -17,32 +19,22 @@ skinparam usecase {
 (bash-completion@2)
 (bash-completion@2)->(bash)
 (bat)
-(bazaar)
 (bfg)
-(binaryen)
-(boxes)
-(c-ares) << dep >>
 (clang-format)
 (cmake)
 (colordiff)
 (colorsvn)
 (cscope) << dep >>
 (ctags)
+(curl)
 (dep)
 (dep)->(go)
 (di)
 (direnv)
 (dmalloc)
-(emscripten)
-(emscripten)->(icu4c)
-(emscripten)->(node)
-(emscripten)->(gdbm)
-(emscripten)->(openssl)
-(emscripten)->(readline)
-(emscripten)->(sqlite)
-(emscripten)->(python@2)
-(emscripten)->(yuicompressor)
 (ethereum)
+(exa)
+(fd)
 (figlet)
 (file-formula)
 (file-formula)->(libmagic)
@@ -72,6 +64,7 @@ skinparam usecase {
 (gd)->(libtiff)
 (gd)->(webp)
 (gdbm) << dep >>
+(geckodriver)
 (gettext) << dep >>
 (git)
 (git)->(gettext)
@@ -81,16 +74,53 @@ skinparam usecase {
 (glib)->(gettext)
 (glib)->(libffi)
 (glib)->(pcre)
+(glib)->(gdbm)
+(glib)->(openssl)
+(glib)->(readline)
+(glib)->(sqlite)
+(glib)->(xz)
+(glib)->(python)
 (gmp) << dep >>
 (gnu-sed)
 (gnu-tar)
+(gnupg)
+(gnupg)->(adns)
+(gnupg)->(gettext)
+(gnupg)->(gmp)
+(gnupg)->(libtasn1)
+(gnupg)->(libunistring)
+(gnupg)->(nettle)
+(gnupg)->(libffi)
+(gnupg)->(p11-kit)
+(gnupg)->(openssl)
+(gnupg)->(libevent)
+(gnupg)->(unbound)
+(gnupg)->(gnutls)
+(gnupg)->(libgpg-error)
+(gnupg)->(libassuan)
+(gnupg)->(libgcrypt)
+(gnupg)->(libksba)
+(gnupg)->(libusb)
+(gnupg)->(npth)
+(gnupg)->(pinentry)
+(gnutls) << dep >>
+(gnutls)->(gmp)
+(gnutls)->(gettext)
+(gnutls)->(libunistring)
+(gnutls)->(libidn2)
+(gnutls)->(libtasn1)
+(gnutls)->(nettle)
+(gnutls)->(libffi)
+(gnutls)->(p11-kit)
+(gnutls)->(openssl)
+(gnutls)->(libevent)
+(gnutls)->(unbound)
 (go) << dep >>
 (go-bindata)
 (go-bindata)->(go)
 (gotags)
 (gradle)
 (graphviz)
-(graphviz)->(libtool)
 (graphviz)->(libpng)
 (graphviz)->(freetype)
 (graphviz)->(fontconfig)
@@ -98,8 +128,38 @@ skinparam usecase {
 (graphviz)->(libtiff)
 (graphviz)->(webp)
 (graphviz)->(gd)
+(graphviz)->(gettext)
+(graphviz)->(libffi)
+(graphviz)->(pcre)
+(graphviz)->(gdbm)
+(graphviz)->(openssl)
+(graphviz)->(readline)
+(graphviz)->(sqlite)
+(graphviz)->(xz)
+(graphviz)->(python)
+(graphviz)->(glib)
+(graphviz)->(jasper)
+(graphviz)->(netpbm)
+(graphviz)->(gts)
+(graphviz)->(libtool)
 (grep)
 (grep)->(pcre)
+(gts) << dep >>
+(gts)->(gettext)
+(gts)->(libffi)
+(gts)->(pcre)
+(gts)->(gdbm)
+(gts)->(openssl)
+(gts)->(readline)
+(gts)->(sqlite)
+(gts)->(xz)
+(gts)->(python)
+(gts)->(glib)
+(gts)->(jpeg)
+(gts)->(jasper)
+(gts)->(libpng)
+(gts)->(libtiff)
+(gts)->(netpbm)
 (httpie)
 (httpie)->(gdbm)
 (httpie)->(openssl)
@@ -117,30 +177,39 @@ skinparam usecase {
 (ipython)->(xz)
 (ipython)->(python)
 (ipython)->(zeromq)
+(jasper) << dep >>
+(jasper)->(jpeg)
 (jemalloc)
 (jpeg) << dep >>
 (jq)
 (jq)->(oniguruma)
-(libev) << dep >>
+(libassuan) << dep >>
+(libassuan)->(libgpg-error)
 (libevent) << dep >>
 (libevent)->(openssl)
 (libffi) << dep >>
+(libgcrypt) << dep >>
+(libgcrypt)->(libgpg-error)
+(libgpg-error) << dep >>
 (libidn2) << dep >>
 (libidn2)->(gettext)
 (libidn2)->(libunistring)
+(libksba) << dep >>
+(libksba)->(libgpg-error)
 (libmagic) << dep >>
 (libmemcached)
 (libmemcached)->(openssl)
 (libmemcached)->(libevent)
 (libmemcached)->(memcached)
 (libpng) << dep >>
-(libsodium) << dep >>
 (libssh2) << dep >>
 (libssh2)->(openssl)
+(libtasn1) << dep >>
 (libtiff) << dep >>
 (libtiff)->(jpeg)
 (libtool) << dep >>
 (libunistring) << dep >>
+(libusb) << dep >>
 (libyaml) << dep >>
 (lua) << dep >>
 (lz4) << dep >>
@@ -156,9 +225,7 @@ skinparam usecase {
 (mariadb)
 (mariadb)->(openssl)
 (mas)
-(mas)->(trash)
 (maven)
-(mbedtls) << dep >>
 (memcached)
 (memcached)->(openssl)
 (memcached)->(libevent)
@@ -171,27 +238,50 @@ skinparam usecase {
 (mitmproxy)->(python)
 (mitmproxy)->(python@2)
 (mitmproxy)->(protobuf)
+(mongodb)
+(mongodb)->(openssl)
+(mongodb)->(gdbm)
+(mongodb)->(readline)
+(mongodb)->(sqlite)
+(mongodb)->(python@2)
 (mosh)
 (mosh)->(gdbm)
 (mosh)->(openssl)
 (mosh)->(readline)
 (mosh)->(sqlite)
+(mosh)->(xz)
+(mosh)->(python)
 (mosh)->(python@2)
 (mosh)->(protobuf)
 (mpfr) << dep >>
 (mpfr)->(gmp)
+(ncdu)
 (ncurses) << dep >>
+(netpbm) << dep >>
+(netpbm)->(jpeg)
+(netpbm)->(jasper)
+(netpbm)->(libpng)
+(netpbm)->(libtiff)
+(nettle) << dep >>
+(nettle)->(gmp)
 (node)
 (node)->(icu4c)
+(npth) << dep >>
 (oniguruma) << dep >>
 (openssl) << dep >>
+(p11-kit) << dep >>
+(p11-kit)->(libffi)
 (p7zip)
 (parallel)
 (pcre) << dep >>
 (pcre2) << dep >>
 (perl) << dep >>
 (pigz)
-(protobuf)
+(pinentry) << dep >>
+(pinentry)->(libgpg-error)
+(pinentry)->(libassuan)
+(pinentry-mac)
+(protobuf) << dep >>
 (protobuf)->(gdbm)
 (protobuf)->(openssl)
 (protobuf)->(readline)
@@ -217,6 +307,7 @@ skinparam usecase {
 (q)
 (rcs)
 (readline) << dep >>
+(ripgrep-bin)
 (rlwrap)
 (rlwrap)->(readline)
 (rsync)
@@ -224,12 +315,6 @@ skinparam usecase {
 (ruby)->(libyaml)
 (ruby)->(openssl)
 (ruby)->(readline)
-(shadowsocks-libev)
-(shadowsocks-libev)->(c-ares)
-(shadowsocks-libev)->(libev)
-(shadowsocks-libev)->(libsodium)
-(shadowsocks-libev)->(mbedtls)
-(shadowsocks-libev)->(pcre)
 (shellcheck)
 (sqlite) << dep >>
 (sqlite)->(readline)
@@ -238,10 +323,14 @@ skinparam usecase {
 (sshfs)->(gettext)
 (sshfs)->(libffi)
 (sshfs)->(pcre)
+(sshfs)->(gdbm)
+(sshfs)->(openssl)
+(sshfs)->(readline)
+(sshfs)->(sqlite)
+(sshfs)->(xz)
+(sshfs)->(python)
 (sshfs)->(glib)
 (sshpass)
-(stunnel)
-(stunnel)->(openssl)
 (subversion)
 (subversion)->(apr)
 (subversion)->(openssl)
@@ -252,37 +341,30 @@ skinparam usecase {
 (subversion)->(readline)
 (subversion)->(sqlite)
 (subversion)->(utf8proc)
+(tcping)
 (terminal-notifier)
-(thefuck)
-(thefuck)->(gdbm)
-(thefuck)->(openssl)
-(thefuck)->(readline)
-(thefuck)->(sqlite)
-(thefuck)->(xz)
-(thefuck)->(python)
 (tomcat)
 (tomcat-native)
 (tomcat-native)->(apr)
 (tomcat-native)->(openssl)
 (tomcat-native)->(tomcat)
 (trash)
-(tree)
+(unbound) << dep >>
+(unbound)->(openssl)
+(unbound)->(libevent)
 (utf8proc) << dep >>
-(wabt)
 (webp) << dep >>
 (webp)->(jpeg)
 (webp)->(libpng)
+(webp)->(libtiff)
 (wget)
 (wget)->(gettext)
 (wget)->(libunistring)
 (wget)->(libidn2)
 (wget)->(openssl)
 (xz) << dep >>
-(yarn)
-(yarn)->(icu4c)
-(yarn)->(node)
-(yuicompressor) << dep >>
 (zeromq) << dep >>
 (zsh)
 (zsh)->(ncurses)
+(zsh)->(pcre)
 @enduml

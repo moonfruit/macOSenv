@@ -56,8 +56,6 @@ test_port() {
 }
 
 test_http() {
-	test_port 9990 "LoadBalanced"
-	echo
 	for PORT in {9901..9914}; do
 		test_port $PORT
 		PORT=$((PORT + 1))
