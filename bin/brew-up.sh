@@ -19,7 +19,7 @@ export HOMEBREW_AUTO_UPDATE_CHECKED=1
 
 OUTDATED=$(brew outdated)
 if [[ -n $OUTDATED ]]; then
-	if brew upgrade; then
+	if brew upgrade --force-bottle; then
 		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
 		brew cleanup -s
 	fi
