@@ -1,4 +1,4 @@
-#!/bin/sh
-JAVA_HOME="$(java_home -v 1.8.0_202)"
-export JAVA_HOME
+#!/bin/bash
+# shellcheck source=java8
+source "${BASH_SOURCE[0]%/*}/java8"
 exec mvn "$@"

@@ -17,7 +17,7 @@ copy() {
 wget https://iterm2.com/shell_integration/zsh -O item.zsh
 copy item.zsh "$ENV/etc/zsh"
 
-UTILS=(imgcat imgls it2attention it2check it2copy it2dl it2getvar it2setcolor it2setkeylabel it2ul it2universion)
+UTILS=(imgcat imgls it2api it2attention it2check it2copy it2dl it2getvar it2git it2setcolor it2setkeylabel it2ul it2universion)
 for UTIL in "${UTILS[@]}"; do
     wget "https://iterm2.com/utilities/$UTIL"
     copy "$UTIL" "$ENV/bin"

@@ -1,4 +1,4 @@
 #!/bin/sh
-JAVA_HOME="$(java_home -v 11)"
-export JAVA_HOME
+# shellcheck source=java11
+source "${BASH_SOURCE[0]%/*}/java11"
 exec mvn "$@"

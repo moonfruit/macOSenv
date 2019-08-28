@@ -1,5 +1,5 @@
-#proxy=http://dkmoonfruit:QAZwsxEDC@localhost:9900/
-#https-proxy=http://dkmoonfruit:QAZwsxEDC@localhost:9900/
+#proxy=http://localhost:9990/
+#https-proxy=http://localhost:9990/
 
 #proxy=http://10.1.2.12:8118
 #https-proxy=http://10.1.2.12:8118
