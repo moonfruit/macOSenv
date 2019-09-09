@@ -52,6 +52,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -59,7 +61,7 @@
 				<key>escaping</key>
 				<integer>103</integer>
 				<key>keyword</key>
-				<string>wc</string>
+				<string>wechat</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -90,7 +92,7 @@
 			<key>uid</key>
 			<string>50BACE1D-287A-44A1-A1F0-45A474CAB226</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -122,6 +124,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -160,7 +164,7 @@
 			<key>uid</key>
 			<string>007E644A-4E07-48F3-A8D2-CDA4802FE7DE</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 	</array>
 	<key>readme</key>

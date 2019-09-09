@@ -1,13 +1,12 @@
 #!/bin/bash
+SVN=/usr/local/bin/svn
 if [[ $1 == "-l" || $1 == "--lang" ]]; then
 	shift
 else
 	export LANG=C
-fi
-
-SVN=/usr/local/bin/svn
-if [[ ! -x $SVN ]]; then
-	SVN=svn
+	if hash colorsvn >/dev/null 2>&1; then
+		SVN=colorsvn
+	fi
 fi
 
 exec "$SVN" "$@"

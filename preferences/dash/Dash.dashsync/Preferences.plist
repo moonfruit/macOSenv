@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-28T03:41:01Z</date>
+				<date>2019-09-09T02:32:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-28T03:41:02Z</date>
+				<date>2019-09-09T02:32:37Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-07-22T10:30:50Z</date>
+				<date>2019-09-09T02:32:28Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:41Z</date>
+				<date>2019-09-09T02:32:50Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2019-05-22T01:57:13Z</date>
+				<date>2019-09-09T02:32:23Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -414,7 +414,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2019-06-13T01:48:03Z</date>
+				<date>2019-08-29T03:45:10Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:37Z</date>
+				<date>2019-09-09T02:32:52Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:40Z</date>
+				<date>2019-09-09T02:33:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +764,7 @@
 			<key>org.springframework.boot:spring-boot</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:44Z</date>
+				<date>2019-09-09T02:32:49Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +778,7 @@
 			<key>org.springframework.boot:spring-boot-actuator</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:37Z</date>
+				<date>2019-09-09T02:32:42Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +792,7 @@
 			<key>org.springframework.boot:spring-boot-autoconfigure</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:50Z</date>
+				<date>2019-09-09T02:33:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
