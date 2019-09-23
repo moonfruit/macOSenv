@@ -1,0 +1,4 @@
+#!/bin/bash
+# shellcheck source=java7
+source "${BASH_SOURCE[0]%/*}/java7"
+exec mvn "$@"

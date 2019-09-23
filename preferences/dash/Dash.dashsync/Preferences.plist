@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:33Z</date>
+				<date>2019-09-20T04:02:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:37Z</date>
+				<date>2019-09-23T02:38:23Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:28Z</date>
+				<date>2019-09-23T02:36:59Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:50Z</date>
+				<date>2019-09-23T02:37:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:23Z</date>
+				<date>2019-09-23T02:36:59Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -442,7 +442,7 @@
 			<key>com.squareup.okhttp3:okhttp</key>
 			<dict>
 				<key>date</key>
-				<date>2019-05-20T07:21:38Z</date>
+				<date>2019-09-16T09:08:11Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -666,7 +666,7 @@
 			<key>org.projectlombok:lombok</key>
 			<dict>
 				<key>date</key>
-				<date>2019-05-07T08:03:32Z</date>
+				<date>2019-09-16T09:08:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>

@@ -1,5 +1,5 @@
 #!/bin/bash
-JAVA_HOME=$(/usr/libexec/java_home -v 11)
+JAVA_HOME=$("${BASH_SOURCE[0]%/*}/java_home" -v 11)
 
 export JAVA_HOME
 export PATH="$JAVA_HOME/bin:$PATH"

@@ -9,7 +9,8 @@ skinparam usecase {
 (apr) << dep >>
 (apr-util) << dep >>
 (apr-util)->(apr)
-(apr-util)->(openssl)
+(apr-util)->(openssl@1.1)
+(apr-util)->(postgresql)
 (archey)
 (aria2)
 (aria2)->(openssl)
@@ -186,7 +187,7 @@ skinparam usecase {
 (libassuan) << dep >>
 (libassuan)->(libgpg-error)
 (libevent) << dep >>
-(libevent)->(openssl)
+(libevent)->(openssl@1.1)
 (libffi) << dep >>
 (libgcrypt) << dep >>
 (libgcrypt)->(libgpg-error)
@@ -203,7 +204,7 @@ skinparam usecase {
 (libmemcached)->(memcached)
 (libpng) << dep >>
 (libssh2) << dep >>
-(libssh2)->(openssl)
+(libssh2)->(openssl@1.1)
 (libtasn1) << dep >>
 (libtiff) << dep >>
 (libtiff)->(jpeg)
@@ -230,14 +231,13 @@ skinparam usecase {
 (memcached)->(openssl)
 (memcached)->(libevent)
 (mitmproxy)
-(mitmproxy)->(openssl)
+(mitmproxy)->(openssl@1.1)
+(mitmproxy)->(protobuf)
 (mitmproxy)->(gdbm)
 (mitmproxy)->(readline)
 (mitmproxy)->(sqlite)
 (mitmproxy)->(xz)
 (mitmproxy)->(python)
-(mitmproxy)->(python@2)
-(mitmproxy)->(protobuf)
 (mongodb-community)
 (mosh)
 (mosh)->(protobuf)
@@ -283,7 +283,7 @@ skinparam usecase {
 (pv)
 (python) << dep >>
 (python)->(gdbm)
-(python)->(openssl)
+(python)->(openssl@1.1)
 (python)->(readline)
 (python)->(sqlite)
 (python)->(xz)
@@ -322,7 +322,7 @@ skinparam usecase {
 (sshpass)
 (subversion)
 (subversion)->(apr)
-(subversion)->(openssl)
+(subversion)->(openssl@1.1)
 (subversion)->(apr-util)
 (subversion)->(gettext)
 (subversion)->(lz4)
@@ -330,6 +330,7 @@ skinparam usecase {
 (subversion)->(readline)
 (subversion)->(sqlite)
 (subversion)->(utf8proc)
+(subversion)->(libmagic)
 (tcping)
 (terminal-notifier)
 (tomcat)
@@ -339,7 +340,7 @@ skinparam usecase {
 (tomcat-native)->(tomcat)
 (trash)
 (unbound) << dep >>
-(unbound)->(openssl)
+(unbound)->(openssl@1.1)
 (unbound)->(libevent)
 (utf8proc) << dep >>
 (webp) << dep >>

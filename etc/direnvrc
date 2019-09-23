@@ -1,0 +1,66 @@
+#!/bin/bash
+layout_node() {
+	if [[ -n $1 ]]; then
+		PATH_add "/usr/local/opt/node@$1/bin"
+
+		export LDFLAGS=-L/usr/local/opt/node@$1/lib
+		export CPPFLAGS=-I/usr/local/opt/node@$1/include
+	fi
+
+	PATH_add node_modules/.bin
+}
+
+layout_node10() {
+	layout node 10
+}
+
+venv_type() {
+	"$1" <<END
+import pkgutil
+for pkg in ('venv', 'virtualenv'):
+	if pkgutil.find_loader(pkg):
+		print(pkg)
+		break
+END
+}
+
+layout_python() {
+	local python=${1:-python}
+	[[ $# -gt 0 ]] && shift
+
+	if [[ ! -r venv/bin/activate ]]; then
+		log_status "creating virtualenv"
+		case $(venv_type "$python") in
+		"venv")
+			"$python" -m venv "$@" venv
+			;;
+		"virtualenv")
+			virtualenv "--python=$python" "$@" venv
+			;;
+		*)
+			log_error "Error: neither venv nor virtualenv are available."
+			return 1
+			;;
+		esac
+	fi
+
+	# shellcheck disable=SC1091
+	source venv/bin/activate
+}
+
+layout_java() {
+	local version=$1
+	if [[ -n $version ]]; then
+		if [[ $version = 7 ]]; then
+			version=1.7
+		elif [[ $version = 8 ]]; then
+			version=1.8
+		fi
+
+		JAVA_HOME=$(/usr/libexec/java_home -v "$version")
+		export JAVA_HOME
+		PATH_add "$JAVA_HOME/bin"
+	fi
+
+	export MAVEN_REPO_URL=http://10.1.2.32/nexus/repository
+}
