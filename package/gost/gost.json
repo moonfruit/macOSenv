@@ -2,7 +2,7 @@
 	"Debug": false,
 	"Routes": [{
 		"ServeNodes": ["$userPass@:9900"],
-		"ChainNodes": ["https://$userPass@aio3.hhservers.com:443?secure=true"]
+		"ChainNodes": [":9990"]
 	}, {
 		"Retries": 16,
 		"ServeNodes": ["localhost:9990"],
