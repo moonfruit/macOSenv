@@ -1,6 +1,6 @@
 {
     "strategy": "random",
-    "max_fails": 1,
+    "max_fails": 3,
     "fail_timeout": 21600,
     "nodes": [
 		"ss://aes-256-cfb:QAZwsxEDC@aio1.hhservers.com:19966",
@@ -31,7 +31,6 @@
 		"https://dkmoonfruit:QAZwsxEDC@aio12.hhservers.com:443?secure=true",
 		"https://dkmoonfruit:QAZwsxEDC@aio13.hhservers.com:443?secure=true",
 		"https://dkmoonfruit:QAZwsxEDC@aio14.hhservers.com:443?secure=true",
-		"ss://$moonAlgoPass@moonfruit.top:8445",
 		"http2://$userPass@moonfruit.top:8443?secure=true&ca=ca.cer"
 	]
 }

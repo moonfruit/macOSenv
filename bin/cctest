@@ -1,0 +1,13 @@
+#!/bin/sh
+CC=cc
+TYPE=c
+
+if [ -n "$1" ]; then
+	CC="$*"
+fi
+
+if echo "$CC" | grep '\+\+' >/dev/null 2>&1; then
+    TYPE=c++
+fi
+
+echo "int main(){return 0;}" | $CC -v -x "$TYPE" -o /dev/null -

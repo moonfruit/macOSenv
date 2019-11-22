@@ -121,10 +121,6 @@
 		"ChainNodes": ["https://$userPass@aio14.hhservers.com:443?secure=true"]
 	}, {
 		"Retries": 3,
-		"ServeNodes": ["localhost:9815"],
-		"ChainNodes": ["ss://$moonAlgoPass@moonfruit.top:8445"]
-	}, {
-		"Retries": 3,
 		"ServeNodes": ["localhost:9915"],
 		"ChainNodes": ["http2://$userPass@moonfruit.top:8443?secure=true&ca=ca.cer"]
 	}]

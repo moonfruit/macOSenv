@@ -5,15 +5,16 @@ skinparam usecase {
     BackgroundColor<< dep >> DarkGoldenRod
 }
 (adns) << dep >>
+(ant)
+(ant@1.9)
 (apache-spark)
 (apr) << dep >>
 (apr-util) << dep >>
 (apr-util)->(apr)
 (apr-util)->(openssl@1.1)
-(apr-util)->(postgresql)
 (archey)
 (aria2)
-(aria2)->(openssl)
+(aria2)->(openssl@1.1)
 (aria2)->(libssh2)
 (autojump)
 (bash)
@@ -27,7 +28,6 @@ skinparam usecase {
 (colorsvn)
 (cscope) << dep >>
 (ctags)
-(curl)
 (dep)
 (dep)->(go)
 (di)
@@ -42,7 +42,7 @@ skinparam usecase {
 (findutils)
 (flake8)
 (flake8)->(gdbm)
-(flake8)->(openssl)
+(flake8)->(openssl@1.1)
 (flake8)->(readline)
 (flake8)->(sqlite)
 (flake8)->(xz)
@@ -76,7 +76,7 @@ skinparam usecase {
 (glib)->(libffi)
 (glib)->(pcre)
 (glib)->(gdbm)
-(glib)->(openssl)
+(glib)->(openssl@1.1)
 (glib)->(readline)
 (glib)->(sqlite)
 (glib)->(xz)
@@ -113,7 +113,7 @@ skinparam usecase {
 (gnutls)->(nettle)
 (gnutls)->(libffi)
 (gnutls)->(p11-kit)
-(gnutls)->(openssl)
+(gnutls)->(openssl@1.1)
 (gnutls)->(libevent)
 (gnutls)->(unbound)
 (go) << dep >>
@@ -133,7 +133,7 @@ skinparam usecase {
 (graphviz)->(libffi)
 (graphviz)->(pcre)
 (graphviz)->(gdbm)
-(graphviz)->(openssl)
+(graphviz)->(openssl@1.1)
 (graphviz)->(readline)
 (graphviz)->(sqlite)
 (graphviz)->(xz)
@@ -145,6 +145,12 @@ skinparam usecase {
 (graphviz)->(libtool)
 (grep)
 (grep)->(pcre)
+(groonga) << dep >>
+(groonga)->(mecab)
+(groonga)->(mecab-ipadic)
+(groonga)->(msgpack)
+(groonga)->(openssl@1.1)
+(groonga)->(pcre)
 (gts) << dep >>
 (gts)->(gettext)
 (gts)->(libffi)
@@ -161,9 +167,10 @@ skinparam usecase {
 (gts)->(libpng)
 (gts)->(libtiff)
 (gts)->(netpbm)
+(gwt)
 (httpie)
 (httpie)->(gdbm)
-(httpie)->(openssl)
+(httpie)->(openssl@1.1)
 (httpie)->(readline)
 (httpie)->(sqlite)
 (httpie)->(xz)
@@ -172,7 +179,7 @@ skinparam usecase {
 (iftop)
 (ipython)
 (ipython)->(gdbm)
-(ipython)->(openssl)
+(ipython)->(openssl@1.1)
 (ipython)->(readline)
 (ipython)->(sqlite)
 (ipython)->(xz)
@@ -218,17 +225,27 @@ skinparam usecase {
 (macvim)->(cscope)
 (macvim)->(lua)
 (macvim)->(gdbm)
-(macvim)->(openssl)
+(macvim)->(openssl@1.1)
 (macvim)->(readline)
 (macvim)->(sqlite)
 (macvim)->(xz)
 (macvim)->(python)
+(macvim)->(libyaml)
+(macvim)->(ruby)
 (mariadb)
+(mariadb)->(mecab)
+(mariadb)->(mecab-ipadic)
+(mariadb)->(msgpack)
 (mariadb)->(openssl@1.1)
+(mariadb)->(pcre)
+(mariadb)->(groonga)
 (mas)
 (maven)
+(mecab) << dep >>
+(mecab-ipadic) << dep >>
+(mecab-ipadic)->(mecab)
 (memcached)
-(memcached)->(openssl)
+(memcached)->(openssl@1.1)
 (memcached)->(libevent)
 (mitmproxy)
 (mitmproxy)->(openssl@1.1)
@@ -243,6 +260,7 @@ skinparam usecase {
 (mosh)->(protobuf)
 (mpfr) << dep >>
 (mpfr)->(gmp)
+(msgpack) << dep >>
 (ncdu)
 (ncurses) << dep >>
 (netpbm) << dep >>
@@ -258,7 +276,6 @@ skinparam usecase {
 (node@10)->(icu4c)
 (npth) << dep >>
 (oniguruma) << dep >>
-(openssl) << dep >>
 (openssl@1.1) << dep >>
 (p11-kit) << dep >>
 (p11-kit)->(libffi)
@@ -272,10 +289,6 @@ skinparam usecase {
 (pinentry)->(libgpg-error)
 (pinentry)->(libassuan)
 (pinentry-mac)
-(postgresql)
-(postgresql)->(icu4c)
-(postgresql)->(openssl@1.1)
-(postgresql)->(readline)
 (protobuf) << dep >>
 (proxychains-ng)
 (pstree)
@@ -305,6 +318,7 @@ skinparam usecase {
 (ruby)->(openssl@1.1)
 (ruby)->(readline)
 (shellcheck)
+(shfmt)
 (sqlite) << dep >>
 (sqlite)->(readline)
 (ssh-copy-id)
@@ -313,7 +327,7 @@ skinparam usecase {
 (sshfs)->(libffi)
 (sshfs)->(pcre)
 (sshfs)->(gdbm)
-(sshfs)->(openssl)
+(sshfs)->(openssl@1.1)
 (sshfs)->(readline)
 (sshfs)->(sqlite)
 (sshfs)->(xz)
@@ -330,7 +344,6 @@ skinparam usecase {
 (subversion)->(readline)
 (subversion)->(sqlite)
 (subversion)->(utf8proc)
-(subversion)->(libmagic)
 (tcping)
 (terminal-notifier)
 (tomcat)

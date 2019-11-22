@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-20T04:02:30Z</date>
+				<date>2019-11-21T03:26:09Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-23T02:38:23Z</date>
+				<date>2019-11-21T03:26:10Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-23T02:36:59Z</date>
+				<date>2019-11-13T07:36:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-23T02:37:05Z</date>
+				<date>2019-11-15T07:32:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-23T02:36:59Z</date>
+				<date>2019-11-13T07:35:44Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -540,7 +540,7 @@
 			<key>net.java.dev.jna:jna</key>
 			<dict>
 				<key>date</key>
-				<date>2019-07-22T10:31:03Z</date>
+				<date>2019-11-01T03:24:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -596,7 +596,7 @@
 			<key>org.assertj:assertj-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-06T00:34:40Z</date>
+				<date>2019-10-27T13:24:36Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -624,7 +624,7 @@
 			<key>org.jetbrains:annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-08T03:44:07Z</date>
+				<date>2019-11-13T07:36:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -638,7 +638,7 @@
 			<key>org.mybatis:mybatis</key>
 			<dict>
 				<key>date</key>
-				<date>2019-07-15T12:45:19Z</date>
+				<date>2019-10-24T10:45:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -652,7 +652,7 @@
 			<key>org.mybatis:mybatis-spring</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-15T03:22:42Z</date>
+				<date>2019-10-24T10:44:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -680,7 +680,7 @@
 			<key>org.quartz-scheduler:quartz</key>
 			<dict>
 				<key>date</key>
-				<date>2019-05-20T07:24:29Z</date>
+				<date>2019-10-24T10:44:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -694,7 +694,7 @@
 			<key>org.slf4j:slf4j-api</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-15T03:22:30Z</date>
+				<date>2019-11-01T03:24:23Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:52Z</date>
+				<date>2019-11-05T01:26:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:33:13Z</date>
+				<date>2019-11-05T01:26:28Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -736,7 +736,7 @@
 			<key>org.springframework.batch:spring-batch-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-04-08T01:49:17Z</date>
+				<date>2019-10-10T02:17:00Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -750,7 +750,7 @@
 			<key>org.springframework.batch:spring-batch-infrastructure</key>
 			<dict>
 				<key>date</key>
-				<date>2019-04-08T01:49:18Z</date>
+				<date>2019-10-10T02:16:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +764,7 @@
 			<key>org.springframework.boot:spring-boot</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:49Z</date>
+				<date>2019-11-13T07:54:53Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +778,7 @@
 			<key>org.springframework.boot:spring-boot-actuator</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:32:42Z</date>
+				<date>2019-11-15T07:32:43Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +792,7 @@
 			<key>org.springframework.boot:spring-boot-autoconfigure</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-09T02:33:19Z</date>
+				<date>2019-11-15T07:32:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +806,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:33Z</date>
+				<date>2019-11-05T01:26:21Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -820,7 +820,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-06T00:34:29Z</date>
+				<date>2019-11-05T01:26:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -834,7 +834,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-06T00:34:34Z</date>
+				<date>2019-11-05T01:26:24Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -848,7 +848,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-06T00:34:33Z</date>
+				<date>2019-11-05T01:26:27Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -862,7 +862,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:51Z</date>
+				<date>2019-11-05T01:26:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1465,11 +1465,6 @@
 				<key>date</key>
 				<date>2018-01-19T03:44:13Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Bootstrap_4.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:17:11Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Django.xml</key>
 			<dict>
 				<key>date</key>
@@ -1485,10 +1480,10 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:08Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Java_SE12.xml</key>
+			<key>http://kapeli.com/feeds/Java_SE11.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2019-06-06T07:27:14Z</date>
+				<date>2019-11-21T04:06:06Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE8.xml</key>
 			<dict>
@@ -1548,6 +1543,11 @@
 				<key>date</key>
 				<date>2015-09-07T08:49:31Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Bootstrap_4.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2019-11-21T06:42:12Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/C++.xml</key>
 			<dict>
 				<key>date</key>
@@ -1593,10 +1593,10 @@
 				<key>date</key>
 				<date>2018-12-07T09:56:29Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Java_SE11.xml</key>
+			<key>http://kapeli.com/feeds/Java_SE12.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2019-06-10T07:47:20Z</date>
+				<date>2019-11-21T06:41:10Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE6.xml</key>
 			<dict>

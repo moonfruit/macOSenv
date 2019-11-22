@@ -74,7 +74,7 @@ test_ss() {
 		PORT=$((PORT + 1))
 		echo
 	done
-	test_port 9815 ss://moonfruit.top:8445
+	# test_port 9815 ss://moonfruit.top:8445
 	echo
 	test_port 0
 }
