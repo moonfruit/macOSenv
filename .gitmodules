@@ -66,3 +66,6 @@
 	path = package/yyscripts
 	url = https://github.com/moonfruit/yyscripts.git
 	shallow = true
+[submodule "package/vim/swift.vim"]
+	path = package/vim/swift.vim
+	url = https://github.com/keith/swift.vim.git

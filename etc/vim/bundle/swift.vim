@@ -1,0 +1,1 @@
+../../../package/vim/swift.vim
