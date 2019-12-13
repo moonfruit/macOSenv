@@ -23,7 +23,7 @@
 	rb = rebase
 	ss = stash
 	st = status
-	un = reset HEAD --
+	un = restore --staged
 	sb = submodule
 	sbs = submodule status
 	rpo = remote prune origin

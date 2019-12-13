@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-04T15:59:48Z</date>
+				<date>2019-12-10T08:43:44Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-05T15:58:59Z</date>
+				<date>2019-12-12T08:44:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-05T15:59:00Z</date>
+				<date>2019-12-10T08:43:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-05T16:00:41Z</date>
+				<date>2019-12-10T08:43:09Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +764,7 @@
 			<key>org.springframework.boot:spring-boot</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-13T07:54:53Z</date>
+				<date>2019-12-10T08:48:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +778,7 @@
 			<key>org.springframework.boot:spring-boot-actuator</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-15T07:32:43Z</date>
+				<date>2019-12-10T08:45:21Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +792,7 @@
 			<key>org.springframework.boot:spring-boot-autoconfigure</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-15T07:32:51Z</date>
+				<date>2019-12-10T08:47:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
