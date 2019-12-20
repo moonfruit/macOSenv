@@ -144,7 +144,10 @@ def main(name, argv):
 
     commands = []
     if os.path.isfile(commands_file):
-        commands = json.load(open(commands_file))
+        try:
+            commands = json.load(open(commands_file))
+        except ValueError:
+            pass
 
     found = False
     for item in commands:

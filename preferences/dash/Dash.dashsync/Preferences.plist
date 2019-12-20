@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-10T08:43:44Z</date>
+				<date>2019-12-20T02:25:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-12T08:44:17Z</date>
+				<date>2019-12-20T02:25:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -694,7 +694,7 @@
 			<key>org.slf4j:slf4j-api</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-01T03:24:23Z</date>
+				<date>2019-12-17T07:00:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
