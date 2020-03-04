@@ -1,0 +1,8 @@
+{
+  "alfredsnippet" : {
+    "snippet" : "magnet:?xt=urn:btih:{clipboard}&tr=udp:\/\/9.rarbg.to:2710\/announce&tr=udp:\/\/9.rarbg.me:2710\/announce&tr=http:\/\/tr.cili001.com:8070\/announce&tr=http:\/\/tracker.trackerfix.com:80\/announce&tr=udp:\/\/open.demonii.com:1337&tr=udp:\/\/tracker.opentrackr.org:1337\/announce&tr=udp:\/\/p4p.arenabg.com:1337&tr=wss:\/\/tracker.openwebtorrent.com&tr=wss:\/\/tracker.btorrent.xyz&tr=wss:\/\/tracker.fastcast.nz",
+    "uid" : "054018F7-5F0B-4C2F-8BC3-6BF89CA48D04",
+    "name" : "Magnet",
+    "keyword" : "magnet"
+  }
+}

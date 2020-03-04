@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>moonfruit.gost.xipcloud</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/direnv</string>
+		<string>exec</string>
+		<string>/Users/moon/Workspace.localized/env/package/yyscripts/xipcloud-gost.py</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.gost.xipcloud.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.gost.xipcloud.stdout</string>
+	<key>StartCalendarInterval</key>
+	<array>
+		<dict>
+			<key>Hour</key>
+			<integer>2</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>10</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>18</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/Users/moon/Workspace.localized/env/package/gost</string>
+</dict>
+</plist>

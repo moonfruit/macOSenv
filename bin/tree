@@ -1,0 +1,3 @@
+#!/usr/local/bin/bash
+BIN=$(dirname "${BASH_SOURCE[0]}")
+"$BIN/ls" -T "$@"

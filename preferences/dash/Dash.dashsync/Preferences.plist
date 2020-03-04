@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-20T02:25:46Z</date>
+				<date>2020-03-04T06:38:56Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-20T02:25:41Z</date>
+				<date>2020-03-04T06:38:52Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-13T07:36:19Z</date>
+				<date>2020-03-03T06:40:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-15T07:32:51Z</date>
+				<date>2020-03-03T06:53:45Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-13T07:35:44Z</date>
+				<date>2020-03-03T06:40:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -386,7 +386,7 @@
 			<key>com.github.ben-manes.caffeine:caffeine</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-07T01:47:42Z</date>
+				<date>2020-01-16T02:55:28Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -414,7 +414,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-29T03:45:10Z</date>
+				<date>2019-12-31T03:30:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -439,10 +439,24 @@
 					<string>com.google.inject:guice</string>
 				</dict>
 			</dict>
+			<key>com.squareup.okhttp3:logging-interceptor</key>
+			<dict>
+				<key>date</key>
+				<date>2020-03-01T06:43:50Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.squareup.okhttp3:logging-interceptor</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.squareup.okhttp3:logging-interceptor</string>
+				</dict>
+			</dict>
 			<key>com.squareup.okhttp3:okhttp</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-16T09:08:11Z</date>
+				<date>2020-03-01T06:51:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -451,6 +465,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>com.squareup.okhttp3:okhttp</string>
+				</dict>
+			</dict>
+			<key>com.squareup.retrofit2:retrofit</key>
+			<dict>
+				<key>date</key>
+				<date>2020-02-27T01:30:46Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.squareup.retrofit2:retrofit</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.squareup.retrofit2:retrofit</string>
 				</dict>
 			</dict>
 			<key>commons-beanutils:commons-beanutils</key>
@@ -470,7 +498,7 @@
 			<key>commons-codec:commons-codec</key>
 			<dict>
 				<key>date</key>
-				<date>2019-07-25T06:33:04Z</date>
+				<date>2020-01-06T10:28:48Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -507,6 +535,34 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>commons-net:commons-net</string>
+				</dict>
+			</dict>
+			<key>jakarta.annotation:jakarta.annotation-api</key>
+			<dict>
+				<key>date</key>
+				<date>2020-02-18T03:19:27Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>jakarta.annotation:jakarta.annotation-api</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>jakarta.annotation:jakarta.annotation-api</string>
+				</dict>
+			</dict>
+			<key>jakarta.persistence:jakarta.persistence-api</key>
+			<dict>
+				<key>date</key>
+				<date>2020-02-18T03:24:08Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>jakarta.persistence:jakarta.persistence-api</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>jakarta.persistence:jakarta.persistence-api</string>
 				</dict>
 			</dict>
 			<key>javax.persistence:javax.persistence-api</key>
@@ -582,7 +638,7 @@
 			<key>org.apache.commons:commons-vfs2</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-15T03:23:28Z</date>
+				<date>2020-01-14T02:29:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -596,7 +652,7 @@
 			<key>org.assertj:assertj-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-10-27T13:24:36Z</date>
+				<date>2020-02-14T06:13:44Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -624,7 +680,7 @@
 			<key>org.jetbrains:annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-13T07:36:31Z</date>
+				<date>2020-02-17T07:47:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -638,7 +694,7 @@
 			<key>org.mybatis:mybatis</key>
 			<dict>
 				<key>date</key>
-				<date>2019-10-24T10:45:46Z</date>
+				<date>2020-02-22T12:57:07Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -666,7 +722,7 @@
 			<key>org.projectlombok:lombok</key>
 			<dict>
 				<key>date</key>
-				<date>2019-09-16T09:08:13Z</date>
+				<date>2020-02-14T05:33:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +764,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-10T08:43:14Z</date>
+				<date>2020-02-27T01:29:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +778,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-10T08:43:09Z</date>
+				<date>2020-02-27T01:32:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +820,7 @@
 			<key>org.springframework.boot:spring-boot</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-10T08:48:31Z</date>
+				<date>2020-02-28T01:31:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +834,7 @@
 			<key>org.springframework.boot:spring-boot-actuator</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-10T08:45:21Z</date>
+				<date>2020-02-28T01:32:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +848,7 @@
 			<key>org.springframework.boot:spring-boot-autoconfigure</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-10T08:47:46Z</date>
+				<date>2020-02-28T01:34:00Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +862,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-05T16:03:52Z</date>
+				<date>2020-02-27T01:35:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -820,7 +876,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-05T01:26:20Z</date>
+				<date>2020-02-18T07:29:38Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -834,7 +890,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-05T01:26:24Z</date>
+				<date>2020-02-17T07:52:16Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -848,7 +904,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-05T01:26:27Z</date>
+				<date>2020-02-14T06:08:27Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -862,7 +918,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-05T01:26:26Z</date>
+				<date>2020-02-17T07:50:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1372,7 +1428,13 @@
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/commonsnetcommonsnet/ApacheCommonsNet.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/comsquareupokhttp3logginginterceptor/OkHttpLoggingInterceptor.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comsquareupokhttp3okhttp/OkHttp.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/comsquareupretrofit2retrofit/Retrofit.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/jakartaannotationjakartaannotationapi/JakartaAnnotationsAPI.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/javaxpersistencejavaxpersistenceapi/javaxpersistenceapi.docset</key>
 			<string>java:</string>

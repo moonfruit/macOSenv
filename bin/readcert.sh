@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/usr/bin/env bash
 pfx() {
 	openssl pkcs12 -in "$1" -nodes | openssl x509 -text
 }
@@ -21,13 +20,13 @@ crl() {
 }
 
 cert() {
-	FIX=$(echo "$1" | sed 's/.*\.//')
+	FIX="${1##*.}"
 	case "$FIX" in
-		pfx|pkcs12|p12) pfx  "$1"     ;;
-		der)            x509 "$1" der ;;
-		pem|crt|cert)   x509 "$1"     ;;
-		p7b)            p7b  "$1"     ;;
-		crl)            crl  "$1"     ;;
+		pfx|pkcs12|p12)   pfx     "$1"     ;;
+		der)              x509    "$1" der ;;
+		pem|cer|cert|crt) x509    "$1"     ;;
+		p7b)              p7b     "$1"     ;;
+		crl)              crl     "$1"     ;;
 		*) echo "Unkown file type: $1" >&2 ;;
 	esac
 }

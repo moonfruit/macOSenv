@@ -4,13 +4,6 @@
 <dict>
 	<key>Disabled</key>
 	<false/>
-	<key>EnvironmentVariables</key>
-	<dict>
-		<key>ENV</key>
-		<string>/Users/moon/Workspace.localized/env</string>
-		<key>YY_PASSWORD</key>
-		<string>/Users/moon/Workspace.localized/env/etc/private.txt</string>
-	</dict>
 	<key>KeepAlive</key>
 	<dict>
 		<key>SuccessfulExit</key>
@@ -18,11 +11,17 @@
 	</dict>
 	<key>Label</key>
 	<string>moonfruit.gost</string>
-	<key>Program</key>
-	<string>/Users/moon/Workspace.localized/env/package/gost/gost.sh</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/moon/Workspace.localized/env/package/gost/gost</string>
+		<string>-C</string>
+		<string>gost.json</string>
+	</array>
 	<key>StandardErrorPath</key>
 	<string>/tmp/moonfruit.gost.stderr</string>
 	<key>StandardOutPath</key>
 	<string>/tmp/moonfruit.gost.stdout</string>
+	<key>WorkingDirectory</key>
+	<string>/Users/moon/Workspace.localized/env/package/gost</string>
 </dict>
 </plist>

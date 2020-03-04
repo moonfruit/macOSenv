@@ -15,7 +15,7 @@ kilo() {
 }
 
 once() {
-	proxy "$1" curl --connect-timeout 5 -m 30 -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
+	proxy "$1" curl --connect-timeout 3 -m 10 -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
 	TIME=$(grep -v '^curl:' "$TEMP" | tail -1 | sed 's/.*\r//' | awk '{print $7}')
 	rm -f "$TEMP"
 }
@@ -55,35 +55,24 @@ test_port() {
 	test_one "$1"
 }
 
-test_http() {
-	for PORT in {9901..9914}; do
-		test_port $PORT
-		PORT=$((PORT + 1))
-		echo
+test_node() {
+	jq -r '.[] | .name + "\t" + .uri + "\t" + (.port | tostring)' "$1" | \
+	while IFS=$'\t' read -r -a NODE; do
+		local NAME=${NODE[0]}
+		local URI=${NODE[1]}
+		local PORT=${NODE[2]}
+		if [[ $PORT =~ ^[1-9][0-9]*$ ]]; then
+			test_port "$PORT" "$NAME"
+		else
+			test_port "$URI" "$NAME"
+		fi
 	done
-	test_port 9915 http2://moonfruit.top:8443
-	echo
-	test_port gingkoo http://10.1.2.12:8118
-	echo
+	test_port 10000 Auto
 	test_port 0
 }
 
-test_ss() {
-	for PORT in {9801..9814}; do
-		test_port $PORT
-		PORT=$((PORT + 1))
-		echo
-	done
-	# test_port 9815 ss://moonfruit.top:8445
-	echo
-	test_port 0
-}
-
-if [[ $1 == http ]]; then
-	test_http
-
-elif [[ $1 == ss ]]; then
-	test_ss
+if [[ $1 == *.json ]]; then
+	test_node "$1"
 
 elif [[ $# -gt 0 ]]; then
 	while [[ $# -gt 0 ]]; do
@@ -92,5 +81,5 @@ elif [[ $# -gt 0 ]]; then
 	done
 
 else
-	test_http
+	test_node "$ENV/package/gost/node.json"
 fi
