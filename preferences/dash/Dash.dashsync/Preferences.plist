@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-04T06:38:52Z</date>
+				<date>2020-03-09T08:07:12Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -565,20 +565,6 @@
 					<string>jakarta.persistence:jakarta.persistence-api</string>
 				</dict>
 			</dict>
-			<key>javax.persistence:javax.persistence-api</key>
-			<dict>
-				<key>date</key>
-				<date>2019-05-23T03:49:22Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>javax.persistence:javax.persistence-api</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>javax.persistence:javax.persistence-api</string>
-				</dict>
-			</dict>
 			<key>log4j:log4j</key>
 			<dict>
 				<key>date</key>
@@ -666,7 +652,7 @@
 			<key>org.freemarker:freemarker</key>
 			<dict>
 				<key>date</key>
-				<date>2019-08-19T02:42:31Z</date>
+				<date>2020-03-06T06:42:47Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +694,7 @@
 			<key>org.mybatis:mybatis-spring</key>
 			<dict>
 				<key>date</key>
-				<date>2019-10-24T10:44:17Z</date>
+				<date>2020-03-09T08:08:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -876,7 +862,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-18T07:29:38Z</date>
+				<date>2020-03-06T06:40:43Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -890,7 +876,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-17T07:52:16Z</date>
+				<date>2020-03-06T06:41:37Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -904,7 +890,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-14T06:08:27Z</date>
+				<date>2020-03-06T06:42:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -918,7 +904,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-17T07:50:13Z</date>
+				<date>2020-03-06T06:44:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -986,6 +972,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>commons-dbcp:commons-dbcp</string>
+				</dict>
+			</dict>
+			<key>javax.persistence:javax.persistence-api</key>
+			<dict>
+				<key>date</key>
+				<date>2020-03-06T10:25:54Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>javax.persistence:javax.persistence-api</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>javax.persistence:javax.persistence-api</string>
 				</dict>
 			</dict>
 			<key>javax.servlet:javax.servlet-api</key>
@@ -1435,6 +1435,8 @@
 			<key>~/Library/Application Support/Dash/Java DocSets/comsquareupretrofit2retrofit/Retrofit.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/jakartaannotationjakartaannotationapi/JakartaAnnotationsAPI.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/jakartapersistencejakartapersistenceapi/JakartaPersistenceAPI.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/javaxpersistencejavaxpersistenceapi/javaxpersistenceapi.docset</key>
 			<string>java:</string>
