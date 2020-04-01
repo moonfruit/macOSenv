@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-04T06:38:56Z</date>
+				<date>2020-03-25T03:08:42Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-09T08:07:12Z</date>
+				<date>2020-03-31T08:56:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -428,7 +428,7 @@
 			<key>com.google.inject:guice</key>
 			<dict>
 				<key>date</key>
-				<date>2018-10-30T01:50:59Z</date>
+				<date>2020-03-24T03:09:03Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -470,7 +470,7 @@
 			<key>com.squareup.retrofit2:retrofit</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-27T01:30:46Z</date>
+				<date>2020-03-27T07:23:00Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -610,7 +610,7 @@
 			<key>org.apache.commons:commons-lang3</key>
 			<dict>
 				<key>date</key>
-				<date>2018-09-25T01:47:14Z</date>
+				<date>2020-03-31T08:59:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +806,7 @@
 			<key>org.springframework.boot:spring-boot</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-28T01:31:06Z</date>
+				<date>2020-03-27T07:29:54Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -820,7 +820,7 @@
 			<key>org.springframework.boot:spring-boot-actuator</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-28T01:32:41Z</date>
+				<date>2020-03-27T07:33:38Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -834,7 +834,7 @@
 			<key>org.springframework.boot:spring-boot-autoconfigure</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-28T01:34:00Z</date>
+				<date>2020-03-27T07:30:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -848,7 +848,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-27T01:35:14Z</date>
+				<date>2020-03-27T07:29:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1198,7 +1198,7 @@
 			<key>Kotlin</key>
 			<dict>
 				<key>date</key>
-				<date>2019-04-08T01:50:24Z</date>
+				<date>2020-03-24T03:56:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
