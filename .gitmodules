@@ -12,7 +12,7 @@
 	shallow = true
 [submodule "package/pac"]
 	path = package/pac
-	url = git@git.dev.tencent.com:moonfruit/pac.git
+	url = git@gitee.com:moonfruit/pac.git
 	shallow = true
 [submodule "package/vim/pathogen"]
 	path = package/vim/pathogen
