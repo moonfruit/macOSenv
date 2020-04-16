@@ -34,10 +34,6 @@
 	path = package/vim/XMLCatalog
 	url = https://github.com/moonfruit/XMLCatalog.git
 	shallow = true
-[submodule "package/BaiduExporter"]
-	path = package/BaiduExporter
-	url = https://github.com/acgotaku/BaiduExporter.git
-	shallow = true
 [submodule "package/WeChatTweak"]
 	path = package/WeChatTweak
 	url = https://github.com/Sunnyyoung/WeChatTweak-macOS.git

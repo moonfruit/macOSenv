@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-25T03:08:42Z</date>
+				<date>2020-04-15T07:00:22Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-31T08:56:13Z</date>
+				<date>2020-04-15T07:00:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-03T06:53:45Z</date>
+				<date>2020-04-13T07:08:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -414,7 +414,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-31T03:30:58Z</date>
+				<date>2020-04-15T07:11:36Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +778,7 @@
 			<key>org.springframework.batch:spring-batch-core</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-05T16:05:27Z</date>
+				<date>2020-04-02T09:03:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +792,7 @@
 			<key>org.springframework.batch:spring-batch-infrastructure</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-05T16:01:44Z</date>
+				<date>2020-04-02T09:01:47Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -862,7 +862,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-06T06:40:43Z</date>
+				<date>2020-04-02T08:58:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -876,7 +876,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-06T06:41:37Z</date>
+				<date>2020-04-02T08:58:11Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -890,7 +890,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-06T06:42:17Z</date>
+				<date>2020-04-02T08:58:38Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -904,7 +904,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-06T06:44:31Z</date>
+				<date>2020-04-02T08:58:48Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
