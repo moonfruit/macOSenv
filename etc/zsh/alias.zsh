@@ -20,17 +20,19 @@ alias du='du -h'
 alias ..='cd ..'
 alias cd..='cd ..'
 
-alias h="history | tail -58"
-alias hist="history"
+alias h='history | tail -58'
+alias hist='history'
 
-alias bash="SHELL=/usr/local/bin/bash /usr/local/bin/bash --login"
-# alias diff="colordiff"
-alias ldd="otool -L"
-alias tmuxc="tmux -CC"
+alias bash='SHELL=/usr/local/bin/bash /usr/local/bin/bash --login'
+# alias diff='colordiff'
+alias ldd='otool -L'
+alias tmuxc='tmux -CC'
 
 alias sl='sl -e'
 alias LS='sl'
 alias ls-='sl'
+
+alias gotop='gotop -c solarized -r 0.2'
 
 unalias grep
 
