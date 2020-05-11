@@ -4,4 +4,4 @@ ControlPersist 10m
 
 Host moonfruit.top
   Port 26800
-  ProxyCommand nc -X 5 -x 127.0.0.1:11002 %h %p
+  ProxyCommand nc -X 5 -x 127.0.0.1:10001 %h %p
