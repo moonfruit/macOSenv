@@ -10,6 +10,9 @@
 	quotepath = false
 	autocrlf = input
 
+[pull]
+	rebase = true
+
 [alias]
 	br = branch
 	ci = commit

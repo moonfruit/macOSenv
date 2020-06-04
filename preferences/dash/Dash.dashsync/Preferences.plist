@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-12T05:56:07Z</date>
+				<date>2020-05-27T02:47:54Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-14T05:53:37Z</date>
+				<date>2020-05-29T02:47:54Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -386,7 +386,7 @@
 			<key>com.github.ben-manes.caffeine:caffeine</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:54:54Z</date>
+				<date>2020-05-22T01:23:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -512,7 +512,7 @@
 			<key>commons-io:commons-io</key>
 			<dict>
 				<key>date</key>
-				<date>2017-10-21T10:05:33Z</date>
+				<date>2020-05-28T02:48:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -750,7 +750,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:58:24Z</date>
+				<date>2020-05-22T01:23:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +764,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:56:03Z</date>
+				<date>2020-05-22T01:23:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -801,48 +801,6 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.springframework.batch:spring-batch-infrastructure</string>
-				</dict>
-			</dict>
-			<key>org.springframework.boot:spring-boot</key>
-			<dict>
-				<key>date</key>
-				<date>2020-05-09T05:57:40Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.springframework.boot:spring-boot</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.springframework.boot:spring-boot</string>
-				</dict>
-			</dict>
-			<key>org.springframework.boot:spring-boot-actuator</key>
-			<dict>
-				<key>date</key>
-				<date>2020-05-09T06:01:50Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.springframework.boot:spring-boot-actuator</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.springframework.boot:spring-boot-actuator</string>
-				</dict>
-			</dict>
-			<key>org.springframework.boot:spring-boot-autoconfigure</key>
-			<dict>
-				<key>date</key>
-				<date>2020-05-09T06:03:00Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.springframework.boot:spring-boot-autoconfigure</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.springframework.boot:spring-boot-autoconfigure</string>
 				</dict>
 			</dict>
 			<key>org.springframework.integration:spring-integration-core</key>
@@ -1098,6 +1056,48 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.quartz-scheduler:quartz-jobs</string>
+				</dict>
+			</dict>
+			<key>org.springframework.boot:spring-boot</key>
+			<dict>
+				<key>date</key>
+				<date>2020-05-26T03:53:02Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.springframework.boot:spring-boot</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.springframework.boot:spring-boot</string>
+				</dict>
+			</dict>
+			<key>org.springframework.boot:spring-boot-actuator</key>
+			<dict>
+				<key>date</key>
+				<date>2020-05-26T03:53:02Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.springframework.boot:spring-boot-actuator</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.springframework.boot:spring-boot-actuator</string>
+				</dict>
+			</dict>
+			<key>org.springframework.boot:spring-boot-autoconfigure</key>
+			<dict>
+				<key>date</key>
+				<date>2020-05-26T03:53:02Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.springframework.boot:spring-boot-autoconfigure</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.springframework.boot:spring-boot-autoconfigure</string>
 				</dict>
 			</dict>
 			<key>org.springframework.security:spring-security-core-tiger</key>
@@ -1356,6 +1356,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>DHWKWebViewTextSizeMultiplier</key>
+	<real>1.1499998569488525</real>
 	<key>DHWebViewIsDark</key>
 	<false/>
 	<key>actuallyDarkWebView</key>
@@ -1496,9 +1498,15 @@
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringboot/SpringBoot.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringboot/springboot.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringbootactuator/SpringBootActuator.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringbootactuator/springbootactuator.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringbootautoconfigure/SpringBootAutoConfigure.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkbootspringbootautoconfigure/springbootautoconfigure.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/orgspringframeworkintegrationspringintegrationcore/SpringIntegrationCore.docset</key>
 			<string>java:</string>

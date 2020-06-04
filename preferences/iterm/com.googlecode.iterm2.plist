@@ -202,7 +202,7 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-1067 920 544 77 -2560 537 2560 1417 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
-	<string>236 636 735 382 0 0 1680 1050 </string>
+	<string>-2104 1465 735 382 -2560 458 2560 1440 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>-1588 1390 616 174 -2560 458 2560 1417 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
@@ -216,7 +216,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>127 443 592 584 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2560 908 1066 537 -2560 458 2560 1440 </string>
+	<string>0 450 1066 537 0 0 1680 1027 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_550B3BC4-9D90-4016-B342-242B82E83738</key>
@@ -18180,6 +18180,7 @@
 	<array>
 		<string>3.3.3beta1</string>
 		<string>3.3.8beta3</string>
+		<string>3.3.10beta4</string>
 		<string>3.3.0beta11</string>
 		<string>3.3.2beta1</string>
 		<string>3.3.0beta13</string>
@@ -18246,7 +18247,7 @@
 	<key>NoSyncLastTipTime</key>
 	<real>589775389.76097596</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>85</integer>
+	<integer>88</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -19250,6 +19251,8 @@
 	<string></string>
 	<key>PasteSpecialUseRegexSubstitution</key>
 	<true/>
+	<key>PasteTabToStringTabStopSize</key>
+	<integer>4</integer>
 	<key>PerPaneBackgroundImage</key>
 	<true/>
 	<key>PointerActions</key>
@@ -19308,11 +19311,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-05-06T11:56:48Z</date>
+	<date>2020-05-30T07:20:38Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
-	<true/>
+	<false/>
 	<key>SavePasteHistory</key>
 	<true/>
 	<key>Secure Input</key>
@@ -19394,7 +19397,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.10beta3</string>
+	<string>3.3.10beta4</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
