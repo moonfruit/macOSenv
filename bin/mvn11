@@ -1,4 +1,1 @@
-#!/bin/sh
-# shellcheck source=java11
-source "${BASH_SOURCE[0]%/*}/java11"
-exec mvn "$@"
+zoo/javan

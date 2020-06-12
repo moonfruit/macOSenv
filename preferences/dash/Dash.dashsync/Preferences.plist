@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-27T02:47:54Z</date>
+				<date>2020-06-08T07:18:45Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-29T02:47:54Z</date>
+				<date>2020-06-11T07:15:40Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -400,7 +400,7 @@
 			<key>com.google.errorprone:error_prone_annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2019-12-03T15:58:28Z</date>
+				<date>2020-06-08T07:18:36Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -680,7 +680,7 @@
 			<key>org.mybatis:mybatis</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-22T12:57:07Z</date>
+				<date>2020-06-08T07:18:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -694,7 +694,7 @@
 			<key>org.mybatis:mybatis-spring</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-09T08:08:05Z</date>
+				<date>2020-06-08T07:18:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +778,7 @@
 			<key>org.springframework.batch:spring-batch-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-04-02T09:03:46Z</date>
+				<date>2020-06-11T07:17:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +792,7 @@
 			<key>org.springframework.batch:spring-batch-infrastructure</key>
 			<dict>
 				<key>date</key>
-				<date>2020-04-02T09:01:47Z</date>
+				<date>2020-06-11T07:17:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +806,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-14T05:56:11Z</date>
+				<date>2020-06-11T07:19:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -820,7 +820,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:54:20Z</date>
+				<date>2020-06-08T07:18:23Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -834,7 +834,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:54:43Z</date>
+				<date>2020-06-08T07:19:52Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -848,7 +848,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:55:07Z</date>
+				<date>2020-06-08T07:18:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -862,7 +862,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:57:21Z</date>
+				<date>2020-06-08T07:19:09Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
