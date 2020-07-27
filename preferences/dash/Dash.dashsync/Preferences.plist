@@ -22,22 +22,6 @@
 					<string>ASCII_Tables</string>
 				</dict>
 			</dict>
-			<key>GDB</key>
-			<dict>
-				<key>date</key>
-				<date>2018-07-07T02:24:38Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>name</key>
-					<string>GDB</string>
-					<key>platform</key>
-					<string>cheatsheet</string>
-					<key>uniqueIdentifier</key>
-					<string>GDB</string>
-				</dict>
-			</dict>
 			<key>Gitmoji</key>
 			<dict>
 				<key>date</key>
@@ -55,38 +39,6 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>Gitmoji</string>
-				</dict>
-			</dict>
-			<key>LLDB_Commands</key>
-			<dict>
-				<key>date</key>
-				<date>2018-07-07T02:24:38Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>name</key>
-					<string>LLDB Commands</string>
-					<key>platform</key>
-					<string>cheatsheet</string>
-					<key>uniqueIdentifier</key>
-					<string>LLDB_Commands</string>
-				</dict>
-			</dict>
-			<key>LLDB_to_GDB_Command_Map</key>
-			<dict>
-				<key>date</key>
-				<date>2018-07-07T02:24:38Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>name</key>
-					<string>LLDB to GDB Command Map</string>
-					<key>platform</key>
-					<string>cheatsheet</string>
-					<key>uniqueIdentifier</key>
-					<string>LLDB_to_GDB_Command_Map</string>
 				</dict>
 			</dict>
 		</dict>
@@ -108,6 +60,22 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>Bash_Shortcuts</string>
+				</dict>
+			</dict>
+			<key>GDB</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-15T08:38:03Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>GDB</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>GDB</string>
 				</dict>
 			</dict>
 			<key>Hub</key>
@@ -142,6 +110,38 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>IntelliJ_Shortcuts</string>
+				</dict>
+			</dict>
+			<key>LLDB_Commands</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-15T08:38:06Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>LLDB Commands</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>LLDB_Commands</string>
+				</dict>
+			</dict>
+			<key>LLDB_to_GDB_Command_Map</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-15T08:37:47Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>LLDB to GDB Command Map</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>LLDB_to_GDB_Command_Map</string>
 				</dict>
 			</dict>
 			<key>Sublime_Text_3</key>
@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-06-16T07:11:42Z</date>
+				<date>2020-07-27T01:17:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-06-16T07:11:43Z</date>
+				<date>2020-07-27T01:17:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:53:40Z</date>
+				<date>2020-07-21T06:53:16Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T06:04:47Z</date>
+				<date>2020-07-21T07:02:12Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-09T05:53:45Z</date>
+				<date>2020-07-21T06:53:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -386,7 +386,7 @@
 			<key>com.github.ben-manes.caffeine:caffeine</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-22T01:23:30Z</date>
+				<date>2020-06-30T01:32:21Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -523,20 +523,6 @@
 					<string>commons-io:commons-io</string>
 				</dict>
 			</dict>
-			<key>commons-net:commons-net</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:17:44Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>commons-net:commons-net</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>commons-net:commons-net</string>
-				</dict>
-			</dict>
 			<key>jakarta.annotation:jakarta.annotation-api</key>
 			<dict>
 				<key>date</key>
@@ -565,24 +551,10 @@
 					<string>jakarta.persistence:jakarta.persistence-api</string>
 				</dict>
 			</dict>
-			<key>log4j:log4j</key>
-			<dict>
-				<key>date</key>
-				<date>2017-08-06T11:17:40Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>log4j:log4j</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>log4j:log4j</string>
-				</dict>
-			</dict>
 			<key>net.java.dev.jna:jna</key>
 			<dict>
 				<key>date</key>
-				<date>2019-11-01T03:24:31Z</date>
+				<date>2020-07-15T08:33:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -610,7 +582,7 @@
 			<key>org.apache.commons:commons-lang3</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-31T08:59:32Z</date>
+				<date>2020-07-17T08:30:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -661,20 +633,6 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.freemarker:freemarker</string>
-				</dict>
-			</dict>
-			<key>org.jetbrains:annotations</key>
-			<dict>
-				<key>date</key>
-				<date>2020-02-17T07:47:17Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>org.jetbrains:annotations</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>org.jetbrains:annotations</string>
 				</dict>
 			</dict>
 			<key>org.mybatis:mybatis</key>
@@ -750,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-22T01:23:26Z</date>
+				<date>2020-07-23T06:53:10Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2020-05-22T01:23:25Z</date>
+				<date>2020-07-23T06:53:56Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +764,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-06-11T07:19:04Z</date>
+				<date>2020-07-23T06:56:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -932,6 +890,20 @@
 					<string>commons-dbcp:commons-dbcp</string>
 				</dict>
 			</dict>
+			<key>commons-net:commons-net</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-15T08:38:13Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>commons-net:commons-net</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>commons-net:commons-net</string>
+				</dict>
+			</dict>
 			<key>javax.persistence:javax.persistence-api</key>
 			<dict>
 				<key>date</key>
@@ -958,6 +930,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>javax.servlet:javax.servlet-api</string>
+				</dict>
+			</dict>
+			<key>log4j:log4j</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-15T08:38:10Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>log4j:log4j</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>log4j:log4j</string>
 				</dict>
 			</dict>
 			<key>org.apache.poi:poi</key>
@@ -1042,6 +1028,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>org.eclipse.jetty:jetty-util</string>
+				</dict>
+			</dict>
+			<key>org.jetbrains:annotations</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-27T01:19:22Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>org.jetbrains:annotations</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>org.jetbrains:annotations</string>
 				</dict>
 			</dict>
 			<key>org.quartz-scheduler:quartz-jobs</key>
@@ -1380,6 +1380,8 @@
 			<string>python:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Groovy/Groovy.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/DocSets/Groovy_JDK/Groovy JDK.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Java_EE8/Java EE8.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Java_SE11/Java.docset</key>
@@ -1552,20 +1554,30 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:08Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Groovy_JDK.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-14T08:30:22Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Java_SE11.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2019-11-21T04:06:06Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_SE14.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-14T09:48:45Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE8.xml</key>
 			<dict>
 				<key>date</key>
 				<date>2017-08-06T11:22:28Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Lua_5.3.xml</key>
+			<key>http://kapeli.com/feeds/Lua_5.4.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2017-08-06T11:17:40Z</date>
+				<date>2020-07-14T08:46:16Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Man_Pages.xml</key>
 			<dict>
@@ -1645,11 +1657,6 @@
 				<key>date</key>
 				<date>2019-02-27T05:59:01Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Groovy_JDK.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2016-04-05T10:19:50Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/HTML.xml</key>
 			<dict>
 				<key>date</key>
@@ -1679,6 +1686,11 @@
 			<dict>
 				<key>date</key>
 				<date>2018-12-07T09:56:28Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Lua_5.3.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2020-07-14T08:46:17Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Markdown.xml</key>
 			<dict>
