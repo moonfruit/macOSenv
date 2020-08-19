@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-08-07T07:40:10Z</date>
+				<date>2020-08-19T01:13:55Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-08-10T06:40:42Z</date>
+				<date>2020-08-17T01:13:49Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2020-07-23T06:53:10Z</date>
+				<date>2020-08-13T06:41:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2020-07-23T06:53:56Z</date>
+				<date>2020-08-13T06:41:53Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
