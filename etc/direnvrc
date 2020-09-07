@@ -42,6 +42,9 @@ layout_python() {
 			return 1
 			;;
 		esac
+		if [[ -x venv/bin/pip ]]; then
+			venv/bin/pip install -U pip setuptools wheel
+		fi
 	fi
 
 	# shellcheck disable=SC1091

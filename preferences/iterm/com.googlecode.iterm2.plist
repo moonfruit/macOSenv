@@ -134,6 +134,8 @@
 	<string>{712, 448}</string>
 	<key>NSNavPanelExpandedSizeForSaveMode</key>
 	<string>{712, 448}</string>
+	<key>NSOverlayScrollersFallBackForAccessoryViews</key>
+	<false/>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -202,9 +204,9 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-1067 920 544 77 -2560 537 2560 1417 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
-	<string>-2104 1465 735 382 -2560 458 2560 1440 </string>
+	<string>-1602 1018 735 382 -2560 350 2560 1440 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
-	<string>-1588 1390 616 174 -2560 458 2560 1417 </string>
+	<string>-1588 1299 616 174 -2560 350 2560 1440 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>640 690 400 129 0 0 1680 1050 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
@@ -216,7 +218,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>127 443 592 584 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 450 1066 537 0 0 1680 1027 </string>
+	<string>-2560 800 1066 537 -2560 350 2560 1417 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_550B3BC4-9D90-4016-B342-242B82E83738</key>
@@ -18181,16 +18183,20 @@
 		<string>3.3.3beta1</string>
 		<string>3.3.8beta3</string>
 		<string>3.3.10beta4</string>
+		<string>3.3.12beta3</string>
 		<string>3.3.0beta11</string>
 		<string>3.3.2beta1</string>
+		<string>3.3.8beta1</string>
 		<string>3.3.0beta13</string>
+		<string>3.4.0beta2</string>
 		<string>3.3.8beta2</string>
 		<string>3.3.0beta15</string>
 		<string>3.3.5beta1</string>
 		<string>3.3.8beta4</string>
 		<string>3.3.4beta1</string>
+		<string>3.3.11beta1</string>
 		<string>3.3.0beta3</string>
-		<string>3.3.8beta1</string>
+		<string>3.3.12beta1</string>
 		<string>3.3.10beta3</string>
 	</array>
 	<key>NoSyncBFPFavorites</key>
@@ -18219,16 +18225,16 @@
 	<key>NoSyncFrame_SessionsPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{-2560, 458}, {2560, 1440}}</string>
+		<string>{{-2560, 350}, {2560, 1440}}</string>
 		<key>topLeft</key>
-		<string>{-2291, 1053}</string>
+		<string>{-2291, 945}</string>
 	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{-2560, 458}, {2560, 1440}}</string>
+		<string>{{-2560, 350}, {2560, 1440}}</string>
 		<key>topLeft</key>
-		<string>{-2148, 1635}</string>
+		<string>{-2027, 1410}</string>
 	</dict>
 	<key>NoSyncHaveRequestedFullDiskAccess</key>
 	<true/>
@@ -18244,10 +18250,12 @@
 	<integer>0</integer>
 	<key>NoSyncInstallationId</key>
 	<string>98917B37-D8E6-40C0-AB9E-DE70D22C3307</string>
+	<key>NoSyncLastOSVersion</key>
+	<string>Version 10.15.6 (Build 19G73)</string>
 	<key>NoSyncLastTipTime</key>
-	<real>589775389.76097596</real>
+	<real>619497606.97488403</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>88</integer>
+	<integer>99</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -18389,6 +18397,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>selectionLength</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>user.gitDirty</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -18424,6 +18440,14 @@
 				<string>user.gitDeletes</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<false/>
+				<key>name</key>
+				<string>parentSession</string>
+				<key>nonterminalContext</key>
+				<integer>1</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
@@ -18550,6 +18574,14 @@
 				<true/>
 				<key>name</key>
 				<string>tmuxStatusLeft</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>selection</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -18867,23 +18899,23 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.pid</string>
+				<string>currentSession.terminalWindowName</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
-				<true/>
+				<false/>
 				<key>name</key>
-				<string>tmuxWindow</string>
+				<string>currentSession</string>
 				<key>nonterminalContext</key>
-				<integer>0</integer>
+				<integer>1</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.user.gitDirty</string>
+				<string>currentSession</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -19057,6 +19089,14 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession.pid</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<false/>
 				<key>name</key>
 				<string>iterm2</string>
@@ -19083,6 +19123,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>tmuxWindow</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentSession.hostname</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -19091,23 +19139,7 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.terminalWindowName</string>
-				<key>nonterminalContext</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>isTerminal</key>
-				<false/>
-				<key>name</key>
-				<string>currentSession</string>
-				<key>nonterminalContext</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>isTerminal</key>
-				<true/>
-				<key>name</key>
-				<string>currentSession</string>
+				<string>currentSession.user.gitDirty</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -19140,6 +19172,8 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NoSyncRestoreWindowsCount</key>
+	<integer>0</integer>
 	<key>NoSyncSuppressDownloadConfirmation</key>
 	<true/>
 	<key>NoSyncSuppressDownloadConfirmation_selection</key>
@@ -19148,86 +19182,88 @@
 	<real>523549182.34915102</real>
 	<key>NoSyncTipsToNotShow</key>
 	<array>
-		<string>000</string>
-		<string>0000</string>
-		<string>0001</string>
-		<string>0002</string>
-		<string>0003</string>
-		<string>0004</string>
-		<string>0005</string>
-		<string>0006</string>
-		<string>0007</string>
-		<string>0008</string>
 		<string>0009</string>
-		<string>0010</string>
-		<string>0011</string>
-		<string>0012</string>
-		<string>0013</string>
-		<string>0014</string>
-		<string>0015</string>
 		<string>0016</string>
-		<string>0017</string>
-		<string>0018</string>
-		<string>0019</string>
-		<string>0020</string>
-		<string>0021</string>
-		<string>0022</string>
 		<string>0023</string>
-		<string>0024</string>
-		<string>0025</string>
-		<string>0026</string>
-		<string>0027</string>
-		<string>0028</string>
-		<string>0029</string>
 		<string>0030</string>
-		<string>0031</string>
-		<string>0032</string>
-		<string>0033</string>
-		<string>0034</string>
-		<string>0035</string>
-		<string>0036</string>
-		<string>0037</string>
-		<string>0038</string>
-		<string>0039</string>
-		<string>0040</string>
-		<string>0041</string>
-		<string>0042</string>
-		<string>0043</string>
-		<string>0044</string>
-		<string>0045</string>
-		<string>0046</string>
-		<string>0047</string>
-		<string>0048</string>
-		<string>0049</string>
-		<string>0050</string>
-		<string>0051</string>
-		<string>0052</string>
-		<string>0053</string>
-		<string>0054</string>
-		<string>0055</string>
-		<string>0056</string>
-		<string>0057</string>
-		<string>0058</string>
 		<string>0059</string>
-		<string>0060</string>
-		<string>0061</string>
-		<string>0062</string>
-		<string>0063</string>
-		<string>0064</string>
-		<string>0065</string>
 		<string>0066</string>
-		<string>0067</string>
-		<string>0068</string>
-		<string>0069</string>
-		<string>0070</string>
-		<string>0071</string>
-		<string>0072</string>
 		<string>0073</string>
+		<string>0002</string>
+		<string>0038</string>
+		<string>0045</string>
+		<string>0052</string>
+		<string>0017</string>
+		<string>0024</string>
+		<string>0031</string>
+		<string>0067</string>
 		<string>0074</string>
+		<string>0003</string>
+		<string>0010</string>
+		<string>0039</string>
+		<string>0046</string>
+		<string>0053</string>
+		<string>0060</string>
+		<string>0018</string>
+		<string>0025</string>
+		<string>0032</string>
+		<string>0068</string>
 		<string>0075</string>
+		<string>0004</string>
+		<string>0011</string>
+		<string>0047</string>
+		<string>0054</string>
+		<string>0061</string>
+		<string>0019</string>
+		<string>0026</string>
+		<string>0033</string>
+		<string>0040</string>
+		<string>0069</string>
 		<string>0076</string>
+		<string>0005</string>
+		<string>0012</string>
+		<string>0048</string>
+		<string>0055</string>
+		<string>0062</string>
+		<string>0027</string>
+		<string>0034</string>
+		<string>0041</string>
 		<string>0077</string>
+		<string>0006</string>
+		<string>0013</string>
+		<string>0020</string>
+		<string>0049</string>
+		<string>0056</string>
+		<string>0063</string>
+		<string>0070</string>
+		<string>0028</string>
+		<string>0035</string>
+		<string>0042</string>
 		<string>0078</string>
+		<string>0007</string>
+		<string>0014</string>
+		<string>0021</string>
+		<string>0057</string>
+		<string>0064</string>
+		<string>0071</string>
+		<string>0000</string>
+		<string>0029</string>
+		<string>0036</string>
+		<string>0043</string>
+		<string>0050</string>
+		<string>0079</string>
+		<string>0008</string>
+		<string>0015</string>
+		<string>0022</string>
+		<string>0058</string>
+		<string>0065</string>
+		<string>0072</string>
+		<string>0001</string>
+		<string>0037</string>
+		<string>000</string>
+		<string>0044</string>
+		<string>0051</string>
+		<string>0079</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
@@ -19307,11 +19343,11 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/testing_new.xml?shard=32</string>
+	<string>https://iterm2.com/appcasts/testing_modern.xml?shard=32</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-05-30T07:20:38Z</date>
+	<date>2020-08-31T06:08:40Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -19354,6 +19390,8 @@
 	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
 	<false/>
+	<key>TimeBetweenTips</key>
+	<real>86400</real>
 	<key>TmuxDashboardLimit</key>
 	<integer>10</integer>
 	<key>ToolbeltTools</key>
@@ -19397,7 +19435,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.10beta4</string>
+	<string>3.4.0beta2</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
