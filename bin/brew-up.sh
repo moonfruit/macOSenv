@@ -14,19 +14,14 @@ if [[ $1 = "--force" || $1 = "-f" ]]; then
 fi
 
 echo "$GREEN==>$RESET ${BOLD}Updating Homebrew$RESET"
+# shellcheck disable=SC2086
 brew update $PREINSTALL -v
-export HOMEBREW_AUTO_UPDATE_CHECKED=1
+export HOMEBREW_UPDATE_PREINSTALL=1
 
 OUTDATED=$(brew outdated)
 if [[ -n $OUTDATED ]]; then
-	if brew upgrade --force-bottle; then
+	if brew upgrade --display-times; then
 		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
 		brew cleanup -s --prune 30
 	fi
-fi
-
-OUTDATED=$(brew cask outdated)
-if [[ -n $OUTDATED ]]; then
-	echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
-	echo "$OUTDATED"
 fi
