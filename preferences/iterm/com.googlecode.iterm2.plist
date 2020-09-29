@@ -204,13 +204,13 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-1067 920 544 77 -2560 537 2560 1417 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
-	<string>-1602 1018 735 382 -2560 350 2560 1440 </string>
+	<string>496 437 735 382 0 0 1680 1027 </string>
 	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
 	<string>-1588 1299 616 174 -2560 350 2560 1440 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>640 690 400 129 0 0 1680 1050 </string>
+	<string>-1690 1312 400 129 -2560 350 2560 1440 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-1590 1244 620 392 -2560 458 2560 1440 </string>
+	<string>-1590 1136 620 392 -2560 350 2560 1440 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-2071 748 606 469 -2560 537 2560 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
@@ -218,7 +218,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>127 443 592 584 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2560 800 1066 537 -2560 350 2560 1417 </string>
+	<string>-1810 800 1066 537 -2560 350 2560 1440 </string>
 	<key>NeverWarnAboutShortLivedSessions_312161DB-F566-4C41-9D5F-F7186C104406</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_550B3BC4-9D90-4016-B342-242B82E83738</key>
@@ -18186,7 +18186,8 @@
 		<string>3.3.12beta3</string>
 		<string>3.3.0beta11</string>
 		<string>3.3.2beta1</string>
-		<string>3.3.8beta1</string>
+		<string>3.4.0beta5</string>
+		<string>3.3.10beta3</string>
 		<string>3.3.0beta13</string>
 		<string>3.4.0beta2</string>
 		<string>3.3.8beta2</string>
@@ -18195,9 +18196,9 @@
 		<string>3.3.8beta4</string>
 		<string>3.3.4beta1</string>
 		<string>3.3.11beta1</string>
-		<string>3.3.0beta3</string>
 		<string>3.3.12beta1</string>
-		<string>3.3.10beta3</string>
+		<string>3.3.8beta1</string>
+		<string>3.3.0beta3</string>
 	</array>
 	<key>NoSyncBFPFavorites</key>
 	<array>
@@ -18244,6 +18245,8 @@
 	<true/>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
+	<key>NoSyncIgnoreSystemWindowRestoration</key>
+	<true/>
 	<key>NoSyncInstallUtilitiesPackage</key>
 	<true/>
 	<key>NoSyncInstallUtilitiesPackage_selection</key>
@@ -18251,11 +18254,11 @@
 	<key>NoSyncInstallationId</key>
 	<string>98917B37-D8E6-40C0-AB9E-DE70D22C3307</string>
 	<key>NoSyncLastOSVersion</key>
-	<string>Version 10.15.6 (Build 19G73)</string>
+	<string>Version 10.15.6 (Build 19G2021)</string>
 	<key>NoSyncLastTipTime</key>
 	<real>619497606.97488403</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>99</integer>
+	<integer>104</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -18398,6 +18401,14 @@
 				<true/>
 				<key>name</key>
 				<string>selectionLength</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>processTitle</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -18736,6 +18747,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentTab.currentSession.processTitle</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentTab.currentSession</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -18899,23 +18918,23 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.terminalWindowName</string>
+				<string>tmuxWindow</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
-				<false/>
+				<true/>
 				<key>name</key>
-				<string>currentSession</string>
+				<string>currentSession.hostname</string>
 				<key>nonterminalContext</key>
-				<integer>1</integer>
+				<integer>0</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession</string>
+				<string>currentSession.user.gitDirty</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -19097,6 +19116,14 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession.terminalWindowName</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<false/>
 				<key>name</key>
 				<string>iterm2</string>
@@ -19121,25 +19148,17 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
-				<true/>
+				<false/>
 				<key>name</key>
-				<string>tmuxWindow</string>
+				<string>currentSession</string>
 				<key>nonterminalContext</key>
-				<integer>0</integer>
+				<integer>1</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.hostname</string>
-				<key>nonterminalContext</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>isTerminal</key>
-				<true/>
-				<key>name</key>
-				<string>currentSession.user.gitDirty</string>
+				<string>currentSession</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -19326,6 +19345,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/moon/Workspace.localized/env/preferences/iterm</string>
+	<key>PreventEscapeSequenceFromClearingHistory</key>
+	<false/>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -19347,7 +19368,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-08-31T06:08:40Z</date>
+	<date>2020-09-25T02:39:54Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -19435,7 +19456,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.4.0beta2</string>
+	<string>3.4.0beta5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
