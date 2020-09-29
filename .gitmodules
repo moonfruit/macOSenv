@@ -38,10 +38,6 @@
 	path = package/WeChatTweak
 	url = https://github.com/Sunnyyoung/WeChatTweak-macOS.git
 	shallow = true
-[submodule "package/pam-touchID"]
-	path = package/pam-touchID
-	url = https://github.com/moonfruit/pam-touchID.git
-	shallow = true
 [submodule "package/vim/kotlin-vim"]
 	path = package/vim/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim.git
