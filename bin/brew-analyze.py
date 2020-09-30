@@ -12,7 +12,7 @@ skinparam usecase {
     BackgroundColor<< dep >> DarkGoldenRod
 }""")
     for obj in data:
-        name = obj["name"]
+        name = obj["full_name"]
         installed = obj.get("installed")
         if installed:
             installed = installed[0]
