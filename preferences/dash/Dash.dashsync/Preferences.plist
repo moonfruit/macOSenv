@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-29T01:13:39Z</date>
+				<date>2020-10-09T03:14:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-29T01:13:39Z</date>
+				<date>2020-10-09T03:14:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2020-08-05T07:40:48Z</date>
+				<date>2020-10-04T05:43:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2020-08-25T05:56:42Z</date>
+				<date>2020-10-09T03:17:56Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2020-08-05T07:40:07Z</date>
+				<date>2020-10-04T05:43:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -638,7 +638,7 @@
 			<key>org.mybatis:mybatis</key>
 			<dict>
 				<key>date</key>
-				<date>2020-06-08T07:18:30Z</date>
+				<date>2020-10-09T03:15:50Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -666,7 +666,7 @@
 			<key>org.projectlombok:lombok</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-14T05:33:04Z</date>
+				<date>2020-10-09T03:16:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +778,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-15T01:40:08Z</date>
+				<date>2020-10-09T03:14:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +792,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-15T01:40:10Z</date>
+				<date>2020-10-09T03:17:00Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +806,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-15T01:40:28Z</date>
+				<date>2020-10-09T03:16:15Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -820,7 +820,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-15T01:41:15Z</date>
+				<date>2020-10-09T03:16:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1564,10 +1564,10 @@
 				<key>date</key>
 				<date>2019-11-21T04:06:06Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Java_SE14.xml</key>
+			<key>http://kapeli.com/feeds/Java_SE15.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2020-07-14T09:48:45Z</date>
+				<date>2020-10-09T03:43:03Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE8.xml</key>
 			<dict>
@@ -1676,6 +1676,11 @@
 			<dict>
 				<key>date</key>
 				<date>2019-11-21T06:41:10Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_SE14.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2020-10-09T03:18:52Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE6.xml</key>
 			<dict>
