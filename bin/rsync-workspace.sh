@@ -2,10 +2,11 @@
 
 DEST=$1
 if [[ -z $DEST ]]; then
-	DEST="$HOME/Documents"
+	DEST="$HOME/Resources.localized"
 fi
 
 RSYNC=/usr/local/bin/rsync
+SED=/usr/local/opt/gnu-sed/libexec/gnubin/sed
 ARGS=(-aXh --delete --delete-excluded)
 
 if [[ -t 1 ]]; then
@@ -47,7 +48,11 @@ ARGS+=(
 	"--exclude=.svn/"
 	"--exclude=.tmp/"
 	"--exclude=bin/"
+	"--exclude=/$ROOT/tmp/"
+	"--exclude=/$ROOT/temp/"
+	"--exclude=/$ROOT/zoo/"
 	"--exclude=/$ROOT/java3/"
+	"--exclude=/$ROOT/xcode/XVim2/"
 	"--exclude=/$ROOT/go/bin/"
 	"--exclude=/$ROOT/go/pkg/"
 	"--exclude=/$ROOT/go/mod/"
@@ -56,7 +61,11 @@ ARGS+=(
 	"--include=/$ROOT/go/src/github.com/moonfruit/***"
 	"--include=/$ROOT/go/src/github.com/pentaglobal/***"
 	"--exclude=/$ROOT/go/src/**"
+	"--include=/$ROOT/env/.git/modules"
 )
+
+mapfile -t -O ${#ARGS[@]} ARGS < <(
+	$SED -n 's|	*path = \(.*\)|--exclude=/'"$ROOT"'/env/\1/|p' "$WORKSPACE/env/.gitmodules")
 
 echo "-------- Rsync Start at $(date) --------"
 "$RSYNC" "${ARGS[@]}" "$WORKSPACE" "$DEST"
