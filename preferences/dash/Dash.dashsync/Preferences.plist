@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-10T03:14:21Z</date>
+				<date>2020-10-14T01:27:02Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-13T01:26:24Z</date>
+				<date>2020-10-14T01:27:01Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
