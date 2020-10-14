@@ -22,6 +22,7 @@ ARGS+=(
 	"--exclude=Thumbs.db"
 	"--exclude=.*.swp"
 	"--exclude=*.log"
+	"--exclude=*.log.*.gz"
 	"--exclude=*.o"
 	"--exclude=*.a"
 	"--exclude=*.lo"
