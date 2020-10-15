@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec java-home -v 8 -- /usr/local/opt/ant@1.9/bin/ant "$@"

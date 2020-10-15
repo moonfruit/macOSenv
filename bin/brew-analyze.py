@@ -11,6 +11,7 @@ skinparam usecase {
     BackgroundColor DarkSeaGreen
     BackgroundColor<< dep >> DarkGoldenRod
 }""")
+    lines = []
     for obj in data:
         name = obj["full_name"]
         installed = obj.get("installed")
@@ -18,13 +19,16 @@ skinparam usecase {
             installed = installed[0]
         is_dep = installed.get("installed_as_dependency")
         if is_dep:
-            print("(%s) << dep >>" % name)
+            lines.append("(%s) << dep >>" % name)
         else:
-            print("(%s)" % name)
+            lines.append("(%s)" % name)
         deps = installed.get("runtime_dependencies")
         if deps:
             for dep in deps:
-                print("(%s)->(%s)" % (name, dep["full_name"]))
+                lines.append("(%s)->(%s)" % (name, dep["full_name"]))
+    lines.sort()
+    for line in lines:
+        print(line)
     print("@enduml")
 
 
