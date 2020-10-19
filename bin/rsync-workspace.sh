@@ -62,7 +62,7 @@ ARGS+=(
 	"--include=/$ROOT/go/src/github.com/moonfruit/***"
 	"--include=/$ROOT/go/src/github.com/pentaglobal/***"
 	"--exclude=/$ROOT/go/src/**"
-	"--include=/$ROOT/env/.git/modules"
+	"--exclude=/$ROOT/env/.git/modules"
 )
 
 mapfile -t -O ${#ARGS[@]} ARGS < <(
