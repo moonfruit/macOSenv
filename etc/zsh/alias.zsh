@@ -32,7 +32,7 @@ alias sl='sl -e'
 alias LS='sl'
 alias ls-='sl'
 
-alias gotop='gotop -c solarized -r 0.5'
+alias gotop='gotop -c solarized -r 2s'
 alias gpft='git push --follow-tags'
 
 unalias grep
