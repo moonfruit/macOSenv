@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+CMD=(plutil -convert json -o - "${1:--}")
+if [[ -t 1 ]]; then
+	"${CMD[@]}" | jq
+else
+	"${CMD[@]}"
+fi
