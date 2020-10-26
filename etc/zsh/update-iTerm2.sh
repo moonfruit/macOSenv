@@ -20,7 +20,13 @@ copy item.zsh "$ENV/etc/zsh"
 UTILS=(imgcat imgls it2api it2attention it2check it2copy it2dl it2getvar it2git it2setcolor it2setkeylabel it2ul it2universion)
 for UTIL in "${UTILS[@]}"; do
     wget "https://iterm2.com/utilities/$UTIL"
-    copy "$UTIL" "$ENV/bin"
+	BANG=$(head -1 "$UTIL")
+	if [[ $BANG == *python* ]]; then
+		sed -i '1s|.*|#!/usr/bin/env python|' "$1"
+		copy "$UTIL" "$ENV/package/iterm2"
+	else
+    	copy "$UTIL" "$ENV/bin"
+	fi
 done
 
 rm -fr "$TMP"
