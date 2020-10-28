@@ -169,6 +169,7 @@ let g:syntastic_java_checkers = []
 
 " you&me
 set completeopt-=preview
+let g:ycm_gopls_binary_path="gopls"
 
 " putty
 if $PUTTY != "" || $TERM == "xterm-256color"
