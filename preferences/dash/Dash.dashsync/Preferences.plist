@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-28T01:52:15Z</date>
+				<date>2020-10-30T01:52:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-28T01:52:16Z</date>
+				<date>2020-10-30T01:52:18Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-17T01:40:25Z</date>
+				<date>2020-10-29T01:52:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2020-09-17T01:40:35Z</date>
+				<date>2020-10-29T01:52:20Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -736,7 +736,7 @@
 			<key>org.springframework.batch:spring-batch-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-06-12T07:18:46Z</date>
+				<date>2020-10-29T01:52:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -750,7 +750,7 @@
 			<key>org.springframework.batch:spring-batch-infrastructure</key>
 			<dict>
 				<key>date</key>
-				<date>2020-06-12T07:18:28Z</date>
+				<date>2020-10-29T01:52:29Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +764,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-07-23T06:56:25Z</date>
+				<date>2020-10-30T01:53:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>

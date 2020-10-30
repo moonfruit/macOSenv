@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [[ $1 == -u ]]; then
+	INCLUDE="#include <unistd.h>"
+	shift
+fi
+
+if command -v -- "$1" >/dev/null; then
+	CMD=("$@")
+else
+	CMD=(cc "$@")
+fi
+
+if [[ ${CMD[0]} = *++ ]]; then
+	CMD+=(-x c++)
+fi
+
+"${CMD[@]}" -dM -E - <<END
+$INCLUDE
+END

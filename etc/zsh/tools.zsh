@@ -28,8 +28,11 @@ eval "$(direnv hook zsh)"
 # for zmv
 autoload -U zmv
 
-# for brew
-export HOMEBREW_AUTO_UPDATE_SECS=21600
+# for homebrew
+export HOMEBREW_AUTO_UPDATE_SECS=86400
+export HOMEBREW_BAT=true
+export HOMEBREW_CLEANUP_MAX_AGE_DAYS=30
+#export HUB_REMOTE=moonfruit
 
 # brew command-not-found (too slow)
 #if brew command command-not-found-init > /dev/null; then
