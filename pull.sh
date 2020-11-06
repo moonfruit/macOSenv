@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
-	exec proxy "$0" "$@"
-fi
+#if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
+#	exec proxy "$0" "$@"
+#fi
 
 if [[ $1 == gc ]]; then
 	GC="git gc"

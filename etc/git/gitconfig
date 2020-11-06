@@ -48,14 +48,23 @@
 #[url "persistent-http"]
 #	insteadof = http
 
-[url "https://github.com/"]
-	insteadOf = git://github.com/
-
 [protocol "persistent-https"]
 	allow = always
 
 [protocol "persistent-http"]
 	allow = always
+
+[url "https://github.com/"]
+	insteadOf = git://github.com/
+
+[http "https://github.com"]
+	proxy = http://127.0.0.1:10001
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 [mergetool "vscode"]
 	cmd = code --wait "$MERGED"
@@ -82,9 +91,3 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
