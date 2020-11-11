@@ -5,5 +5,4 @@
 #https-proxy=http://10.1.2.12:8118
 
 #registry=http://10.1.2.32/nexus/repository/npm
-
-registry=http://registry.npm.taobao.org/
+registry=http://registry.npm.taobao.org

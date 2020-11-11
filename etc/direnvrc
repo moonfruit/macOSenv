@@ -14,6 +14,10 @@ layout_node10() {
 	layout node 10
 }
 
+layout_node12() {
+	layout node 12
+}
+
 venv_type() {
 	"$1" <<END
 import pkgutil
