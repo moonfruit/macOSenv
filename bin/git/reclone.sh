@@ -18,7 +18,7 @@ OLD=$(pwd)
 NAME=$(basename "$OLD")
 cd "$TMP" || exit 1
 
-git clone --depth=100 "$REMOTE" "$NAME"
+git clone --depth=100 --verbose "$REMOTE" "$NAME"
 BAK=$OLD/$NAME-git
 mv "$OLD/.git" "$BAK"
 trash "$BAK"

@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-30T01:52:17Z</date>
+				<date>2020-11-12T02:22:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-30T01:52:18Z</date>
+				<date>2020-11-12T02:22:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -526,7 +526,7 @@
 			<key>jakarta.annotation:jakarta.annotation-api</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-18T03:19:27Z</date>
+				<date>2020-11-11T02:24:05Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -540,7 +540,7 @@
 			<key>jakarta.persistence:jakarta.persistence-api</key>
 			<dict>
 				<key>date</key>
-				<date>2020-02-18T03:24:08Z</date>
+				<date>2020-11-11T02:25:24Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -596,7 +596,7 @@
 			<key>org.apache.commons:commons-vfs2</key>
 			<dict>
 				<key>date</key>
-				<date>2020-01-14T02:29:20Z</date>
+				<date>2020-11-11T02:25:23Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -610,7 +610,7 @@
 			<key>org.assertj:assertj-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-26T01:58:26Z</date>
+				<date>2020-11-12T02:26:09Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-29T01:52:17Z</date>
+				<date>2020-11-12T02:23:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-29T01:52:20Z</date>
+				<date>2020-11-12T02:23:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +764,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-30T01:53:04Z</date>
+				<date>2020-11-12T02:25:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
