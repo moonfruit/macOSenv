@@ -16,9 +16,9 @@
 		<string>/Users/moon/Workspace.localized/python/bingwallpaper/bing.py</string>
 	</array>
 	<key>StandardErrorPath</key>
-	<string>/Users/moon/Workspace.localized/python/bingwallpaper/bing.log</string>
+	<string>/tmp/moonfruit.bing.stderr</string>
 	<key>StandardOutPath</key>
-	<string>/Users/moon/Workspace.localized/python/bingwallpaper/bing.log</string>
+	<string>/tmp/moonfruit.bing.stdout</string>
 	<key>StartCalendarInterval</key>
 	<dict>
 		<key>Hour</key>
