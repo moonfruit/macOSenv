@@ -102,7 +102,6 @@ set showmatch
 " map F2 to switch off highlighting for search
 nmap <silent> <F2> :nohlsearch<CR>
 
-
 " map space to control folding
 set foldenable
 set foldmethod=marker
@@ -125,6 +124,9 @@ set undodir=/tmp/vim
 if !isdirectory(&undodir)
     silent! call mkdir(&undodir, "p")
 endif
+
+" python3
+" set pythonthreedll=/usr/local/opt/python/Frameworks/Python.framework/Python
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>

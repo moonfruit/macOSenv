@@ -34,10 +34,6 @@
 	path = package/vim/XMLCatalog
 	url = https://github.com/moonfruit/XMLCatalog.git
 	shallow = true
-[submodule "package/WeChatTweak"]
-	path = package/WeChatTweak
-	url = https://github.com/Sunnyyoung/WeChatTweak-macOS.git
-	shallow = true
 [submodule "package/vim/kotlin-vim"]
 	path = package/vim/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim.git

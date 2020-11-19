@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
 
-SCRIPT=/usr/local/etc/profile.d/bash_completion.sh
-[[ -r $SCRIPT ]] && . $SCRIPT
+load() {
+	 [[ -r $1 ]] && source "$1"
+}
 
-SCRIPT=/usr/local/etc/profile.d/autojump.sh
-[[ -r $SCRIPT ]] && . $SCRIPT
+if [[ $- == *i* ]]; then
+	load /usr/local/etc/profile.d/bash_completion.sh
+	load /usr/local/etc/profile.d/autojump.sh
 
-#if brew command command-not-found-init > /dev/null; then
-#	eval "$(brew command-not-found-init)";
-#fi
-SCRIPT=/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
-[[ -r $SCRIPT ]] && . $SCRIPT
+	#if brew command command-not-found-init > /dev/null; then
+	#	eval "$(brew command-not-found-init)";
+	#fi
+	load /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+fi
 
+export GINGKOO_ENV=dev
 export ENV="$HOME/Workspace.localized/env"
 export PATH="$ENV/bin:$PATH"

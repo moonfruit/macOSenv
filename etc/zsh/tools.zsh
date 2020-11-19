@@ -46,3 +46,6 @@ export MAVEN_OPTS="-Xss2m -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=y
 
 # for fzf
 export FZF_DEFAULT_COMMAND='rg --files'
+
+# for java
+export GINGKOO_ENV=dev
