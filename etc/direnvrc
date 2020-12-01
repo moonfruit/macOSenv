@@ -1,6 +1,12 @@
 #!/bin/bash
 layout_node() {
-	if [[ -n $1 ]]; then
+	if [[ $1 == 12 ]]; then
+		JAVA_HOME=$(java-home -n graalvm)
+		PATH_add "$JAVA_HOME/bin"
+
+		export CPPFLAGS=-I$JAVA_HOME/languages/js/include
+
+	elif [[ -n $1 ]]; then
 		PATH_add "/usr/local/opt/node@$1/bin"
 
 		export LDFLAGS=-L/usr/local/opt/node@$1/lib
@@ -59,13 +65,7 @@ layout_python() {
 layout_java() {
 	local version=$1
 	if [[ -n $version ]]; then
-		if [[ $version = 7 ]]; then
-			version=1.7
-		elif [[ $version = 8 ]]; then
-			version=1.8
-		fi
-
-		JAVA_HOME=$(/usr/libexec/java_home -v "$version")
+		JAVA_HOME=$(java-home -v "$version")
 		export JAVA_HOME
 		PATH_add "$JAVA_HOME/bin"
 	fi
