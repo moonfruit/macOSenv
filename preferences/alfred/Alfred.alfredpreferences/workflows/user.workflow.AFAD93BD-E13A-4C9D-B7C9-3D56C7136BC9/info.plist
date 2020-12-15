@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>iTerm</string>
+	<string>com.github.moonfruit.iterm</string>
 	<key>category</key>
 	<string>Tools</string>
 	<key>connections</key>

@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-11-26T13:57:04Z</date>
+				<date>2020-12-09T03:19:06Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-11-27T13:57:03Z</date>
+				<date>2020-12-10T03:19:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-01T01:43:17Z</date>
+				<date>2020-12-12T03:19:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-01T01:46:25Z</date>
+				<date>2020-12-03T01:48:57Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -386,7 +386,7 @@
 			<key>com.github.ben-manes.caffeine:caffeine</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-13T01:26:22Z</date>
+				<date>2020-12-09T03:19:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -708,7 +708,7 @@
 			<key>org.springframework.amqp:spring-amqp</key>
 			<dict>
 				<key>date</key>
-				<date>2020-11-12T02:23:06Z</date>
+				<date>2020-12-10T03:19:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -722,7 +722,7 @@
 			<key>org.springframework.amqp:spring-rabbit</key>
 			<dict>
 				<key>date</key>
-				<date>2020-11-12T02:23:14Z</date>
+				<date>2020-12-10T03:19:29Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -736,7 +736,7 @@
 			<key>org.springframework.batch:spring-batch-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-29T01:52:41Z</date>
+				<date>2020-12-11T03:21:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -750,7 +750,7 @@
 			<key>org.springframework.batch:spring-batch-infrastructure</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-29T01:52:29Z</date>
+				<date>2020-12-11T03:22:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +764,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-11-12T02:25:41Z</date>
+				<date>2020-12-12T03:21:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +778,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-09T03:14:58Z</date>
+				<date>2020-12-10T03:19:07Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +792,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-09T03:17:00Z</date>
+				<date>2020-12-10T03:19:59Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +806,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-09T03:16:15Z</date>
+				<date>2020-12-10T03:19:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -820,7 +820,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-09T03:16:05Z</date>
+				<date>2020-12-10T03:19:45Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1198,7 +1198,7 @@
 			<key>Kotlin</key>
 			<dict>
 				<key>date</key>
-				<date>2020-03-24T03:56:19Z</date>
+				<date>2020-12-03T02:36:55Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -1206,7 +1206,7 @@
 					<key>authorLinkHref</key>
 					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Kotlin#readme</string>
 					<key>authorLinkText</key>
-					<string>Kevin Cianfarini</string>
+					<string>Alexander Ronald Altman</string>
 					<key>name</key>
 					<string>Kotlin</string>
 					<key>platform</key>
@@ -1775,7 +1775,7 @@
 		</dict>
 	</dict>
 	<key>isPinned</key>
-	<true/>
+	<false/>
 	<key>menuIconBehavior</key>
 	<integer>1</integer>
 	<key>placeholderDelimiter</key>

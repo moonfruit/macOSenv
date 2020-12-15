@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>tkkk.wechatPlugin</string>
+	<key>category</key>
+	<string>Internet</string>
 	<key>connections</key>
 	<dict>
 		<key>0D88BE16-D0D5-4489-B54E-9C3A9C7FB187</key>
@@ -173,6 +175,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -211,7 +215,7 @@
 			<key>uid</key>
 			<string>7DECB235-5455-435D-90AF-1A51C26046DD</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -220,6 +224,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -256,7 +262,7 @@
 			<key>uid</key>
 			<string>0D88BE16-D0D5-4489-B54E-9C3A9C7FB187</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>

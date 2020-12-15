@@ -31,7 +31,7 @@ autoload -U zmv
 # for homebrew
 export HOMEBREW_AUTO_UPDATE_SECS=86400
 export HOMEBREW_BAT=true
-export HOMEBREW_CLEANUP_MAX_AGE_DAYS=30
+export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 #export HUB_REMOTE=moonfruit
 
 # brew command-not-found (too slow)

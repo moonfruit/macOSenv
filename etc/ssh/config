@@ -1,6 +1,7 @@
 ControlMaster auto
 ControlPath /tmp/%r@%h:%p
 ControlPersist 10m
+TCPKeepAlive yes
 
 Host moonfruit.top
   Port 26800
