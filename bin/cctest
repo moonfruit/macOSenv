@@ -6,7 +6,7 @@ else
 	TYPE=c
 fi
 
-$CC -v -x "$TYPE" -o /dev/null <<END
+$CC -v -x "$TYPE" -o /dev/null - <<END
 int main() {
 	return 0;
 }
