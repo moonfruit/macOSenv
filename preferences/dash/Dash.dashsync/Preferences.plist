@@ -292,7 +292,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-09T03:19:06Z</date>
+				<date>2020-12-23T12:49:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-10T03:19:08Z</date>
+				<date>2020-12-29T09:26:09Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-03T01:48:57Z</date>
+				<date>2020-12-23T12:57:55Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-01T01:43:24Z</date>
+				<date>2020-12-23T12:50:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -414,7 +414,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2020-10-19T07:55:43Z</date>
+				<date>2020-12-23T13:04:25Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1775,7 +1775,7 @@
 		</dict>
 	</dict>
 	<key>isPinned</key>
-	<false/>
+	<true/>
 	<key>menuIconBehavior</key>
 	<integer>1</integer>
 	<key>placeholderDelimiter</key>
