@@ -49,3 +49,6 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 # for java
 export GINGKOO_ENV=dev
+
+# for perl
+export PERL5LIB=/usr/local/lib/perl5/site_perl/5.28.2/darwin-thread-multi-2level

@@ -25,7 +25,7 @@
 			<key>Gitmoji</key>
 			<dict>
 				<key>date</key>
-				<date>2018-11-07T02:57:52Z</date>
+				<date>2021-01-11T13:18:10Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -306,7 +306,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-29T09:26:09Z</date>
+				<date>2021-01-11T13:18:33Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +344,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-12T03:19:46Z</date>
+				<date>2021-01-11T13:19:34Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +358,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-23T12:57:55Z</date>
+				<date>2021-01-11T13:36:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +372,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2020-12-23T12:50:04Z</date>
+				<date>2021-01-11T13:19:09Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
