@@ -2,9 +2,9 @@
 
 FOREGROUND=()
 BACKGROUND=()
-for i in {0..7}; do
-    FOREGROUND+=("$(tput setaf $i)")
-    BACKGROUND+=("$(tput setab $i)")
+for ((i=0; i<8; i++)); do
+    FOREGROUND+=("$(tput setaf "$i")")
+    BACKGROUND+=("$(tput setab "$i")")
 done
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
