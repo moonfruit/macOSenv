@@ -42,7 +42,7 @@ script=/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/hand
 [[ -f "$script" ]] && . "$script"
 
 # for maven
-export MAVEN_OPTS="-Xss2m -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
+export MAVEN_OPTS="-Xss2m -Duser.language=en_us -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
 
 # for fzf
 export FZF_DEFAULT_COMMAND='rg --files'

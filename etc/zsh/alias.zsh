@@ -3,9 +3,25 @@
 # export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 
-unalias ls
-#alias ls='exa -gF --time-style long-iso --git'
-#alias tree='ls -T'
+function exaf() {
+	local extra
+	if [[ $1 = '-lrt' ]]; then
+		extra=-lsnew
+		shift
+	fi
+	exa -gF --time-style long-iso --git $extra "$@"
+}
+
+function tree() {
+	local extra=-T
+	if [[ $1 = '-lrt' ]]; then
+		extra=-Tlsnew
+		shift
+	fi
+	exaf $extra "$@"
+}
+
+alias ls='exaf'
 
 alias ll='ls -l'
 alias la='ls -a'
