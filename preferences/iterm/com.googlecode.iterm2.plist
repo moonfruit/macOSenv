@@ -12564,11 +12564,13 @@
 				<string></string>
 			</dict>
 			<key>Send Code When Idle</key>
-			<false/>
+			<true/>
 			<key>Set Local Environment Vars</key>
 			<true/>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Status Bar</key>
+			<false/>
 			<key>Silence Bell</key>
 			<true/>
 			<key>Smart Cursor Color</key>
