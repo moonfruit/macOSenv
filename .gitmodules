@@ -58,3 +58,7 @@
 	path = package/vim/swift.vim
 	url = https://github.com/keith/swift.vim.git
 	shallow = true
+[submodule "package/vim/vim-wakatime"]
+	path = package/vim/vim-wakatime
+	url = git://github.com/wakatime/vim-wakatime.git
+	shallow = true
