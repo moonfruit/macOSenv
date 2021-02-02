@@ -32,23 +32,21 @@ autoload -U zmv
 export HOMEBREW_AUTO_UPDATE_SECS=86400
 export HOMEBREW_BAT=true
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
-#export HUB_REMOTE=moonfruit
 
-# brew command-not-found (too slow)
-#if brew command command-not-found-init > /dev/null; then
-#	eval "$(brew command-not-found-init)"
-#fi
-script=/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+export HUB_REMOTE=moonfruit
+
+local prefix="/usr/local"	# $(brew --prefix)
+script=${prefix}/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
 [[ -f "$script" ]] && . "$script"
+unset prefix
 
 # for maven
 export MAVEN_OPTS="-Xss2m -Duser.language=en_us -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
-
-# for fzf
-export FZF_DEFAULT_COMMAND='rg --files'
 
 # for java
 export GINGKOO_ENV=dev
 
 # for perl
 export PERL5LIB=/usr/local/lib/perl5/site_perl/5.28.2/darwin-thread-multi-2level
+
+unset script

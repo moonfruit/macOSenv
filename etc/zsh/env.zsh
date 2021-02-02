@@ -25,9 +25,6 @@ fi
 # for crypto
 export YY_PASSWORD="$ENV/etc/private.txt"
 
-# for homebrew
-export HOMEBREW_BAT=true
-export HUB_REMOTE=moonfruit
-
-pac=https://gitee.com/moonfruit/pac/raw/master/pac.js
-unset pac
+# FIXME: What is this?
+# pac=https://gitee.com/moonfruit/pac/raw/master/pac.js
+# unset pac

@@ -6,13 +6,24 @@ load() {
 }
 
 if [[ $- == *i* ]]; then
-	load /usr/local/etc/profile.d/bash_completion.sh
-	load /usr/local/etc/profile.d/autojump.sh
+	HOMEBREW_PREFIX="/usr/local"	# $(brew --prefix)
 
-	#if brew command command-not-found-init > /dev/null; then
-	#	eval "$(brew command-not-found-init)";
-	#fi
-	load /usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+	SCRIPT="${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+	if [[ -r $SCRIPT ]]; then
+		source "${SCRIPT}"
+	else
+		for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+			[[ -r "$COMPLETION" ]] && source "$COMPLETION"
+		done
+	fi
+
+	SCRIPT="${HOMEBREW_PREFIX}/etc/profile.d/autojump.sh"
+	[[ -f "$SCRIPT" ]] && . "$SCRIPT"
+
+	SCRIPT="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
+	[[ -f "$SCRIPT" ]] && . "$SCRIPT"
+
+	unset SCRIPT HOMEBREW_PREFIX
 fi
 
 export GINGKOO_ENV=dev

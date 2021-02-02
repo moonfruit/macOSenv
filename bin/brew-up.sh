@@ -22,6 +22,6 @@ OUTDATED=$(brew outdated)
 if [[ -n $OUTDATED ]]; then
 	if brew upgrade --force-bottle --display-times; then
 		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
-		brew cleanup -s --prune 30
+		brew cleanup -s
 	fi
 fi
