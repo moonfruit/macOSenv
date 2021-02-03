@@ -5,8 +5,6 @@ export LANG=zh_CN.UTF-8
 
 # tools
 export EDITOR=vim
-unset GREP_OPTIONS
-unset GREP_COLOR
 
 # catalog
 export XML_CATALOG_FILES="$ENV/package/vim/XMLCatalog/catalog.xml"
