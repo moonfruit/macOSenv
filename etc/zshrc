@@ -80,9 +80,13 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(colored-man-pages cp docker extract git golang gradle
-         history-substring-search httpie mvn npm osx pip yarn yy
-         zsh-syntax-highlighting)
+plugins=(autojump colored-man-pages extract git gradle history-substring-search httpie mvn osx pip
+         zsh-syntax-highlighting zsh-completions docker-completions yy)
+
+# For zsh-completions
+# if [[ ! -f $ZSH_CUSTOM/plugins/zsh-completions/zsh-completions.plugin.zsh ]]; then
+#     touch $ZSH_CUSTOM/plugins/zsh-completions/zsh-completions.plugin.zsh
+# fi
 
 # User configuration
 ZDOTDIR="$HOME/.zsh"
@@ -92,6 +96,5 @@ ZSH_CACHE_DIR="$ZDOTDIR/cache"
 ZSH_DISABLE_COMPFIX="true"
 
 source $ZSH/oh-my-zsh.sh
-#source $ZSH_CUSTOM/themes/crack.zsh
 
 #zprof

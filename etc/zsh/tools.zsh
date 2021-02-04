@@ -3,9 +3,6 @@
 
 unalias pip
 
-# shellcheck disable=SC2168
-local script
-
 # for dmalloc
 function dmalloc {
 	eval "$(command dmalloc -b "$@")"
@@ -13,10 +10,6 @@ function dmalloc {
 
 # for thefuck
 # eval $(thefuck --alias)
-
-# for autojump
-script=/usr/local/etc/profile.d/autojump.sh
-[[ -f "$script" ]] && . "$script"
 
 # for direnv
 eval "$(direnv hook zsh)"
@@ -36,9 +29,9 @@ export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 export HUB_REMOTE=moonfruit
 
 local prefix="/usr/local"	# $(brew --prefix)
-script=${prefix}/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+local script=${prefix}/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
 [[ -f "$script" ]] && . "$script"
-unset prefix
+unset prefix script
 
 # for maven
 export MAVEN_OPTS="-Xss2m -Duser.language=en_us -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
@@ -48,5 +41,3 @@ export GINGKOO_ENV=dev
 
 # for perl
 export PERL5LIB=/usr/local/lib/perl5/site_perl/5.28.2/darwin-thread-multi-2level
-
-unset script

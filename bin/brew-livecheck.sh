@@ -7,10 +7,9 @@ fi
 BOLD=$(tput bold)
 BLUE=$(tput setaf 4)
 GREEN=$(tput setaf 2)
-RED=$(tput setaf 1)
 RESET=$(tput sgr0)
 
-echo "$RED==>$RESET ${BOLD}Live Check$RESET"
+echo "$GREEN==>$RESET ${BOLD}Live Check$RESET"
 brew livecheck --json --installed | \
 	jq -r '.[] | select(.version.outdated) |
 		"\(if has("formula") then .formula else .cask end)\t\(.version.current)\t\(.version.latest)"' | \

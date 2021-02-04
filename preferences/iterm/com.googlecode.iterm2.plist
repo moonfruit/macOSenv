@@ -58,6 +58,8 @@
 	<true/>
 	<key>DoNotSetCtype</key>
 	<true/>
+	<key>DoubleClickPerformsSmartSelection</key>
+	<true/>
 	<key>EnableAPIServer</key>
 	<true/>
 	<key>EnableProxyIcon</key>
@@ -13620,7 +13622,7 @@
 		<string>Command History</string>
 	</array>
 	<key>TripleClickSelectsFullWrappedLines</key>
-	<false/>
+	<true/>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>Use background pattern indicator</key>
