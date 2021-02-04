@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034,SC2154
 
-if [[ $TERM_PROGRAM != iTerm.app ]]; then
+# if [[ $TERM_PROGRAM != iTerm.app ]]; then
     return
-fi
+# fi
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
@@ -33,4 +33,3 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=yellow'
 ZSH_HIGHLIGHT_STYLES[bracket-level-5]='fg=green'
 
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
-ZSH_HIGHLIGHT_PATTERNS+=('rm -fr *' 'fg=white,bold,bg=red')

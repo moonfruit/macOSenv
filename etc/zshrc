@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-#zmodload zsh/zprof
+# zmodload zsh/zprof
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -80,7 +80,7 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autojump colored-man-pages extract git gradle history-substring-search httpie mvn osx pip
+plugins=(autojump colored-man-pages extract git gradle httpie mvn osx pip
          zsh-syntax-highlighting zsh-completions docker-completions yy)
 
 # For zsh-completions
@@ -97,4 +97,4 @@ ZSH_DISABLE_COMPFIX="true"
 
 source $ZSH/oh-my-zsh.sh
 
-#zprof
+# zprof
