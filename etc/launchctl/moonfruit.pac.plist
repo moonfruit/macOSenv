@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>moonfruit.pac</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/miniserve</string>
+		<string>-i</string>
+		<string>127.0.0.1</string>
+		<string>-p</string>
+		<string>7899</string>
+		<string>-t</string>
+		<string>pac</string>
+		<string>-v</string>
+		<string>/Users/moon/Workspace.localized/env/package/pac</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.pac.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.pac.stdout</string>
+</dict>
+</plist>
