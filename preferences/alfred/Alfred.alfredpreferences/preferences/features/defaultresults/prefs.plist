@@ -20,7 +20,8 @@
 	<true/>
 	<key>showUserDefined</key>
 	<array>
-		<string>com.vmware.vm-package</string>
+		<string>com.parallels.vm.vmpackage</string>
+		<string>net.daringfireball.markdown</string>
 	</array>
 </dict>
 </plist>
