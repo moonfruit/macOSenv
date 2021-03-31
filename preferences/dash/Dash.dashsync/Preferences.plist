@@ -1534,11 +1534,6 @@
 	<dict>
 		<key>installed</key>
 		<dict>
-			<key>http://kapeli.com/feeds/Bash.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2021-02-22T09:54:28Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Django.xml</key>
 			<dict>
 				<key>date</key>
@@ -1589,6 +1584,11 @@
 				<key>date</key>
 				<date>2017-08-06T11:20:09Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Ruby_2.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-03-29T02:49:17Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/SQLAlchemy.xml</key>
 			<dict>
 				<key>date</key>
@@ -1611,6 +1611,11 @@
 			<dict>
 				<key>date</key>
 				<date>2019-02-27T05:59:09Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Bash.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-03-29T05:51:38Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Boost.xml</key>
 			<dict>
@@ -1735,12 +1740,7 @@
 			<key>http://kapeli.com/feeds/Ruby.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2018-01-26T02:20:49Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Ruby_2.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-12-07T10:02:50Z</date>
+				<date>2021-03-29T05:51:21Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Rust.xml</key>
 			<dict>

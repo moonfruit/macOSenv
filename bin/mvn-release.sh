@@ -19,13 +19,21 @@ else
 	DEVELOP=$MAJOR.$((MINOR+1))-SNAPSHOT
 fi
 
-echo "Release Version: $RELEASE"
-read -rp "Develop Version ($DEVELOP): " NEXT
-if [[ $NEXT ]]; then
-	if [[ $NEXT == *-SNAPSHOT ]]; then
-		DEVELOP=$NEXT
+read -rp "Release Version ($RELEASE): " INPUT
+if [[ $INPUT ]]; then
+	if [[ $INPUT == *-RELEASE ]]; then
+		RELEASE=$INPUT
 	else
-		DEVELOP=$NEXT-SNAPSHOT
+		RELEASE=$INPUT-RELEASE
+	fi
+fi
+
+read -rp "Develop Version ($DEVELOP): " INPUT
+if [[ $INPUT ]]; then
+	if [[ $INPUT == *-SNAPSHOT ]]; then
+		DEVELOP=$INPUT
+	else
+		DEVELOP=$INPUT-SNAPSHOT
 	fi
 fi
 

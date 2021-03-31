@@ -5,6 +5,7 @@ tags
 .svn
 .git
 .hg
+.idea
 CVS
 *.o
 #*.a
@@ -13,4 +14,5 @@ CVS
 *.luac
 *.pyc
 *.log
+*.iml
 Icon
