@@ -10,10 +10,6 @@
 	path = package/solarized
 	url = https://github.com/altercation/solarized.git
 	shallow = true
-[submodule "package/pac"]
-	path = package/pac
-	url = git@gitee.com:moonfruit/pac.git
-	shallow = true
 [submodule "package/vim/pathogen"]
 	path = package/vim/pathogen
 	url = https://github.com/tpope/vim-pathogen.git
@@ -57,8 +53,4 @@
 [submodule "package/vim/swift.vim"]
 	path = package/vim/swift.vim
 	url = https://github.com/keith/swift.vim.git
-	shallow = true
-[submodule "package/vim/vim-wakatime"]
-	path = package/vim/vim-wakatime
-	url = git://github.com/wakatime/vim-wakatime.git
 	shallow = true
