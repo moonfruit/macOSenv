@@ -22,6 +22,8 @@
 	<true/>
 	<key>ClosingHotkeySwitchesSpaces</key>
 	<true/>
+	<key>Command</key>
+	<string>sshroot@10.1.2.57</string>
 	<key>CommandSelection</key>
 	<true/>
 	<key>Control</key>
@@ -118,6 +120,10 @@
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_550B3BC4-9D90-4016-B342-242B82E83738</key>
 	<true/>
+	<key>NeverWarnAboutShortLivedSessions_8C55FFB4-3303-4AA5-99A5-1313A6BE25D6</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_8C55FFB4-3303-4AA5-99A5-1313A6BE25D6_selection</key>
+	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -2356,7 +2362,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>JetBrainsMono-Medium 13</string>
+			<string>JetBrainsMono-Bold 13</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>

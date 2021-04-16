@@ -41,6 +41,22 @@
 					<string>Gitmoji</string>
 				</dict>
 			</dict>
+			<key>Vim_CN</key>
+			<dict>
+				<key>date</key>
+				<date>2021-04-13T03:26:58Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>Vim (Chinese)</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>Vim_CN</string>
+				</dict>
+			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
@@ -292,7 +308,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2021-04-12T03:27:44Z</date>
+				<date>2021-04-16T01:52:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -306,7 +322,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2021-04-12T03:48:34Z</date>
+				<date>2021-04-16T02:06:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -344,7 +360,7 @@
 			<key>com.fasterxml.jackson.core:jackson-annotations</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-25T10:38:29Z</date>
+				<date>2021-04-13T03:25:22Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -358,7 +374,7 @@
 			<key>com.fasterxml.jackson.core:jackson-databind</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-25T10:48:37Z</date>
+				<date>2021-04-13T03:25:31Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -372,7 +388,7 @@
 			<key>com.fasterxml.jackson.dataformat:jackson-dataformat-xml</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-25T10:38:27Z</date>
+				<date>2021-04-13T03:25:22Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -764,7 +780,7 @@
 			<key>org.springframework.integration:spring-integration-core</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-25T10:44:45Z</date>
+				<date>2021-04-16T01:49:22Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -778,7 +794,7 @@
 			<key>org.springframework.security:spring-security-config</key>
 			<dict>
 				<key>date</key>
-				<date>2021-02-22T08:22:58Z</date>
+				<date>2021-04-13T03:25:22Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -792,7 +808,7 @@
 			<key>org.springframework.security:spring-security-core</key>
 			<dict>
 				<key>date</key>
-				<date>2021-02-22T08:25:16Z</date>
+				<date>2021-04-13T03:25:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -806,7 +822,7 @@
 			<key>org.springframework.security:spring-security-crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2021-02-22T08:23:54Z</date>
+				<date>2021-04-13T03:25:34Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -820,7 +836,7 @@
 			<key>org.springframework.security:spring-security-web</key>
 			<dict>
 				<key>date</key>
-				<date>2021-02-22T08:23:47Z</date>
+				<date>2021-04-13T03:25:28Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1195,6 +1211,26 @@
 					<string>Bottle</string>
 				</dict>
 			</dict>
+			<key>Hammerspoon</key>
+			<dict>
+				<key>date</key>
+				<date>2021-04-13T03:33:15Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Hammerspoon#readme</string>
+					<key>authorLinkText</key>
+					<string>Hammerspoon Team</string>
+					<key>name</key>
+					<string>Hammerspoon</string>
+					<key>platform</key>
+					<string>usercontribHammerspoon</string>
+					<key>uniqueIdentifier</key>
+					<string>Hammerspoon</string>
+				</dict>
+			</dict>
 			<key>Kotlin</key>
 			<dict>
 				<key>date</key>
@@ -1264,7 +1300,7 @@
 			<key>Apache_Commons_Collections</key>
 			<dict>
 				<key>date</key>
-				<date>2015-11-26T10:03:46Z</date>
+				<date>2021-04-13T03:37:24Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -1311,7 +1347,7 @@
 			<key>Guava</key>
 			<dict>
 				<key>date</key>
-				<date>2018-03-14T08:09:19Z</date>
+				<date>2021-04-13T03:37:36Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -1329,6 +1365,31 @@
 					<string>usercontribGuava</string>
 					<key>uniqueIdentifier</key>
 					<string>Guava</string>
+				</dict>
+			</dict>
+			<key>MyBatis_zh_cn</key>
+			<dict>
+				<key>date</key>
+				<date>2021-04-13T03:38:32Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array>
+						<string>mybatis</string>
+						<string>chinese</string>
+						<string>cn</string>
+						<string>zh</string>
+					</array>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/MyBatis_zh_cn#readme</string>
+					<key>authorLinkText</key>
+					<string>bokix</string>
+					<key>name</key>
+					<string>MyBatis (Chinese)</string>
+					<key>platform</key>
+					<string>usercontribMyBatis_zh_cn</string>
+					<key>uniqueIdentifier</key>
+					<string>MyBatis_zh_cn</string>
 				</dict>
 			</dict>
 			<key>POI</key>
@@ -1352,6 +1413,26 @@
 					<string>usercontribPOI</string>
 					<key>uniqueIdentifier</key>
 					<string>POI</string>
+				</dict>
+			</dict>
+			<key>Spring_Boot</key>
+			<dict>
+				<key>date</key>
+				<date>2021-04-13T03:37:50Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Spring_Boot#readme</string>
+					<key>authorLinkText</key>
+					<string>maenujem</string>
+					<key>name</key>
+					<string>Spring Boot</string>
+					<key>platform</key>
+					<string>usercontribSpring_Boot</string>
+					<key>uniqueIdentifier</key>
+					<string>Spring_Boot</string>
 				</dict>
 			</dict>
 		</dict>
@@ -1559,11 +1640,6 @@
 				<key>date</key>
 				<date>2019-11-21T04:06:06Z</date>
 			</dict>
-			<key>http://kapeli.com/feeds/Java_SE15.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2020-10-09T03:43:03Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Java_SE8.xml</key>
 			<dict>
 				<key>date</key>
@@ -1681,6 +1757,16 @@
 			<dict>
 				<key>date</key>
 				<date>2020-10-09T03:18:52Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_SE15.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-04-13T03:25:57Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_SE16.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-04-13T03:35:30Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE6.xml</key>
 			<dict>

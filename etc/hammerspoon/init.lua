@@ -1,3 +1,5 @@
+hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
+
 -- local events <const> = {
 -- 	[hs.application.watcher.activated] = "activated",
 -- 	[hs.application.watcher.deactivated] = "deactivated",
@@ -8,7 +10,7 @@
 -- 	[hs.application.watcher.unhidden] = "unhidden",
 -- }
 
-local hstracker <const> = "net.hearthsim.hstracker"
+local hstracker <const> = "/Applications/HSTracker.app"
 local hearthstone <const> = "unity.Blizzard Entertainment.Hearthstone"
 hs.application.watcher.new(function(name, event, app)
 	if event == hs.application.watcher.launching then
