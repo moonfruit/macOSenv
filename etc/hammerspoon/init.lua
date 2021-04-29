@@ -10,6 +10,8 @@ hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 -- 	[hs.application.watcher.unhidden] = "unhidden",
 -- }
 
+hs.application.enableSpotlightForNameSearches(true)
+
 local hstracker <const> = "/Applications/HSTracker.app"
 local hearthstone <const> = "unity.Blizzard Entertainment.Hearthstone"
 hs.application.watcher.new(function(name, event, app)
