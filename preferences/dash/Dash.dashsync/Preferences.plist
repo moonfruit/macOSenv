@@ -308,7 +308,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2021-04-29T03:22:31Z</date>
+				<date>2021-05-07T07:21:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -322,7 +322,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2021-04-29T03:36:39Z</date>
+				<date>2021-05-06T07:34:14Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1214,7 +1214,7 @@
 			<key>Hammerspoon</key>
 			<dict>
 				<key>date</key>
-				<date>2021-04-29T03:19:06Z</date>
+				<date>2021-05-06T07:19:07Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
