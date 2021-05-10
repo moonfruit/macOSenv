@@ -2,7 +2,7 @@
 
 CMD=(plutil -convert json -o - "${1:--}")
 if [[ -t 1 ]]; then
-	"${CMD[@]}" | jq
+	"${CMD[@]}" | jq -S
 else
 	"${CMD[@]}"
 fi
