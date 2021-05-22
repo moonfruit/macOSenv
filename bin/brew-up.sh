@@ -21,6 +21,7 @@ export HOMEBREW_UPDATE_PREINSTALL=1
 OUTDATED=$(brew outdated)
 if [[ -n $OUTDATED ]]; then
 	if brew upgrade --force-bottle --display-times; then
+		brew autoremove
 		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
 		brew cleanup -s
 	fi
