@@ -26,3 +26,6 @@ if [[ -n $OUTDATED ]]; then
 		brew cleanup -s
 	fi
 fi
+
+echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
+brew-outdated.py

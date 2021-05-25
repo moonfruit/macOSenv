@@ -4,12 +4,34 @@ local home <const> = os.getenv("HOME")
 hs.pathwatcher.new(home .. "/.hammerspoon", hs.reload):start()
 
 -- Prevent create some directories
-local function removeDirectory(path)
-	result, error = hs.fs.rmdir(path)
+local trash <const> = home .. "/.Trash"
+
+local function applescript(source, ...)
+	result, _, descriptor = hs.osascript.applescript(string.format(source, ...))
 	if result then
-		print(string.format("Delete `%s` success", path))
+		return true;
+	end
+	description = descriptor["NSLocalizedDescription"]:gsub("\\U(....)", function(cp)
+		return utf8.char(tonumber(cp, 16))
+	end)
+	return nil, description
+end
+
+local function removeDirectory(path)
+	local result, error = hs.fs.rmdir(path)
+	if result then
+		hs.printf("Delete `%s` success", path)
+	elseif error == "Directory not empty" then
+		result, error = applescript([[
+			tell application "Finder"
+				move POSIX file "%s" to trash
+			end tell
+		]], path)
+		if not result then
+			print(error)
+		end
 	elseif error ~= "No such file or directory" then
-		print(string.format("Delete `%s` failure, %s", path, error))
+		hs.printf("Delete `%s` failure, %s", path, error)
 	end
 end
 
