@@ -1,6 +1,6 @@
 #!/bin/bash
 layout_node() {
-	if [[ $1 == 12 ]]; then
+	if [[ $1 == 14 || $1 == lts ]]; then
 		JAVA_HOME=$(java-home -n graalvm)
 		PATH_add "$JAVA_HOME/bin"
 
@@ -14,14 +14,6 @@ layout_node() {
 	fi
 
 	PATH_add node_modules/.bin
-}
-
-layout_node10() {
-	layout node 10
-}
-
-layout_node12() {
-	layout node 12
 }
 
 venv_type() {
@@ -53,7 +45,10 @@ layout_python() {
 			;;
 		esac
 		if [[ -x venv/bin/pip ]]; then
-			venv/bin/pip install -U pip setuptools wheel
+			if [[ -r requirements.txt ]]; then
+				REQUIREMENTS=(-r requirements.txt)
+			fi
+			venv/bin/pip install -U pip setuptools wheel "${REQUIREMENTS[@]}"
 		fi
 	fi
 
