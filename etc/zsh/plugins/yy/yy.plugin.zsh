@@ -12,7 +12,7 @@ zstyle ':completion:*:*:*:users' ignored-patterns $_ignored_users
 zstyle -e ':completion:*:my-accounts' users-hosts 'reply=($(cat ~/.ssh/save_hosts))'
 
 # for npm
-_npm_completion() {
+function _npm_completion() {
   local si=$IFS
   compadd -- $(COMP_CWORD=$((CURRENT-1)) \
                COMP_LINE=$BUFFER \
@@ -22,3 +22,15 @@ _npm_completion() {
   IFS=$si
 }
 compdef _npm_completion npm
+
+# for pip
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+compctl -K _pip_completion pip
+compctl -K _pip_completion pip3

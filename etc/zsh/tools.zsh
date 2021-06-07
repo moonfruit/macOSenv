@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
 
-unalias pip
-
 # for dmalloc
 function dmalloc {
 	eval "$(command dmalloc -b "$@")"

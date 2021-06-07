@@ -11,7 +11,6 @@ function exaf() {
 	fi
 	exa -gF --time-style long-iso --git $extra "$@"
 }
-
 function tree() {
 	local extra=-T
 	if [[ $1 = '-lrt' ]]; then
@@ -20,6 +19,7 @@ function tree() {
 	fi
 	exaf $extra "$@"
 }
+compdef _exa exaf tree
 
 alias ls='exaf'
 
@@ -50,8 +50,6 @@ alias ls-='sl'
 
 alias gotop='gotop -c solarized -r 2s'
 alias gpft='git push --follow-tags'
-
-unalias grep
 
 # vman() {
 #    env PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
