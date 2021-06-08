@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
-
 function exaf() {
 	local extra
 	if [[ $1 = '-lrt' ]]; then
