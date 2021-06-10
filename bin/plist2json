@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-CMD=(plutil -convert json -o - "${1:--}")
-if [[ -t 1 ]]; then
-	"${CMD[@]}" | jq -S
+FILE=${1:--}
+CMD=(plutil -convert json -o - "$FILE")
+
+shift
+if [[ $# == 0 ]]; then
+	"${CMD[@]}" | jq -S		
 else
-	"${CMD[@]}"
+	"${CMD[@]}" | jq "$@"
 fi

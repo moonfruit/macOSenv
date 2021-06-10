@@ -24,3 +24,5 @@ if [[ $1 == --parallel ]]; then
 else
 	brew livecheck --json --installed | output
 fi
+
+it2attention start
