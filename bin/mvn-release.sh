@@ -40,3 +40,5 @@ fi
 mvn clean
 mvn release:prepare -Dtag="$RELEASE" -DreleaseVersion="$RELEASE" -DdevelopmentVersion="$DEVELOP"
 mvn release:clean
+
+it2attention start
