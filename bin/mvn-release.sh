@@ -2,18 +2,23 @@
 set -e
 
 CURRENT=$(mvn help:evaluate -q -DforceStdout -Dexpression=project.version)
-if [[ $CURRENT =~ ^([0-9]+)\.([0-9]+)(\.[0-9]+)?-SNAPSHOT$ ]]; then
+if [[ $CURRENT =~ ^([0-9]+)\.([0-9]+)(\.([0-9]+))?-SNAPSHOT$ ]]; then
 	MAJOR=${BASH_REMATCH[1]}
 	MINOR=${BASH_REMATCH[2]}
-	PATCH=${BASH_REMATCH[3]}
+	PATCH=${BASH_REMATCH[4]}
 else
  	echo "Project version is not standard SNAPSHOT: $CURRENT" >&2
  	exit 1
 fi
 
 if [[ $PATCH ]]; then
-	RELEASE=$MAJOR.$MINOR$PATCH-RELEASE
-	DEVELOP=$MAJOR.$((MINOR+1)).0-SNAPSHOT
+	if (( PATCH > 0 )); then
+		RELEASE=$MAJOR.$MINOR.$PATCH-RELEASE
+		DEVELOP=$MAJOR.$MINOR.$((PATCH+1))-SNAPSHOT
+	else
+		RELEASE=$MAJOR.$MINOR.$PATCH-RELEASE
+		DEVELOP=$MAJOR.$((MINOR+1)).0-SNAPSHOT
+	fi
 else
 	RELEASE=$MAJOR.$MINOR-RELEASE
 	DEVELOP=$MAJOR.$((MINOR+1))-SNAPSHOT

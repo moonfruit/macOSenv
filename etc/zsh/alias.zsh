@@ -47,6 +47,10 @@ alias ls-='sl'
 
 alias gotop='gotop -c solarized -r 2s'
 alias gpft='git push --follow-tags'
+alias gpmf='git branch --show-current | xargs git push --set-upstream moonfruit'
+
+alias fdi='fd -uu'
+alias rgi='rg --no-ignore'
 
 # vman() {
 #    env PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
