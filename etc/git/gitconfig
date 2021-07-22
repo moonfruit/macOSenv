@@ -57,7 +57,7 @@
 	allow = always
 
 [url "https://github.com/"]
-	insteadOf = git://github.com/
+	insteadOf = git@github.com:
 
 [http "https://github.com"]
 	proxy = http://127.0.0.1:7890

@@ -19,7 +19,7 @@ brew update $PREINSTALL -v
 export HOMEBREW_UPDATE_PREINSTALL=1
 
 OUTDATED=$(brew outdated)
-if [[ -n $OUTDATED ]]; then
+if [[ $OUTDATED ]]; then
 	if brew upgrade --force-bottle --display-times; then
 		brew autoremove
 		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
@@ -27,5 +27,9 @@ if [[ -n $OUTDATED ]]; then
 	fi
 fi
 
-echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
-brew-outdated.py
+
+OUTDATED=$(brew outdated)
+if [[ $OUTDATED ]]; then
+	echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
+	echo "$OUTDATED"
+fi
