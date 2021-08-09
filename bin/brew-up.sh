@@ -28,7 +28,7 @@ if [[ $OUTDATED ]]; then
 fi
 
 
-OUTDATED=$(brew outdated)
+OUTDATED=$(brew-outdated.py)
 if [[ $OUTDATED ]]; then
 	echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
 	echo "$OUTDATED"
