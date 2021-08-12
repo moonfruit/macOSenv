@@ -22,6 +22,22 @@
 					<string>ASCII_Tables</string>
 				</dict>
 			</dict>
+			<key>GDB</key>
+			<dict>
+				<key>date</key>
+				<date>2021-08-12T08:29:59Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>GDB</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>GDB</string>
+				</dict>
+			</dict>
 			<key>Gitmoji</key>
 			<dict>
 				<key>date</key>
@@ -39,6 +55,22 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>Gitmoji</string>
+				</dict>
+			</dict>
+			<key>LLDB_to_GDB_Command_Map</key>
+			<dict>
+				<key>date</key>
+				<date>2021-08-12T08:30:01Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>LLDB to GDB Command Map</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>LLDB_to_GDB_Command_Map</string>
 				</dict>
 			</dict>
 			<key>Vim_CN</key>
@@ -76,22 +108,6 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>Bash_Shortcuts</string>
-				</dict>
-			</dict>
-			<key>GDB</key>
-			<dict>
-				<key>date</key>
-				<date>2020-07-15T08:38:03Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>name</key>
-					<string>GDB</string>
-					<key>platform</key>
-					<string>cheatsheet</string>
-					<key>uniqueIdentifier</key>
-					<string>GDB</string>
 				</dict>
 			</dict>
 			<key>Hub</key>
@@ -142,22 +158,6 @@
 					<string>cheatsheet</string>
 					<key>uniqueIdentifier</key>
 					<string>LLDB_Commands</string>
-				</dict>
-			</dict>
-			<key>LLDB_to_GDB_Command_Map</key>
-			<dict>
-				<key>date</key>
-				<date>2020-07-15T08:37:47Z</date>
-				<key>entry</key>
-				<dict>
-					<key>aliases</key>
-					<array/>
-					<key>name</key>
-					<string>LLDB to GDB Command Map</string>
-					<key>platform</key>
-					<string>cheatsheet</string>
-					<key>uniqueIdentifier</key>
-					<string>LLDB_to_GDB_Command_Map</string>
 				</dict>
 			</dict>
 			<key>Sublime_Text_3</key>
@@ -308,7 +308,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2021-07-30T08:48:21Z</date>
+				<date>2021-08-12T07:51:19Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -322,7 +322,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2021-07-30T09:13:34Z</date>
+				<date>2021-08-12T08:19:43Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1635,6 +1635,16 @@
 				<key>date</key>
 				<date>2020-07-14T08:30:22Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/HTML.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-08-11T08:16:30Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/JavaScript.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-08-11T09:12:27Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Java_SE11.xml</key>
 			<dict>
 				<key>date</key>
@@ -1732,16 +1742,6 @@
 			<dict>
 				<key>date</key>
 				<date>2019-02-27T05:59:01Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/HTML.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2015-09-07T08:50:14Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/JavaScript.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2018-12-07T10:02:17Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_EE8.xml</key>
 			<dict>
