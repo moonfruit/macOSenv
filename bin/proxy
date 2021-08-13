@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-if echo "$1" | grep -Exq '[0-9]+|https?:.*|gingkoo'; then
+if echo "$1" | grep -Exq ':?[0-9]+|https?:.*|gingkoo'; then
 	if [[ $1 == gingkoo ]]; then
 		port=http://10.1.2.12:8118
+	elif [[ $1 == :* ]]; then
+		port=${1:1}
 	else
 		port="$1"
 	fi
