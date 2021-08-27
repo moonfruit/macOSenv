@@ -25,4 +25,20 @@ else
 	brew livecheck --json --installed | output
 fi
 
+EXTRA=(
+	openliberty-jakartaee8
+	appcode
+	clion
+	phpstorm
+	rider
+	webstorm
+)
+
+echo "$GREEN==>$RESET ${BOLD}Live Check (Extra)$RESET"
+if [[ $1 == --parallel ]]; then
+	parallel -j16 --bar brew livecheck --json ::: "${EXTRA[@]}" | output
+else
+	brew livecheck --json "${EXTRA[@]}" | output
+fi
+
 it2attention start
