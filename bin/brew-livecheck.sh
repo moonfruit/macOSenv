@@ -28,6 +28,7 @@ fi
 EXTRA=(
 	openliberty-jakartaee8
 	ariang
+	discord
 	appcode
 	clion
 	phpstorm
