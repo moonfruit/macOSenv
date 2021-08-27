@@ -27,6 +27,7 @@ fi
 
 EXTRA=(
 	openliberty-jakartaee8
+	ariang
 	appcode
 	clion
 	phpstorm
