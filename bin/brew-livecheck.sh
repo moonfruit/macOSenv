@@ -17,18 +17,13 @@ output() {
 	done
 }
 
-echo "$GREEN==>$RESET ${BOLD}Live Check$RESET"
-if [[ $1 == --parallel ]]; then
-	(brew ls --formula | sed 's/^/--formula,/'; brew ls --cask | sed 's/^/--cask,/') | \
-		parallel -C, -j16 --bar brew livecheck --json '{1}' '{2}' | output
-else
-	brew livecheck --json --installed | output
-fi
-
 EXTRA=(
+	kettle
 	openliberty-jakartaee8
+	plantuml
 	ariang
 	discord
+	kitty
 	appcode
 	clion
 	phpstorm
@@ -36,11 +31,27 @@ EXTRA=(
 	webstorm
 )
 
-echo "$GREEN==>$RESET ${BOLD}Live Check (Extra)$RESET"
+brew-ls() {
+	brew info --json=v2 --installed | jq -r '.formulae + .casks | .[] |
+		if has("token") then "--cask,\(.token)" else "--formula,\(.name)" end'
+	brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
+		select(.installed | length == 0) |
+		if has("token") then "--cask,\(.token)" else "--formula,\(.name)" end'
+}
+
+brew-extra() {
+	brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
+		select(.installed | length == 0) |
+		if has("token") then .token else .name end'
+}
+
+echo "$GREEN==>$RESET ${BOLD}Live Check$RESET"
 if [[ $1 == --parallel ]]; then
-	parallel -j16 --bar brew livecheck --json ::: "${EXTRA[@]}" | output
+	brew-ls | parallel -C, -j8 --bar brew livecheck --json '{1}' '{2}' | output
 else
-	brew livecheck --json "${EXTRA[@]}" | output
+	brew livecheck --json --installed | output
+	echo "$GREEN==>$RESET ${BOLD}Live Check (Extra)$RESET"
+	brew-extra | xargs brew livecheck --json | output
 fi
 
 it2attention start
