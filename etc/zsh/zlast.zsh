@@ -38,5 +38,5 @@ while [[ ${fpath[1]} == /usr/local/share/zsh/site-functions ]]; do
 done
 
 if [[ $TERM_PROGRAM == iTerm.app ]]; then
-	archey -o
+	archey -l
 fi

@@ -1,1 +1,1 @@
-../../python/geoip/wrapper.sh
+../package/yyscripts/wrapper.sh

@@ -54,3 +54,7 @@
 	path = package/vim/swift.vim
 	url = https://github.com/keith/swift.vim.git
 	shallow = true
+[submodule "package/archey-osx"]
+	path = package/archey-osx
+	url = https://github.com/moonfruit/archey-osx.git
+	shallow = true
