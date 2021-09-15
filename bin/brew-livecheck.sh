@@ -21,6 +21,8 @@ EXTRA=(
 	kettle
 	openliberty-jakartaee8
 	plantuml
+	tomcat
+	tomcat@8
 	ariang
 	discord
 	kitty
