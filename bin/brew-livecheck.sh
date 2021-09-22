@@ -27,9 +27,11 @@ EXTRA=(
 	discord
 	kitty
 	appcode
+	android-studio
 	clion
 	phpstorm
 	rider
+	rubymine
 	webstorm
 )
 

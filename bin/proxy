@@ -13,7 +13,7 @@ if echo "$1" | grep -Exq ':?[0-9]+|https?:.*|gingkoo'; then
 else
 	#port=http://10.1.2.12:8118
 	#port=7890
-	port=11001
+	port=10001
 fi
 
 if [[ $port == 0 ]]; then
