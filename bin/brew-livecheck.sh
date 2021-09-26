@@ -19,9 +19,11 @@ output() {
 
 EXTRA=(
 	kettle
+	neovim
 	openliberty-jakartaee8
 	plantuml
 	tomcat
+	tomcat@9
 	tomcat@8
 	ariang
 	discord
@@ -29,7 +31,11 @@ EXTRA=(
 	appcode
 	android-studio
 	clion
+	datagrip
+	goland
+	intellij-idea
 	phpstorm
+	pycharm
 	rider
 	rubymine
 	webstorm

@@ -308,7 +308,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2021-09-18T07:02:22Z</date>
+				<date>2021-09-24T05:32:32Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -322,7 +322,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2021-09-16T02:30:43Z</date>
+				<date>2021-09-23T05:48:37Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1466,8 +1466,10 @@
 			<key>~/Library/Application Support/Dash/DocSets/Java_EE8/Java EE8.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Java_SE11/Java.docset</key>
-			<string>java:</string>
+			<string>java11:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Java_SE12/Java.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/DocSets/Java_SE17/Java.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/DocSets/Java_SE8/Java.docset</key>
 			<string>java8:</string>
@@ -1615,6 +1617,11 @@
 	<dict>
 		<key>installed</key>
 		<dict>
+			<key>http://kapeli.com/feeds/AppleScript.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-09-23T05:51:57Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Bash.xml</key>
 			<dict>
 				<key>date</key>
@@ -1655,6 +1662,11 @@
 				<key>date</key>
 				<date>2019-11-21T04:06:06Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Java_SE17.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-09-24T02:50:55Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Java_SE8.xml</key>
 			<dict>
 				<key>date</key>
@@ -1693,11 +1705,6 @@
 		</dict>
 		<key>uninstalled</key>
 		<dict>
-			<key>http://kapeli.com/feeds/AppleScript.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2019-02-27T05:59:09Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Apple_API_Reference.xml</key>
 			<dict>
 				<key>date</key>
