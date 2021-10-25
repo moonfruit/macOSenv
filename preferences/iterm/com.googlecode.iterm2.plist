@@ -3441,7 +3441,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>JetBrainsMono-Medium 13</string>
+			<string>JetBrainsMono-Bold 13</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -3486,7 +3486,7 @@
 				<string></string>
 			</dict>
 			<key>Send Code When Idle</key>
-			<false/>
+			<true/>
 			<key>Set Local Environment Vars</key>
 			<true/>
 			<key>Shortcut</key>
@@ -17048,6 +17048,8 @@
 	<false/>
 	<key>SeparateStatusBarsPerPane</key>
 	<true/>
+	<key>SeparateWindowTitlePerTab</key>
+	<false/>
 	<key>Show Toolbelt</key>
 	<false/>
 	<key>ShowBookmarkName</key>

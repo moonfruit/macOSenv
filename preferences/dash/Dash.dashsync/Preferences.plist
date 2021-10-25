@@ -60,7 +60,7 @@
 			<key>LLDB_to_GDB_Command_Map</key>
 			<dict>
 				<key>date</key>
-				<date>2021-08-12T08:30:01Z</date>
+				<date>2021-10-05T05:41:03Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -308,7 +308,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2021-09-24T05:32:32Z</date>
+				<date>2021-10-25T08:52:41Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -322,7 +322,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2021-09-23T05:48:37Z</date>
+				<date>2021-10-23T11:14:11Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1251,6 +1251,28 @@
 					<string>Kotlin</string>
 				</dict>
 			</dict>
+			<key>Requests</key>
+			<dict>
+				<key>date</key>
+				<date>2021-10-25T08:52:45Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array>
+						<string>python requests</string>
+					</array>
+					<key>authorLinkHref</key>
+					<string>https://github.com/Kapeli/Dash-User-Contributions/tree/master/docsets/Requests#readme</string>
+					<key>authorLinkText</key>
+					<string>Thiago Medeiros</string>
+					<key>name</key>
+					<string>Requests</string>
+					<key>platform</key>
+					<string>usercontribRequests</string>
+					<key>uniqueIdentifier</key>
+					<string>Requests</string>
+				</dict>
+			</dict>
 			<key>Zsh</key>
 			<dict>
 				<key>date</key>
@@ -1611,6 +1633,8 @@
 			<string>python:</string>
 			<key>~/Library/Application Support/Dash/User Contributed/Kotlin/kotlin.docset</key>
 			<string>kotlin:</string>
+			<key>~/Library/Application Support/Dash/User Contributed/Requests/Requests.docset</key>
+			<string>python:</string>
 		</dict>
 	</dict>
 	<key>feeds</key>
@@ -1656,11 +1680,6 @@
 			<dict>
 				<key>date</key>
 				<date>2021-08-11T09:12:27Z</date>
-			</dict>
-			<key>http://kapeli.com/feeds/Java_SE11.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2019-11-21T04:06:06Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE17.xml</key>
 			<dict>
@@ -1754,6 +1773,11 @@
 			<dict>
 				<key>date</key>
 				<date>2018-12-07T09:56:29Z</date>
+			</dict>
+			<key>http://kapeli.com/feeds/Java_SE11.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2021-10-25T08:50:54Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Java_SE12.xml</key>
 			<dict>

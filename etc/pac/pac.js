@@ -11,6 +11,7 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)maven\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)mozilla\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)jetbrains\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)steampowered\.com$/.test(host)) return "+AUTO";
@@ -428,6 +429,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)mvg\.jp$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".mybet.com") >= 0) return "+AUTO";
         if (/(?:^|\.)mybet\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)mypikpak\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)nationwide\.com$/.test(host)) return "+AUTO";
         if (/^http:\/\/www\.nbc\.com\/live/.test(url)) return "+AUTO";
         if (/(?:^|\.)neo-miracle\.com$/.test(host)) return "+AUTO";
@@ -490,6 +492,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)login\.target\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)rcam\.target\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)technews\.tw$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)terabox\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)thinkgeek\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)thebodyshop-usa\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)tma\.co\.jp$/.test(host)) return "+AUTO";
@@ -1219,6 +1222,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)tfhub\.dev$/.test(host)) return "+AUTO";
         if (/(?:^|\.)thinkwithgoogle\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)tiltbrush\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)translate\.goog$/.test(host)) return "+AUTO";
         if (/(?:^|\.)translate\.google$/.test(host)) return "+AUTO";
         if (/(?:^|\.)tv\.google$/.test(host)) return "+AUTO";
         if (/(?:^|\.)urchin\.com$/.test(host)) return "+AUTO";
@@ -1767,6 +1771,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/^http:\/\/japanfirst\.asianfreeforum\.com\//.test(url)) return "+AUTO";
         if (/(?:^|\.)asiansexdiary\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)asianwomensfilm\.de$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)asiaone\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".asiatgp.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".asiatoday.us") >= 0) return "+AUTO";
         if (/(?:^|\.)askstudent\.com$/.test(host)) return "+AUTO";
@@ -2442,6 +2447,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/^http:\/\/goagent\.codeplex\.com/.test(url)) return "+AUTO";
         if (/(?:^|\.)codeshare\.io$/.test(host)) return "+AUTO";
         if (/(?:^|\.)codeskulptor\.org$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)coinmarketcap\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)conoha\.jp$/.test(host)) return "+AUTO";
         if (/^http:\/\/tosh\.comedycentral\.com/.test(url)) return "+AUTO";
         if (scheme === "http" && url.indexOf("comefromchina.com") >= 0) return "+AUTO";
@@ -3211,6 +3217,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)frootvpn\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)fscked\.org$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".fsurf.com") >= 0) return "+AUTO";
+        if (/(?:^|\.)ftp\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".ftv.com.tw") >= 0) return "+AUTO";
         if (/(?:^|\.)ftv\.com\.tw$/.test(host)) return "+AUTO";
         if (/(?:^|\.)ftvnews\.com\.tw$/.test(host)) return "+AUTO";
@@ -3584,6 +3591,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)hexieshe\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)hexieshe\.xyz$/.test(host)) return "+AUTO";
         if (/(?:^|\.)hexxeh\.net$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)heyuedi\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("app.heywire.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".heyzo.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".hgseav.com") >= 0) return "+AUTO";
@@ -3715,6 +3723,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf(".hornygamer.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".hornytrip.com") >= 0) return "+AUTO";
         if (/^http:\/\/hornytrip\.com/.test(url)) return "+AUTO";
+        if (/(?:^|\.)horrorporn\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)hotair\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".hotav.tv") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".hotels.cn") >= 0) return "+AUTO";
@@ -5599,6 +5608,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)shadowsocks\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)shadowsocks-r\.com$/.test(host)) return "+AUTO";
         if (/^http:\/\/cn\.shafaqna\.com/.test(url)) return "+AUTO";
+        if (/(?:^|\.)shahit\.biz$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".shambalapost.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".shambhalasun.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".shangfang.org") >= 0) return "+AUTO";
@@ -6302,7 +6312,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf(".tparents.org") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".tpi.org.tw") >= 0) return "+AUTO";
         if (/(?:^|\.)tpi\.org\.tw$/.test(host)) return "+AUTO";
-        if (scheme === "http" && url.indexOf("traffichaus.com") >= 0) return "+AUTO";
+        if (/(?:^|\.)tradingview\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)transparency\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)treemall\.com\.tw$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("trendsmap.com") >= 0) return "+AUTO";

@@ -22,12 +22,15 @@ EXTRA=(
 	neovim
 	openliberty-jakartaee8
 	plantuml
+	ant
+	ant@1.9
 	tomcat
 	tomcat@9
 	tomcat@8
 	ariang
 	discord
 	kitty
+	oracle-jdk
 	appcode
 	android-studio
 	clion

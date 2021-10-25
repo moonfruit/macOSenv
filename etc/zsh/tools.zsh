@@ -37,8 +37,5 @@ export MAVEN_OPTS="-Xss2m -Duser.language=en_us -Dstyle.debug=bold -Dstyle.info=
 # for java
 export GINGKOO_ENV=dev
 
-# for perl
-export PERL5LIB=/usr/local/lib/perl5/site_perl/5.30.2/darwin-thread-multi-2level
-
 # for liquibase
 export LIQUIBASE_HOME=/usr/local/opt/liquibase/libexec
