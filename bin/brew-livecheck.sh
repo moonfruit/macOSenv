@@ -31,6 +31,7 @@ EXTRA=(
 	discord
 	kitty
 	oracle-jdk
+	samsung-portable-ssd-t5
 	appcode
 	android-studio
 	clion

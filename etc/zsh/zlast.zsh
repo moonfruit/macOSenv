@@ -33,8 +33,6 @@ eval "$(env | grep '_HOME$' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
 
 # dylink "$DYLD_FALLBACK_LIBRARY_PATH"
 
-unalias gdu
-
 while [[ ${fpath[1]} == /usr/local/share/zsh/site-functions ]]; do
 	shift fpath
 done

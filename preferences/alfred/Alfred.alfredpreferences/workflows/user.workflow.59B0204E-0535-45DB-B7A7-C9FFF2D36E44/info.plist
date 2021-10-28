@@ -385,7 +385,7 @@ diskutil unmount Transcend 2&gt;&amp;1</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>VOLUMES=(Transcend SamsungT5)
+				<string>VOLUMES=(Transcend SamsungT5 TimeMachine)
 
 for VOL in "${VOLUMES[@]}"; do
 	if [[ ! -d "/Volumes/$VOL" ]]; then
@@ -440,7 +440,7 @@ fi</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>VOLUMES=(Transcend SamsungT5)
+				<string>VOLUMES=(Transcend SamsungT5 TimeMachine)
 
 for VOL in "${VOLUMES[@]}"; do
 	if [[ -d "/Volumes/$VOL" ]]; then
