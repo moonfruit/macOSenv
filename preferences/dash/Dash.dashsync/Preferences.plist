@@ -89,6 +89,22 @@
 					<string>Vim_CN</string>
 				</dict>
 			</dict>
+			<key>YAML</key>
+			<dict>
+				<key>date</key>
+				<date>2021-11-23T02:42:20Z</date>
+				<key>entry</key>
+				<dict>
+					<key>aliases</key>
+					<array/>
+					<key>name</key>
+					<string>YAML</string>
+					<key>platform</key>
+					<string>cheatsheet</string>
+					<key>uniqueIdentifier</key>
+					<string>YAML</string>
+				</dict>
+			</dict>
 		</dict>
 		<key>uninstalled</key>
 		<dict>
@@ -308,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2021-10-26T08:52:43Z</date>
+				<date>2021-11-23T02:44:21Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -322,7 +338,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2021-10-23T11:14:11Z</date>
+				<date>2021-11-23T02:47:03Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1214,7 +1230,7 @@
 			<key>Hammerspoon</key>
 			<dict>
 				<key>date</key>
-				<date>2021-05-13T13:20:33Z</date>
+				<date>2021-11-01T13:12:58Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>

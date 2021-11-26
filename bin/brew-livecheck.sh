@@ -18,20 +18,27 @@ output() {
 }
 
 EXTRA=(
-	kettle
+	ccache
 	neovim
-	openliberty-jakartaee8
-	plantuml
+	vim
+
 	ant
 	ant@1.9
+	kettle
+	openj9
+	openliberty-jakartaee8
+	plantuml
 	tomcat
 	tomcat@9
 	tomcat@8
+	wildfly-as
+
 	ariang
 	discord
 	kitty
 	oracle-jdk
 	samsung-portable-ssd-t5
+
 	appcode
 	android-studio
 	clion
