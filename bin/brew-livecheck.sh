@@ -26,7 +26,7 @@ EXTRA=(
 	ant@1.9
 	kettle
 	openj9
-	openliberty-jakartaee8
+	openliberty-webprofile8
 	plantuml
 	tomcat
 	tomcat@9
