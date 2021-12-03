@@ -23,7 +23,7 @@ if [[ $OUTDATED ]]; then
 	if brew upgrade --force-bottle --display-times; then
 		brew autoremove
 		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
-		brew cleanup -s
+		brew cleanup
 	fi
 fi
 

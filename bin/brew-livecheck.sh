@@ -19,8 +19,6 @@ output() {
 
 EXTRA=(
 	ccache
-	neovim
-	vim
 
 	ant
 	ant@1.9
