@@ -41,6 +41,7 @@ EXTRA=(
 	android-studio
 	clion
 	datagrip
+	dataspell
 	goland
 	intellij-idea
 	phpstorm

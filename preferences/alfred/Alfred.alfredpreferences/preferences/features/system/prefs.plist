@@ -4,9 +4,10 @@
 <dict>
 	<key>ejectBlacklist</key>
 	<array>
+		<string>*.backup</string>
+		<string>com.apple.TimeMachine*</string>
 		<string>Macintosh HD</string>
-		<string>Macintosh HD - 数据</string>
-		<string>Recovery</string>
+		<string>MobileBackups</string>
 		<string>SamsungT5</string>
 		<string>TimeMachine</string>
 		<string>Transcend</string>
