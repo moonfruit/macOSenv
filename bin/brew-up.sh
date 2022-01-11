@@ -4,6 +4,12 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 	exec proxy "$0" "$@"
 fi
 
+STATUS=$(curl -sw "%{http_code}" http://connectivitycheck.gstatic.com/generate_204)
+if [[ $STATUS != 204 ]]; then
+	echo Cannot connect to Internet
+	exit 1
+fi
+
 BOLD=$(tput bold)
 GREEN=$(tput setaf 2)
 RESET=$(tput sgr0)
