@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-01-08T07:09:59Z</date>
+				<date>2022-01-17T16:24:47Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -338,7 +338,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2021-12-21T10:15:00Z</date>
+				<date>2022-01-13T13:24:40Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
