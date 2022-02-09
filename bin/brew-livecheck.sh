@@ -32,9 +32,11 @@ EXTRA=(
 	wildfly-as
 
 	ariang
+	dbvisualizer
 	discord
 	kitty
 	oracle-jdk
+	postman
 	samsung-portable-ssd-t5
 
 	appcode
