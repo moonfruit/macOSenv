@@ -9,7 +9,7 @@
 			<key>ASCII_Tables</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-25T10:25:22Z</date>
+				<date>2022-02-09T09:09:45Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -25,7 +25,7 @@
 			<key>GDB</key>
 			<dict>
 				<key>date</key>
-				<date>2021-08-12T08:29:59Z</date>
+				<date>2022-02-09T09:09:45Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -41,7 +41,7 @@
 			<key>Gitmoji</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-25T10:25:26Z</date>
+				<date>2022-02-09T09:09:48Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -60,7 +60,7 @@
 			<key>LLDB_to_GDB_Command_Map</key>
 			<dict>
 				<key>date</key>
-				<date>2021-10-05T05:41:03Z</date>
+				<date>2022-02-09T09:09:47Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -76,7 +76,7 @@
 			<key>Vim_CN</key>
 			<dict>
 				<key>date</key>
-				<date>2021-04-13T03:26:58Z</date>
+				<date>2022-02-09T09:09:45Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -92,7 +92,7 @@
 			<key>YAML</key>
 			<dict>
 				<key>date</key>
-				<date>2021-11-23T02:42:20Z</date>
+				<date>2022-02-09T09:09:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-01-20T01:59:25Z</date>
+				<date>2022-02-11T07:31:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -338,7 +338,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2022-01-13T13:24:40Z</date>
+				<date>2022-02-09T09:18:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
