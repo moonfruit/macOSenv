@@ -23,8 +23,6 @@ EXTRA=(
 	ant
 	ant@1.9
 	kettle
-	openj9
-	openliberty-webprofile8
 	plantuml
 	tomcat
 	tomcat@9
@@ -36,6 +34,8 @@ EXTRA=(
 	discord
 	kitty
 	oracle-jdk
+	semeru-jdk11-open
+	paw
 	postman
 	samsung-portable-ssd-t5
 
