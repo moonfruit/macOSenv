@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-02-17T01:46:36Z</date>
+				<date>2022-02-21T09:34:34Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -373,6 +373,34 @@
 	<dict>
 		<key>installed</key>
 		<dict>
+			<key>com.google.guava:guava</key>
+			<dict>
+				<key>date</key>
+				<date>2022-02-19T07:46:00Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.google.guava:guava</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.google.guava:guava</string>
+				</dict>
+			</dict>
+			<key>com.hazelcast:hazelcast</key>
+			<dict>
+				<key>date</key>
+				<date>2022-02-19T07:45:22Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>com.hazelcast:hazelcast</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>com.hazelcast:hazelcast</string>
+				</dict>
+			</dict>
 			<key>com.squareup.okhttp3:logging-interceptor</key>
 			<dict>
 				<key>date</key>
@@ -486,20 +514,6 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>com.google.errorprone:error_prone_annotations</string>
-				</dict>
-			</dict>
-			<key>com.google.guava:guava</key>
-			<dict>
-				<key>date</key>
-				<date>2021-04-19T09:16:07Z</date>
-				<key>entry</key>
-				<dict>
-					<key>name</key>
-					<string>com.google.guava:guava</string>
-					<key>platform</key>
-					<string>javadoc</string>
-					<key>uniqueIdentifier</key>
-					<string>com.google.guava:guava</string>
 				</dict>
 			</dict>
 			<key>com.google.inject:guice</key>
@@ -1542,6 +1556,8 @@
 			<key>~/Library/Application Support/Dash/Java DocSets/comgooglezxingcore/ZXingCore.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comgooglezxingjavase/ZXingJavaSEextensions.docset</key>
+			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/comhazelcasthazelcast/hazelcast.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comitextpdfitextpdf/iTextCore.docset</key>
 			<string>java:</string>
