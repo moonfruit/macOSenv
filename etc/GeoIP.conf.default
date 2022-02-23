@@ -5,12 +5,12 @@
 # Replace YOUR_ACCOUNT_ID_HERE and YOUR_LICENSE_KEY_HERE with an active account
 # ID and license key combination associated with your MaxMind account. These
 # are available from https://www.maxmind.com/en/my_license_key.
-AccountID 332993
-LicenseKey zdyI3NwDy0Gh6YdF
+AccountID YOUR_ACCOUNT_ID_HERE
+LicenseKey YOUR_LICENSE_KEY_HERE
 
 # Enter the edition IDs of the databases you would like to update.
 # Multiple edition IDs are separated by spaces.
-EditionIDs GeoLite2-City
+EditionIDs GeoLite2-Country GeoLite2-City
 
 # The remaining settings are OPTIONAL.
 
@@ -23,7 +23,7 @@ EditionIDs GeoLite2-City
 # The proxy host name or IP address. You may optionally specify a
 # port number, e.g., 127.0.0.1:8888. If no port number is specified, 1080
 # will be used.
-Proxy 127.0.0.1:10001
+# Proxy 127.0.0.1:8888
 
 # The user name and password to use with your proxy server.
 # ProxyUserPassword username:password
