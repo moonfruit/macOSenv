@@ -46,6 +46,7 @@ EXTRA=(
 	dataspell
 	goland
 	intellij-idea
+	jetbrains-toolbox
 	phpstorm
 	pycharm
 	rider
