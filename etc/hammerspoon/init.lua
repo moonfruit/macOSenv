@@ -71,7 +71,8 @@ hs.application.enableSpotlightForNameSearches(true)
 local hstracker <const> = "/Applications/HSTracker.app"
 local hearthstone <const> = "unity.Blizzard Entertainment.Hearthstone"
 hs.application.watcher.new(function(name, event, app)
-	if event == hs.application.watcher.launching then
+	if event == hs.application.watcher.launching or
+		event == hs.application.watcher.launched then
 		-- print(app:bundleID())
 		if app:bundleID() == hearthstone then
 			hs.application.open(hstracker)
