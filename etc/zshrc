@@ -9,13 +9,14 @@
 export ENV="$HOME/Workspace.localized/env"
 hash -d ENV="$ENV"
 export ZSH="$ENV/package/zsh/oh-my-zsh"
+ZDOTDIR="$HOME/.zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 if [[ $LC_TERMINAL == iTerm2 ]]; then
-    source ~/.zsh/.p10k.zsh
+    source $ZDOTDIR/.p10k.zsh
     ZSH_THEME="powerlevel10k/powerlevel10k"
     # ZSH_THEME="agnoster"
 else
@@ -86,7 +87,6 @@ plugins=(autojump colored-man-pages extract git gradle history-substring-search 
     fast-syntax-highlighting yy)
 
 # User configuration
-ZDOTDIR="$HOME/.zsh"
 HISTFILE="$ZDOTDIR/history.txt"
 ZSH_COMPDUMP="$ZDOTDIR/compdump.zsh"
 ZSH_CACHE_DIR="$ZDOTDIR/cache"
