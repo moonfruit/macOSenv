@@ -14,8 +14,10 @@ export ZSH="$ENV/package/zsh/oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-if [[ $TERM_PROGRAM == iTerm.app || $TERM_PROGRAM == tmux ]]; then
-    ZSH_THEME="agnoster"
+if [[ $LC_TERMINAL == iTerm2 ]]; then
+    source ~/.zsh/.p10k.zsh
+    ZSH_THEME="powerlevel10k/powerlevel10k"
+    # ZSH_THEME="agnoster"
 else
     ZSH_THEME="robbyrussell"
 fi
@@ -81,12 +83,7 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(autojump colored-man-pages extract git gradle history-substring-search httpie macos mvn
-    zsh-syntax-highlighting yy)
-
-# For zsh-completions
-# if [[ ! -f $ZSH_CUSTOM/plugins/zsh-completions/zsh-completions.plugin.zsh ]]; then
-#     touch $ZSH_CUSTOM/plugins/zsh-completions/zsh-completions.plugin.zsh
-# fi
+    fast-syntax-highlighting yy)
 
 # User configuration
 ZDOTDIR="$HOME/.zsh"

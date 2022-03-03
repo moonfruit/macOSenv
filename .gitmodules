@@ -58,3 +58,11 @@
 	path = package/archey-osx
 	url = https://github.com/moonfruit/archey-osx.git
 	shallow = true
+[submodule "package/zsh/powerlevel10k"]
+	path = package/zsh/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
+	shallow = true
+[submodule "package/zsh/fast-syntax-highlighting"]
+	path = package/zsh/fast-syntax-highlighting
+	url = https://github.com/zdharma-continuum/fast-syntax-highlighting.git
+	shallow = true
