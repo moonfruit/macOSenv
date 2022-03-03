@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-02-28T08:48:19Z</date>
+				<date>2022-03-03T08:48:24Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -376,7 +376,7 @@
 			<key>com.google.guava:guava</key>
 			<dict>
 				<key>date</key>
-				<date>2022-02-19T07:46:00Z</date>
+				<date>2022-03-01T08:47:48Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -390,7 +390,7 @@
 			<key>com.hazelcast:hazelcast</key>
 			<dict>
 				<key>date</key>
-				<date>2022-02-19T07:45:22Z</date>
+				<date>2022-03-01T08:47:57Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1244,7 +1244,7 @@
 			<key>Hammerspoon</key>
 			<dict>
 				<key>date</key>
-				<date>2021-12-21T10:12:24Z</date>
+				<date>2022-03-02T08:53:13Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
