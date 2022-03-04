@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+hash -d ENV="$ENV"
 
 export DESKTOP="$HOME/Desktop"
 hash -d DESKTOP="$DESKTOP"

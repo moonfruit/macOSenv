@@ -36,7 +36,3 @@ eval "$(env | grep '_HOME$' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
 while [[ ${fpath[1]} == /usr/local/share/zsh/site-functions ]]; do
 	shift fpath
 done
-
-if [[ $TERM_PROGRAM == iTerm.app ]]; then
-	archey -l
-fi
