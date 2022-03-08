@@ -3,6 +3,17 @@ ControlPath /tmp/%r@%h:%p
 ControlPersist 10m
 TCPKeepAlive yes
 
+Host 10.1.2.57
+	User root
+
+Host 10.1.2.16
+	User app
+	ProxyJump 10.1.2.57
+
+Host 10.1.2.32
+	User dev
+	ProxyJump 10.1.2.57
+
 Host moonfruit.top
   Port 26800
   ProxyCommand nc -X 5 -x 127.0.0.1:10001 %h %p
