@@ -7,13 +7,13 @@
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>AlternateMouseScroll</key>
-	<true/>
+	<false/>
 	<key>AnimateDimming</key>
 	<false/>
 	<key>AutoHideTmuxClientSession</key>
 	<true/>
 	<key>BadgeMaxWidthFraction</key>
-	<real>0.60000002384185791</real>
+	<real>0.5</real>
 	<key>BracketedPasteMode</key>
 	<true/>
 	<key>CheckTestRelease</key>
@@ -47,7 +47,7 @@
 	<key>Default Bookmark Guid</key>
 	<string>550B3BC4-9D90-4016-B342-242B82E83738</string>
 	<key>DefaultTabBarHeight</key>
-	<real>28</real>
+	<real>24</real>
 	<key>DeleteProfile_SilenceUntil</key>
 	<real>668004839.62766898</real>
 	<key>DeleteProfile_selection</key>
@@ -61,11 +61,13 @@
 	<key>DisableFullscreenTransparency</key>
 	<true/>
 	<key>DoNotSetCtype</key>
-	<true/>
+	<false/>
 	<key>DoubleClickPerformsSmartSelection</key>
 	<true/>
 	<key>EnableAPIServer</key>
 	<true/>
+	<key>EnableDivisionView</key>
+	<false/>
 	<key>EnableProxyIcon</key>
 	<true/>
 	<key>EnableRendezvous</key>
@@ -78,6 +80,8 @@
 	<false/>
 	<key>FsTabDelay</key>
 	<real>1.011116623878479</real>
+	<key>HTMLTabTitles</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HiddenAFRStrokeThickness</key>
@@ -92,6 +96,8 @@
 	<false/>
 	<key>HideTab</key>
 	<true/>
+	<key>HideTabNumber</key>
+	<false/>
 	<key>HighlightTabLabels</key>
 	<true/>
 	<key>HotKeyBookmark</key>
@@ -21926,6 +21932,8 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
+	<false/>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -21968,12 +21976,14 @@
 	<integer>6</integer>
 	<key>TabStyle</key>
 	<integer>1</integer>
+	<key>TabStyleWithAutomaticOption</key>
+	<integer>4</integer>
 	<key>TabTransform</key>
 	<integer>0</integer>
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
-	<false/>
+	<true/>
 	<key>TimeBetweenTips</key>
 	<real>86400</real>
 	<key>TmuxDashboardLimit</key>
@@ -22009,7 +22019,7 @@
 	<key>WebKitStandardFont</key>
 	<string>Lucida Grande</string>
 	<key>WindowNumber</key>
-	<false/>
+	<true/>
 	<key>WindowStyle</key>
 	<integer>0</integer>
 	<key>WordCharacters</key>

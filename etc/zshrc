@@ -10,6 +10,9 @@ export ENV="$HOME/Workspace.localized/env"
 export ZSH="$ENV/package/zsh/oh-my-zsh"
 ZDOTDIR="$HOME/.zsh"
 
+# >>> Enable direnv
+(( ${+commands[direnv]} )) && eval "$(direnv export zsh)"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -31,6 +34,9 @@ if [[ $LC_TERMINAL == iTerm2 ]]; then
 else
     ZSH_THEME="robbyrussell"
 fi
+
+# <<< Initilize direnv
+(( ${+commands[direnv]} )) && eval "$(direnv hook zsh)"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -93,7 +99,7 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autojump colored-man-pages extract git gradle history-substring-search httpie macos mvn
+plugins=(autojump colored-man-pages cp extract git golang gradle history-substring-search httpie macos mosh mvn yarn
     fast-syntax-highlighting yy)
 
 # User configuration

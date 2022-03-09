@@ -10,7 +10,7 @@ function dmalloc {
 # eval $(thefuck --alias)
 
 # for direnv
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
 
 # for hstr
 # export HSTR_CONFIG=hicolor        # get more colors
