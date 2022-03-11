@@ -33,6 +33,7 @@ EXTRA=(
 	dbvisualizer
 	discord
 	kitty
+	macast
 	oracle-jdk
 	semeru-jdk11-open
 	paw
