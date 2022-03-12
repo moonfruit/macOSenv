@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-03-10T13:40:18Z</date>
+				<date>2022-03-11T13:41:17Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1244,7 +1244,7 @@
 			<key>Hammerspoon</key>
 			<dict>
 				<key>date</key>
-				<date>2022-03-02T08:53:13Z</date>
+				<date>2022-03-11T13:45:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
