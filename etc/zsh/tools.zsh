@@ -18,6 +18,7 @@ function dmalloc {
 
 # for zmv
 autoload -U zmv
+alias mmv='noglob zmv -W'
 
 # for homebrew
 export HOMEBREW_AUTO_UPDATE_SECS=86400

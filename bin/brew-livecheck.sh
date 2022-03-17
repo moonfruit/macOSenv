@@ -36,6 +36,8 @@ EXTRA=(
 	macast
 	oracle-jdk
 	semeru-jdk11-open
+	slack
+	slack-beta
 	paw
 	postman
 	samsung-portable-ssd-t5
