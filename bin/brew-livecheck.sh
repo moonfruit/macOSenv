@@ -29,11 +29,13 @@ EXTRA=(
 	tomcat@8
 	wildfly-as
 
+	alacritty
 	ariang
 	dbvisualizer
 	discord
 	kitty
 	macast
+	macvim
 	oracle-jdk
 	semeru-jdk11-open
 	slack
