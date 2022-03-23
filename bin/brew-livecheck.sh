@@ -11,10 +11,10 @@ RESET=$(tput sgr0)
 
 output() {
 	jq -r '.[] | select(.version.outdated) |
-		"\(if has("formula") then .formula else .cask end)\t\(.version.current)\t\(.version.latest)"' | \
-	while IFS=$'\t' read -r -a ITEMS; do
-		echo "$BLUE${ITEMS[0]}$RESET : ${ITEMS[1]} ==> $GREEN${ITEMS[2]}$RESET"
-	done
+        "\(if has("formula") then .formula else .cask end)\t\(.version.current)\t\(.version.latest)"' |
+		while IFS=$'\t' read -r -a ITEMS; do
+			echo "$BLUE${ITEMS[0]}$RESET : ${ITEMS[1]} ==> $GREEN${ITEMS[2]}$RESET"
+		done
 }
 
 EXTRA=(
@@ -35,7 +35,7 @@ EXTRA=(
 	discord
 	kitty
 	macast
-	macvim
+	homebrew/cask/macvim
 	oracle-jdk
 	semeru-jdk11-open
 	slack
