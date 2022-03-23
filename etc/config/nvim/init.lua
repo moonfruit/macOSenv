@@ -1,0 +1,2 @@
+require("yy").init().finalize()
+

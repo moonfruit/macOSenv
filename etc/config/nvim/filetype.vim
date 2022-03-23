@@ -1,0 +1,1 @@
+../lvim/filetype.vim
