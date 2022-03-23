@@ -2,14 +2,6 @@
 	path = package/zsh/oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 	shallow = true
-[submodule "package/vim/kotlin-vim"]
-	path = package/vim/kotlin-vim
-	url = https://github.com/udalov/kotlin-vim.git
-	shallow = true
-[submodule "package/vim/vim-solidity"]
-	path = package/vim/vim-solidity
-	url = https://github.com/tomlion/vim-solidity.git
-	shallow = true
 [submodule "package/yyscripts"]
 	path = package/yyscripts
 	url = https://github.com/moonfruit/yyscripts.git

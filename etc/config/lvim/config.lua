@@ -122,6 +122,8 @@ lvim.plugins = {
   { "ishan9299/nvim-solarized-lua" },
   { "folke/tokyonight.nvim" },
   { "folke/trouble.nvim" },
+  { "udalov/kotlin-vim" },
+  { "TovarishFin/vim-solidity" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
