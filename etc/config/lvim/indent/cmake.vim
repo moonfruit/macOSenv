@@ -1,0 +1,1 @@
+/usr/local/opt/cmake/share/vim/vimfiles/indent/cmake.vim
