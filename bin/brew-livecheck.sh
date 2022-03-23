@@ -35,7 +35,6 @@ EXTRA=(
 	discord
 	kitty
 	macast
-	homebrew/cask/macvim
 	oracle-jdk
 	semeru-jdk11-open
 	slack
