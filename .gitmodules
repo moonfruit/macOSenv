@@ -6,22 +6,6 @@
 	path = package/solarized
 	url = https://github.com/altercation/solarized.git
 	shallow = true
-[submodule "package/vim/pathogen"]
-	path = package/vim/pathogen
-	url = https://github.com/tpope/vim-pathogen.git
-	shallow = true
-[submodule "package/vim/syntastic"]
-	path = package/vim/syntastic
-	url = https://github.com/scrooloose/syntastic.git
-	shallow = true
-[submodule "package/vim/YouCompleteMe"]
-	path = package/vim/YouCompleteMe
-	url = https://github.com/Valloric/YouCompleteMe.git
-	shallow = true
-[submodule "package/vim/tagbar"]
-	path = package/vim/tagbar
-	url = https://github.com/majutsushi/tagbar.git
-	shallow = true
 [submodule "package/vim/XMLCatalog"]
 	path = package/vim/XMLCatalog
 	url = https://github.com/moonfruit/XMLCatalog.git
@@ -34,21 +18,9 @@
 	path = package/vim/vim-solidity
 	url = https://github.com/tomlion/vim-solidity.git
 	shallow = true
-[submodule "package/vim/vim-wasm"]
-	path = package/vim/vim-wasm
-	url = https://github.com/rhysd/vim-wasm.git
-	shallow = true
-[submodule "package/vim/vimcdoc"]
-	path = package/vim/vimcdoc
-	url = https://github.com/yianwillis/vimcdoc.git
-	shallow = true
 [submodule "package/yyscripts"]
 	path = package/yyscripts
 	url = https://github.com/moonfruit/yyscripts.git
-	shallow = true
-[submodule "package/vim/swift.vim"]
-	path = package/vim/swift.vim
-	url = https://github.com/keith/swift.vim.git
 	shallow = true
 [submodule "package/archey-osx"]
 	path = package/archey-osx
