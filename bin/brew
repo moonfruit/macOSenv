@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+brew=(/usr/local/bin/brew)
+
+case $1 in
+audit | bump* | bundle | create | info | install | livecheck | reinstall | search | tap | update | upgrade)
+	if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
+		brew=(proxy "${brew[@]}")
+	fi
+	;;
+esac
+
+exec "${brew[@]}" "$@"

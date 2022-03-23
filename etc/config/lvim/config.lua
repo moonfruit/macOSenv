@@ -30,30 +30,30 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
-  -- for input mode
-  i = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-    ["<C-n>"] = actions.cycle_history_next,
-    ["<C-p>"] = actions.cycle_history_prev,
-  },
-  -- for normal mode
-  n = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-  },
+    -- for input mode
+    i = {
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-n>"] = actions.cycle_history_next,
+        ["<C-p>"] = actions.cycle_history_prev,
+    },
+    -- for normal mode
+    n = {
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+    },
 }
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<cr>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
+    name = "+Trouble",
+    r = { "<cmd>Trouble lsp_references<cr>", "References" },
+    f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+    d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+    q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+    l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+    w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
 }
 
 -- TODO: User Config for predefined plugins
@@ -96,34 +96,35 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
 -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-  { command = "shfmt" },
-  { command = "black", extra_args = { "--line-length", "120" } },
-  { command = "prettier", extra_args = { "--print-width", "120" } },
-}
+local formatters = require("lvim.lsp.null-ls.formatters")
+formatters.setup({
+    { command = "shfmt" },
+    { command = "black", extra_args = { "--line-length", "120" } },
+    { command = "prettier", extra_args = { "--print-width", "120" } },
+    { command = "stylua", extra_args = { "--indent-type", "Spaces" } },
+})
 
 -- set additional linters
 -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
-  {
-    command = "codespell",
-    disabled_filetypes = { "c", "cpp", "objc", "objcpp" },
-    extra_args = { "--builtin", "clear,rare,code", "--ignore-words", get_config_dir() .. "/dictionary.txt" },
-  },
-  { command = "shellcheck", extra_args = { "--severity", "warning" } },
-  { command = "flake8", extra_args = { "--max-line-length=120" } },
-  { command = "eslint" },
-}
+local linters = require("lvim.lsp.null-ls.linters")
+linters.setup({
+    {
+        command = "codespell",
+        disabled_filetypes = { "c", "cpp", "objc", "objcpp" },
+        extra_args = { "--builtin", "clear,rare,code", "--ignore-words", get_config_dir() .. "/dictionary.txt" },
+    },
+    { command = "shellcheck", extra_args = { "--severity", "warning" } },
+    { command = "flake8", extra_args = { "--max-line-length=120" } },
+    { command = "eslint" },
+})
 
 -- Additional Plugins
 lvim.plugins = {
-  { "ishan9299/nvim-solarized-lua" },
-  { "folke/tokyonight.nvim" },
-  { "folke/trouble.nvim" },
-  { "udalov/kotlin-vim" },
-  { "TovarishFin/vim-solidity" },
+    { "ishan9299/nvim-solarized-lua" },
+    { "folke/tokyonight.nvim" },
+    { "folke/trouble.nvim" },
+    { "udalov/kotlin-vim" },
+    { "TovarishFin/vim-solidity" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -132,5 +133,3 @@ lvim.plugins = {
 -- }
 
 yy.finalize()
-
--- vim: shiftwidth=2:tabstop=2

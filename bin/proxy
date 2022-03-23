@@ -1,28 +1,25 @@
 #!/usr/bin/env bash
 
-if echo "$1" | grep -Exq ':?[0-9]+|https?:.*|gingkoo'; then
-	if [[ $1 == gingkoo ]]; then
-		port=http://10.1.2.12:8118
-	elif [[ $1 == :* ]]; then
-		port=${1:1}
-	else
-		port="$1"
-	fi
+if echo "$1" | grep -Exq ':?[0-9]+|https?:.*|gingkoo|none'; then
+	case $1 in
+	gingkoo) port=http://10.1.2.12:8118 ;;
+	none) port=0 ;;
+	:*) port=${1:1} ;;
+	*) port=$1 ;;
+	esac
 	shift
-
 else
 	#port=http://10.1.2.12:8118
 	#port=7890
 	port=10001
 fi
 
-if [[ $port == 0 ]]; then
-	exec "$@"
-fi
-
 export PROXY_ENABLED=1
 
-if [[ $port == 1080 ]]; then
+if [[ $port == 0 ]]; then
+	exec "$@"
+
+elif [[ $port == 1080 ]]; then
 	exec proxychains "$port" "$@"
 
 elif [[ $port =~ https?:.* ]]; then
