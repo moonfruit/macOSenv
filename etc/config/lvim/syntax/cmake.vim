@@ -1,1 +1,0 @@
-/usr/local/opt/cmake/share/vim/vimfiles/syntax/cmake.vim
