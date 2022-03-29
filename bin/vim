@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 if [[ $LC_TERMINAL == iTerm2 ]]; then
-	VIM=lvim
+	VIM=(proxy lvim)
 else
-	VIM=nvim
+	VIM=(nvim)
 fi
 
 NAME="${0##*/}"
 if [[ $NAME == view ]]; then
-	OPTS=(-R)
+	VIM+=(-R)
 elif [[ $NAME == vimdiff ]]; then
-	OPTS=(-d)
+	VIM+=(-d)
 elif [[ $NAME == vimex ]]; then
-	OPTS=(-e)
-else
-	OPTS=()
+	VIM+=(-e)
 fi
 
-exec "$VIM" "${OPTS[@]}" "$@"
+exec "${VIM[@]}" "$@"

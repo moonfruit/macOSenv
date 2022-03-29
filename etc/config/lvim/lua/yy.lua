@@ -57,6 +57,29 @@ local function set_keymaps(keymaps)
     end
 end
 
+local function get_plugin_location(plugin)
+    if type(plugin) == "table" then
+        return plugin[1]
+    else
+        return plugin
+    end
+end
+
+local function append_plugin(plugins, plugin)
+    local location = get_plugin_location(plugin)
+    for _, item in pairs(plugins) do
+        if get_plugin_location(item) == location then
+            return
+        end
+    end
+    table.insert(plugins, plugin)
+end
+
+local colorscheme_plugins = {
+    solarized = "ishan9299/nvim-solarized-lua",
+    tokyonight = "folke/tokyonight.nvim",
+}
+
 function M:finalize()
     set_keymaps({
         normal_mode = {
@@ -75,6 +98,11 @@ function M:finalize()
                 N = { "<Cmd>BufferLineCyclePrev<CR>", "Previous Buffer" },
             },
         })
+
+        local plugin = colorscheme_plugins[lvim.colorscheme]
+        if plugin then
+            append_plugin(lvim.plugins, plugin)
+        end
     end
 
     vim.opt.clipboard = "unnamedplus"
