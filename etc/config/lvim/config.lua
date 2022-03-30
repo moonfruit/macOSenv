@@ -45,7 +45,7 @@ lvim.builtin.telescope.defaults.mappings = {
 }
 
 -- Use which-key to add extra bindings with the leader-key prefix
-lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<cr>", "Projects" }
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
     name = "+Trouble",
     r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -69,7 +69,7 @@ lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "maintained"
-lvim.builtin.treesitter.ignore_install = { "cooklang", "haskell" }
+lvim.builtin.treesitter.ignore_install = { "cooklang" }
 lvim.builtin.treesitter.highlight.enabled = true
 
 -- generic LSP settings

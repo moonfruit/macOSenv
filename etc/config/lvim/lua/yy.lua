@@ -12,6 +12,10 @@ function M:init()
     return M
 end
 
+local function is_table(value)
+    return type(value) == "table"
+end
+
 local set_keymap
 if lvim then
     local mode_adapters = {
@@ -20,7 +24,7 @@ if lvim then
     }
 
     function set_keymap(mode, key, value)
-        if type(value) == "table" then
+        if is_table(value) then
             lvim.builtin.which_key[mode_adapters[mode]][key] = value
         else
             lvim.keys[mode][key] = value
@@ -41,7 +45,7 @@ else
     }
 
     function set_keymap(mode, key, value)
-        if type(value) == "table" then
+        if is_table(value) then
             vim.api.nvim_set_keymap(mode_adapters[mode], "<Leader>" .. key, value[1], keymap_opts)
         else
             vim.api.nvim_set_keymap(mode_adapters[mode], key, value, keymap_opts)
@@ -58,7 +62,7 @@ local function set_keymaps(keymaps)
 end
 
 local function get_plugin_location(plugin)
-    if type(plugin) == "table" then
+    if is_table(plugin) then
         return plugin[1]
     else
         return plugin
