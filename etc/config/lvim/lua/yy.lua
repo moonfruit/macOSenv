@@ -2,7 +2,7 @@ local local_dir = vim.env.HOME .. "/.local"
 
 local M = {}
 
-function M:init()
+function M:initialize()
     vim.g.python3_host_prog = local_dir .. "/venv/bin/python3"
 
     if not lvim then

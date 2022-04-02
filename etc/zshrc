@@ -35,7 +35,7 @@ else
     ZSH_THEME="robbyrussell"
 fi
 
-# <<< Initilize direnv
+# <<< Initialize direnv
 (( ${+commands[direnv]} )) && eval "$(direnv hook zsh)"
 
 # Set list of themes to pick from when loading at random

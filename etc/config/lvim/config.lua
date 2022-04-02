@@ -7,7 +7,7 @@ a global executable or a path to
 an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-local yy = require("yy").init()
+local yy = require("yy").initialize()
 
 -- general
 lvim.log.level = "warn"

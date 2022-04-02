@@ -1,2 +1,1 @@
-require("yy").init().finalize()
-
+require("yy").initialize().finalize()
