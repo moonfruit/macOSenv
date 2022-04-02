@@ -5,17 +5,10 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 fi
 
 BOLD=$(tput bold)
-BLUE=$(tput setaf 4)
+RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
+BLUE=$(tput setaf 4)
 RESET=$(tput sgr0)
-
-output() {
-	jq -r '.[] | select(.version.outdated) |
-        "\(if has("formula") then .formula else .cask end)\t\(.version.current)\t\(.version.latest)"' |
-		while IFS=$'\t' read -r -a ITEMS; do
-			echo "$BLUE${ITEMS[0]}$RESET : ${ITEMS[1]} ==> $GREEN${ITEMS[2]}$RESET"
-		done
-}
 
 EXTRA=(
 	ccache
@@ -58,27 +51,77 @@ EXTRA=(
 	webstorm
 )
 
-brew-ls() {
-	brew info --json=v2 --installed | jq -r '.formulae + .casks | .[] |
-		if has("token") then "--cask,\(.token)" else "--formula,\(.name)" end'
-	brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
-		select(.installed | length == 0) |
-		if has("token") then "--cask,\(.token)" else "--formula,\(.name)" end'
+NOPROXY=(
+	adrive
+	baidunetdisk
+	neteasemusic
+	tencent-lemon
+	tencent-meeting
+	thunder
+	uu-booster
+	wechat
+	wechatwork
+	ximalaya
+)
+
+OUTDATED=()
+
+iterate() {
+	COMMAND=$1
+	shift
+
+	while [[ $# -gt 0 ]]; do
+		IFS=";" read -r -a ARGUMENTS <<<$1
+		"$COMMAND" "${ARGUMENTS[@]}"
+		shift
+	done
+}
+
+bump() {
+	# shellcheck disable=SC2076
+	if [[ " ${NOPROXY[*]} " =~ " $2 " ]]; then
+		PREFIX="${RED}noproxy$RESET "
+	else
+		PREFIX=""
+	fi
+	echo "${PREFIX}brew ${BOLD}bump-$1-pr$RESET --version $GREEN$4$RESET $BLUE$2$RESET"
+}
+
+describe() {
+	echo "$BLUE$2$RESET : $3 ==> $GREEN$4$RESET"
+}
+
+handle-outdated() {
+	mapfile -t OUTPUT < <(jq -r '.[] | select(.version.outdated) |
+		"\(if has("formula") then "formula;" + .formula else "cask;" + .cask end);\(.version.current);\(.version.latest)"')
+	OUTDATED+=("${OUTPUT[@]}")
+	iterate describe "${OUTPUT[@]}"
 }
 
 brew-extra() {
 	brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
 		select(.installed | length == 0) |
-		if has("token") then .token else .name end'
+		"\(.tap)/\(if has("token") then .token else .name end)"'
+}
+
+brew-ls() {
+	brew info --json=v2 --installed | jq -r '.formulae + .casks | .[] |
+		"\(.tap)/\(if has("token") then .token else .name end)"'
+	brew-extra
 }
 
 echo "$GREEN==>$RESET ${BOLD}Live Check$RESET"
 if [[ $1 == --parallel ]]; then
-	brew-ls | parallel -C, -j8 --bar brew livecheck --json '{1}' '{2}' | output
+	handle-outdated < <(brew-ls | parallel -n8 --bar brew livecheck --json)
 else
-	brew livecheck --json --installed | output
+	handle-outdated < <(brew livecheck --json --installed)
 	echo "$GREEN==>$RESET ${BOLD}Live Check (Extra)$RESET"
-	brew-extra | xargs brew livecheck --json | output
+	handle-outdated < <(brew-extra | xargs brew livecheck --json)
+fi
+
+if [[ ${#OUTDATED[@]} -gt 0 ]]; then
+	echo "$GREEN==>$RESET ${BOLD}Bump PR$RESET"
+	iterate bump "${OUTDATED[@]}"
 fi
 
 it2attention start
