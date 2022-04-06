@@ -12,6 +12,7 @@ fi
 
 BOLD=$(tput bold)
 GREEN=$(tput setaf 2)
+BLUE=$(tput setaf 4)
 RESET=$(tput sgr0)
 
 PREINSTALL=--preinstall
@@ -33,9 +34,12 @@ if [[ $OUTDATED ]]; then
 	fi
 fi
 
-
 OUTDATED=$(brew-outdated.py)
 if [[ $OUTDATED ]]; then
 	echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
 	echo "$OUTDATED"
+	echo "$GREEN==>$RESET ${BOLD}Upgrade casks$RESET"
+	awk 'NR>2{print $2}' <<<"$OUTDATED" | while read -r CASK; do
+		echo "brew ${BOLD}upgrade$RESET --cask $BLUE$CASK$RESET"
+	done
 fi
