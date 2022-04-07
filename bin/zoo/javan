@@ -10,9 +10,4 @@ else
 	exit 1
 fi
 
-if [[ $VERSION = 11 ]]; then
-	if java-home -v 11 -n graalvm >/dev/null 2>&1; then
-		exec java-home -v 11 -n graalvm -- "$CMD" "$@"
-	fi
-fi
 exec java-home -v "$VERSION" -- "$CMD" "$@"
