@@ -53,7 +53,7 @@ lvim.builtin.which_key.mappings["t"] = {
     d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
     q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
     l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-    w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
+    w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 
 -- TODO: User Config for predefined plugins
@@ -130,5 +130,16 @@ lvim.plugins = {
 -- lvim.autocommands.custom_groups = {
 --   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
 -- }
+
+local components = require("lvim.core.lualine.components")
+lvim.builtin.lualine.sections.lualine_x = {
+    components.diagnostics,
+    components.treesitter,
+    components.lsp,
+    components.filetype,
+    yy.lualine.fileformat,
+    yy.lualine.encoding,
+    components.location,
+}
 
 yy.finalize()

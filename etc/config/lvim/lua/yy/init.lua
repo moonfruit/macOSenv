@@ -18,6 +18,8 @@ end
 
 local set_keymap
 if lvim then
+    M.lualine = require(".lualine")
+
     local mode_adapters = {
         normal_mode = "mappings",
         visual_mode = "vmappings",
