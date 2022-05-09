@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-04-08T02:10:28Z</date>
+				<date>2022-05-08T07:21:26Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -338,7 +338,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2022-04-08T02:13:31Z</date>
+				<date>2022-04-28T05:18:11Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -390,7 +390,7 @@
 			<key>com.hazelcast:hazelcast</key>
 			<dict>
 				<key>date</key>
-				<date>2022-03-29T09:51:59Z</date>
+				<date>2022-04-28T05:13:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -441,6 +441,20 @@
 					<string>javadoc</string>
 					<key>uniqueIdentifier</key>
 					<string>com.squareup.retrofit2:retrofit</string>
+				</dict>
+			</dict>
+			<key>io.projectreactor:reactor-core</key>
+			<dict>
+				<key>date</key>
+				<date>2022-04-28T05:13:25Z</date>
+				<key>entry</key>
+				<dict>
+					<key>name</key>
+					<string>io.projectreactor:reactor-core</string>
+					<key>platform</key>
+					<string>javadoc</string>
+					<key>uniqueIdentifier</key>
+					<string>io.projectreactor:reactor-core</string>
 				</dict>
 			</dict>
 		</dict>
@@ -1575,6 +1589,8 @@
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/comsquareupretrofit2retrofit/Retrofit.docset</key>
 			<string>java:</string>
+			<key>~/Library/Application Support/Dash/Java DocSets/ioprojectreactorreactorcore/NonBlockingReactiveFoundationfortheJVM.docset</key>
+			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/jakartaannotationjakartaannotationapi/JakartaAnnotationsAPI.docset</key>
 			<string>java:</string>
 			<key>~/Library/Application Support/Dash/Java DocSets/jakartapersistencejakartapersistenceapi/JakartaPersistenceAPI.docset</key>
@@ -1741,7 +1757,7 @@
 			<key>http://kapeli.com/feeds/Ruby_2.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-29T02:49:17Z</date>
+				<date>2022-04-15T02:17:52Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/SQLAlchemy.xml</key>
 			<dict>
@@ -1889,7 +1905,7 @@
 			<key>http://kapeli.com/feeds/Ruby.xml</key>
 			<dict>
 				<key>date</key>
-				<date>2021-03-29T05:51:21Z</date>
+				<date>2022-04-15T02:28:13Z</date>
 			</dict>
 			<key>http://kapeli.com/feeds/Rust.xml</key>
 			<dict>

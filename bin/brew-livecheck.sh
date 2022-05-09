@@ -29,7 +29,10 @@ EXTRA=(
 	kitty
 	macast
 	oracle-jdk
+	semeru-jdk-open
+	semeru-jdk8-open
 	semeru-jdk11-open
+	#	semeru-jdk17-open
 	slack
 	slack-beta
 	paw
@@ -55,6 +58,8 @@ NOPROXY=(
 	adrive
 	baidunetdisk
 	neteasemusic
+	qq
+	qqmusic
 	tencent-lemon
 	tencent-meeting
 	thunder
