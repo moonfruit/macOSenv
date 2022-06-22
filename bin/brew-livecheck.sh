@@ -5,7 +5,6 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 fi
 
 BOLD=$(tput bold)
-RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 BLUE=$(tput setaf 4)
 RESET=$(tput sgr0)
@@ -54,21 +53,6 @@ EXTRA=(
 	webstorm
 )
 
-NOPROXY=(
-	adrive
-	baidunetdisk
-	neteasemusic
-	qq
-	qqmusic
-	tencent-lemon
-	tencent-meeting
-	thunder
-	uu-booster
-	wechat
-	wechatwork
-	ximalaya
-)
-
 OUTDATED=()
 
 iterate() {
@@ -83,12 +67,6 @@ iterate() {
 }
 
 bump() {
-	# shellcheck disable=SC2076
-	if [[ " ${NOPROXY[*]} " =~ " $2 " ]]; then
-		PREFIX="${RED}noproxy$RESET "
-	else
-		PREFIX=""
-	fi
 	echo "${PREFIX}brew ${BOLD}bump-$1-pr$RESET --version $GREEN$4$RESET $BLUE$2$RESET"
 }
 

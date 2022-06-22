@@ -2,12 +2,73 @@
 
 brew=(/usr/local/bin/brew)
 
-case $1 in
-audit | bump* | bundle | create | info | install | livecheck | reinstall | search | tap | update | upgrade)
-	if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
-		brew=(proxy "${brew[@]}")
+readonly -A NOPROXY=(
+	[--formula]=1
+	[--formulae]=1
+	[--cask]=1
+	[--casks]=1
+	[adrive]=1
+	[baidunetdisk]=1
+	[neteasemusic]=1
+	[qq]=1
+	[qqmusic]=1
+	['tencent-lemon']=1
+	['tencent-meeting']=1
+	[thunder]=1
+	['uu-booster']=1
+	[wechat]=1
+	[wechatwork]=1
+	[ximalaya]=1
+)
+
+all-test() {
+	if [[ $# -gt 0 ]]; then
+		for PARA in "$@"; do
+			# shellcheck disable=SC2076
+			if [[ -z ${NOPROXY[$PARA]} ]]; then
+				return 1
+			fi
+		done
 	fi
-	;;
-esac
+}
+
+any-test() {
+	for PARA in "$@"; do
+		# shellcheck disable=SC2076
+		if [[ -n ${NOPROXY[$PARA]} ]]; then
+			return 0
+		fi
+	done
+	return 1
+}
+
+echo-direct() {
+	BOLD=$(tput bold)
+	RED=$(tput setaf 1)
+	RESET=$(tput sgr0)
+	echo "$RED==>$RESET ${BOLD}DIRECT connection to the Internet$RESET"
+}
+
+if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
+	case $1 in
+	audit | bundle | create | info | livecheck | search | tap | update)
+		brew=(proxy "${brew[@]}")
+		;;
+	bump-cask-pr | bump-formula-pr)
+		if any-test "${@:2}"; then
+			echo-direct
+		else
+			brew=(proxy "${brew[@]}")
+		fi
+		;;
+	install | reinstall | upgrade)
+		if all-test "${@:2}"; then
+			echo-direct
+		else
+			brew=(proxy "${brew[@]}")
+		fi
+		;;
+	esac
+fi
 
 exec "${brew[@]}" "$@"

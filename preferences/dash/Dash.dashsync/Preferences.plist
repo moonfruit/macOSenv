@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-05-08T07:21:26Z</date>
+				<date>2022-06-22T02:50:42Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -338,7 +338,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2022-04-28T05:18:11Z</date>
+				<date>2022-06-22T02:54:15Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -390,7 +390,7 @@
 			<key>com.hazelcast:hazelcast</key>
 			<dict>
 				<key>date</key>
-				<date>2022-04-28T05:13:04Z</date>
+				<date>2022-06-22T02:54:08Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -446,7 +446,7 @@
 			<key>io.projectreactor:reactor-core</key>
 			<dict>
 				<key>date</key>
-				<date>2022-04-28T05:13:25Z</date>
+				<date>2022-06-22T02:51:01Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1504,7 +1504,7 @@
 		</dict>
 	</dict>
 	<key>DHWKWebViewTextSizeMultiplier</key>
-	<real>1.1499998569488525</real>
+	<real>1</real>
 	<key>DHWebViewIsDark</key>
 	<false/>
 	<key>actuallyDarkWebView</key>
