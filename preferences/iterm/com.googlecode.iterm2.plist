@@ -25656,7 +25656,7 @@
 	<key>PasteSpecialSubstitution</key>
 	<string></string>
 	<key>PasteSpecialUseRegexSubstitution</key>
-	<true/>
+	<false/>
 	<key>PasteTabToStringTabStopSize</key>
 	<integer>4</integer>
 	<key>PerPaneBackgroundImage</key>
