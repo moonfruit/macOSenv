@@ -93,7 +93,7 @@ function M:finalize()
             ["<Space>"] = { "@=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>", "Fold Toggle" },
         },
         visual_mode = {
-            ["<LeftRelease>"] = '"*ygv',
+            ["<LeftRelease>"] = '"+ygv',
         },
     })
 
@@ -111,9 +111,9 @@ function M:finalize()
         end
     end
 
-    vim.opt.clipboard = "unnamedplus"
+    vim.opt.clipboard = ""
     vim.opt.cmdheight = 1
-    vim.opt.fileencodings = "ucs-bom,utf-8,chinese,default,latin1"
+    vim.opt.fileencodings = "ucs-bom,utf-8,gb18030,big5,default,latin1"
     vim.opt.foldmethod = "marker"
     vim.opt.shiftwidth = 4
     vim.opt.tabstop = 4

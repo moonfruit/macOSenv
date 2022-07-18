@@ -30,6 +30,8 @@
 	<integer>1</integer>
 	<key>ConvertDosNewlines</key>
 	<true/>
+	<key>ConvertUnicodePunctuation</key>
+	<false/>
 	<key>Coprocess MRU</key>
 	<array>
 		<string>/Users/moon/Documents/Environment/bin/iterm2-recv-zmodem.sh</string>

@@ -1,1 +1,1 @@
-require("yy").initialize().finalize()
+require("yy"):initialize():finalize()
