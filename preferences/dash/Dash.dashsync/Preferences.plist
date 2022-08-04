@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-07-18T03:35:15Z</date>
+				<date>2022-08-03T09:26:30Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -390,7 +390,7 @@
 			<key>com.hazelcast:hazelcast</key>
 			<dict>
 				<key>date</key>
-				<date>2022-06-22T02:54:08Z</date>
+				<date>2022-08-02T09:27:04Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -1694,6 +1694,11 @@
 				<key>date</key>
 				<date>2021-09-23T05:51:57Z</date>
 			</dict>
+			<key>http://kapeli.com/feeds/Apple_API_Reference.xml</key>
+			<dict>
+				<key>date</key>
+				<date>2022-07-20T06:33:55Z</date>
+			</dict>
 			<key>http://kapeli.com/feeds/Bash.xml</key>
 			<dict>
 				<key>date</key>
@@ -1772,11 +1777,6 @@
 		</dict>
 		<key>uninstalled</key>
 		<dict>
-			<key>http://kapeli.com/feeds/Apple_API_Reference.xml</key>
-			<dict>
-				<key>date</key>
-				<date>2019-02-27T05:59:09Z</date>
-			</dict>
 			<key>http://kapeli.com/feeds/Boost.xml</key>
 			<dict>
 				<key>date</key>
