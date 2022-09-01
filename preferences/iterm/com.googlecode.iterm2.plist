@@ -9917,7 +9917,7 @@
 			<key>Columns</key>
 			<integer>132</integer>
 			<key>Command</key>
-			<string>ssh -J root@10.1.2.57 dev@10.1.2.32</string>
+			<string>ssh dev@10.1.2.32</string>
 			<key>Cursor Boost</key>
 			<real>0.0</real>
 			<key>Cursor Boost (Dark)</key>
@@ -11745,7 +11745,7 @@
 			<key>Columns</key>
 			<integer>132</integer>
 			<key>Command</key>
-			<string>ssh -J root@10.1.2.57 app@10.1.2.16</string>
+			<string>ssh app@10.1.2.16</string>
 			<key>Cursor Boost</key>
 			<real>0.0</real>
 			<key>Cursor Boost (Dark)</key>

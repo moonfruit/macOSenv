@@ -68,28 +68,14 @@
 	process = git-lfs filter-process
 	required = true
 
-[mergetool "vscode"]
-	cmd = code --wait "$MERGED"
-
 [difftool "vscode"]
 	cmd = code --wait --diff "$LOCAL" "$REMOTE"
 
-[mergetool "idea"]
-	cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+[mergetool "vscode"]
+	cmd = code --wait --merge "$REMOTE" "$LOCAL" "$BASE" "$MERGED"
 
 [difftool "idea"]
 	cmd = idea diff "$LOCAL" "$REMOTE"
 
-[mergetool "goland"]
-	cmd = goland merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
-
-[difftool "goland"]
-	cmd = goland diff "$LOCAL" "$REMOTE"
-
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+[mergetool "idea"]
+	cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
