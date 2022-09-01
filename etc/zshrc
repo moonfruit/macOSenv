@@ -19,7 +19,7 @@ ZDOTDIR="$HOME/.zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 if [[ $LC_TERMINAL == iTerm2 ]]; then
     # Show system information before Powerlevel10k instant prompt.
-    if [[ $TERM_PROGRAM == iTerm.app && -z $VIMRUNTIM ]]; then
+    if [[ $TERM_PROGRAM == iTerm.app && -z $VIMRUNTIM && -z $ARCHEY_DISABLED ]]; then
         "$ENV/bin/archey" -l
     fi
     # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
