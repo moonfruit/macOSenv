@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if hash it2check 2>/dev/null && hash it2profile 2>/dev/null && it2check; then
+	profile=$(it2profile -g)
+	if [[ $profile != dark ]]; then
+		on-exit() {
+			it2profile -s "$profile"
+		}
+		trap on-exit EXIT
+		it2profile -s dark
+		export DARK_ENABLED=1
+	fi
+fi
+
+"$@"

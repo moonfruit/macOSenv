@@ -53,6 +53,12 @@ EXTRA=(
 	webstorm
 )
 
+EXCLUDED=(
+	luajit
+	hazelcast
+	hazelcast-management-center
+)
+
 OUTDATED=()
 
 iterate() {
@@ -74,9 +80,31 @@ describe() {
 	echo "$BLUE$2$RESET : $3 ==> $GREEN$4$RESET"
 }
 
+generate-excluded() {
+	if [[ -z $EXCLUDED_JSON ]]; then
+		EXCLUDED_JSON="{"
+		for ITEM in "${EXCLUDED[@]}"; do
+			if [[ -n $COMMA ]]; then
+				EXCLUDED_JSON+=$COMMA
+			else
+				COMMA=,
+			fi
+			EXCLUDED_JSON+="\"$ITEM\":true"
+		done
+		EXCLUDED_JSON+="}"
+	fi
+}
+
 handle-outdated() {
-	mapfile -t OUTPUT < <(jq -r '.[] | select(.version.outdated) |
-		"\(if has("formula") then "formula;" + .formula else "cask;" + .cask end);\(.version.current);\(.version.latest)"')
+	generate-excluded
+	mapfile -t OUTPUT < <(jq -r --argjson excluded "$EXCLUDED_JSON" '.[] |
+		select(.version.outdated) | {
+			type: "\(if .formula then "formula" else "cask" end)",
+			name: "\(if .formula then .formula else .cask end)",
+			version: .version
+		} |
+		select(.name | in($excluded) | not) |
+		"\(.type);\(.name);\(.version.current);\(.version.latest)"')
 	OUTDATED+=("${OUTPUT[@]}")
 	iterate describe "${OUTPUT[@]}"
 }
