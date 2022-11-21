@@ -6,6 +6,9 @@ function dmalloc {
 	eval "$(command dmalloc -b "$@")"
 }
 
+# for di
+export DI_ARGS="-f sMbuvpt"
+
 # for thefuck
 # eval $(thefuck --alias)
 

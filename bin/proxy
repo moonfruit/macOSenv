@@ -50,6 +50,9 @@ fi
 
 if [[ -z $no_proxy ]]; then
 	# shellcheck source=../etc/no_proxy.sh
+	if [[ -z $ENV ]]; then
+		ENV="${BASH_SOURCE[0]%/*}/.."
+	fi
 	source "$ENV/etc/no_proxy.sh"
 fi
 
