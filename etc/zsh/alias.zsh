@@ -50,6 +50,7 @@ alias gpft='git push --follow-tags'
 alias gpmf='git branch --show-current | xargs git push --set-upstream moonfruit'
 
 alias fdi='fd -uu'
+alias fdp='fd -p'
 alias rgi='rg --no-ignore'
 
 # vman() {
