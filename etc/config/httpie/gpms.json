@@ -1,0 +1,19 @@
+{
+    "__meta__": {
+        "about": "HTTPie session file",
+        "help": "https://httpie.io/docs#sessions",
+        "httpie": "3.2.1"
+    },
+    "auth": {
+        "password": null,
+        "type": null,
+        "username": null
+    },
+    "cookies": [],
+    "headers": [
+        {
+            "name": "X-Access-Token",
+            "value": "eyJhbGciOiJFUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxOTg0NjMzMDQ3fQ.xlpVxKCbQyXNmwcy8R2h3x-bq9dCgtYJaTDjiTLdXdCCNXkGvywPDC9hgeb6T_WTQFZdNFvJxFFVB0HWuPQYVg"
+        }
+    ]
+}
