@@ -2,14 +2,17 @@ local colors = require("lvim.core.lualine.colors")
 
 return {
     encoding = {
-        "o:encoding",
-        fmt = function(encoding)
-            return encoding == "utf-8" and "" or encoding
+        "o:fileencoding",
+        color = { fg = colors.yellow },
+        cond = function()
+            return vim.o.fileencoding ~= "utf-8"
         end,
-        color = { fg = colors.red },
     },
     fileformat = {
         "fileformat",
-        color = { fg = colors.green },
+        color = { fg = colors.violet },
+        cond = function()
+            return vim.o.fileformat ~= "unix"
+        end,
     },
 }
