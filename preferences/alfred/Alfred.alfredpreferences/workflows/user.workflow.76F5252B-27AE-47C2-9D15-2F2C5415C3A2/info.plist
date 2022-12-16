@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.github.moonfruit.clipboard</string>
+	<string>com.alfredapp.vero.pasteasplaintext</string>
 	<key>category</key>
 	<string>Tools</string>
 	<key>connections</key>
@@ -23,13 +23,13 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string>MoonFruit</string>
+	<string>Vero Pepperrell</string>
 	<key>description</key>
-	<string>Paste as plain text from hotkey</string>
+	<string>Paste your clipboard content as plain text from a hotkey</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>PastePlainText</string>
+	<string>Paste as Plain Text from Hotkey</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -71,7 +71,7 @@
 				<key>clipboardtext</key>
 				<string></string>
 				<key>ignoredynamicplaceholders</key>
-				<false/>
+				<true/>
 				<key>transient</key>
 				<true/>
 			</dict>
@@ -84,25 +84,48 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>SD Card Searcher</string>
+	<string># Paste as Plain Text
+
+This very simple workflow allows you to set a hotkey to paste the contents of your macOS clipboard as plain text, stripping it of any formatting.
+
+![Paste as Plain Text workflow](workflow-canvas.png)
+
+## Usage
+
+Double-click the Hotkey object and set a hotkey combo of your choice.
+
+The workflow assumes that you've already granted Alfred the necessary Accessibility permissions:
+https://www.alfredapp.com/help/getting-started/permissions/</string>
 	<key>uidata</key>
 	<dict>
 		<key>816667CB-E309-42DA-A6AE-856C215E2717</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>note</key>
+			<string>Set the hotkey here to paste your clipboard content as plain text.</string>
 			<key>xpos</key>
-			<integer>50</integer>
+			<real>50</real>
 			<key>ypos</key>
-			<integer>50</integer>
+			<real>50</real>
 		</dict>
 		<key>E244FEC6-9942-4EC6-A9D8-BBE08A039FDB</key>
 		<dict>
+			<key>note</key>
+			<string>The Clipboard object is set to automatically paste the content to the frontmost app.</string>
 			<key>xpos</key>
-			<integer>280</integer>
+			<real>280</real>
 			<key>ypos</key>
-			<integer>50</integer>
+			<real>50</real>
 		</dict>
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>2022.2</string>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://github.com/alfredapp/paste-as-plain-text-from-hotkey-workflow/</string>
 </dict>
 </plist>

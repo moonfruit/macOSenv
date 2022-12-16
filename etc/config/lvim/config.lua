@@ -12,7 +12,7 @@ local yy = require("yy"):initialize()
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
-lvim.colorscheme = "lunar"
+-- lvim.colorscheme = "lunar"
 -- lvim.colorscheme = "tokyonight"
 lvim.colorscheme = "solarized"
 lvim.transparent_window = true
@@ -114,8 +114,7 @@ lvim.builtin.treesitter.highlight.enable = true
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jtdls" })
-table.insert(lvim.lsp.automatic_configuration.skipped_servers, "jtdls")
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "clangd", "gopls" })
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
@@ -136,7 +135,7 @@ table.insert(lvim.lsp.automatic_configuration.skipped_servers, "jtdls")
 -- end
 
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
--- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+-- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
     { command = "shfmt" },
@@ -146,6 +145,7 @@ formatters.setup({
 })
 
 -- set additional linters
+-- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
     {
@@ -160,7 +160,10 @@ linters.setup({
 
 -- Additional Plugins
 lvim.plugins = {
-    "folke/trouble.nvim",
+    {
+        "folke/trouble.nvim",
+        cmd = "TroubleToggle",
+    },
     "udalov/kotlin-vim",
     "TovarishFin/vim-solidity",
 }
@@ -179,6 +182,7 @@ lvim.plugins = {
 --   end,
 -- })
 
+-- lualine
 local components = require("lvim.core.lualine.components")
 lvim.builtin.lualine.sections.lualine_x = {
     components.diagnostics,
