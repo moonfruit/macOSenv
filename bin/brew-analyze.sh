@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-http -fh http://10.1.2.32/plantuml/form text=@<(brew-analyze.py) | \
-	sed -n 's|Location: /plantuml/uml|http://10.1.2.32/plantuml/svg|p'
+URL=$(http -fh http://10.1.2.32/plantuml-v1/form text=@<(brew-analyze.py) |
+	sed -n 's|Location: /plantuml-v1/uml|http://10.1.2.32/plantuml-v1/svg|p')
+open "$URL"
