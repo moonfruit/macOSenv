@@ -15,9 +15,15 @@ Host 10.1.2.32
 	ProxyJump 10.1.2.57
 
 Host 10.1.3.11
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
+    User gpp
+	HostKeyAlgorithms +ssh-rsa
+	PubkeyAcceptedKeyTypes +ssh-rsa
+
+Host 10.1.3.25
+    User gpp
+	HostKeyAlgorithms +ssh-rsa
+	PubkeyAcceptedKeyTypes +ssh-rsa
 
 Host moonfruit.top
-  Port 26800
-  ProxyCommand nc -X 5 -x 127.0.0.1:10001 %h %p
+	Port 26800
+	ProxyCommand nc -X 5 -x 127.0.0.1:10001 %h %p

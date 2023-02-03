@@ -31,7 +31,7 @@ EXTRA=(
 	semeru-jdk-open
 	semeru-jdk8-open
 	semeru-jdk11-open
-	#	semeru-jdk17-open
+	semeru-jdk17-open
 	slack
 	slack-beta
 	paw
@@ -66,7 +66,7 @@ iterate() {
 	shift
 
 	while [[ $# -gt 0 ]]; do
-		IFS=";" read -r -a ARGUMENTS <<<$1
+		IFS=";" read -r -a ARGUMENTS <<<"$1"
 		"$COMMAND" "${ARGUMENTS[@]}"
 		shift
 	done
@@ -112,7 +112,7 @@ handle-outdated() {
 brew-extra() {
 	brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
 		select(.installed | length == 0) |
-		"\(.tap)/\(if has("token") then .token else .name end)"'
+		"\(if .tap == null then "homebrew/cask" else .tap end)/\(if has("token") then .token else .name end)"'
 }
 
 brew-ls() {

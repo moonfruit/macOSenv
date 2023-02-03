@@ -6,22 +6,23 @@ if [[ $CURRENT =~ ^([0-9]+)\.([0-9]+)(\.([0-9]+))?-SNAPSHOT$ ]]; then
 	MAJOR=${BASH_REMATCH[1]}
 	MINOR=${BASH_REMATCH[2]}
 	PATCH=${BASH_REMATCH[4]}
-else
- 	echo "Project version is not standard SNAPSHOT: $CURRENT" >&2
- 	exit 1
-fi
 
-if [[ $PATCH ]]; then
-	if (( PATCH > 0 )); then
-		RELEASE=$MAJOR.$MINOR.$PATCH-RELEASE
-		DEVELOP=$MAJOR.$MINOR.$((PATCH+1))-SNAPSHOT
+	if [[ $PATCH ]]; then
+		if ((PATCH > 0)); then
+			RELEASE=$MAJOR.$MINOR.$PATCH-RELEASE
+			DEVELOP=$MAJOR.$MINOR.$((PATCH + 1))-SNAPSHOT
+		else
+			RELEASE=$MAJOR.$MINOR.$PATCH-RELEASE
+			DEVELOP=$MAJOR.$((MINOR + 1)).0-SNAPSHOT
+		fi
 	else
-		RELEASE=$MAJOR.$MINOR.$PATCH-RELEASE
-		DEVELOP=$MAJOR.$((MINOR+1)).0-SNAPSHOT
+		RELEASE=$MAJOR.$MINOR-RELEASE
+		DEVELOP=$MAJOR.$((MINOR + 1))-SNAPSHOT
 	fi
 else
-	RELEASE=$MAJOR.$MINOR-RELEASE
-	DEVELOP=$MAJOR.$((MINOR+1))-SNAPSHOT
+	RELEASE=$(echo "$CURRENT" | sd -- '-SNAPSHOT$' '-RELEASE')
+	# shellcheck disable=SC2016
+	DEVELOP=$(echo "$CURRENT" | sd -- '(.*)\..*$' '$1.?')
 fi
 
 read -rp "Release Version ($RELEASE): " INPUT

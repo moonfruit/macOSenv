@@ -41,7 +41,7 @@
 			<key>Gitmoji</key>
 			<dict>
 				<key>date</key>
-				<date>2022-02-09T09:09:48Z</date>
+				<date>2023-01-31T02:36:46Z</date>
 				<key>entry</key>
 				<dict>
 					<key>aliases</key>
@@ -324,7 +324,7 @@
 			<key>golang.org/x/crypto</key>
 			<dict>
 				<key>date</key>
-				<date>2022-11-18T07:36:21Z</date>
+				<date>2023-01-06T01:47:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -338,7 +338,7 @@
 			<key>google.golang.org/grpc</key>
 			<dict>
 				<key>date</key>
-				<date>2022-11-20T02:45:55Z</date>
+				<date>2023-01-31T02:40:59Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
@@ -446,7 +446,7 @@
 			<key>io.projectreactor:reactor-core</key>
 			<dict>
 				<key>date</key>
-				<date>2022-11-18T07:35:23Z</date>
+				<date>2023-01-31T02:37:51Z</date>
 				<key>entry</key>
 				<dict>
 					<key>name</key>
