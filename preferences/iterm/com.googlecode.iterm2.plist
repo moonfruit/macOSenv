@@ -18240,6 +18240,7 @@
 			<array>
 				<string>gingkoo</string>
 				<string>c</string>
+				<string>cfets</string>
 			</array>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
