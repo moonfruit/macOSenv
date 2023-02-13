@@ -12,7 +12,7 @@
 	<integer>1</integer>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/python3</string>
+		<string>/opt/homebrew/bin/python3</string>
 		<string>/Users/moon/Workspace.localized/python/bingwallpaper/bing.py</string>
 	</array>
 	<key>StandardErrorPath</key>

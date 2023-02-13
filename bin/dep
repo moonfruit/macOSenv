@@ -6,7 +6,7 @@ fi
 
 if [[ $1 == ensure ]]; then
 	VERBOSE=-v
-	if /usr/local/bin/dep "$@" $VERBOSE; then
+	if /opt/homebrew/bin/dep "$@" $VERBOSE; then
 		RESULT=success
 	else
 		RESULT=failure
@@ -14,5 +14,5 @@ if [[ $1 == ensure ]]; then
 	terminal-notifier -message "\`dep\` end -- $RESULT"
 
 else
-	exec /usr/local/bin/dep "$@" $VERBOSE
+	exec /opt/homebrew/bin/dep "$@" $VERBOSE
 fi

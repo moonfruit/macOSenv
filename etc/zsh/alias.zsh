@@ -36,7 +36,7 @@ alias cd..='cd ..'
 alias h='history | tail -58'
 alias hist='history'
 
-alias bash='SHELL=/usr/local/bin/bash /usr/local/bin/bash --login'
+alias bash='SHELL=/opt/homebrew/bin/bash /opt/homebrew/bin/bash --login'
 # alias diff='colordiff'
 alias ldd='otool -L'
 alias tmuxc='tmux -CC'

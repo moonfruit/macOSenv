@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NPM="/usr/local/bin/npm"
+NPM="/opt/homebrew/bin/npm"
 
 npm_install() {
 	if ! diff package.json node_modules/package.json >/dev/null 2>&1; then

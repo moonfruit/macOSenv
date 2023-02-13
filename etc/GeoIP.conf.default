@@ -14,8 +14,8 @@ EditionIDs GeoLite2-Country GeoLite2-City
 
 # The remaining settings are OPTIONAL.
 
-# The directory to store the database files. Defaults to /usr/local/var/GeoIP
-# DatabaseDirectory /usr/local/var/GeoIP
+# The directory to store the database files. Defaults to /opt/homebrew/var/GeoIP
+# DatabaseDirectory /opt/homebrew/var/GeoIP
 
 # The server to use. Defaults to "updates.maxmind.com".
 # Host updates.maxmind.com
@@ -36,7 +36,7 @@ EditionIDs GeoLite2-Country GeoLite2-City
 # time.
 # Note: Once created, this lockfile is not removed from the filesystem.
 # Defaults to ".geoipupdate.lock" under the DatabaseDirectory.
-# LockFile /usr/local/var/GeoIP/.geoipupdate.lock
+# LockFile /opt/homebrew/var/GeoIP/.geoipupdate.lock
 
 # The amount of time to retry for when errors during HTTP transactions are
 # encountered. It can be specified as a (possibly fractional) decimal number

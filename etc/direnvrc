@@ -7,10 +7,10 @@ layout_node() {
 		export CPPFLAGS=-I$JAVA_HOME/languages/js/include
 
 	elif [[ -n $1 ]]; then
-		PATH_add "/usr/local/opt/node@$1/bin"
+		PATH_add "/opt/homebrew/opt/node@$1/bin"
 
-		export LDFLAGS=-L/usr/local/opt/node@$1/lib
-		export CPPFLAGS=-I/usr/local/opt/node@$1/include
+		export LDFLAGS=-L/opt/homebrew/opt/node@$1/lib
+		export CPPFLAGS=-I/opt/homebrew/opt/node@$1/include
 	fi
 
 	PATH_add node_modules/.bin

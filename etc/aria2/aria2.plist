@@ -8,7 +8,7 @@
 	<string>moonfruit.aria2</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/aria2c</string>
+		<string>/opt/homebrew/bin/aria2c</string>
 		<string>--conf-path=/Users/moon/Workspace.localized/env/etc/aria2/aria2.conf</string>
 	</array>
 	<key>RunAtLoad</key>

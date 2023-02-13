@@ -10,8 +10,8 @@ if [[ "$1" =~ ^(:?[0-9]+|https?:.*|gingkoo|none)$ ]]; then
 	shift
 else
 	#port=http://10.1.2.12:8118
-	#port=7890
-	port=10001
+	port=7890
+	#port=10001
 fi
 
 export PROXY_ENABLED=1
@@ -34,6 +34,7 @@ elif [[ $port == 9999 ]]; then
 else
 	export http_proxy="http://127.0.0.1:$port"
 	export https_proxy="$http_proxy"
+	export all_proxy="socks5://127.0.0.1:$port"
 
 	if [[ $1 == "gu" ]]; then
 		extra=(

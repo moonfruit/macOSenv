@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-brew=(/usr/local/bin/brew)
+brew=(/opt/homebrew/bin/brew)
 
 readonly -A NOPROXY=(
 	[--formula]=1

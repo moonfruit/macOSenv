@@ -15,7 +15,7 @@ if [[ $port == 0 ]]; then
 	exec "$@"
 fi
 
-export PATH=/usr/local/opt/curl/bin:$PATH
+export PATH=/opt/homebrew/opt/curl/bin:$PATH
 
 exec proxychains4 -q -f <(cat <<END
 strict_chain

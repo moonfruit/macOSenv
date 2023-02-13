@@ -18,14 +18,14 @@ hash -d CIPS_HOME="$APP_HOME/gpp/apps/cips"
 hash -d YY_HOME="$APP_HOME/gpp/apps/yy"
 
 # for PATH and MANPATH
-PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/file-formula/bin:$PATH"
-# PATH="/usr/local/opt/curl/bin:$PATH"
-# PATH="/usr/local/opt/ruby/bin:$PATH"
-# PATH="/usr/local/lib/ruby/gems/2.6.0/bin:$PATH"
+PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
+PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+PATH="/opt/homebrew/opt/file-formula/bin:$PATH"
+# PATH="/opt/homebrew/opt/curl/bin:$PATH"
+# PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+# PATH="/opt/homebrew/lib/ruby/gems/2.6.0/bin:$PATH"
 export PATH="$ENV/bin:$HOME/.local/bin:$PATH"
 
 # Auto hash XXOO_HOME
@@ -33,6 +33,6 @@ eval "$(env | grep '_HOME$' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
 
 # dylink "$DYLD_FALLBACK_LIBRARY_PATH"
 
-while [[ ${fpath[1]} == /usr/local/share/zsh/site-functions ]]; do
+while [[ ${fpath[1]} == /opt/homebrew/share/zsh/site-functions ]]; do
 	shift fpath
 done

@@ -13,7 +13,7 @@
 	<string>moonfruit.gost</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/gost</string>
+		<string>/opt/homebrew/bin/gost</string>
 		<string>-C</string>
 		<string>gost.json</string>
 	</array>

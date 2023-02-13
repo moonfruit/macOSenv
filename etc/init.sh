@@ -29,9 +29,9 @@ cd ~/Library/LaunchAgents || exit 1
 ln -sf /Users/moon/Documents/Environment/etc/aria2/aria2.plist com.github.moonfruit.aria2.plist
 ln -sf /Users/moon/Documents/Environment/etc/stunnel/stunnel.plist com.github.moonfruit.stunnel.plist
 
-cd /usr/local/etc || exit 1
+cd /opt/homebrew/etc || exit 1
 ln -sf ~/Documents/Environment/etc/proxychains.conf
 ln -sf ~/Documents/Environment/etc/shadowsocks-libev.json
 
-cd /usr/local/etc/stunnel || exit 1
+cd /opt/homebrew/etc/stunnel || exit 1
 ln -sf ~/Documents/Environment/etc/stunnel/stunnel.conf

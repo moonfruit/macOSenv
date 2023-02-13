@@ -6,7 +6,7 @@
 	<string>moonfruit.gost.xipcloud</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/direnv</string>
+		<string>/opt/homebrew/bin/direnv</string>
 		<string>exec</string>
 		<string>/Users/moon/Workspace.localized/env/package/yyscripts/xipcloud-gost.py</string>
 	</array>

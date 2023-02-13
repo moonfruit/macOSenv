@@ -1,5 +1,5 @@
 #!/bin/bash
-SVN=/usr/local/bin/svn
+SVN=/opt/homebrew/bin/svn
 if [[ $1 == "-l" || $1 == "--lang" ]]; then
 	shift
 else

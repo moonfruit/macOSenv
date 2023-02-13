@@ -5,8 +5,8 @@ if [[ -z $DEST ]]; then
 	DEST="$HOME/Resources.localized"
 fi
 
-RSYNC=/usr/local/bin/rsync
-SED=/usr/local/opt/gnu-sed/libexec/gnubin/sed
+RSYNC=/opt/homebrew/bin/rsync
+SED=/opt/homebrew/opt/gnu-sed/libexec/gnubin/sed
 ARGS=(-aXh --delete --delete-excluded)
 
 if [[ -t 1 ]]; then

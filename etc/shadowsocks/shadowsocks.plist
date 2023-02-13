@@ -10,7 +10,7 @@
 	<string>moonfruit.shadowsocks</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/direnv</string>
+		<string>/opt/homebrew/bin/direnv</string>
 		<string>exec</string>
 		<string>package/yyscripts/shadowsocks.py</string>
 		<string>etc/shadowsocks/shadowsocks.csv</string>

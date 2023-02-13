@@ -11,7 +11,7 @@
 	<string>moonfruit.rsync</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/bash</string>
+		<string>/opt/homebrew/bin/bash</string>
 		<string>/Users/moon/Workspace.localized/env/bin/rsync-workspace.sh</string>
 	</array>
 	<key>StandardErrorPath</key>

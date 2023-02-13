@@ -6,7 +6,7 @@ load() {
 }
 
 if [[ $- == *i* ]]; then
-	HOMEBREW_PREFIX="/usr/local"	# $(brew --prefix)
+	HOMEBREW_PREFIX="/opt/homebrew"	# $(brew --prefix)
 
 	SCRIPT="${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
 	if [[ -r $SCRIPT ]]; then

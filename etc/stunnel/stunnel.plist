@@ -9,7 +9,7 @@
 	<key>Label</key>
 	<string>moonfruit.stunnel</string>
 	<key>Program</key>
-	<string>/usr/local/bin/stunnel</string>
+	<string>/opt/homebrew/bin/stunnel</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
