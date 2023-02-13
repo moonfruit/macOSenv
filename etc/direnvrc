@@ -1,6 +1,6 @@
 #!/bin/bash
 layout_node() {
-	if [[ $1 == 14 || $1 == lts ]]; then
+	if [[ $1 == 16 || $1 == lts ]]; then
 		JAVA_HOME=$(java-home -n graalvm)
 		PATH_add "$JAVA_HOME/bin"
 
@@ -27,7 +27,7 @@ END
 }
 
 layout_python() {
-	local python=${1:-python}
+	local python=${1:-python3}
 	[[ $# -gt 0 ]] && shift
 
 	if [[ ! -r venv/bin/activate ]]; then
