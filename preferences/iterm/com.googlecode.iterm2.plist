@@ -8087,7 +8087,7 @@
 			<key>Columns</key>
 			<integer>132</integer>
 			<key>Command</key>
-			<string>ssh moon@moons-ubuntu.local</string>
+			<string>ssh parallels@moons-ubuntu.local</string>
 			<key>Cursor Boost</key>
 			<real>0.0</real>
 			<key>Cursor Boost (Dark)</key>
@@ -8616,7 +8616,7 @@
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
-			<string>moon@moons-ubuntu.local</string>
+			<string>parallels@moons-ubuntu.local</string>
 			<key>Non Ascii Font</key>
 			<string>JetBrainsMonoNerdFontComplete-Bold 13</string>
 			<key>Non-ASCII Anti Aliased</key>

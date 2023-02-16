@@ -385,7 +385,7 @@ diskutil unmount Transcend 2&gt;&amp;1</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>VOLUMES=(Transcend SamsungT5 TimeMachine)
+				<string>VOLUMES=(SamsungT5 TimeMachine)
 
 for VOL in "${VOLUMES[@]}"; do
 	if [[ ! -d "/Volumes/$VOL" ]]; then
@@ -440,7 +440,7 @@ fi</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>VOLUMES=(Transcend SamsungT5 TimeMachine)
+				<string>VOLUMES=(SamsungT5 TimeMachine)
 
 for VOL in "${VOLUMES[@]}"; do
 	if [[ -d "/Volumes/$VOL" ]]; then
@@ -474,81 +474,83 @@ fi</string>
 		<key>020DBF50-AF18-4B6A-8CD0-BAE16AA91485</key>
 		<dict>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>450</integer>
+			<real>450</real>
 		</dict>
 		<key>05141473-8AFB-4FE7-9BE7-BE2390C1B960</key>
 		<dict>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>120</integer>
+			<real>120</real>
 		</dict>
 		<key>0D6847C2-EC38-4070-A41C-3B1F98C68A15</key>
 		<dict>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>340</integer>
+			<real>340</real>
 		</dict>
 		<key>188BFBF3-4E7C-4259-AABB-C26738350A1B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>160</integer>
+			<real>160</real>
 			<key>ypos</key>
-			<integer>340</integer>
+			<real>340</real>
 		</dict>
 		<key>18E84B45-31A5-4C19-B4B8-44E53411EAB7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>160</integer>
+			<real>160</real>
 			<key>ypos</key>
-			<integer>450</integer>
+			<real>450</real>
 		</dict>
 		<key>70BEC4E1-C35C-4D25-9269-89E69C65F1A8</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<real>420</real>
 			<key>ypos</key>
-			<integer>280</integer>
+			<real>280</real>
 		</dict>
 		<key>7F66CFDF-DDEB-4A5F-A11B-D269555CDC5C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>340</integer>
+			<real>340</real>
 			<key>ypos</key>
-			<integer>310</integer>
+			<real>310</real>
 		</dict>
 		<key>8698E2A1-55A3-4788-9B9C-08915E91B54E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>A9AE62AF-A95D-4DA2-A507-487B316182E7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>160</integer>
+			<real>160</real>
 			<key>ypos</key>
-			<integer>120</integer>
+			<real>120</real>
 		</dict>
 		<key>C80A0BED-90B3-4690-B837-04AD53FB2CCB</key>
 		<dict>
 			<key>xpos</key>
-			<integer>160</integer>
+			<real>160</real>
 			<key>ypos</key>
-			<integer>230</integer>
+			<real>230</real>
 		</dict>
 		<key>EAAEE9D7-0FB5-458B-B525-72F470B7860A</key>
 		<dict>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>230</integer>
+			<real>230</real>
 		</dict>
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
 	<key>version</key>
 	<string></string>
 	<key>webaddress</key>
