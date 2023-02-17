@@ -1,1 +1,0 @@
-../package/yyscripts/wrapper.sh

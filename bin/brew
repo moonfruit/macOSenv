@@ -54,7 +54,7 @@ echo-direct() {
 
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 	case $1 in
-	audit | bundle | create | info | livecheck | search | tap | uninstall | update)
+	audit | bundle | create | info | livecheck | search | tap | test | uninstall | update)
 		brew=(proxy "${brew[@]}")
 		;;
 	bump-cask-pr | bump-formula-pr)

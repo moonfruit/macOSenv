@@ -29,6 +29,9 @@ END
 layout_python() {
 	local python=${1:-python3}
 	[[ $# -gt 0 ]] && shift
+    if ! hash "$python" 2>/dev/null; then
+        python="/opt/homebrew/opt/python@$python/bin/python$python"
+    fi
 
 	if [[ ! -r venv/bin/activate ]]; then
 		log_status "creating virtualenv"

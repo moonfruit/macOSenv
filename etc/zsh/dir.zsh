@@ -10,6 +10,9 @@ hash -d DOCUMENTS="$DOCUMENTS"
 export LIBRARY="$HOME/Library"
 hash -d LIBRARY="$LIBRARY"
 
+export APP_SUPPORT="$LIBRARY/Application Support"
+hash -d APP_SUPPORT="$APP_SUPPORT"
+
 export DOWNLOADS="$HOME/Downloads"
 hash -d DOWNLOADS="$DOWNLOADS"
 
