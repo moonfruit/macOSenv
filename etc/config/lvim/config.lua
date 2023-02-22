@@ -153,7 +153,8 @@ linters.setup({
         disabled_filetypes = { "c", "cpp", "objc", "objcpp" },
         extra_args = { "--builtin", "clear,rare,code", "--ignore-words", get_config_dir() .. "/dictionary.txt" },
     },
-    { command = "shellcheck", extra_args = { "--severity", "warning" } },
+    -- Included by bashls
+    -- { command = "shellcheck", extra_args = { "--severity", "warning" } },
     { command = "flake8", extra_args = { "--max-line-length=120" } },
     { command = "eslint" },
 })

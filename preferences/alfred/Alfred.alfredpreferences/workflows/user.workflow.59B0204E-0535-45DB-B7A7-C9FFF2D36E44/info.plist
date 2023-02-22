@@ -362,7 +362,7 @@ diskutil unmount Transcend 2&gt;&amp;1</string>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>sdmall</string>
+				<string>sdmv</string>
 				<key>subtext</key>
 				<string></string>
 				<key>text</key>
@@ -417,7 +417,7 @@ fi</string>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>sduall</string>
+				<string>sduv</string>
 				<key>subtext</key>
 				<string></string>
 				<key>text</key>
