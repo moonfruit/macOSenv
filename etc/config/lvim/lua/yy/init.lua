@@ -120,4 +120,8 @@ function M:finalize()
     vim.opt.tagfunc = "v:lua.vim.lsp.tagfunc"
 end
 
+function M.list_extend(dst, src)
+    vim.list_extend(dst, src, 1, #src)
+end
+
 return M

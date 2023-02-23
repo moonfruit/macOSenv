@@ -2,7 +2,7 @@
 if [[ $LC_TERMINAL == iTerm2 ]]; then
 	export DIRENV_LOG_FORMAT=
 	#VIM=(proxy direnv exec "$HOME/.local/bin/lvim")
-	VIM=(proxy "$HOME/.local/bin/lvim")
+	VIM=(proxy lvim)
 else
 	VIM=(nvim)
 fi
