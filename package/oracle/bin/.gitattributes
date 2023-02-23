@@ -1,6 +1,0 @@
-adrci filter=lfs diff=lfs merge=lfs -text
-genezi filter=lfs diff=lfs merge=lfs -text
-proc filter=lfs diff=lfs merge=lfs -text
-procob filter=lfs diff=lfs merge=lfs -text
-sqlplus filter=lfs diff=lfs merge=lfs -text
-uidrvci filter=lfs diff=lfs merge=lfs -text
