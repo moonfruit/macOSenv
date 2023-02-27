@@ -1,12 +1,19 @@
 #!/bin/bash
-SVN=/opt/homebrew/bin/svn
-if [[ $1 == "-l" || $1 == "--lang" ]]; then
-	shift
-else
-	export LANG=C
-	if hash colorsvn >/dev/null 2>&1; then
-		SVN=colorsvn
+if [[ $# -gt 0 ]] && command -v colorsvn &>/dev/null; then
+	ARGS=()
+	for arg in "$@"; do
+		if [[ $arg == "-l" || $arg == "--lang" ]]; then
+			NOCOLOR=1
+		elif [[ $arg == "-h" || $arg == "--help" ]]; then
+			NOCOLOR=1
+			ARGS+=("$arg")
+		else
+			ARGS+=("$arg")
+		fi
+	done
+	if [[ -z $NOCOLOR ]]; then
+		export LANG=C
+		exec colorsvn "${ARGS[@]}"
 	fi
 fi
-
-exec "$SVN" "$@"
+exec /opt/homebrew/bin/svn "$@"
