@@ -88,12 +88,17 @@ local colorscheme_plugins = {
 
 function M:finalize()
     set_keymaps({
+        insert_mode = {
+            ["<M-A>s"] = "<C-o><Cmd>up<CR>",
+        },
         normal_mode = {
-            ["<C-S>"] = "<Cmd>w<CR>",
+            ["<M-A>a"] = "ggVG",
+            ["<M-A>s"] = "<Cmd>up<CR>",
+            ["<M-A>z"] = "u",
             ["<Space>"] = { "@=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>", "Fold Toggle" },
         },
         visual_mode = {
-            ["<LeftRelease>"] = '"+ygv',
+            ["<M-A>c"] = '"+y',
         },
     })
 
