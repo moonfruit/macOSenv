@@ -66,7 +66,7 @@ The syntax is standard INI format:
 The syntax of the configuration files is a subset of the one used by
 Python's ConfigParser module; see
 
-   http://www.python.org/doc/current/lib/module-ConfigParser.html
+   https://docs.python.org/3/library/configparser.html
 
 Configuration data in the Windows registry
 ==========================================

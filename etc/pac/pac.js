@@ -11,6 +11,7 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)github\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)battle\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)pentaho\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)spring\.io$/.test(host)) return "+AUTO";
