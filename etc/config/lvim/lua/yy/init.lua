@@ -3,9 +3,17 @@ local local_dir = vim.env.HOME .. "/.local"
 local M = {}
 
 function M:initialize()
+    vim.g.node_host_prog = local_dir .. "/node_modules/.bin/neovim-node-host"
     vim.g.python3_host_prog = local_dir .. "/venv/bin/python3"
 
-    if not lvim then
+    if lvim then
+        if vim.g.neovide then
+            lvim.colorscheme = "lunar"
+            vim.opt.guifont = ""
+        else
+            lvim.colorscheme = "solarized"
+        end
+    else
         vim.g.mapleader = " "
     end
 
@@ -95,6 +103,7 @@ function M:finalize()
             ["<M-A>a"] = "ggVG",
             ["<M-A>s"] = "<Cmd>up<CR>",
             ["<M-A>z"] = "u",
+            ["<M-A>Z"] = "<C-R>",
             ["<Space>"] = { "@=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>", "Fold Toggle" },
         },
         visual_mode = {
@@ -114,6 +123,25 @@ function M:finalize()
         if plugin then
             append_plugin(lvim.plugins, plugin)
         end
+    end
+
+    if vim.g.neovide then
+        set_keymaps({
+            insert_mode = {
+                ["<D-s>"] = "<C-o><Cmd>up<CR>",
+                ["<D-v>"] = '<C-o>"+p',
+            },
+            normal_mode = {
+                ["<D-a>"] = "ggVG",
+                ["<D-s>"] = "<Cmd>up<CR>",
+                ["<D-v>"] = '"+p',
+                ["<D-z>"] = "u",
+                ["<S-D-z>"] = "<C-R>",
+            },
+            visual_mode = {
+                ["<D-c>"] = '"+y',
+            },
+        })
     end
 
     vim.opt.clipboard = ""

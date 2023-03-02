@@ -10,9 +10,6 @@ export ENV="$HOME/Workspace.localized/env"
 export ZSH="$ENV/package/zsh/oh-my-zsh"
 ZDOTDIR="$HOME/.zsh"
 
-# >>> Enable direnv
-(( ${+commands[direnv]} )) && eval "$(direnv export zsh)"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -50,7 +47,6 @@ fi
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
-
 
 # Uncomment one of the following lines to change the auto-update behavior
 zstyle ':omz:update' mode disabled  # disable automatic updates

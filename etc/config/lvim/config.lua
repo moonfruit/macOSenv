@@ -14,7 +14,7 @@ lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
 -- lvim.colorscheme = "lunar"
 -- lvim.colorscheme = "tokyonight"
-lvim.colorscheme = "solarized"
+-- lvim.colorscheme = "solarized"
 lvim.transparent_window = true
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
@@ -178,6 +178,17 @@ lvim.plugins = {
         "folke/trouble.nvim",
         cmd = "TroubleToggle",
     },
+    {
+        "ethanholz/nvim-lastplace",
+        event = "BufRead",
+        config = function()
+            require("nvim-lastplace").setup({
+                lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+                lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
+                lastplace_open_folds = true,
+            })
+        end,
+    },
     "udalov/kotlin-vim",
     "TovarishFin/vim-solidity",
 }
@@ -207,5 +218,16 @@ lvim.builtin.lualine.sections.lualine_x = {
     yy.lualine.encoding,
     yy.lualine.fileformat,
 }
+
+-- which-key plugins
+lvim.builtin.which_key.setup.plugins.marks = true
+lvim.builtin.which_key.setup.plugins.registers = true
+lvim.builtin.which_key.setup.plugins.presets.operators = true
+lvim.builtin.which_key.setup.plugins.presets.motions = true
+lvim.builtin.which_key.setup.plugins.presets.text_objects = true
+lvim.builtin.which_key.setup.plugins.presets.windows = true
+lvim.builtin.which_key.setup.plugins.presets.nav = true
+lvim.builtin.which_key.setup.plugins.presets.z = true
+lvim.builtin.which_key.setup.plugins.presets.g = true
 
 yy:finalize()

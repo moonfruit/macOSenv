@@ -26,7 +26,7 @@ PATH="/opt/homebrew/opt/file-formula/bin:$PATH"
 # PATH="/opt/homebrew/opt/curl/bin:$PATH"
 # PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 # PATH="/opt/homebrew/lib/ruby/gems/2.6.0/bin:$PATH"
-export PATH="$ENV/bin:$HOME/.local/bin:$PATH"
+export PATH="$ENV/bin:$PATH"
 
 # Auto hash XXOO_HOME
 eval "$(env | grep '_HOME$' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"

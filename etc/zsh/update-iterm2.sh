@@ -14,8 +14,8 @@ copy() {
 	fi
 }
 
-wget https://iterm2.com/shell_integration/zsh -O item.zsh
-copy item.zsh "$ENV/etc/zsh"
+wget https://iterm2.com/shell_integration/zsh -O iterm.zsh
+copy iterm.zsh "$ENV/etc/zsh"
 
 UTILITIES=(imgcat imgls it2api it2attention it2check it2copy it2dl it2getvar it2git it2setcolor it2setkeylabel it2tip it2ul it2universion it2profile)
 for UTILITY in "${UTILITIES[@]}"; do

@@ -31,7 +31,7 @@ export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 export HUB_REMOTE=moonfruit
 
 local prefix="/opt/homebrew" # $(brew --prefix)
-local script=${prefix}/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+local script=${prefix}/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
 [[ -f "$script" ]] && . "$script"
 unset prefix script
 

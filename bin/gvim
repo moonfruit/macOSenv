@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+if [[ -x ~/.local/bin/gvim ]]; then
+	VIM=(proxy ~/.local/bin/gvim)
+else
+	VIM=(gvim)
+fi
+
+NAME="${0##*/}"
+if [[ $NAME == gview ]]; then
+	VIM+=(-R)
+elif [[ $NAME == gvimdiff ]]; then
+	VIM+=(-d)
+fi
+
+exec "${VIM[@]}" "$@"
