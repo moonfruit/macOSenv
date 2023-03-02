@@ -1256,6 +1256,19 @@
 					<key>Text</key>
 					<string>0x7f</string>
 				</dict>
+				<key>0x5a-0x120000-0x6</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>AZ</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
 				<key>0x61-0x100000</key>
 				<dict>
 					<key>Action</key>
@@ -3064,6 +3077,19 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x7f</string>
+				</dict>
+				<key>0x5a-0x120000-0x6</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>AZ</string>
+					<key>Version</key>
+					<integer>2</integer>
 				</dict>
 				<key>0x61-0x100000</key>
 				<dict>
@@ -4894,6 +4920,19 @@
 					<key>Text</key>
 					<string>0x7f</string>
 				</dict>
+				<key>0x5a-0x120000-0x6</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>AZ</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
 				<key>0x61-0x100000</key>
 				<dict>
 					<key>Action</key>
@@ -6709,6 +6748,19 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x7f</string>
+				</dict>
+				<key>0x5a-0x120000-0x6</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>AZ</string>
+					<key>Version</key>
+					<integer>2</integer>
 				</dict>
 				<key>0x61-0x100000</key>
 				<dict>
