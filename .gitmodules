@@ -18,3 +18,11 @@
 	path = package/zsh/fast-syntax-highlighting
 	url = https://github.com/zdharma-continuum/fast-syntax-highlighting.git
 	shallow = true
+[submodule "package/zsh/zsh-history-substring-search"]
+	path = package/zsh/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search.git
+	shallow = true
+[submodule "package/zsh/zsh-autosuggestions"]
+	path = package/zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+	shallow = true

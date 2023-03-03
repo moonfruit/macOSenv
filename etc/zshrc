@@ -95,8 +95,8 @@ ZSH_CUSTOM="$ENV/etc/zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autojump colored-man-pages cp extract git golang gradle history-substring-search httpie macos mosh mvn yarn
-    fast-syntax-highlighting yy)
+plugins=(autojump colored-man-pages cp extract git golang gradle httpie macos mosh mvn yarn
+    fast-syntax-highlighting zsh-autosuggestions zsh-history-substring-search yy)
 
 # User configuration
 HISTFILE="$ZDOTDIR/history.txt"
