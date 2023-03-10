@@ -9,13 +9,13 @@
 # fi
 APP_HOME="$WORKSPACE/gpp"
 hash -d APP_HOME="$APP_HOME"
-hash -d GAL_HOME="$APP_HOME/gpp/fw/gal"
-hash -d GMQ_HOME="$APP_HOME/gpp/fw/gmq"
-hash -d GSE_HOME="$APP_HOME/gpp/fw/gse"
-hash -d GTELLER_HOME="$APP_HOME/gpp/apps/gteller"
-hash -d CNAPS_HOME="$APP_HOME/gpp/apps/cnaps"
-hash -d CIPS_HOME="$APP_HOME/gpp/apps/cips"
-hash -d YY_HOME="$APP_HOME/gpp/apps/yy"
+hash -d GAL_HOME="$APP_HOME/fw/gal"
+hash -d GMQ_HOME="$APP_HOME/fw/gmq"
+hash -d GSE_HOME="$APP_HOME/fw/gse"
+hash -d GTELLER_HOME="$APP_HOME/apps/gteller"
+hash -d CNAPS_HOME="$APP_HOME/apps/cnaps"
+hash -d CIPS_HOME="$APP_HOME/apps/cips"
+hash -d YY_HOME="$APP_HOME/apps/yy"
 
 # for PATH and MANPATH
 PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
@@ -24,8 +24,6 @@ PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
 PATH="/opt/homebrew/opt/file-formula/bin:$PATH"
 # PATH="/opt/homebrew/opt/curl/bin:$PATH"
-# PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-# PATH="/opt/homebrew/lib/ruby/gems/2.6.0/bin:$PATH"
 export PATH="$ENV/bin:$PATH"
 
 # Auto hash XXOO_HOME

@@ -150,6 +150,10 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)hearthstonejson\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)intercom\.help$/.test(host)) return "+AUTO";
         if (/(?:^|\.)blizzard\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)unity3dusercontent\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)unity3d\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)googleusercontent\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)akamaitechnologies\.com$/.test(host)) return "+AUTO";
         return "+__ruleListOf_\u81ea\u52a8\u5207\u6362";
     },
     "+__ruleListOf_\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
@@ -1591,6 +1595,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)advanscene\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)advertfan\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".ae.org") >= 0) return "+AUTO";
+        if (/(?:^|\.)aei\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)aenhancers\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)af\.mil$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".afantibbs.com") >= 0) return "+AUTO";

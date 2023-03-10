@@ -1,3 +1,5 @@
+Include /Users/moon/.colima/ssh_config
+
 ControlMaster auto
 ControlPath /tmp/%r@%h:%p
 ControlPersist 10m

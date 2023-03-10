@@ -15,6 +15,9 @@ export DI_ARGS="-f sMbuvpt"
 # for direnv
 # eval "$(direnv hook zsh)"
 
+# for fzf
+export FZF_DEFAULT_OPTS=--cycle
+
 # for hstr
 # export HSTR_CONFIG=hicolor        # get more colors
 # bindkey -s "\C-r" "\eqhstr\n"     # bind hstr to Ctrl-r
