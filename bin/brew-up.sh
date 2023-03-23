@@ -27,13 +27,13 @@ export HOMEBREW_UPDATE_PREINSTALL=1
 
 pull() {
 	local tap="/opt/homebrew/Library/Taps/$1"
-	if [[ $(git -C "$tap" branch --show-current) = "$2" ]]; then
+	if [[ $(git -C "$tap" branch --show-current) = "master" ]]; then
 		echo "$GREEN==>$RESET ${BOLD}Pull $1$RESET"
-		git -C "$tap" pull
+		git -C "$tap" merge --ff-only origin/master
 	fi
 }
-pull homebrew/homebrew-core master
-pull homebrew/homebrew-cask master
+pull homebrew/homebrew-core
+pull homebrew/homebrew-cask
 
 OUTDATED=$(brew outdated)
 if [[ $OUTDATED ]]; then
