@@ -11,6 +11,11 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)apple\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)meiguodizhi\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)marvelsnap\.io$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)marvelsnapzone\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)untapped\.gg$/.test(host)) return "+AUTO";
         if (/(?:^|\.)github\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)battle\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)pentaho\.org$/.test(host)) return "+AUTO";
@@ -154,6 +159,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)unity3d\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)googleusercontent\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)akamaitechnologies\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)hearthstonejson\.com$/.test(host)) return "+AUTO";
         return "+__ruleListOf_\u81ea\u52a8\u5207\u6362";
     },
     "+__ruleListOf_\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
@@ -444,6 +450,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)s1\.nudezz\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)nusatrip\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)nuuvem\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)olehdtv\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)omni7\.jp$/.test(host)) return "+AUTO";
         if (/(?:^|\.)onapp\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)ontrac\.com$/.test(host)) return "+AUTO";
@@ -1072,6 +1079,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)chromercise\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)chromestatus\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)chromium\.org$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)cloudfunctions\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)com\.google$/.test(host)) return "+AUTO";
         if (/(?:^|\.)crbug\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)creativelab5\.com$/.test(host)) return "+AUTO";
@@ -1701,6 +1709,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf("aniscartujo.com") >= 0) return "+AUTO";
         if (/(?:^|\.)aniscartujo\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)anobii\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)anonfiles\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".anonymitynetwork.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".anonymizer.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".anonymouse.org") >= 0) return "+AUTO";
@@ -4031,8 +4040,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)isupportuyghurs\.org$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("itaboo.info") >= 0) return "+AUTO";
         if (/(?:^|\.)itaboo\.info$/.test(host)) return "+AUTO";
-        if (scheme === "http" && url.indexOf(".italiatibet.org") >= 0) return "+AUTO";
-        if (scheme === "http" && url.indexOf("download.ithome.com.tw") >= 0) return "+AUTO";
+        if (/(?:^|\.)italiatibet\.org$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)itemfix\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("ithelp.ithome.com.tw") >= 0) return "+AUTO";
         if (/(?:^|\.)itshidden\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".itsky.it") >= 0) return "+AUTO";
@@ -4046,6 +4055,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)ivacy\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".iverycd.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".ivpn.net") >= 0) return "+AUTO";
+        if (/(?:^|\.)ivpn\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)ixquick\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".ixxx.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".iyouport.com") >= 0) return "+AUTO";
@@ -4307,6 +4317,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)le-vpn\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".leafyvpn.net") >= 0) return "+AUTO";
         if (/(?:^|\.)leafyvpn\.net$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)ledger\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("leeao.com.cn/bbs/forum.php") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf("lefora.com") >= 0) return "+AUTO";
         if (/(?:^|\.)left21\.hk$/.test(host)) return "+AUTO";

@@ -34,8 +34,8 @@ EXTRA=(
 	semeru-jdk17-open
 	slack
 	slack-beta
-	paw
 	postman
+	rapidapi
 	samsung-portable-ssd-t5
 
 	appcode
