@@ -12,6 +12,7 @@ function M:initialize()
             vim.opt.guifont = ""
         else
             lvim.colorscheme = "solarized"
+            lvim.transparent_window = true
         end
     else
         vim.g.mapleader = " "
