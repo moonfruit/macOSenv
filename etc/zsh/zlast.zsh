@@ -17,6 +17,16 @@ hash -d CNAPS_HOME="$APP_HOME/apps/cnaps"
 hash -d CIPS_HOME="$APP_HOME/apps/cips"
 hash -d YY_HOME="$APP_HOME/apps/yy"
 
+# for Docker
+DOCKER="$HOME/.docker/bin"
+[[ -d "$DOCKER" ]] && PATH="$DOCKER:$PATH"
+
+# for JetBrains
+for APP in "IntelliJ IDEA" "PyCharm"; do
+    APP_EXEC="/Applications/$APP.app/Contents/MacOS"
+    [[ -d "$APP_EXEC" ]] && PATH="$APP_EXEC:$PATH"
+done
+
 # for PATH and MANPATH
 PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
