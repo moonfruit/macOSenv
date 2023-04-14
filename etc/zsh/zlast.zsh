@@ -17,24 +17,30 @@ hash -d CNAPS_HOME="$APP_HOME/apps/cnaps"
 hash -d CIPS_HOME="$APP_HOME/apps/cips"
 hash -d YY_HOME="$APP_HOME/apps/yy"
 
+local prepend-path() {
+    [[ -d "$1" ]] && PATH="$1:$PATH"
+}
+
 # for Docker
-DOCKER="$HOME/.docker/bin"
-[[ -d "$DOCKER" ]] && PATH="$DOCKER:$PATH"
+prepend-path "$HOME/.docker/bin"
 
 # for JetBrains
-for APP in "IntelliJ IDEA" "PyCharm"; do
-    APP_EXEC="/Applications/$APP.app/Contents/MacOS"
-    [[ -d "$APP_EXEC" ]] && PATH="$APP_EXEC:$PATH"
+for APP in "PyCharm" "IntelliJ IDEA"; do
+    prepend-path "/Applications/$APP.app/Contents/MacOS"
 done
 
+# for CotEditor
+prepend-path "/Applications/CotEditor.app/Contents/SharedSupport/bin"
+
 # for PATH and MANPATH
-PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
-PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
-PATH="/opt/homebrew/opt/file-formula/bin:$PATH"
-# PATH="/opt/homebrew/opt/curl/bin:$PATH"
-export PATH="$ENV/bin:$PATH"
+prepend-path "/opt/homebrew/opt/grep/libexec/gnubin"
+prepend-path "/opt/homebrew/opt/gnu-tar/libexec/gnubin"
+prepend-path "/opt/homebrew/opt/gnu-sed/libexec/gnubin"
+prepend-path "/opt/homebrew/opt/findutils/libexec/gnubin"
+prepend-path "/opt/homebrew/opt/file-formula/bin"
+#prepend-path "/opt/homebrew/opt/curl/bin"
+prepend-path "$ENV/bin"
+export PATH
 
 # Auto hash XXOO_HOME
 eval "$(env | grep '_HOME$' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"

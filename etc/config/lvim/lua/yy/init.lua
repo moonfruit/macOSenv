@@ -92,6 +92,9 @@ end
 
 local colorscheme_plugins = {
     solarized = "ishan9299/nvim-solarized-lua",
+    ["solarized-high"] = "ishan9299/nvim-solarized-lua",
+    ["solarized-flat"] = "ishan9299/nvim-solarized-lua",
+    ["solarized-low"] = "ishan9299/nvim-solarized-lua",
     tokyonight = "folke/tokyonight.nvim",
 }
 
