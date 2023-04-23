@@ -1,7 +1,5 @@
 [user]
 	useConfigOnly = true
-	name = moonfruit
-	email = dkmoonfruit@gmail.com
 
 [color]
 	ui = auto
