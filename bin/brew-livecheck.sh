@@ -27,16 +27,18 @@ EXTRA=(
 	discord
 	kitty
 	macast
+	motrix
 	oracle-jdk
+	postman
+	rapidapi
+	samsung-portable-ssd-t5
 	semeru-jdk-open
 	semeru-jdk8-open
 	semeru-jdk11-open
 	semeru-jdk17-open
 	slack
 	slack-beta
-	postman
-	rapidapi
-	samsung-portable-ssd-t5
+	warp
 
 	appcode
 	android-studio
