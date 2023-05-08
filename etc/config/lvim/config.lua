@@ -1,15 +1,9 @@
---[[
- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
- `lvim` is the global options object
-]]
 local yy = require("yy"):initialize()
 
--- vim options
--- vim.opt.shiftwidth = 2
--- vim.opt.tabstop = 2
+--- Vim options
 vim.opt.relativenumber = true
 
--- general
+--- General
 lvim.log.level = "info"
 lvim.format_on_save = true
 -- lvim.format_on_save = {
@@ -17,18 +11,17 @@ lvim.format_on_save = true
 --   pattern = "*.lua",
 --   timeout = 1000,
 -- }
--- to disable icons and use a minimalist setup, uncomment the following
+--- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
--- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
+-- Key mappings <https://www.lunarvim.org/docs/configuration/keybindings>
 lvim.leader = "space"
--- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-
+--- Add your own keymapping
+-- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
--- -- Use which-key to add extra bindings with the leader-key prefix
+--- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
@@ -41,7 +34,7 @@ lvim.builtin.which_key.mappings["t"] = {
     w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 
--- -- Change theme settings
+--- Change theme settings
 -- lvim.colorscheme = "lunar"
 -- lvim.colorscheme = "tokyonight"
 -- lvim.colorscheme = "solarized"
@@ -54,18 +47,17 @@ lvim.builtin.nvimtree.setup.hijack_netrw = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
--- if you don't want all the parsers change this to a table of the ones you want
+--- If you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.auto_install = true
 lvim.builtin.treesitter.highlight.enable = true
 
-lvim.builtin.treesitter.ignore_install = { "gitcommit" }
-
--- -- always installed on startup, useful for parsers without a strict filetype
+--- Always installed on startup, useful for parsers without a strict filetype
 lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "regex" }
+-- lvim.builtin.treesitter.ignore_install = { "gitcommit" }
 
--- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
+-- Generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
 
--- --- disable automatic installation of servers
+--- Disable automatic installation of servers
 -- lvim.lsp.installer.setup.automatic_installation = false
 lvim.lsp.installer.setup.automatic_installation = {
     exclude = {
@@ -87,29 +79,29 @@ lvim.lsp.installer.setup.automatic_installation = {
     },
 }
 
--- ---configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
--- ---see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
+--- Configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
+--- see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
--- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
--- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
+--- Remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
+--- `:LvimInfo` lists which server(s) are skipped for the current filetype
 -- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
 --   return server ~= "emmet_ls"
 -- end, lvim.lsp.automatic_configuration.skipped_servers)
 
--- -- you can set a custom on_attach function that will be used for all the language servers
--- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
+--- You can set a custom on_attach function that will be used for all the language servers
+--- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
 -- lvim.lsp.on_attach_callback = function(client, bufnr)
 --   local function buf_set_option(...)
 --     vim.api.nvim_buf_set_option(bufnr, ...)
 --   end
---   --Enable completion triggered by <c-x><c-o>
+--   --- Enable completion triggered by <c-x><c-o>
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
--- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
+--- Linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
     { command = "shfmt" },
@@ -124,13 +116,12 @@ linters.setup({
         disabled_filetypes = { "c", "cpp", "objc", "objcpp" },
         extra_args = { "--builtin", "clear,rare,code", "--ignore-words", get_config_dir() .. "/dictionary.txt" },
     },
-    -- Included by bashls
-    -- { command = "shellcheck", extra_args = { "--severity", "warning" } },
+    -- { command = "shellcheck", extra_args = { "--severity", "warning" } }, -- included by bashls
     { command = "flake8", extra_args = { "--max-line-length=120" } },
     { command = "eslint" },
 })
 
--- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
+--- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
     {
         "folke/trouble.nvim",
@@ -151,7 +142,7 @@ lvim.plugins = {
     "TovarishFin/vim-solidity",
 }
 
--- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
+--- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = "zsh",
 --   callback = function()
@@ -160,7 +151,7 @@ lvim.plugins = {
 --   end,
 -- })
 
--- lualine
+--- Plugin: lualine
 local components = require("lvim.core.lualine.components")
 lvim.builtin.lualine.sections.lualine_x = {
     components.diagnostics,
@@ -172,7 +163,7 @@ lvim.builtin.lualine.sections.lualine_x = {
     yy.lualine.fileformat,
 }
 
--- which-key plugins
+--- Plugin: which-key
 lvim.builtin.which_key.setup.plugins.marks = true
 lvim.builtin.which_key.setup.plugins.registers = true
 lvim.builtin.which_key.setup.plugins.presets.operators = true
