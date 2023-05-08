@@ -31,7 +31,7 @@ EXTRA=(
 	oracle-jdk
 	postman
 	rapidapi
-	samsung-portable-ssd-t5
+	samsung-portable-ssd-t7
 	semeru-jdk-open
 	semeru-jdk8-open
 	semeru-jdk11-open

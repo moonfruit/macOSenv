@@ -10,6 +10,9 @@
 	quotepath = false
 	autocrlf = input
 
+[init]
+	defaultBranch = main
+
 [pull]
 	rebase = true
 
