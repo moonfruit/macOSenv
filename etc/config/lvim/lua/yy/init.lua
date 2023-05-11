@@ -3,6 +3,8 @@ local local_dir = vim.env.HOME .. "/.local"
 local M = {}
 
 function M:initialize()
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
     vim.g.node_host_prog = local_dir .. "/node_modules/.bin/neovim-node-host"
     vim.g.python3_host_prog = local_dir .. "/venv/bin/python3"
 

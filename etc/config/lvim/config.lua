@@ -14,6 +14,11 @@ lvim.format_on_save = true
 --- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
+--- Change theme settings
+-- lvim.colorscheme = "lunar"
+-- lvim.colorscheme = "tokyonight"
+-- lvim.colorscheme = "solarized"
+
 -- Key mappings <https://www.lunarvim.org/docs/configuration/keybindings>
 lvim.leader = "space"
 --- Add your own keymapping
@@ -34,25 +39,10 @@ lvim.builtin.which_key.mappings["t"] = {
     w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 
---- Change theme settings
--- lvim.colorscheme = "lunar"
--- lvim.colorscheme = "tokyonight"
--- lvim.colorscheme = "solarized"
-
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.disable_netrw = false
-lvim.builtin.nvimtree.setup.hijack_netrw = false
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-
---- If you don't want all the parsers change this to a table of the ones you want
-lvim.builtin.treesitter.auto_install = true
-lvim.builtin.treesitter.highlight.enable = true
+lvim.builtin.nvimtree.setup.filters.dotfiles = true
 
 --- Always installed on startup, useful for parsers without a strict filetype
-lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "regex" }
+-- lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "regex" }
 -- lvim.builtin.treesitter.ignore_install = { "gitcommit" }
 
 -- Generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
@@ -72,6 +62,7 @@ lvim.lsp.installer.setup.automatic_installation = {
         "lua_ls",
         "marksman",
         "pyright",
+        "solargraph",
         "sumneko_lua",
         "taplo",
         "tsserver",
