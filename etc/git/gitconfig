@@ -1,5 +1,8 @@
 [user]
 	useConfigOnly = true
+    name = MoonFruit
+	email = dkmoonfruit@gmail.com
+	signingkey = dkmoonfruit@gmail.com
 
 [color]
 	ui = auto
@@ -44,6 +47,10 @@
 
 [credential]
 	helper = osxkeychain
+
+[includeIf "hasconfig:remote.*.url:git@git.server.gingkoo:*/**"]
+	path = .gitconfig-yuy
+	path = gitconfig-yuy
 
 #[url "persistent-https"]
 #	insteadof = https
