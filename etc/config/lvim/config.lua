@@ -29,6 +29,8 @@ lvim.leader = "space"
 --- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["n"] = { "<Cmd>BufferLineCycleNext<CR>", "Next Buffer" }
+lvim.builtin.which_key.mappings["N"] = { "<Cmd>BufferLineCyclePrev<CR>", "Previous Buffer" }
 lvim.builtin.which_key.mappings["t"] = {
     name = "+Trouble",
     r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -38,6 +40,9 @@ lvim.builtin.which_key.mappings["t"] = {
     l = { "<cmd>Trouble loclist<cr>", "LocationList" },
     w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
+lvim.builtin.which_key.mappings["T"]["n"] = { "<Cmd>TSInstallInfo<CR>", "InstallInfo" }
+lvim.builtin.which_key.mappings["T"]["t"] = { "<Cmd>TSToggle<CR>", "Toggle" }
+lvim.builtin.which_key.mappings["T"]["u"] = { "<Cmd>TSUpdate<CR>", "Update" }
 
 lvim.builtin.nvimtree.setup.filters.dotfiles = true
 
@@ -114,6 +119,8 @@ linters.setup({
 
 --- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
+    "ishan9299/nvim-solarized-lua",
+    "folke/tokyonight.nvim",
     {
         "folke/trouble.nvim",
         cmd = "TroubleToggle",

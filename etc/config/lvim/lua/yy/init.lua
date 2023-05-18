@@ -74,32 +74,6 @@ local function set_keymaps(keymaps)
     end
 end
 
-local function get_plugin_location(plugin)
-    if is_table(plugin) then
-        return plugin[1]
-    else
-        return plugin
-    end
-end
-
-local function append_plugin(plugins, plugin)
-    local location = get_plugin_location(plugin)
-    for _, item in pairs(plugins) do
-        if get_plugin_location(item) == location then
-            return
-        end
-    end
-    table.insert(plugins, plugin)
-end
-
-local colorscheme_plugins = {
-    solarized = "ishan9299/nvim-solarized-lua",
-    ["solarized-high"] = "ishan9299/nvim-solarized-lua",
-    ["solarized-flat"] = "ishan9299/nvim-solarized-lua",
-    ["solarized-low"] = "ishan9299/nvim-solarized-lua",
-    tokyonight = "folke/tokyonight.nvim",
-}
-
 function M:finalize()
     set_keymaps({
         insert_mode = {
@@ -116,20 +90,6 @@ function M:finalize()
             ["<M-A>c"] = '"+y',
         },
     })
-
-    if lvim then
-        set_keymaps({
-            normal_mode = {
-                n = { "<Cmd>BufferLineCycleNext<CR>", "Next Buffer" },
-                N = { "<Cmd>BufferLineCyclePrev<CR>", "Previous Buffer" },
-            },
-        })
-
-        local plugin = colorscheme_plugins[lvim.colorscheme]
-        if plugin then
-            append_plugin(lvim.plugins, plugin)
-        end
-    end
 
     if vim.g.neovide then
         set_keymaps({

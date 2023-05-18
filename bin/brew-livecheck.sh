@@ -46,6 +46,7 @@ EXTRA=(
 	datagrip
 	dataspell
 	goland
+	fleet
 	intellij-idea
 	jetbrains-toolbox
 	phpstorm
