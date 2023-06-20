@@ -26,6 +26,11 @@ Host 10.1.3.25
 	HostKeyAlgorithms +ssh-rsa
 	PubkeyAcceptedKeyTypes +ssh-rsa
 
+Host 10.1.3.30
+    User gpp
+	HostKeyAlgorithms +ssh-rsa
+	PubkeyAcceptedKeyTypes +ssh-rsa
+
 Host moons-ubuntu.local
     User parallels
 

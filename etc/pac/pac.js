@@ -11,6 +11,25 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)92hm\.life$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)buff\.ly$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)msauth\.net$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)bit\.ly$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)google\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)gstatic\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)buzzsprout\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)snap\.fan$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)discord\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)hcaptcha\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)paypal\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)paypalobjects\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)bing\.com$/.test(host)) return "+OUTSIDE";
+        if (/(?:^|\.)live\.com$/.test(host)) return "+OUTSIDE";
+        if (/(?:^|\.)bytedgame\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)marvelsnap\.pro$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)sonatype\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)jetbrains\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)marvelsnap\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)apple\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)meiguodizhi\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)marvelsnap\.io$/.test(host)) return "+AUTO";
@@ -47,14 +66,11 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)jquery\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)hsreplay\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)gravatar\.com$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)hcaptcha\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)cloudflare\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)kubernetes-site\.appspot\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)kubernetes\.io$/.test(host)) return "+AUTO";
         if (/(?:^|\.)gceasy\.io$/.test(host)) return "+AUTO";
         if (/(?:^|\.)raw\.githubusercontent\.com$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)gstatic\.com$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)google\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)hearthpwn\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)hearthstonejson\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)mayswind\.net$/.test(host)) return "+AUTO";
@@ -1092,6 +1108,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)design\.google$/.test(host)) return "+AUTO";
         if (/(?:^|\.)digisfera\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)dns\.google$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)hub\.docker\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)domains\.google$/.test(host)) return "+AUTO";
         if (/(?:^|\.)duck\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)environment\.google$/.test(host)) return "+AUTO";
@@ -5082,6 +5099,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf(".packetix.net") >= 0) return "+AUTO";
         if (/(?:^|\.)pacopacomama\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".padmanet.com") >= 0) return "+AUTO";
+        if (/(?:^|\.)page\.link$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("page2rss.com") >= 0) return "+AUTO";
         if (/(?:^|\.)pagodabox\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".palacemoon.com") >= 0) return "+AUTO";
@@ -5232,6 +5250,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf("pobieramy.top") >= 0) return "+AUTO";
         if (/(?:^|\.)podbean\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)podictionary\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)poe\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".pokerstars.com") >= 0) return "+AUTO";
         if (/(?:^|\.)pokerstars\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".pokerstars.net") >= 0) return "+AUTO";
@@ -7437,5 +7456,11 @@ var FindProxyForURL = function(init, profiles) {
         "use strict";
         if (/^127\.0\.0\.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host) || /^10\/8$/.test(host) || /^172\.16\/12$/.test(host) || /^192\.168\/16$/.test(host) || /server\.gingkoo$/.test(host)) return "DIRECT";
         return "PROXY 127.0.0.1:7890";
+    },
+    "+OUTSIDE": "+US09 Shadowsocks",
+    "+US09 Shadowsocks": function(url, host, scheme) {
+        "use strict";
+        if (/^127\.0\.0\.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host) || /^10\/8$/.test(host) || /^172\.16\/12$/.test(host) || /^192\.168\/16$/.test(host) || /server\.gingkoo$/.test(host)) return "DIRECT";
+        return "PROXY 127.0.0.1:11009";
     }
 });
