@@ -1,6 +1,6 @@
 [user]
 	useConfigOnly = true
-    name = MoonFruit
+	name = MoonFruit
 	email = dkmoonfruit@gmail.com
 	signingkey = dkmoonfruit@gmail.com
 
