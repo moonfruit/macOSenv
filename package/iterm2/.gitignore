@@ -1,7 +1,0 @@
-.*
-!.envrc
-!.git*
-
-/venv
-/__pycache__
-/zoo
