@@ -1,8 +1,8 @@
 #!/bin/bash
 # https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh
 
-TARGET=$PWD/iterm2
-mkdir -p "$TARGET"
+BIN=$PWD/bin
+mkdir -p "$BIN"
 
 PYTHON=$PWD/venv/bin/python
 if [[ ! -x "$PYTHON" ]]; then
@@ -29,7 +29,7 @@ copy() {
 }
 
 wget https://iterm2.com/shell_integration/zsh -O iterm2.zsh
-copy iterm2.zsh "$TARGET"
+copy iterm2.zsh "$BIN"
 
 UTILITIES=(
 	imgcat imgls it2api it2attention it2check it2copy it2dl it2getvar it2git

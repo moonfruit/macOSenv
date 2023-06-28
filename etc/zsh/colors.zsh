@@ -7,7 +7,9 @@ export LS_COLORS='no=00;38;5;244:rs=0:di=00;38;5;33:ln=00;38;5;37:mh=00:pi=48;5;
 
 export EXA_COLORS='ur=33:uw=38;5;9:ux=32:ue=32:gw=38;5;9:tw=38;5;9:sn=38;5;28:un=33:gn=33:da=0'
 
-it2profile=$ENV/bin/it2profile
-if [[ -x $it2profile && $($it2profile -g) != dark ]]; then
-	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=10
+if [[ $LC_TERMINAL == iTerm2 ]]; then
+	it2profile=$ENV/etc/zsh/plugins/iterm2/bin/it2profile
+	if [[ -x $it2profile && $($it2profile -g) != dark ]]; then
+		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=10
+	fi
 fi
