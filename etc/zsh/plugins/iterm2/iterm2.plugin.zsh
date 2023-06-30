@@ -1,4 +1,7 @@
 if [[ $LC_TERMINAL == iTerm2 ]]; then
-    export PATH="${0:A:h}/bin:$PATH"
-    source ${0:A:h}/bin/iterm2.zsh
+    BIN=${0:A:h}/bin
+    if [[ -f "$BIN/iterm2.zsh" ]]; then
+        export PATH="$BIN:$PATH"
+        source $BIN/iterm2.zsh
+    fi
 fi
