@@ -55,8 +55,12 @@
 	helper = !/opt/homebrew/bin/gh auth git-credential
 
 [includeIf "hasconfig:remote.*.url:git@git.server.gingkoo:*/**"]
-	path = .gitconfig-yuy
-	path = gitconfig-yuy
+	path = .gitconfig-gingkoo
+	path = gitconfig-gingkoo
+
+[includeIf "hasconfig:remote.*.url:https://gitlab.iquantex.com/**"]
+	path = .gitconfig-quantex
+	path = gitconfig-quantex
 
 #[url "persistent-https"]
 #	insteadof = https

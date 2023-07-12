@@ -21,9 +21,6 @@ local prepend-path() {
     [[ -d "$1" ]] && PATH="$1:$PATH"
 }
 
-# for Docker
-prepend-path "$HOME/.docker/bin"
-
 # for JetBrains
 for APP in "PyCharm" "IntelliJ IDEA"; do
     prepend-path "/Applications/$APP.app/Contents/MacOS"
