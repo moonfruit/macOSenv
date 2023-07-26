@@ -18,11 +18,22 @@ hash -d CIPS_HOME="$APP_HOME/apps/cips"
 hash -d YY_HOME="$APP_HOME/apps/yy"
 
 local prepend-path() {
-    [[ -d "$1" ]] && PATH="$1:$PATH"
+    local bin=$1
+    local dir
+    if [[ -d $bin ]]; then
+        if [[ $bin = */gnubin ]]; then
+            dir=${bin%/*}
+            bin=$dir/bin
+            if [[ ! -e $bin ]]; then
+                (cd $dir && ln -s gnubin bin)
+            fi
+        fi
+        PATH="$bin:$PATH"
+    fi
 }
 
 # for JetBrains
-for APP in "PyCharm" "IntelliJ IDEA"; do
+for APP in "DataGrip" "PyCharm" "IntelliJ IDEA"; do
     prepend-path "/Applications/$APP.app/Contents/MacOS"
 done
 

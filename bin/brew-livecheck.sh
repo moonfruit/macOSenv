@@ -25,7 +25,6 @@ EXTRA=(
 	ariang
 	dbvisualizer
 	discord
-	docker
 	kitty
 	macast
 	motrix
@@ -47,6 +46,7 @@ EXTRA=(
 	datagrip
 	dataspell
 	goland
+	homebrew/core/docker
 	homebrew/cask/docker
 	fleet
 	intellij-idea
