@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 if [[ $LC_TERMINAL == iTerm2 ]]; then
-	export PATH="/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.2.0/bin:$PATH"
-	#export DIRENV_LOG_FORMAT=
-	#VIM=(proxy direnv exec "$HOME/.local/bin/lvim")
+	#VIM=(DIRENV_LOG_FORMAT= proxy direnv exec "$HOME/.local/bin/lvim")
 	VIM=(proxy ~/.local/bin/lvim)
 else
 	VIM=(nvim)

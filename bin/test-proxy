@@ -2,6 +2,13 @@
 
 TEMP=/tmp/$(basename "$0").$$.tmp
 
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+PINK=$(tput setaf 5)
+RESET=$(tput sgr0)
+
 kilo() {
 	N=$1
 	if [[ -z $N ]]; then
@@ -11,13 +18,15 @@ kilo() {
 	else
 		N=$((N / 1024))
 	fi
-	echo $N
+	echo "$N"
 }
 
-readonly url=https://raw.githubusercontent.com/yourkin/fileupload-fastapi/a85a697cab2f887780b3278059a0dd52847d80f3/tests/data/test-10mb.bin
+readonly CURL=(curl --connect-timeout 3 --max-time 10)
+readonly CONN_URL=http://www.gstatic.com/generate_204
+readonly FLOW_URL=https://raw.githubusercontent.com/yourkin/fileupload-fastapi/a85a697cab2f887780b3278059a0dd52847d80f3/tests/data/test-10mb.bin
 once() {
-	#proxy "$1" curl --connect-timeout 3 -m 10 -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
-	proxy "$1" curl --connect-timeout 3 -m 10 "$url" 2>&1 >/dev/null | tee "$TEMP"
+	#proxy "$1" "${CURL[@]}" -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
+	proxy "$1" "${CURL[@]}" "$FLOW_URL" 2>&1 >/dev/null | tee "$TEMP"
 	TIME=$(grep -v '^curl:' "$TEMP" | tail -1 | sed 's/.*\r//' | awk '{print $7}')
 	rm -f "$TEMP"
 }
@@ -33,17 +42,34 @@ test_one() {
 	while [[ $I -lt $TOTAL ]]; do
 		once "$1"
 		if [[ $TIME = 0 ]]; then
-			echo "Error: Network blocked"
+			echo "${RED}Error$RESET: Network blocked"
 			return
 		fi
 		SUM=$((SUM + $(kilo "$TIME")))
 		I=$((I + 1))
 	done
-
 	AVG=$((SUM / I))
-	echo "Average Speed: ${AVG} k/s"
+
+	if [[ $(echo "$DELAY < 0.5" | bc) == 1 ]]; then
+		COLOR=$GREEN
+	elif [[ $(echo "$DELAY < 1" | bc) == 1 ]]; then
+		COLOR=$YELLOW
+	else
+		COLOR=$PINK
+	fi
+	echo "${BLUE}Delay$RESET: $COLOR${DELAY}s$RESET"
+
+	if [[ $AVG -ge 2000 ]]; then
+		COLOR=$GREEN
+	elif [[ $AVG -ge 1000 ]]; then
+		COLOR=$YELLOW
+	else
+		COLOR=$PINK
+	fi
+	echo "${BLUE}Speed$RESET: $COLOR${AVG}k/s$RESET"
 }
 
+TIMEFORMAT=%R
 test_port() {
 	if [[ "$1" == 0 ]]; then
 		DISPLAY="DIRECT"
@@ -54,15 +80,23 @@ test_port() {
 		DISPLAY="$DISPLAY aka $2"
 	fi
 	echo "-------- $DISPLAY --------"
-	test_one "$1"
+	if DELAY=$( (time proxy "$1" "${CURL[@]}" -s "$CONN_URL") 2>&1); then
+		test_one "$1"
+	else
+		echo "${RED}Error$RESET: Network blocked"
+	fi
 }
 
 test_node() {
-	jq -r '.[] | .name + "\t" + .uri + "\t" + (.port | tostring)' "$1" |
+	jq -r '.[] | .name + "\t" + .uri + "\t" + (.port | tostring) + if .prefer then "\tprefer" else "" end' "$1" |
 		while IFS=$'\t' read -r -a NODE; do
 			local NAME=${NODE[0]}
 			local URI=${NODE[1]}
 			local PORT=${NODE[2]}
+			local PREFER=${NODE[3]}
+			if [[ -n $PREFER ]]; then
+				NAME="$NAME (prefer)"
+			fi
 			if [[ $PORT =~ ^[1-9][0-9]*$ ]]; then
 				test_port "$PORT" "$NAME"
 			else

@@ -21,11 +21,18 @@ download() {
 	wget -N "https://repo1.maven.org/maven2/$DIR/$JAR"
 }
 
+download-all() {
+	fd -e jar | sed 's|/[^/]*$||' | sort -u | fzf -m | while read -r line; do
+		(cd "$line" && download)
+	done
+}
+
 if [[ $# == 0 ]]; then
-	if [[ $PWD = "$REPO" ]]; then
-		fd -e jar | sed 's|/[^/]*$||' | sort | fzf -m | while read -r line; do
-			(cd "$line" && download)
-		done
+	if [[ $PWD != $REPO/* ]]; then
+		cd "$REPO" || exit 1
+		download-all
+	elif [[ $PWD = "$REPO" ]]; then
+		download-all
 	else
 		download
 	fi
