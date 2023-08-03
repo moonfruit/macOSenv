@@ -13,5 +13,9 @@
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.aria2.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.aria2.stdout</string>
 </dict>
 </plist>

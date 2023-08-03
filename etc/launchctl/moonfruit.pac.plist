@@ -14,8 +14,9 @@
 		<string>-p</string>
 		<string>7899</string>
 		<string>-t</string>
-		<string>pac</string>
-		<string>-v</string>
+		<string>moons-macbook-m2</string>
+		<string>--index</string>
+		<string>index.html</string>
 		<string>/Users/moon/Workspace.localized/env/etc/pac</string>
 	</array>
 	<key>RunAtLoad</key>
