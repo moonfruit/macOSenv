@@ -1,15 +1,39 @@
 #!/usr/bin/env bash
 
-if hash it2check 2>/dev/null && hash it2profile 2>/dev/null && it2check; then
+if [[ $1 =~ ^-?[0-9]+$ ]]; then
+	WAIT=$1
+	shift
+fi
+if [[ $# = 0 ]]; then
+	exit
+fi
+
+if [[ -z $DARK_ENABLED ]] && hash it2check 2>/dev/null && hash it2profile 2>/dev/null && it2check; then
 	profile=$(it2profile -g)
 	if [[ $profile != dark ]]; then
 		on-exit() {
+			# shellcheck disable=SC2317
 			it2profile -s "$profile"
 		}
 		trap on-exit EXIT
 		it2profile -s dark
 		export DARK_ENABLED=1
 	fi
+else
+	exec "$@"
 fi
 
+[[ -z $WAIT ]] && LEFT=$(date +%s)
 "$@"
+STATUS=$?
+if [[ -z $WAIT ]]; then
+	LEFT=$((LEFT + 10 - $(date +%s)))
+	[[ $LEFT -gt 0 ]] && WAIT=$LEFT || WAIT=0
+fi
+
+if [[ $WAIT -ge 0 ]]; then
+	read -rsn1 -t "$WAIT"
+else
+	read -rsn1
+fi
+exit $STATUS

@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-# proxy
+# dark and proxy
+compdef _precommand dark
 compdef _precommand proxy
 compdef _precommand noproxy
 
