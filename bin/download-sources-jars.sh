@@ -4,6 +4,11 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 	exec proxy "$0" "$@"
 fi
 
+if [[ $1 = "force" ]]; then
+	FORCE=1
+	shift
+fi
+
 REPO=$HOME/.m2/repository
 download() {
 	DIR=$PWD
@@ -18,6 +23,7 @@ download() {
 	IFS="/" read -r -a PARTS <<<"$DIR"
 	JAR="${PARTS[-2]}-${PARTS[-1]}-sources.jar"
 
+	[[ -n $FORCE ]] && rm "$JAR"
 	wget -N "https://repo1.maven.org/maven2/$DIR/$JAR"
 }
 

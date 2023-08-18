@@ -3,13 +3,11 @@ local local_dir = vim.env.HOME .. "/.local"
 local M = {}
 
 function M:initialize()
-    vim.env.PATH = "/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.2.0/bin:" .. vim.env.PATH
-
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
     vim.g.node_host_prog = local_dir .. "/node_modules/.bin/neovim-node-host"
     vim.g.python3_host_prog = local_dir .. "/venv/bin/python3"
-    -- vim.g.ruby_host_prog = local_dir .. "/bin/neovim-ruby-host"
+    vim.g.ruby_host_prog = local_dir .. "/bin/neovim-ruby-host"
 
     if lvim then
         if vim.g.neovide then

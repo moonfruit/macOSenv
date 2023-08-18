@@ -32,7 +32,7 @@ wget https://iterm2.com/shell_integration/zsh -O iterm2.zsh
 copy iterm2.zsh "$BIN"
 
 UTILITIES=(
-	imgcat imgls it2api it2attention it2check it2copy it2dl it2getvar it2git
+	imgcat imgls it2api it2attention it2check it2copy it2dl it2getvar
 	it2setcolor it2setkeylabel it2tip it2ul it2universion it2profile
 )
 for UTILITY in "${UTILITIES[@]}"; do
@@ -41,5 +41,5 @@ for UTILITY in "${UTILITIES[@]}"; do
 	if [[ $BANG == *python* ]]; then
 		sed -i '1s|.*|#!'"$PYTHON"'|' "$UTILITY"
 	fi
-	copy "$UTILITY" "$TARGET" "+x"
+	copy "$UTILITY" "$BIN" "+x"
 done

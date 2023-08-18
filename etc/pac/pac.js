@@ -11,12 +11,20 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)grazie\.ai$/.test(host)) return "+OUTSIDE";
+        if (/(?:^|\.)jetbrains\.space$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)bitbucket\.org$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)googletagmanager\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)googleapis\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)gitlab\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)nikke-en\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)gstatic\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)google\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)good\.news$/.test(host)) return "+AUTO";
         if (/(?:^|\.)92hm\.life$/.test(host)) return "+AUTO";
         if (/(?:^|\.)buff\.ly$/.test(host)) return "+AUTO";
         if (/(?:^|\.)msauth\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)bit\.ly$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)google\.com$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)gstatic\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)buzzsprout\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)snap\.fan$/.test(host)) return "+AUTO";
         if (/(?:^|\.)discord\.com$/.test(host)) return "+AUTO";
@@ -55,7 +63,6 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)liuli\.cat$/.test(host)) return "+AUTO";
         if (/(?:^|\.)appcenter\.ms$/.test(host)) return "+AUTO";
         if (/(?:^|\.)azureedge\.net$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)googletagmanager\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)cloud-cdn-digitalocean-com\.global\.ssl\.fastly\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)steamcommunity\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)sourcegraph\.com$/.test(host)) return "+AUTO";
@@ -96,7 +103,6 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)penta\.global$/.test(host)) return "+AUTO";
         if (/(?:^|\.)steampowered\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)ethereum\.org$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)gitlab\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)rust-lang\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)gate\.io$/.test(host)) return "+AUTO";
         if (/(?:^|\.)etherscan\.io$/.test(host)) return "+AUTO";
@@ -176,6 +182,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)googleusercontent\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)akamaitechnologies\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)hearthstonejson\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)hembed\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)docker\.io$/.test(host)) return "+AUTO";
         return "+__ruleListOf_\u81ea\u52a8\u5207\u6362";
     },
     "+__ruleListOf_\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
@@ -534,6 +542,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)wowhead\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)vod\.wwe\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)xfinity\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)xiaomi\.eu$/.test(host)) return "+AUTO";
         if (/(?:^|\.)youwin\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)ytn\.co\.kr$/.test(host)) return "+AUTO";
         if (/(?:^|\.)zattoo\.com$/.test(host)) return "+AUTO";
@@ -3515,6 +3524,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf(".greenvpn.net") >= 0) return "+AUTO";
         if (/(?:^|\.)greenvpn\.net$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".greenvpn.org") >= 0) return "+AUTO";
+        if (/(?:^|\.)grindr\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)grotty-monday\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("gs-discuss.com") >= 0) return "+AUTO";
         if (/(?:^|\.)gsearch\.media$/.test(host)) return "+AUTO";
@@ -3939,8 +3949,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)ilove80\.be$/.test(host)) return "+AUTO";
         if (/(?:^|\.)im\.tv$/.test(host)) return "+AUTO";
         if (/(?:^|\.)im88\.tw$/.test(host)) return "+AUTO";
-        if (scheme === "http" && url.indexOf(".imgchili.net") >= 0) return "+AUTO";
-        if (/^http:\/\/imgchili\.net/.test(url)) return "+AUTO";
+        if (/(?:^|\.)imgchili\.net$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".imageab.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".imagefap.com") >= 0) return "+AUTO";
         if (/(?:^|\.)imagefap\.com$/.test(host)) return "+AUTO";
@@ -3956,6 +3965,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf(".imdb.com/title/tt4908644") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".img.ly") >= 0) return "+AUTO";
         if (/(?:^|\.)img\.ly$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)imgasd\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".imgur.com") >= 0) return "+AUTO";
         if (/(?:^|\.)imgur\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".imkev.com") >= 0) return "+AUTO";
@@ -7457,10 +7467,10 @@ var FindProxyForURL = function(init, profiles) {
         if (/^127\.0\.0\.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host) || /^10\/8$/.test(host) || /^172\.16\/12$/.test(host) || /^192\.168\/16$/.test(host) || /server\.gingkoo$/.test(host)) return "DIRECT";
         return "PROXY 127.0.0.1:7890";
     },
-    "+OUTSIDE": "+US09 Shadowsocks",
-    "+US09 Shadowsocks": function(url, host, scheme) {
+    "+OUTSIDE": "+US03 Shadowsocks",
+    "+US03 Shadowsocks": function(url, host, scheme) {
         "use strict";
         if (/^127\.0\.0\.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host) || /^10\/8$/.test(host) || /^172\.16\/12$/.test(host) || /^192\.168\/16$/.test(host) || /server\.gingkoo$/.test(host)) return "DIRECT";
-        return "PROXY 127.0.0.1:11009";
+        return "PROXY 127.0.0.1:11003";
     }
 });
