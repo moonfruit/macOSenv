@@ -59,12 +59,13 @@ EXTRA=(
 )
 
 EXCLUDED=(
-	nghttp2
-	libnghttp2
-	luajit
 	hazelcast
 	hazelcast-management-center
 	microsoft-edge
+	nghttp2
+	libnghttp2
+	luajit
+	q
 )
 
 OUTDATED=()
