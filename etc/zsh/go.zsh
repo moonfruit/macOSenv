@@ -3,13 +3,12 @@
 export GOPATH="$WORKSPACE/go"
 hash -d GOPATH="$GOPATH"
 
-#export PATH="$GOPATH/bin:/opt/homebrew/opt/go/libexec/misc/wasm:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 
-export GO_MOON="$GOPATH/src/github.com/moonfruit"
+GO_MOON="$GOPATH/src/github.com/moonfruit"
 hash -d GO_MOON="$GO_MOON"
-export GO_PENTA="$GOPATH/src/github.com/pentaglobal"
+GO_PENTA="$GOPATH/src/github.com/pentaglobal"
 hash -d GO_PENTA="$GO_PENTA"
 
-export GO_ETH="$GOPATH/src/github.com/ethereum/go-ethereum"
+GO_ETH="$GOPATH/src/github.com/ethereum/go-ethereum"
 hash -d GO_ETH="$GO_ETH"

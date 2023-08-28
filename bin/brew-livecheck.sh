@@ -66,6 +66,7 @@ EXCLUDED=(
 	libnghttp2
 	luajit
 	q
+	tencent-meeting
 )
 
 OUTDATED=()

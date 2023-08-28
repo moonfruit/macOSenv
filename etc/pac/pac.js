@@ -11,6 +11,11 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)google-analytics\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)fonts\.googleapis\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)nocookie\.net$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)steamcommunity\.com$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)aspyr\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)grazie\.ai$/.test(host)) return "+OUTSIDE";
         if (/(?:^|\.)jetbrains\.space$/.test(host)) return "+AUTO";
         if (/(?:^|\.)bitbucket\.org$/.test(host)) return "+AUTO";
@@ -64,7 +69,6 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)appcenter\.ms$/.test(host)) return "+AUTO";
         if (/(?:^|\.)azureedge\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)cloud-cdn-digitalocean-com\.global\.ssl\.fastly\.net$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)steamcommunity\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)sourcegraph\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)fontawesome\.com$/.test(host)) return "+AUTO";
         if (/^youtrack\.jetbrains\.com$/.test(host)) return "+AUTO";
@@ -169,7 +173,6 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)devmate\.com$/.test(host)) return "+AUTO";
         if (/^officecdn-microsoft-com\.akamaized\.net$/.test(host)) return "+AUTO";
         if (/^officeci-mauservice\.azurewebsites\.net$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)aspyr\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)javadoc\.io$/.test(host)) return "+AUTO";
         if (/(?:^|\.)acg\.gy$/.test(host)) return "+AUTO";
         if (/(?:^|\.)stackoverflow\.com$/.test(host)) return "+AUTO";
