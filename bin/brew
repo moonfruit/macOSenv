@@ -54,6 +54,11 @@ echo-direct() {
 }
 
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
+	if [[ $1 == "--dev" ]]; then
+		export HOMEBREW_DEVELOPER=1
+		export HOMEBREW_NO_INSTALL_FROM_API=1
+		shift
+	fi
 	case $1 in
 	audit | bump | bundle | create | info | livecheck | outdated | search | tap | test | uninstall | update)
 		brew=(proxy "${brew[@]}")

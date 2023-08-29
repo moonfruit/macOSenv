@@ -11,12 +11,13 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)hammerspoon\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)google-analytics\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)fonts\.googleapis\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)nocookie\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)steamcommunity\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)aspyr\.com$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)grazie\.ai$/.test(host)) return "+OUTSIDE";
+        if (/(?:^|\.)grazie\.ai$/.test(host)) return "+Localhost Auto US";
         if (/(?:^|\.)jetbrains\.space$/.test(host)) return "+AUTO";
         if (/(?:^|\.)bitbucket\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)googletagmanager\.com$/.test(host)) return "+AUTO";
@@ -36,8 +37,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)hcaptcha\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)paypal\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)paypalobjects\.com$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)bing\.com$/.test(host)) return "+OUTSIDE";
-        if (/(?:^|\.)live\.com$/.test(host)) return "+OUTSIDE";
+        if (/(?:^|\.)bing\.com$/.test(host)) return "+Localhost Auto US";
+        if (/(?:^|\.)live\.com$/.test(host)) return "+Localhost Auto US";
         if (/(?:^|\.)bytedgame\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)marvelsnap\.pro$/.test(host)) return "+AUTO";
         if (/(?:^|\.)sonatype\.com$/.test(host)) return "+AUTO";
@@ -7470,10 +7471,9 @@ var FindProxyForURL = function(init, profiles) {
         if (/^127\.0\.0\.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host) || /^10\/8$/.test(host) || /^172\.16\/12$/.test(host) || /^192\.168\/16$/.test(host) || /server\.gingkoo$/.test(host)) return "DIRECT";
         return "PROXY 127.0.0.1:7890";
     },
-    "+OUTSIDE": "+US03 Shadowsocks",
-    "+US03 Shadowsocks": function(url, host, scheme) {
+    "+Localhost Auto US": function(url, host, scheme) {
         "use strict";
         if (/^127\.0\.0\.1$/.test(host) || /^::1$/.test(host) || /^localhost$/.test(host) || /^10\/8$/.test(host) || /^172\.16\/12$/.test(host) || /^192\.168\/16$/.test(host) || /server\.gingkoo$/.test(host)) return "DIRECT";
-        return "PROXY 127.0.0.1:11003";
+        return "PROXY 127.0.0.1:10002";
     }
 });
