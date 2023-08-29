@@ -26,8 +26,8 @@ elif [[ $port =~ https?:.* ]]; then
 	export http_proxy="$port"
 	export https_proxy="$http_proxy"
 
-elif [[ $port == 9999 ]]; then
-	auth=$(crypto.py decrypt BuwwEbpxczjslVL4Y3AruywdBSQeX8MD4dZ5sYfdECztDAYpulxRFcyQdTJ8)
+elif [[ -d "$ENV" && $port == 9999 ]]; then
+	auth=$(git -C "$ENV" secret cat etc/secret/proxy.txt.secret)
 	export http_proxy="http://$auth@127.0.0.1:$port"
 	export https_proxy="$http_proxy"
 

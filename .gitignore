@@ -2,6 +2,10 @@
 !.git*
 *.sublime-workspace
 
+.gitsecret/keys/random_seed
+!*.secret
+
 /bin/zoo
 /etc/private.txt
 /etc/shadowsocks-libev.json
+/etc/secret/*.txt
