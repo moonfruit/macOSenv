@@ -11,6 +11,7 @@ RESET=$(tput sgr0)
 
 EXTRA=(
 	ccache
+	zig
 
 	ant
 	ant@1.9
