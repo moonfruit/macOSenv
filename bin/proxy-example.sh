@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
+if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
 	exec proxy "$0" "$@"
 fi
 
 echo "$0" "$@"
-env | grep -i proxy
+env | rg -i proxy
