@@ -1,0 +1,5 @@
+{
+  "bashIde": {
+    "shellcheckArguments": "--external-sources"
+  }
+}
