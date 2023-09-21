@@ -1,0 +1,52 @@
+#!/bin/bash
+
+usage() {
+	echo "Usage: $0 [-d] [-m] type..." 1>&2
+	exit 1
+}
+
+APP=iTerm
+ITEM="file"
+while getopts "a:dm" OPT; do
+	case "$OPT" in
+	a) APP=$OPTARG ;;
+	d) ITEM=folder ;;
+	m) MULTIPLE=1 ;;
+	*) usage ;;
+	esac
+done
+shift $((OPTIND - 1))
+
+if [[ $ITEM = file ]]; then
+	while [[ $# -gt 0 ]]; do
+		if [[ -z $OF_TYPE ]]; then
+			OF_TYPE=" of type {\"$1\""
+		else
+			OF_TYPE="$OF_TYPE, \"$1\""
+		fi
+		shift
+	done
+	if [[ -n "$OF_TYPE" ]]; then
+		OF_TYPE="$OF_TYPE}"
+	fi
+fi
+
+if [[ -z "$MULTIPLE" ]]; then
+	osascript <<END
+tell application "$APP" to set output to choose $ITEM$OF_TYPE
+copy POSIX path of output to stdout
+END
+else
+	osascript <<END
+tell application "$APP" to set theFiles to choose $ITEM$OF_TYPE with multiple selections allowed
+set output to null
+repeat with theFile in theFiles
+	if output is null then
+		set output to POSIX path of theFile
+	else
+		set output to output & "\n" & POSIX path of theFile
+	end if
+end repeat
+copy output to stdout
+END
+fi

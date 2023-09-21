@@ -69,6 +69,7 @@ lvim.lsp.installer.setup.automatic_installation = {
         "pyright",
         "solargraph",
         "sumneko_lua",
+        "tailwindcss",
         "taplo",
         "tsserver",
         "yamlls",
