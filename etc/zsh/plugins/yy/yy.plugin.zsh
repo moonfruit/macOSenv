@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 
-# dark and proxy
+# alias
+alias ls='ezaf'
+
+# compdef
+compdef _eza ezaf tree
 compdef _precommand dark
 compdef _precommand proxy
 compdef _precommand noproxy

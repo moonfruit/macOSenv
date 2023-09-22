@@ -1,25 +1,5 @@
 #!/usr/bin/env bash
 
-function exaf() {
-	local extra
-	if [[ $1 = '-lrt' ]]; then
-		extra=-lsnew
-		shift
-	fi
-	exa -gF --time-style long-iso --git $extra "$@"
-}
-function tree() {
-	local extra=-T
-	if [[ $1 = '-lrt' ]]; then
-		extra=-Tlsnew
-		shift
-	fi
-	exaf $extra "$@"
-}
-compdef _exa exaf tree
-
-alias ls='exaf'
-
 alias ll='ls -l'
 alias la='ls -a'
 alias l='ll'
@@ -30,8 +10,11 @@ alias rm='rm -i'
 alias df='df -H'
 alias du='du -h'
 
-alias ..='cd ..'
+# alias ..='cd ..'
 alias cd..='cd ..'
+alias ...='cd ../..'
+alias cd...='cd ../..'
+alias 'cd-'='cd -'
 
 alias h='history | tail -58'
 alias hist='history'

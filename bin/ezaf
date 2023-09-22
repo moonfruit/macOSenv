@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+ARGS=(-gM --time-style long-iso --git --classify --icons)
+if [[ $1 = '-lrt' ]]; then
+    ARGS+=(-lsnew)
+    shift
+fi
+exec eza "${ARGS[@]}" "$@"

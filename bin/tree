@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+ARGS=(--tree)
+if [[ $1 = '-lrt' ]]; then
+    ARGS+=(-lsnew)
+    shift
+fi
+exec ezaf "${ARGS[@]}" "$@"
