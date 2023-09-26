@@ -3908,7 +3908,7 @@
 					<key>action</key>
 					<string>MuteCoprocessTrigger</string>
 					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
+					<string>/Users/moon/Workspace.localized/env/bin/iterm2sz.py</string>
 					<key>regex</key>
 					<string>rz waiting to receive.\*\*B0100</string>
 				</dict>
@@ -3916,7 +3916,7 @@
 					<key>action</key>
 					<string>MuteCoprocessTrigger</string>
 					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
+					<string>/Users/moon/Workspace.localized/env/bin/iterm2rz.py</string>
 					<key>regex</key>
 					<string>\*\*B00000000000000</string>
 				</dict>
@@ -9430,6 +9430,8 @@
 			<string>xterm-256color</string>
 			<key>Thin Strokes</key>
 			<integer>4</integer>
+			<key>Title Components</key>
+			<integer>1</integer>
 			<key>Transparency</key>
 			<real>0.061055380851030343</real>
 			<key>Triggers</key>
@@ -11278,7 +11280,7 @@
 					<key>action</key>
 					<string>MuteCoprocessTrigger</string>
 					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
+					<string>/Users/moon/Workspace.localized/env/bin/iterm2sz.py</string>
 					<key>regex</key>
 					<string>rz waiting to receive.\*\*B0100</string>
 				</dict>
@@ -11286,7 +11288,7 @@
 					<key>action</key>
 					<string>MuteCoprocessTrigger</string>
 					<key>parameter</key>
-					<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
+					<string>/Users/moon/Workspace.localized/env/bin/iterm2rz.py</string>
 					<key>regex</key>
 					<string>\*\*B00000000000000</string>
 				</dict>
