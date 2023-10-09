@@ -1,16 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-delete() {
-	osascript >/dev/null <<END
-tell application "Finder"
-    set theFile to POSIX file "$1"
-    delete theFile
-end tell
-END
-}
+(($#)) || exit
 
-while [[ $# -gt 0 ]]; do
-	FILE=$(realpath "$1") || exit
-	delete "$FILE" || exit
-	shift
+FILES=()
+for FILE in "$@"; do
+	FILES+=("$(realpath "$FILE")")
 done
+
+SCPT=$(realpath "${BASH_SOURCE[0]}/../trash.scpt")
+osascript "$SCPT" "${FILES[@]}" >/dev/null

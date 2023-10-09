@@ -33,7 +33,7 @@ local prepend-path() {
 }
 
 # for JetBrains
-for APP in "DataGrip" "PyCharm" "IntelliJ IDEA"; do
+for APP in "DataGrip" "GoLand" "PyCharm" "IntelliJ IDEA"; do
     prepend-path "/Applications/$APP.app/Contents/MacOS"
 done
 
