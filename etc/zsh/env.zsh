@@ -20,7 +20,3 @@ fi
 
 # for crypto
 export YY_PASSWORD="$ENV/etc/private.txt"
-
-# FIXME: What is this?
-# pac=https://gitee.com/moonfruit/pac/raw/master/pac.js
-# unset pac

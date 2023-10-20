@@ -78,15 +78,15 @@ lvim.lsp.installer.setup.automatic_installation = {
 
 --- Configure a server manually. IMPORTANT: Requires `:LvimCacheReset` to take effect
 --- see the full default list `:lua =lvim.lsp.automatic_configuration.skipped_servers`
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "solargraph" })
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
 --- Remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
 --- `:LvimInfo` lists which server(s) are skipped for the current filetype
--- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
---   return server ~= "emmet_ls"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+    return server ~= "ruby_ls"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 --- You can set a custom on_attach function that will be used for all the language servers
 --- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
@@ -105,6 +105,7 @@ formatters.setup({
     { command = "black", extra_args = { "--line-length", "120" } },
     { command = "prettier", extra_args = { "--print-width", "120" } },
     { command = "stylua", extra_args = { "--indent-type", "Spaces" } },
+    -- { command = "swift-format", extra_args = { "--assume-filename", "$FILENAME" }, filetypes = { "swift" } },
 })
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
@@ -116,7 +117,6 @@ linters.setup({
     -- { command = "shellcheck", extra_args = { "--severity", "warning" } }, -- included by bashls
     { command = "flake8", extra_args = { "--max-line-length=120" } },
     { command = "eslint" },
-    { command = "vale" },
 })
 
 --- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>

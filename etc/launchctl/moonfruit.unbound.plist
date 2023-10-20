@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>moonfruit.unbound</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/opt/homebrew/bin/wget</string>
+		<string>-N</string>
+		<string>https://www.internic.net/domain/named.root</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.unbound.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.unbound.stdout</string>
+	<key>StartCalendarInterval</key>
+	<array>
+		<dict>
+			<key>Hour</key>
+			<integer>10</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/opt/homebrew/etc/unbound</string>
+</dict>
+</plist>

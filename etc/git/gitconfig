@@ -66,6 +66,10 @@
 	path = .gitconfig-quantex
 	path = gitconfig-quantex
 
+[includeIf "hasconfig:remote.*.url:https://gitlab.iquantex-ecd.com/**"]
+	path = .gitconfig-quantex-ecd
+	path = gitconfig-quantex-ecd
+
 [url "https://github.com/"]
 	insteadOf = git@github.com:
 

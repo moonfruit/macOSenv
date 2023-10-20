@@ -6,6 +6,7 @@ function M:initialize()
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
     vim.g.node_host_prog = local_dir .. "/node_modules/.bin/neovim-node-host"
+    vim.g.perl_host_prog = local_dir .. "/bin/perl"
     vim.g.python3_host_prog = local_dir .. "/venv/bin/python3"
     vim.g.ruby_host_prog = local_dir .. "/bin/neovim-ruby-host"
 
