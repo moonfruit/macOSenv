@@ -85,7 +85,7 @@ vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "solargraph"
 --- Remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
 --- `:LvimInfo` lists which server(s) are skipped for the current filetype
 lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
-    return server ~= "ruby_ls"
+    return server ~= "gradle_ls" and server ~= "ruby_ls"
 end, lvim.lsp.automatic_configuration.skipped_servers)
 
 --- You can set a custom on_attach function that will be used for all the language servers

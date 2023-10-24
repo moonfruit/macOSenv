@@ -21,6 +21,8 @@ readonly -A NOPROXY=(
 	['uu-booster']=1
 	[wechat]=1
 	[wechatwork]=1
+	[wpsoffice]=1
+	['wpsoffice-cn']=1
 	[ximalaya]=1
 )
 
