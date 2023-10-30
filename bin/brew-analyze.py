@@ -30,7 +30,7 @@ skinparam usecase {
         deps = installed.get("runtime_dependencies")
         if deps:
             for dep in deps:
-                lines.append("(%s)->(%s)" % (name, dep["full_name"]))
+                lines.append("(%s)-->(%s)" % (name, dep["full_name"]))
     lines.sort()
     for line in lines:
         print(line)

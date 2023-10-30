@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
-if URL=$(http -fh http://10.1.2.32/plantuml-v1/form text=@<(brew-analyze.py) |
-	sed -n 's|Location: /plantuml-v1/uml|http://10.1.2.32/plantuml-v1/svg|p'); then
-	echo "$URL"
-	open "$URL"
+set -e
+
+DEST=$1
+if [[ -n "$DEST" ]]; then
+    DEST=$(realpath "$DEST")
 fi
+
+TEMP=$(mktemp -d -t "homebrew")
+mkdir -p "$TEMP"
+cd "$TEMP"
+
+brew-analyze.py >homebrew.puml
+plantuml -tsvg homebrew.puml
+if [[ -f homebrew.svg ]]; then
+    if [[ -n "$DEST" ]]; then
+        mv homebrew.svg "$DEST"
+    else
+        open homebrew.svg
+        exit
+    fi
+fi
+
+rm -r "$TEMP"

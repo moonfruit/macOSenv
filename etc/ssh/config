@@ -1,6 +1,5 @@
+Include ~/.colima/ssh_config
 Include ~/.orbstack/ssh/config
-
-Include /Users/moon/.colima/ssh_config
 
 ControlMaster auto
 ControlPath /tmp/%r@%h:%p
