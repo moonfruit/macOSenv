@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
-ARGS=(-gM --time-style long-iso --git --classify --icons)
-if [[ $1 = '-lrt' ]]; then
-    ARGS+=(-lsnew)
-    shift
+BASE=(-gM --git --icons=auto --time-style long-iso)
+ARGS=()
+
+CLASSIFY=1
+while [[ $# -gt 0 ]]; do
+	if [[ $1 == '--' ]]; then
+		break
+	elif [[ $1 == '--no-classify' ]]; then
+		CLASSIFY=
+	elif [[ $1 == '--no-icons' ]]; then
+		ARGS+=(--icons=never)
+	elif [[ $1 == '-lrt' ]]; then
+		ARGS+=(-lsnew)
+	else
+		ARGS+=("$1")
+	fi
+	shift
+done
+if [[ -n $CLASSIFY ]]; then
+	BASE+=(--classify)
 fi
-exec eza "${ARGS[@]}" "$@"
+
+exec eza "${BASE[@]}" "${ARGS[@]}" "$@"
