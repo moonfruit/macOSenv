@@ -22,3 +22,5 @@ if URL=$(curl https://api.github.com/repos/mayswind/AriaNg/releases/latest |
 		download "$URL"
 	fi
 fi
+
+brew-analyze.sh .
