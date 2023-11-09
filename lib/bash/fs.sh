@@ -19,10 +19,17 @@ create-temp-directory() {
 copy-if-diff() {
     local destination
     [[ -d "$2" ]] && destination="$2/$(simple-basename "$1")" || destination=$2
-    if ! diff "$destination" "$1"; then
-        cp "$1" "$destination"
+    if diff "$destination" "$1"; then
+        return 1
+    else
+        cp -v "$1" "$destination"
         if [[ -n $3 ]]; then
             chmod "$3" "$destination"
         fi
+        return 0
     fi
+}
+
+copy-if-exists() {
+    [[ -f "$1" ]] && cp -pv "$1" "$2"
 }

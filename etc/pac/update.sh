@@ -8,8 +8,8 @@ download() {
 	if [[ $1 == "$last" ]]; then
 		return
 	fi
-	if wget "$1" -O ariang.zip; then
-		rm -r ariang
+	if proxy wget "$1" -O ariang.zip; then
+		rm -fr ariang
 		unzip ariang.zip -d ariang
 		rm ariang.zip
 		echo "$1" >ariang.url

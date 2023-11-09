@@ -1,0 +1,846 @@
+{
+  "log": {
+    "level": "trace",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "Alibaba Public DNS",
+        "address": "tls://dns.alidns.com",
+        "address_resolver": "System"
+      },
+      {
+        "tag": "DNSPod Public DNS",
+        "address": "tls://dot.pub",
+        "address_resolver": "System"
+      },
+      {
+        "tag": "Google Public DNS",
+        "address": "tls://dns.google",
+        "address_resolver": "System"
+      },
+      {
+        "tag": "System",
+        "address": "local"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "Service",
+      "listen": "127.0.0.1",
+      "listen_port": 7890,
+      "tcp_fast_open": true,
+      "sniff": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "Direct"
+    },
+    {
+      "type": "block",
+      "tag": "Block"
+    },
+    {
+      "type": "http",
+      "tag": "Clash",
+      "server": "127.0.0.1",
+      "server_port": 7890
+    },
+    {
+      "type": "http",
+      "tag": "Gingkoo",
+      "server": "10.1.2.12",
+      "server_port": 8118
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCEU3 V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "106.75.249.78",
+      "server_port": 60070,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCEU3B V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "42.240.132.95",
+      "server_port": 60070,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCEU3C V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "106.75.25.73",
+      "server_port": 60070,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCEU4 V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "106.75.65.155",
+      "server_port": 60062,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCEU4B V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "106.75.210.223",
+      "server_port": 60062,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCEU4C V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "42.240.131.218",
+      "server_port": 60062,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCHK2 V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "42.240.130.201",
+      "server_port": 60071,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCHK2B V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.25.218",
+      "server_port": 60071,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCHK2C V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "113.31.111.244",
+      "server_port": 60071,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCHK3 V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.2.4",
+      "server_port": 60072,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCHK3B V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "113.31.119.62",
+      "server_port": 60072,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCHK3C V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "42.240.131.175",
+      "server_port": 60072,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCSG2 V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.154.37",
+      "server_port": 60078,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCSG2B V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.233.190",
+      "server_port": 60078,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCSG2C V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.65.35",
+      "server_port": 60078,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCSG3 V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.63.248",
+      "server_port": 60065,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCSG3B V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.153.45",
+      "server_port": 60065,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCSG3C V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "113.31.119.124",
+      "server_port": 60065,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCUS1 V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "106.75.169.102",
+      "server_port": 60063,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCUS1B V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "106.75.218.14",
+      "server_port": 60063,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCUS1C V2Ray VMess (3x)",
+      "tcp_fast_open": true,
+      "server": "106.75.48.200",
+      "server_port": 60063,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCUS3 V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "113.31.118.219",
+      "server_port": 60077,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCUS3B V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.48.147",
+      "server_port": 60077,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCUS3C V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.172.45",
+      "server_port": 60077,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCJP5 V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.153.193",
+      "server_port": 60073,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCJP5B V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.245.188",
+      "server_port": 60073,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "vmess",
+      "tag": "IPLCJP5C V2Ray VMess (4x)",
+      "tcp_fast_open": true,
+      "server": "106.75.20.254",
+      "server_port": 60073,
+      "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
+      "security": "auto",
+      "alter_id": 2
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "TW1 Shadowsocks (1.5x)",
+      "udp_fragment": true,
+      "server": "111.243.98.178",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US3 Shadowsocks (0.8x)",
+      "udp_fragment": true,
+      "server": "24.199.113.175",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US5 Shadowsocks",
+      "udp_fragment": true,
+      "server": "107.178.118.84",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US5X Shadowsocks (0.9x)",
+      "udp_fragment": true,
+      "server": "143.42.154.89",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US6 Shadowsocks",
+      "udp_fragment": true,
+      "server": "45.146.235.244",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US6X Shadowsocks (0.9x)",
+      "udp_fragment": true,
+      "server": "38.54.25.199",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US8X Shadowsocks (1.1x)",
+      "udp_fragment": true,
+      "server": "89.208.244.193",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US9 Shadowsocks (0.9x)",
+      "udp_fragment": true,
+      "server": "24.199.105.221",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US9X Shadowsocks",
+      "udp_fragment": true,
+      "server": "146.190.121.154",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US16-CF Shadowsocks",
+      "udp_fragment": true,
+      "server": "173.249.200.172",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "JP2-A Shadowsocks",
+      "udp_fragment": true,
+      "server": "103.170.232.181",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "JP4 Shadowsocks (1.2x)",
+      "udp_fragment": true,
+      "server": "103.232.214.44",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "SG1 Shadowsocks",
+      "udp_fragment": true,
+      "server": "139.162.7.158",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "EU3-UK Shadowsocks (0.8x)",
+      "udp_fragment": true,
+      "server": "64.176.178.184",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "EU4 Shadowsocks (0.8x)",
+      "udp_fragment": true,
+      "server": "109.122.221.143",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "VN1 Shadowsocks",
+      "udp_fragment": true,
+      "server": "103.173.155.193",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "VN2-A Shadowsocks",
+      "udp_fragment": true,
+      "server": "103.137.184.243",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "VN3-A Shadowsocks (0.8x)",
+      "udp_fragment": true,
+      "server": "103.184.112.130",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "selector",
+      "tag": "Proxy",
+      "outbounds": [
+        "Auto",
+        "Proxy (LO)",
+        "Proxy (US)",
+        "Gingkoo",
+        "IPLCEU3 V2Ray VMess (3x)",
+        "IPLCEU3B V2Ray VMess (3x)",
+        "IPLCEU3C V2Ray VMess (3x)",
+        "IPLCEU4 V2Ray VMess (3x)",
+        "IPLCEU4B V2Ray VMess (3x)",
+        "IPLCEU4C V2Ray VMess (3x)",
+        "IPLCHK2 V2Ray VMess (4x)",
+        "IPLCHK2B V2Ray VMess (4x)",
+        "IPLCHK2C V2Ray VMess (4x)",
+        "IPLCHK3 V2Ray VMess (4x)",
+        "IPLCHK3B V2Ray VMess (4x)",
+        "IPLCHK3C V2Ray VMess (4x)",
+        "IPLCSG2 V2Ray VMess (4x)",
+        "IPLCSG2B V2Ray VMess (4x)",
+        "IPLCSG2C V2Ray VMess (4x)",
+        "IPLCSG3 V2Ray VMess (4x)",
+        "IPLCSG3B V2Ray VMess (4x)",
+        "IPLCSG3C V2Ray VMess (4x)",
+        "IPLCUS1 V2Ray VMess (3x)",
+        "IPLCUS1B V2Ray VMess (3x)",
+        "IPLCUS1C V2Ray VMess (3x)",
+        "IPLCUS3 V2Ray VMess (4x)",
+        "IPLCUS3B V2Ray VMess (4x)",
+        "IPLCUS3C V2Ray VMess (4x)",
+        "IPLCJP5 V2Ray VMess (4x)",
+        "IPLCJP5B V2Ray VMess (4x)",
+        "IPLCJP5C V2Ray VMess (4x)",
+        "TW1 Shadowsocks (1.5x)",
+        "US3 Shadowsocks (0.8x)",
+        "US5 Shadowsocks",
+        "US5X Shadowsocks (0.9x)",
+        "US6 Shadowsocks",
+        "US6X Shadowsocks (0.9x)",
+        "US8X Shadowsocks (1.1x)",
+        "US9 Shadowsocks (0.9x)",
+        "US9X Shadowsocks",
+        "US16-CF Shadowsocks",
+        "JP2-A Shadowsocks",
+        "JP4 Shadowsocks (1.2x)",
+        "SG1 Shadowsocks",
+        "EU3-UK Shadowsocks (0.8x)",
+        "EU4 Shadowsocks (0.8x)",
+        "VN1 Shadowsocks",
+        "VN2-A Shadowsocks",
+        "VN3-A Shadowsocks (0.8x)"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "Auto",
+      "outbounds": [
+        "US3 Shadowsocks (0.8x)",
+        "EU3-UK Shadowsocks (0.8x)",
+        "EU4 Shadowsocks (0.8x)",
+        "VN3-A Shadowsocks (0.8x)",
+        "US5X Shadowsocks (0.9x)",
+        "US6X Shadowsocks (0.9x)",
+        "US9 Shadowsocks (0.9x)",
+        "US5 Shadowsocks",
+        "US6 Shadowsocks",
+        "US9X Shadowsocks",
+        "US16-CF Shadowsocks",
+        "JP2-A Shadowsocks",
+        "SG1 Shadowsocks",
+        "VN1 Shadowsocks",
+        "VN2-A Shadowsocks",
+        "US8X Shadowsocks (1.1x)",
+        "JP4 Shadowsocks (1.2x)",
+        "TW1 Shadowsocks (1.5x)",
+        "IPLCEU3 V2Ray VMess (3x)",
+        "IPLCEU3B V2Ray VMess (3x)",
+        "IPLCEU3C V2Ray VMess (3x)",
+        "IPLCEU4 V2Ray VMess (3x)",
+        "IPLCEU4B V2Ray VMess (3x)",
+        "IPLCEU4C V2Ray VMess (3x)",
+        "IPLCUS1 V2Ray VMess (3x)",
+        "IPLCUS1B V2Ray VMess (3x)",
+        "IPLCUS1C V2Ray VMess (3x)",
+        "IPLCHK2 V2Ray VMess (4x)",
+        "IPLCHK2B V2Ray VMess (4x)",
+        "IPLCHK2C V2Ray VMess (4x)",
+        "IPLCHK3 V2Ray VMess (4x)",
+        "IPLCHK3B V2Ray VMess (4x)",
+        "IPLCHK3C V2Ray VMess (4x)",
+        "IPLCSG2 V2Ray VMess (4x)",
+        "IPLCSG2B V2Ray VMess (4x)",
+        "IPLCSG2C V2Ray VMess (4x)",
+        "IPLCSG3 V2Ray VMess (4x)",
+        "IPLCSG3B V2Ray VMess (4x)",
+        "IPLCSG3C V2Ray VMess (4x)",
+        "IPLCUS3 V2Ray VMess (4x)",
+        "IPLCUS3B V2Ray VMess (4x)",
+        "IPLCUS3C V2Ray VMess (4x)",
+        "IPLCJP5 V2Ray VMess (4x)",
+        "IPLCJP5B V2Ray VMess (4x)",
+        "IPLCJP5C V2Ray VMess (4x)",
+        "Gingkoo"
+      ],
+      "interval": "5m0s"
+    },
+    {
+      "type": "selector",
+      "tag": "Proxy (LO)",
+      "outbounds": [
+        "Auto (LO)",
+        "Gingkoo",
+        "TW1 Shadowsocks (1.5x)",
+        "US3 Shadowsocks (0.8x)",
+        "US5 Shadowsocks",
+        "US5X Shadowsocks (0.9x)",
+        "US6 Shadowsocks",
+        "US6X Shadowsocks (0.9x)",
+        "US8X Shadowsocks (1.1x)",
+        "US9 Shadowsocks (0.9x)",
+        "US9X Shadowsocks",
+        "US16-CF Shadowsocks",
+        "JP2-A Shadowsocks",
+        "JP4 Shadowsocks (1.2x)",
+        "SG1 Shadowsocks",
+        "EU3-UK Shadowsocks (0.8x)",
+        "EU4 Shadowsocks (0.8x)",
+        "VN1 Shadowsocks",
+        "VN2-A Shadowsocks",
+        "VN3-A Shadowsocks (0.8x)"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "Auto (LO)",
+      "outbounds": [
+        "US3 Shadowsocks (0.8x)",
+        "EU3-UK Shadowsocks (0.8x)",
+        "EU4 Shadowsocks (0.8x)",
+        "VN3-A Shadowsocks (0.8x)",
+        "US5X Shadowsocks (0.9x)",
+        "US6X Shadowsocks (0.9x)",
+        "US9 Shadowsocks (0.9x)",
+        "US5 Shadowsocks",
+        "US6 Shadowsocks",
+        "US9X Shadowsocks",
+        "US16-CF Shadowsocks",
+        "JP2-A Shadowsocks",
+        "SG1 Shadowsocks",
+        "VN1 Shadowsocks",
+        "VN2-A Shadowsocks",
+        "US8X Shadowsocks (1.1x)",
+        "JP4 Shadowsocks (1.2x)",
+        "TW1 Shadowsocks (1.5x)",
+        "Gingkoo"
+      ],
+      "interval": "5m0s"
+    },
+    {
+      "type": "selector",
+      "tag": "Proxy (US)",
+      "outbounds": [
+        "Auto (US)",
+        "IPLCUS1B V2Ray VMess (3x)",
+        "IPLCUS1C V2Ray VMess (3x)",
+        "IPLCUS3B V2Ray VMess (4x)",
+        "IPLCUS3C V2Ray VMess (4x)",
+        "US5X Shadowsocks (0.9x)",
+        "US6X Shadowsocks (0.9x)",
+        "US8X Shadowsocks (1.1x)",
+        "US9X Shadowsocks",
+        "US16-CF Shadowsocks"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "Auto (US)",
+      "outbounds": [
+        "US5X Shadowsocks (0.9x)",
+        "US6X Shadowsocks (0.9x)",
+        "US9X Shadowsocks",
+        "US16-CF Shadowsocks",
+        "US8X Shadowsocks (1.1x)",
+        "IPLCUS1B V2Ray VMess (3x)",
+        "IPLCUS1C V2Ray VMess (3x)",
+        "IPLCUS3B V2Ray VMess (4x)",
+        "IPLCUS3C V2Ray VMess (4x)"
+      ],
+      "interval": "5m0s"
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "inbound": "Service",
+        "outbound": "Proxy",
+        "domain_suffix": [
+          "aaplimg.com",
+          "amazonaws.com",
+          "ampproject.org",
+          "apple.co",
+          "apple.com",
+          "awsstatic.com",
+          "bit.ly",
+          "cdn-apple.com",
+          "fb.com",
+          "fb.me",
+          "fbcdn.net",
+          "gstatic.com",
+          "hockeyapp.net",
+          "icloud-content.com",
+          "icloud.com",
+          "itunes.com",
+          "me.com",
+          "mzstatic.com",
+          "scdn.co",
+          "t.co",
+          "telegra.ph",
+          "twimg.co",
+          "twimg.com",
+          "twitpic.com",
+          "youtu.be",
+          "ytimg.com"
+        ],
+        "domain_keyword": [
+          "blogspot",
+          "dropbox",
+          "facebook",
+          "github",
+          "gmail",
+          "google",
+          "instagram",
+          "oculus",
+          "twitter",
+          "whatsapp",
+          "youtube"
+        ],
+        "ip_cidr": [
+          "109.239.140.0/24",
+          "149.154.160.0/20",
+          "149.154.164.0/22",
+          "149.154.168.0/22",
+          "149.154.172.0/22",
+          "205.172.60.0/22",
+          "67.198.55.0/24",
+          "91.108.12.0/22",
+          "91.108.16.0/22",
+          "91.108.4.0/22",
+          "91.108.56.0/22",
+          "91.108.8.0/22"
+        ]
+      },
+      {
+        "inbound": "Service",
+        "outbound": "Block",
+        "domain_keyword": [
+          "admarvel",
+          "admaster",
+          "adsage",
+          "adservice",
+          "adsmogo",
+          "adsrvmedia",
+          "adwords",
+          "crashlytics",
+          "dnserror",
+          "domob",
+          "duomeng",
+          "dwtrack",
+          "guanggao",
+          "lianmeng",
+          "omgmta",
+          "openx",
+          "partnerad",
+          "pingfore",
+          "supersonicads",
+          "uedas",
+          "umeng",
+          "usage",
+          "wlmonitor",
+          "zjtoolbar"
+        ]
+      },
+      {
+        "inbound": "Service",
+        "outbound": "Direct",
+        "domain_keyword": [
+          "alibaba",
+          "alicdn",
+          "alipay",
+          "aliyun",
+          "baidu",
+          "bilibili",
+          "dingtalk",
+          "iqiyi",
+          "taobao"
+        ],
+        "domain_suffix": [
+          "alibaba.com",
+          "bilivideo.com",
+          "biquge.com.tw",
+          "bootcss.com",
+          "ddurl.to",
+          "dingding.xin",
+          "jd.com",
+          "laiwang.com",
+          "local",
+          "loli.net",
+          "lwurl.to",
+          "maoyun.tv",
+          "mi.com",
+          "mmstat.com",
+          "moke.com",
+          "mxhchina.com",
+          "pianku.tv",
+          "pstatp.com",
+          "qq.com",
+          "server.gingkoo",
+          "servicewechat.com",
+          "tmall.com",
+          "youku.com"
+        ],
+        "ip_cidr": [
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "127.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16"
+        ],
+        "geoip": [
+          "CN"
+        ]
+      },
+      {
+        "inbound": "Service",
+        "outbound": "Proxy (US)",
+        "domain_suffix": [
+          "bing.com",
+          "grazie.ai",
+          "live.com"
+        ]
+      }
+    ],
+    "final": "Proxy",
+    "find_process": true
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "ui",
+      "store_selected": true
+    }
+  }
+}
