@@ -7,7 +7,7 @@
 	<key>hidelabels</key>
 	<false/>
 	<key>iconid</key>
-	<string>C77B8161-5E34-49CE-8DCD-40040B973A0E</string>
+	<string>07BC8FB9-65B6-4B0E-8F0E-F86B2B59FF63</string>
 	<key>iconisuserspecified</key>
 	<true/>
 	<key>items</key>
@@ -583,8 +583,8 @@
 		<dict/>
 	</array>
 	<key>subtitle</key>
-	<string>Control your Mac</string>
+	<string>Basic Controllers</string>
 	<key>title</key>
-	<string>System Commands</string>
+	<string>Controller</string>
 </dict>
 </plist>
