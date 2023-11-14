@@ -6,6 +6,9 @@ ControlPath /tmp/%r@%h:%p
 ControlPersist 10m
 TCPKeepAlive yes
 
+Host 10.0.6.64
+	User app
+
 Host 10.1.2.57
 	User root
 

@@ -16,9 +16,9 @@
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
-	<string>/tmp/moonfruit.sing-box.stderr</string>
+	<string>/tmp/moonfruit.sing.stderr</string>
 	<key>StandardOutPath</key>
-	<string>/tmp/moonfruit.sing-box.stdout</string>
+	<string>/tmp/moonfruit.sing.stdout</string>
 	<key>WorkingDirectory</key>
 	<string>/Users/moon/Workspace.localized/env/etc/sing-box</string>
 </dict>

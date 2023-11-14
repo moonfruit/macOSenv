@@ -1,28 +1,22 @@
 #!/bin/bash
 layout_node() {
-	if [[ $1 == 16 || $1 == lts ]]; then
-		JAVA_HOME=$(java-home -n graalvm)
-		PATH_add "$JAVA_HOME/bin"
-
-		export CPPFLAGS=-I$JAVA_HOME/languages/js/include
-
-	elif [[ -n $1 ]]; then
+	if [[ -n $1 ]]; then
 		PATH_add "/opt/homebrew/opt/node@$1/bin"
-
 		export LDFLAGS=-L/opt/homebrew/opt/node@$1/lib
 		export CPPFLAGS=-I/opt/homebrew/opt/node@$1/include
 	fi
-
 	PATH_add node_modules/.bin
 }
 
 venv_type() {
 	"$1" <<END
-import pkgutil
-for pkg in ('venv', 'virtualenv'):
-	if pkgutil.find_loader(pkg):
-		print(pkg)
-		break
+import sys
+if sys.version_info > (3, 3):
+    print("venv")
+else:
+    import pkgutil
+    if pkgutil.find_loader("virtualenv"):
+        print("virtualenv")
 END
 }
 
@@ -35,7 +29,7 @@ layout_python() {
 
 	if [[ ! -r venv/bin/activate ]]; then
 		log_status "creating virtualenv"
-		case $(venv_type "$python") in
+		case "$(venv_type "$python")" in
 		"venv")
 			"$python" -m venv "$@" venv
 			;;
@@ -48,10 +42,16 @@ layout_python() {
 			;;
 		esac
 		if [[ -x venv/bin/pip ]]; then
-			if [[ -r requirements.txt ]]; then
-				REQUIREMENTS=(-r requirements.txt)
+			ARGS=()
+			if [[ $# -le 0 ]]; then
+				ARGS+=(pip setuptools wheel)
 			fi
-			venv/bin/pip install -U pip setuptools wheel "${REQUIREMENTS[@]}"
+			if [[ -r requirements.txt ]]; then
+				ARGS+=(-r requirements.txt)
+			fi
+			if [[ "${#ARGS}" -gt 0 ]]; then
+				venv/bin/pip install -U "${ARGS[@]}"
+			fi
 		fi
 	fi
 
@@ -67,6 +67,4 @@ layout_java() {
 		export JAVA_HOME
 		PATH_add "$JAVA_HOME/bin"
 	fi
-
-	export MAVEN_REPO_URL=http://10.1.2.32/nexus/repository
 }

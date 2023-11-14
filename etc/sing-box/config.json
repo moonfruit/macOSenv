@@ -331,7 +331,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "111.243.98.178",
+      "server": "1.162.159.93",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -494,6 +494,7 @@
       "tag": "Proxy",
       "outbounds": [
         "Auto",
+        "Direct",
         "Proxy (LO)",
         "Proxy (US)",
         "Gingkoo",
@@ -595,13 +596,14 @@
         "IPLCJP5C V2Ray VMess (4x)",
         "Gingkoo"
       ],
-      "interval": "5m0s"
+      "interval": "10m0s"
     },
     {
       "type": "selector",
       "tag": "Proxy (LO)",
       "outbounds": [
         "Auto (LO)",
+        "Direct",
         "Gingkoo",
         "TW1 Shadowsocks (1.5x)",
         "US3 Shadowsocks (0.8x)",
@@ -647,13 +649,14 @@
         "TW1 Shadowsocks (1.5x)",
         "Gingkoo"
       ],
-      "interval": "5m0s"
+      "interval": "10m0s"
     },
     {
       "type": "selector",
       "tag": "Proxy (US)",
       "outbounds": [
         "Auto (US)",
+        "Direct",
         "IPLCUS1B V2Ray VMess (3x)",
         "IPLCUS1C V2Ray VMess (3x)",
         "IPLCUS3B V2Ray VMess (4x)",
@@ -679,7 +682,7 @@
         "IPLCUS3B V2Ray VMess (4x)",
         "IPLCUS3C V2Ray VMess (4x)"
       ],
-      "interval": "5m0s"
+      "interval": "10m0s"
     }
   ],
   "route": {
