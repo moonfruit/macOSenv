@@ -6,5 +6,5 @@ fi
 
 source "$ENV/lib/bash/github.sh"
 
-download-latest ariang mayswind AriaNg -AllInOne.zip
+download-latest-release ariang mayswind AriaNg -AllInOne.zip
 brew-analyze.sh .
