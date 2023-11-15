@@ -11,6 +11,7 @@ rg submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | sort |
 	done
 
 fd -tf update.sh | while read -r MODULE; do
-	echo "-------- ${MODULE%/*} --------"
-	$MODULE
+	DIR=${MODULE%/*}
+	echo "-------- $DIR --------"
+	(cd "$DIR" && ./update.sh)
 done
