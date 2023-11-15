@@ -3,17 +3,23 @@
 [[ -z $__ENV_LIB_NATIVE ]] && __ENV_LIB_NATIVE=1 || return
 
 simple-basename() {
-    [[ $1 = '/' ]] && echo '/' || echo "${1##*/}"
+    case $1 in
+    /) echo "/" ;;
+    */) simple-basename "${1::-1}" ;;
+    *) echo "${1##*/}" ;;
+    esac
 }
 
 simple-dirname() {
-    if [[ -z $1 ]]; then
-        echo '.'
-    elif [[ $1 = '/' ]]; then
-        echo '/'
-    else
-        echo "${1%/*}"
-    fi
+    case $1 in
+    /) echo "/" ;;
+    */) simple-dirname "${1::-1}" ;;
+    */*)
+        local dir="${1%/*}"
+        [[ -z "$dir" ]] && echo "/" || echo "$dir"
+        ;;
+    *) echo "." ;;
+    esac
 }
 
 current-script-directory() {
