@@ -1,24 +1,79 @@
 #!/usr/bin/env bash
-BASE=(-gM --git --icons=auto --time-style long-iso)
 ARGS=()
-
-CLASSIFY=1
-while [[ $# -gt 0 ]]; do
-	if [[ $1 == '--' ]]; then
-		break
-	elif [[ $1 == '--no-classify' ]]; then
+MODE=auto
+CLASSIFY=auto
+while (($# > 0)); do
+	NEXT=$1
+	case $NEXT in
+	--) break ;;
+	--online) MODE=oneline ;;
+	--grid) MODE=grid ;;
+	--tree) MODE=tree ;;
+	--long) LONG=1 ;;
+	--classify)
+		CLASSIFY=1
+		NEXT=
+		;;
+	--no-classify)
 		CLASSIFY=
-	elif [[ $1 == '--no-icons' ]]; then
-		ARGS+=(--icons=never)
-	elif [[ $1 == '-lrt' ]]; then
-		ARGS+=(-lsnew)
-	else
-		ARGS+=("$1")
-	fi
+		NEXT=
+		;;
+	--no-icons) NEXT=--icons=never ;;
+	--*) ;;
+	-lrt)
+		LONG=1
+		NEXT=-lsnew
+		;;
+	-*)
+		OPTS=
+		for ((i = 1; i < ${#NEXT}; i++)); do
+			C="${NEXT:$i:1}"
+			case $C in
+			1) MODE=oneline ;;
+			G) MODE=grid ;;
+			T) MODE=tree ;;
+			l) LONG=1 ;;
+			F)
+				CLASSIFY=1
+				C=
+				;;
+			esac
+			OPTS=$OPTS$C
+		done
+		if [[ -n "$OPTS" ]]; then
+			NEXT=-$OPTS
+		else
+			NEXT=
+		fi
+		;;
+	esac
+	[[ -n $NEXT ]] && ARGS+=("$NEXT")
 	shift
 done
+
+if [[ $MODE = auto ]]; then
+	if [[ -n $LONG ]]; then
+		MODE=oneline
+	else
+		MODE=grid
+	fi
+fi
+if [[ $CLASSIFY = auto ]]; then
+	if [[ $MODE = oneline ]]; then
+		CLASSIFY=
+	else
+		CLASSIFY=1
+	fi
+fi
+
+BASE=()
 if [[ -n $CLASSIFY ]]; then
-	BASE+=(--classify)
+	BASE+=(-F)
+fi
+if [[ -n $LONG ]]; then
+	BASE+=(-gM --git --icons --time-style long-iso)
+elif [[ $MODE = tree ]]; then
+	BASE+=(--icons)
 fi
 
 exec eza "${BASE[@]}" "${ARGS[@]}" "$@"
