@@ -29,7 +29,8 @@ echo
 echo " --- === Update ui === ---"
 download-branch "$DIR/ui" MetaCubeX Yacd-meta gh-pages
 
-#proxy wget https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
-#if ! diff gh-pages.zip "$DIR/gh-pages.zip"; then
-#    unzip gh-pages.zip && rm -fr "$DIR/ui" && mv Yacd-meta-gh-pages "$DIR/ui"
-#fi
+echo " --- === Restart sing-box === ---"
+ps -ef | rg -w sing-box | rg -wv 'bash|rg'
+killall sing-box
+sleep 0.5
+ps -ef | rg -w sing-box | rg -wv 'bash|rg'

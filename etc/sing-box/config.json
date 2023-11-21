@@ -331,7 +331,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "1.162.159.93",
+      "server": "1.162.131.108",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -383,15 +383,6 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US8X Shadowsocks (1.1x)",
-      "udp_fragment": true,
-      "server": "89.208.244.193",
-      "server_port": 55983,
-      "method": "chacha20-ietf-poly1305",
-      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
-    },
-    {
-      "type": "shadowsocks",
       "tag": "US9 Shadowsocks (0.9x)",
       "udp_fragment": true,
       "server": "24.199.105.221",
@@ -404,6 +395,15 @@
       "tag": "US9X Shadowsocks",
       "udp_fragment": true,
       "server": "146.190.121.154",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "US10X Shadowsocks",
+      "udp_fragment": true,
+      "server": "148.135.5.44",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -531,9 +531,9 @@
         "US5X Shadowsocks (0.9x)",
         "US6 Shadowsocks",
         "US6X Shadowsocks (0.9x)",
-        "US8X Shadowsocks (1.1x)",
         "US9 Shadowsocks (0.9x)",
         "US9X Shadowsocks",
+        "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "JP4 Shadowsocks (1.2x)",
@@ -559,12 +559,12 @@
         "US5 Shadowsocks",
         "US6 Shadowsocks",
         "US9X Shadowsocks",
+        "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "SG1 Shadowsocks",
         "VN1 Shadowsocks",
         "VN2-A Shadowsocks",
-        "US8X Shadowsocks (1.1x)",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "IPLCEU3 V2Ray VMess (3x)",
@@ -611,9 +611,9 @@
         "US5X Shadowsocks (0.9x)",
         "US6 Shadowsocks",
         "US6X Shadowsocks (0.9x)",
-        "US8X Shadowsocks (1.1x)",
         "US9 Shadowsocks (0.9x)",
         "US9X Shadowsocks",
+        "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "JP4 Shadowsocks (1.2x)",
@@ -639,12 +639,12 @@
         "US5 Shadowsocks",
         "US6 Shadowsocks",
         "US9X Shadowsocks",
+        "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "SG1 Shadowsocks",
         "VN1 Shadowsocks",
         "VN2-A Shadowsocks",
-        "US8X Shadowsocks (1.1x)",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "Gingkoo"
@@ -663,8 +663,8 @@
         "IPLCUS3C V2Ray VMess (4x)",
         "US5X Shadowsocks (0.9x)",
         "US6X Shadowsocks (0.9x)",
-        "US8X Shadowsocks (1.1x)",
         "US9X Shadowsocks",
+        "US10X Shadowsocks",
         "US16-CF Shadowsocks"
       ]
     },
@@ -675,8 +675,8 @@
         "US5X Shadowsocks (0.9x)",
         "US6X Shadowsocks (0.9x)",
         "US9X Shadowsocks",
+        "US10X Shadowsocks",
         "US16-CF Shadowsocks",
-        "US8X Shadowsocks (1.1x)",
         "IPLCUS1B V2Ray VMess (3x)",
         "IPLCUS1C V2Ray VMess (3x)",
         "IPLCUS3B V2Ray VMess (4x)",
@@ -830,9 +830,14 @@
         "inbound": "Service",
         "outbound": "Proxy (US)",
         "domain_suffix": [
+          "akamaized.net",
           "bing.com",
           "grazie.ai",
-          "live.com"
+          "live.com",
+          "microsoft.com",
+          "microsoftonline.com",
+          "msftauth.net",
+          "msn.com"
         ]
       }
     ],
