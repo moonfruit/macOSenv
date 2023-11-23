@@ -8,12 +8,14 @@
       {
         "tag": "Alibaba Public DNS",
         "address": "tls://dns.alidns.com",
-        "address_resolver": "System"
+        "address_resolver": "System",
+        "detour": "Direct"
       },
       {
         "tag": "DNSPod Public DNS",
         "address": "tls://dot.pub",
-        "address_resolver": "System"
+        "address_resolver": "System",
+        "detour": "Direct"
       },
       {
         "tag": "Google Public DNS",
@@ -22,7 +24,8 @@
       },
       {
         "tag": "System",
-        "address": "local"
+        "address": "local",
+        "detour": "Direct"
       }
     ]
   },
@@ -44,12 +47,6 @@
     {
       "type": "block",
       "tag": "Block"
-    },
-    {
-      "type": "http",
-      "tag": "Clash",
-      "server": "127.0.0.1",
-      "server_port": 7890
     },
     {
       "type": "http",
@@ -689,156 +686,60 @@
     "rules": [
       {
         "inbound": "Service",
+        "outbound": "Direct",
+        "domain_suffix": "server.gingkoo"
+      },
+      {
+        "inbound": "Service",
         "outbound": "Proxy",
-        "domain_suffix": [
-          "aaplimg.com",
-          "amazonaws.com",
-          "ampproject.org",
-          "apple.co",
-          "apple.com",
-          "awsstatic.com",
-          "bit.ly",
-          "cdn-apple.com",
-          "fb.com",
-          "fb.me",
-          "fbcdn.net",
-          "gstatic.com",
-          "hockeyapp.net",
-          "icloud-content.com",
-          "icloud.com",
-          "itunes.com",
-          "me.com",
-          "mzstatic.com",
-          "scdn.co",
-          "t.co",
-          "telegra.ph",
-          "twimg.co",
-          "twimg.com",
-          "twitpic.com",
-          "youtu.be",
-          "ytimg.com"
-        ],
-        "domain_keyword": [
-          "blogspot",
-          "dropbox",
-          "facebook",
-          "github",
-          "gmail",
-          "google",
-          "instagram",
-          "oculus",
-          "twitter",
-          "whatsapp",
-          "youtube"
-        ],
-        "ip_cidr": [
-          "109.239.140.0/24",
-          "149.154.160.0/20",
-          "149.154.164.0/22",
-          "149.154.168.0/22",
-          "149.154.172.0/22",
-          "205.172.60.0/22",
-          "67.198.55.0/24",
-          "91.108.12.0/22",
-          "91.108.16.0/22",
-          "91.108.4.0/22",
-          "91.108.56.0/22",
-          "91.108.8.0/22"
-        ]
+        "domain": "connectivitycheck.gstatic.com"
       },
       {
         "inbound": "Service",
         "outbound": "Block",
-        "domain_keyword": [
-          "admarvel",
-          "admaster",
-          "adsage",
-          "adservice",
-          "adsmogo",
-          "adsrvmedia",
-          "adwords",
-          "crashlytics",
-          "dnserror",
-          "domob",
-          "duomeng",
-          "dwtrack",
-          "guanggao",
-          "lianmeng",
-          "omgmta",
-          "openx",
-          "partnerad",
-          "pingfore",
-          "supersonicads",
-          "uedas",
-          "umeng",
-          "usage",
-          "wlmonitor",
-          "zjtoolbar"
+        "geosite": "category-ads-all"
+      },
+      {
+        "inbound": "Service",
+        "outbound": "Direct",
+        "geosite": [
+          "private",
+          "cn",
+          "apple-cn",
+          "google-cn",
+          "tld-cn",
+          "category-games@cn"
         ]
       },
       {
         "inbound": "Service",
         "outbound": "Direct",
-        "domain_keyword": [
-          "alibaba",
-          "alicdn",
-          "alipay",
-          "aliyun",
-          "baidu",
-          "bilibili",
-          "dingtalk",
-          "iqiyi",
-          "taobao"
-        ],
-        "domain_suffix": [
-          "alibaba.com",
-          "bilivideo.com",
-          "biquge.com.tw",
-          "bootcss.com",
-          "ddurl.to",
-          "dingding.xin",
-          "jd.com",
-          "laiwang.com",
-          "local",
-          "loli.net",
-          "lwurl.to",
-          "maoyun.tv",
-          "mi.com",
-          "mmstat.com",
-          "moke.com",
-          "mxhchina.com",
-          "pianku.tv",
-          "pstatp.com",
-          "qq.com",
-          "server.gingkoo",
-          "servicewechat.com",
-          "tmall.com",
-          "youku.com"
-        ],
-        "ip_cidr": [
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "127.0.0.0/8",
-          "172.16.0.0/12",
-          "192.168.0.0/16"
-        ],
         "geoip": [
-          "CN"
+          "private",
+          "cn"
         ]
       },
       {
         "inbound": "Service",
         "outbound": "Proxy (US)",
-        "domain_suffix": [
-          "akamaized.net",
-          "bing.com",
-          "grazie.ai",
-          "live.com",
-          "microsoft.com",
-          "microsoftonline.com",
-          "msftauth.net",
-          "msn.com"
+        "geosite": [
+          "bing",
+          "jetbrains-ai",
+          "openai"
         ]
+      },
+      {
+        "inbound": "Service",
+        "outbound": "Proxy",
+        "geosite": [
+          "gfw",
+          "telegram"
+        ]
+      },
+      {
+        "inbound": "Service",
+        "outbound": "Proxy",
+        "geoip": "telegram"
       }
     ],
     "final": "Proxy",

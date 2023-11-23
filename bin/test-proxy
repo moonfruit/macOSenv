@@ -22,7 +22,7 @@ kilo() {
 }
 
 readonly CURL=(curl --connect-timeout 3 --max-time 10)
-readonly CONN_URL=http://www.gstatic.com/generate_204
+readonly CONN_URL=http://connectivitycheck.gstatic.com/generate_204
 readonly FLOW_URL=https://raw.githubusercontent.com/yourkin/fileupload-fastapi/a85a697cab2f887780b3278059a0dd52847d80f3/tests/data/test-10mb.bin
 once() {
 	#proxy "$1" "${CURL[@]}" -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"

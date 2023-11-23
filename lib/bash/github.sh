@@ -21,6 +21,8 @@ download-latest-release() {
     local repo=$3
     local suffix=$4
 
+    shift 4 || shift $#
+
     local last_file
     last_file="$(simple-dirname "$target")/$(simple-basename "$target").url"
 
@@ -37,11 +39,15 @@ download-latest-release() {
     wget "$url" -O "$temp" || return
 
     rm -fr "$target"
-    local type
-    if type=$(extractable "$url"); then
-        extract -rt "$type" "$temp" "$target"
+    if (($# > 0)); then
+        "$@" "$temp" "$target"
     else
-        mv -v "$temp" "$target"
+        local type
+        if type=$(extractable "$url"); then
+            extract -rt "$type" "$temp" "$target"
+        else
+            mv -v "$temp" "$target"
+        fi
     fi
 
     echo "$url" >"$last_file"
@@ -76,4 +82,9 @@ download-branch() {
     extract -rt "zip" "$temp" "$target"
 
     echo "$commit" >"$last_file"
+
+    shift 4
+    if (($# > 0)); then
+        "$@"
+    fi
 }
