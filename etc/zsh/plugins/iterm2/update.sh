@@ -28,5 +28,5 @@ for UTILITY in "${UTILITIES[@]}"; do
     if [[ $BANG == *python* ]]; then
         sed -i '1s|.*|#!'"$PYTHON"'|' "$UTILITY"
     fi
-    copy-if-diff "$UTILITY" "$BIN" "+x"
+    copy-if-diff "$UTILITY" "$BIN" chmod +x
 done

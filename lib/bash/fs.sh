@@ -27,15 +27,13 @@ create-temp-file() {
 copy-if-diff() {
     local destination
     [[ -d "$2" ]] && destination="$2/$(simple-basename "$1")" || destination=$2
-    if diff "$destination" "$1"; then
-        return 1
-    else
-        cp -v "$1" "$destination"
-        if [[ -n $3 ]]; then
-            chmod "$3" "$destination"
-        fi
-        return 0
-    fi
+
+    diff "$destination" "$1" && return
+    cp -v "$1" "$destination" || return
+
+    (($# > 2)) || return
+    shift 2
+    "$@" "$destination"
 }
 
 copy-if-exists() {
@@ -72,7 +70,7 @@ extract() {
             ;;
         esac
     done
-    shift "$((OPTIND-1))"
+    shift "$((OPTIND - 1))"
 
     local file=$1
     local dir=$2
