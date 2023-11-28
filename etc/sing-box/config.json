@@ -27,14 +27,28 @@
         "address": "local",
         "detour": "Direct"
       }
+    ],
+    "rules": [
+      {
+        "domain_suffix": "server.gingkoo",
+        "server": "System"
+      }
     ]
   },
   "inbounds": [
     {
       "type": "mixed",
-      "tag": "Service",
+      "tag": "7890",
       "listen": "127.0.0.1",
       "listen_port": 7890,
+      "tcp_fast_open": true,
+      "sniff": true
+    },
+    {
+      "type": "mixed",
+      "tag": "7891",
+      "listen": "127.0.0.1",
+      "listen_port": 7891,
       "tcp_fast_open": true,
       "sniff": true
     }
@@ -53,6 +67,12 @@
       "tag": "Gingkoo",
       "server": "10.1.2.12",
       "server_port": 8118
+    },
+    {
+      "type": "socks",
+      "tag": "Tor Browser",
+      "server": "127.0.0.1",
+      "server_port": 9150
     },
     {
       "type": "vmess",
@@ -495,6 +515,7 @@
         "Proxy (LO)",
         "Proxy (US)",
         "Gingkoo",
+        "Tor Browser",
         "IPLCEU3 V2Ray VMess (3x)",
         "IPLCEU3B V2Ray VMess (3x)",
         "IPLCEU3C V2Ray VMess (3x)",
@@ -591,7 +612,8 @@
         "IPLCJP5 V2Ray VMess (4x)",
         "IPLCJP5B V2Ray VMess (4x)",
         "IPLCJP5C V2Ray VMess (4x)",
-        "Gingkoo"
+        "Gingkoo",
+        "Tor Browser"
       ],
       "interval": "10m0s"
     },
@@ -602,6 +624,7 @@
         "Auto (LO)",
         "Direct",
         "Gingkoo",
+        "Tor Browser",
         "TW1 Shadowsocks (1.5x)",
         "US3 Shadowsocks (0.8x)",
         "US5 Shadowsocks",
@@ -644,7 +667,8 @@
         "VN2-A Shadowsocks",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
-        "Gingkoo"
+        "Gingkoo",
+        "Tor Browser"
       ],
       "interval": "10m0s"
     },
@@ -680,30 +704,83 @@
         "IPLCUS3C V2Ray VMess (4x)"
       ],
       "interval": "10m0s"
+    },
+    {
+      "type": "selector",
+      "tag": "Forward",
+      "outbounds": [
+        "Gingkoo",
+        "Tor Browser",
+        "IPLCEU3 V2Ray VMess (3x)",
+        "IPLCEU3B V2Ray VMess (3x)",
+        "IPLCEU3C V2Ray VMess (3x)",
+        "IPLCEU4 V2Ray VMess (3x)",
+        "IPLCEU4B V2Ray VMess (3x)",
+        "IPLCEU4C V2Ray VMess (3x)",
+        "IPLCHK2 V2Ray VMess (4x)",
+        "IPLCHK2B V2Ray VMess (4x)",
+        "IPLCHK2C V2Ray VMess (4x)",
+        "IPLCHK3 V2Ray VMess (4x)",
+        "IPLCHK3B V2Ray VMess (4x)",
+        "IPLCHK3C V2Ray VMess (4x)",
+        "IPLCSG2 V2Ray VMess (4x)",
+        "IPLCSG2B V2Ray VMess (4x)",
+        "IPLCSG2C V2Ray VMess (4x)",
+        "IPLCSG3 V2Ray VMess (4x)",
+        "IPLCSG3B V2Ray VMess (4x)",
+        "IPLCSG3C V2Ray VMess (4x)",
+        "IPLCUS1 V2Ray VMess (3x)",
+        "IPLCUS1B V2Ray VMess (3x)",
+        "IPLCUS1C V2Ray VMess (3x)",
+        "IPLCUS3 V2Ray VMess (4x)",
+        "IPLCUS3B V2Ray VMess (4x)",
+        "IPLCUS3C V2Ray VMess (4x)",
+        "IPLCJP5 V2Ray VMess (4x)",
+        "IPLCJP5B V2Ray VMess (4x)",
+        "IPLCJP5C V2Ray VMess (4x)",
+        "TW1 Shadowsocks (1.5x)",
+        "US3 Shadowsocks (0.8x)",
+        "US5 Shadowsocks",
+        "US5X Shadowsocks (0.9x)",
+        "US6 Shadowsocks",
+        "US6X Shadowsocks (0.9x)",
+        "US9 Shadowsocks (0.9x)",
+        "US9X Shadowsocks",
+        "US10X Shadowsocks",
+        "US16-CF Shadowsocks",
+        "JP2-A Shadowsocks",
+        "JP4 Shadowsocks (1.2x)",
+        "SG1 Shadowsocks",
+        "EU3-UK Shadowsocks (0.8x)",
+        "EU4 Shadowsocks (0.8x)",
+        "VN1 Shadowsocks",
+        "VN2-A Shadowsocks",
+        "VN3-A Shadowsocks (0.8x)"
+      ]
     }
   ],
   "route": {
     "rules": [
       {
-        "inbound": "Service",
         "outbound": "Direct",
-        "domain_suffix": "server.gingkoo"
+        "domain_suffix": "server.gingkoo",
+        "geosite": "private",
+        "geoip": "private"
       },
       {
-        "inbound": "Service",
+        "inbound": "7890",
         "outbound": "Proxy",
         "domain": "connectivitycheck.gstatic.com"
       },
       {
-        "inbound": "Service",
+        "inbound": "7890",
         "outbound": "Block",
         "geosite": "category-ads-all"
       },
       {
-        "inbound": "Service",
+        "inbound": "7890",
         "outbound": "Direct",
         "geosite": [
-          "private",
           "cn",
           "apple-cn",
           "google-cn",
@@ -712,15 +789,12 @@
         ]
       },
       {
-        "inbound": "Service",
+        "inbound": "7890",
         "outbound": "Direct",
-        "geoip": [
-          "private",
-          "cn"
-        ]
+        "geoip": "cn"
       },
       {
-        "inbound": "Service",
+        "inbound": "7890",
         "outbound": "Proxy (US)",
         "geosite": [
           "bing",
@@ -729,7 +803,7 @@
         ]
       },
       {
-        "inbound": "Service",
+        "inbound": "7890",
         "outbound": "Proxy",
         "geosite": [
           "gfw",
@@ -737,9 +811,13 @@
         ]
       },
       {
-        "inbound": "Service",
+        "inbound": "7890",
         "outbound": "Proxy",
         "geoip": "telegram"
+      },
+      {
+        "inbound": "7891",
+        "outbound": "Forward"
       }
     ],
     "final": "Proxy",

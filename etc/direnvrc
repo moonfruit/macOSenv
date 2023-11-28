@@ -1,15 +1,15 @@
 #!/bin/bash
 layout_node() {
-	if [[ -n $1 ]]; then
-		PATH_add "/opt/homebrew/opt/node@$1/bin"
-		export LDFLAGS=-L/opt/homebrew/opt/node@$1/lib
-		export CPPFLAGS=-I/opt/homebrew/opt/node@$1/include
-	fi
-	PATH_add node_modules/.bin
+    if [[ -n $1 ]]; then
+        PATH_add "/opt/homebrew/opt/node@$1/bin"
+        export LDFLAGS=-L/opt/homebrew/opt/node@$1/lib
+        export CPPFLAGS=-I/opt/homebrew/opt/node@$1/include
+    fi
+    PATH_add node_modules/.bin
 }
 
 venv_type() {
-	"$1" <<END
+    "$1" <<END
 import sys
 if sys.version_info > (3, 3):
     print("venv")
@@ -21,50 +21,50 @@ END
 }
 
 layout_python() {
-	local python=${1:-python3}
-	[[ $# -gt 0 ]] && shift
+    local python=${1:-python3}
+    (($# > 0)) && shift
     if ! hash "$python" 2>/dev/null; then
         python="/opt/homebrew/opt/python@$python/bin/python$python"
     fi
 
-	if [[ ! -r venv/bin/activate ]]; then
-		log_status "creating virtualenv"
-		case "$(venv_type "$python")" in
-		"venv")
-			"$python" -m venv "$@" venv
-			;;
-		"virtualenv")
-			virtualenv "--python=$python" "$@" venv
-			;;
-		*)
-			log_error "Error: neither venv nor virtualenv are available."
-			return 1
-			;;
-		esac
-		if [[ -x venv/bin/pip ]]; then
-			ARGS=()
-			if [[ $# -le 0 ]]; then
-				ARGS+=(pip setuptools wheel)
-			fi
-			if [[ -r requirements.txt ]]; then
-				ARGS+=(-r requirements.txt)
-			fi
-			if [[ "${#ARGS}" -gt 0 ]]; then
-				venv/bin/pip install -U "${ARGS[@]}"
-			fi
-		fi
-	fi
+    if [[ ! -r venv/bin/activate ]]; then
+        log_status "creating virtualenv"
+        case "$(venv_type "$python")" in
+        "venv")
+            "$python" -m venv "$@" venv
+            ;;
+        "virtualenv")
+            virtualenv "--python=$python" "$@" venv
+            ;;
+        *)
+            log_error "Error: neither venv nor virtualenv are available."
+            return 1
+            ;;
+        esac
+        if [[ -x venv/bin/pip ]]; then
+            ARGS=()
+            if [[ $# -le 0 ]]; then
+                ARGS+=(pip setuptools wheel)
+            fi
+            if [[ -r requirements.txt ]]; then
+                ARGS+=(-r requirements.txt)
+            fi
+            if [[ "${#ARGS}" -gt 0 ]]; then
+                venv/bin/pip install -U "${ARGS[@]}"
+            fi
+        fi
+    fi
 
-	# shellcheck disable=SC1091
-	source venv/bin/activate
-	unset PS1
+    # shellcheck disable=SC1091
+    source venv/bin/activate
+    unset PS1
 }
 
 layout_java() {
-	local version=$1
-	if [[ -n $version ]]; then
-		JAVA_HOME=$(java-home -v "$version")
-		export JAVA_HOME
-		PATH_add "$JAVA_HOME/bin"
-	fi
+    local version=$1
+    if [[ -n $version ]]; then
+        JAVA_HOME=$(java-home -v "$version")
+        export JAVA_HOME
+        PATH_add "$JAVA_HOME/bin"
+    fi
 }

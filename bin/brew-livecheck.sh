@@ -24,6 +24,7 @@ EXTRA=(
 
 	alacritty
 	ariang
+	c0re100-qbittorrent
 	dbvisualizer
 	discord
 	kitty
@@ -31,6 +32,7 @@ EXTRA=(
 	motrix
 	oracle-jdk
 	postman
+	qbittorrent
 	rapidapi
 	samsung-portable-ssd-t7
 	semeru-jdk-open
