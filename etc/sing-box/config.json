@@ -763,14 +763,20 @@
     "rules": [
       {
         "outbound": "Direct",
-        "domain_suffix": "server.gingkoo",
-        "geosite": "private",
-        "geoip": "private"
-      },
-      {
-        "inbound": "7890",
-        "outbound": "Proxy",
-        "domain": "connectivitycheck.gstatic.com"
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "outbound": "Direct",
+            "domain_suffix": "server.gingkoo",
+            "geosite": "private",
+            "geoip": "private"
+          },
+          {
+            "domain": "connectivitycheck.gstatic.com",
+            "invert": true
+          }
+        ]
       },
       {
         "inbound": "7890",

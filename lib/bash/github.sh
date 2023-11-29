@@ -35,6 +35,7 @@ download-latest-release() {
     url=$(find-latest-release-url "$user" "$repo" "$suffix") || return
     [[ $url != "$last" ]] || return 0
 
+    local temp
     create-temp-file temp
     wget "$url" -O "$temp" || return
 

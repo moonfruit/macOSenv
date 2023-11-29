@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+describe() {
+    local index=$1
+    local total=$2
+    local message=$3
+    printf "%0${#total}d/%d: %s" "$index" "$total" "$message"
+}
+
+test-node() {
+    local total
+    total=$(jq '. | length + 2' "$1")
+
+    local i=0
+    local label
+    while IFS=$'\t' read -r -a node; do
+        ((i++))
+
+        local name=${node[0]}
+        local uri=${node[1]}
+        local port=${node[2]}
+        local prefer=${node[3]}
+        if [[ -n $prefer ]]; then
+            name="$name (prefer)"
+        fi
+
+        label=$(describe $i "$total" "$name")
+
+        if [[ $port =~ ^[1-9][0-9]*$ ]]; then
+            test-proxy "$port aka $label" "$port"
+        else
+            test-proxy "$uri aka $label" "$uri"
+        fi
+    done < <(jq -r '.[] | .name + "\t" + .uri + "\t" + (.port | tostring)
+                        + if .prefer then "\tprefer" else "" end' "$1")
+
+    ((i++)) && label=$(describe "$i" $# Auto)
+    test-proxy "10000 aka $label" 10000
+    ((i++)) && label=$(describe "$i" $# Direct)
+    test-proxy 0
+}
+
+NODES=$1
+if [[ -z "$NODES" ]]; then
+    NODES="$ENV/package/gost/node.json"
+fi
+test-node "$NODES"

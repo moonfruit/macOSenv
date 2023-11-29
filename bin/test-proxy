@@ -1,121 +1,109 @@
 #!/usr/bin/env bash
 
-TEMP=/tmp/$(basename "$0").$$.tmp
-
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-PINK=$(tput setaf 5)
-RESET=$(tput sgr0)
-
-kilo() {
-	N=$1
-	if [[ -z $N ]]; then
-		N=0
-	elif [[ $N == *k ]]; then
-		N=${N/%k/}
-	else
-		N=$((N / 1024))
-	fi
-	echo "$N"
-}
-
 readonly CURL=(curl --connect-timeout 3 --max-time 10)
-readonly CONN_URL=http://connectivitycheck.gstatic.com/generate_204
-readonly FLOW_URL=https://raw.githubusercontent.com/yourkin/fileupload-fastapi/a85a697cab2f887780b3278059a0dd52847d80f3/tests/data/test-10mb.bin
-once() {
-	#proxy "$1" "${CURL[@]}" -d 'special=1&tt=1&st=st&nfw=1&s=10MB' https://sf.testmy.net/download 2>&1 >/dev/null | tee "$TEMP"
-	proxy "$1" "${CURL[@]}" "$FLOW_URL" 2>&1 >/dev/null | tee "$TEMP"
-	TIME=$(grep -v '^curl:' "$TEMP" | tail -1 | sed 's/.*\r//' | awk '{print $7}')
-	rm -f "$TEMP"
-}
+readonly DELAY_URL=http://connectivitycheck.gstatic.com/generate_204
+readonly SPEED_URL=https://raw.githubusercontent.com/yourkin/fileupload-fastapi/a85a697cab2f887780b3278059a0dd52847d80f3/tests/data/test-10mb.bin
 
-test_one() {
-	TOTAL=$2
-	if [[ -z "$TOTAL" ]]; then
-		TOTAL=1
-	fi
+# shellcheck disable=SC2155
+readonly RED=$(tput setaf 1) GREEN=$(tput setaf 2) YELLOW=$(tput setaf 3)
+# shellcheck disable=SC2155
+readonly BLUE=$(tput setaf 4) MAGENTA=$(tput setaf 5) CYAN=$(tput setaf 6)
+# shellcheck disable=SC2155
+readonly RESET=$(tput sgr0)
 
-	SUM=0
-	I=0
-	while [[ $I -lt $TOTAL ]]; do
-		once "$1"
-		if [[ $TIME = 0 ]]; then
-			echo "${RED}Error$RESET: Network blocked"
-			return
-		fi
-		SUM=$((SUM + $(kilo "$TIME")))
-		I=$((I + 1))
-	done
-	AVG=$((SUM / I))
-
-	if [[ $(echo "$DELAY < 0.5" | bc) == 1 ]]; then
-		COLOR=$GREEN
-	elif [[ $(echo "$DELAY < 1" | bc) == 1 ]]; then
-		COLOR=$YELLOW
-	else
-		COLOR=$PINK
-	fi
-	echo "${BLUE}Delay$RESET: $COLOR${DELAY}s$RESET"
-
-	if [[ $AVG -ge 2000 ]]; then
-		COLOR=$GREEN
-	elif [[ $AVG -ge 1000 ]]; then
-		COLOR=$YELLOW
-	else
-		COLOR=$PINK
-	fi
-	echo "${BLUE}Speed$RESET: $COLOR${AVG}k/s$RESET"
-}
+source "$ENV/lib/bash/fs.sh"
 
 TIMEFORMAT=%R
-test_port() {
-	if [[ "$1" == 0 ]]; then
-		DISPLAY="DIRECT"
-	else
-		DISPLAY="$1"
-	fi
-	if [[ -n "$2" ]]; then
-		DISPLAY="$DISPLAY aka $2"
-	fi
-	echo "-------- $DISPLAY --------"
-	if DELAY=$( (time proxy "$1" "${CURL[@]}" -s "$CONN_URL") 2>&1); then
-		test_one "$1"
-	else
-		echo "${RED}Error$RESET: Network blocked"
-	fi
+benchmark-delay() {
+    (time proxy "$1" "${CURL[@]}" -s "$DELAY_URL") 2>&1
 }
 
-test_node() {
-	jq -r '.[] | .name + "\t" + .uri + "\t" + (.port | tostring) + if .prefer then "\tprefer" else "" end' "$1" |
-		while IFS=$'\t' read -r -a NODE; do
-			local NAME=${NODE[0]}
-			local URI=${NODE[1]}
-			local PORT=${NODE[2]}
-			local PREFER=${NODE[3]}
-			if [[ -n $PREFER ]]; then
-				NAME="$NAME (prefer)"
-			fi
-			if [[ $PORT =~ ^[1-9][0-9]*$ ]]; then
-				test_port "$PORT" "$NAME"
-			else
-				test_port "$URI" "$NAME"
-			fi
-		done
-	test_port 10000 Auto
-	test_port 0
+create-temp-file TEMP
+benchmark-speed() {
+    # shellcheck disable=SC2153
+    # proxy "$1" "${CURL[@]}" -d 'special=1&tt=1&st=st&nfw=1&s=10MB' "https://sf.testmy.net/download" 2>&1 >/dev/null | tee "$TEMP"
+    proxy "$1" "${CURL[@]}" "$SPEED_URL" 2>&1 >/dev/null | tee "$TEMP"
+    TIME=$(rg -v '^curl:' "$TEMP" | sed -En '$s/^.*\r\s*\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+(\S+).*$/\1/p')
 }
 
-if [[ $1 == *.json ]]; then
-	test_node "$1"
+kilo() {
+    local n=$1
+    if [[ -z $n ]]; then
+        n=0
+    elif [[ $n == *k ]]; then
+        n=${n/%k/}
+    else
+        n=$((n / 1024))
+    fi
+    echo "$n"
+}
 
-elif [[ $# -gt 0 ]]; then
-	while [[ $# -gt 0 ]]; do
-		test_port "$1"
-		shift
-	done
+delay-color() {
+    if (($(echo "$1 < 0.5" | bc) == 1)); then
+        echo "$GREEN"
+    elif (($(echo "$1 < 1" | bc) == 1)); then
+        echo "$YELLOW"
+    else
+        echo "$MAGENTA"
+    fi
+}
 
+speed-color() {
+    if (($1 >= 2000)); then
+        echo "$GREEN"
+    elif (($1 >= 1000)); then
+        echo "$YELLOW"
+    else
+        echo "$MAGENTA"
+    fi
+}
+
+benchmark-proxy() {
+    local delay=$1
+    local proxy=$2
+    local total=$3
+    if [[ -z "$total" ]]; then
+        total=1
+    fi
+
+    local sum=0 i
+    for ((i = 0; i < total; i += 1)); do
+        benchmark-speed "$proxy"
+        if [[ $TIME = 0 ]]; then
+            echo "${RED}Error$RESET: Network blocked"
+            return
+        fi
+        sum=$((sum + $(kilo "$TIME")))
+    done
+    local average=$((sum / i))
+
+    local color
+    color=$(delay-color "$delay")
+    echo "${BLUE}Delay$RESET: $color${delay}s$RESET"
+
+    color=$(speed-color "$average")
+    echo "${BLUE}Speed$RESET: $color${average}k/s$RESET"
+}
+
+if (($# == 0)); then
+    echo "benchmark-proxy [LABEL] PROXY [TOTAL]" >&2
+    exit 1
+elif (($# == 1)); then
+    PROXY="$1"
+    if [[ $PROXY = 0 ]]; then
+        LABEL=DIRECT
+    else
+        LABEL=$PROXY
+    fi
+elif (($# >= 2)); then
+    LABEL="$1"
+    PROXY="$2"
+    TOTAL="$3"
+fi
+
+echo "--- --- --- $CYAN$LABEL$RESET --- --- ---"
+if DELAY=$(benchmark-delay "$PROXY"); then
+    benchmark-proxy "$DELAY" "$PROXY" "$TOTAL"
 else
-	test_node "$ENV/package/gost/node.json"
+    echo "${RED}Error$RESET: Network blocked"
 fi

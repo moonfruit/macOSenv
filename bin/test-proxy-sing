@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+readonly URL=http://127.0.0.1:9090/proxies/Forward
+
+describe() {
+    local index=$1
+    local total=$2
+    local message=$3
+    printf "%0${#total}d/%d: %s" "$index" "$total" "$message"
+}
+
+benchmark-proixes() {
+    local previous
+    if (($# > 0)); then
+        previous=$(curl -s "$URL" | jq -r '.now')
+    fi
+
+    local i=0
+    local label proxy
+    for proxy in "$@"; do
+        ((i++))
+        http -q PUT "$URL" name="$proxy"
+        label=$(describe $i $# "$proxy")
+        test-proxy "$label" 7891
+    done
+
+    if [[ -n "$previous" ]]; then
+        http -q PUT "$URL" name="$previous"
+    fi
+}
+
+mapfile -t PROXIES < <(curl -s "$URL" | jq -r '.all.[]')
+if [[ $1 = "--all" ]]; then
+    benchmark-proixes "${PROXIES[@]}"
+else
+    FILTERD=()
+    for PROXY in "${PROXIES[@]}"; do
+        if [[ $PROXY != *" ("[34]"x)" ]]; then
+            FILTERD+=("$PROXY")
+        fi
+    done
+    benchmark-proixes "${FILTERD[@]}"
+fi
