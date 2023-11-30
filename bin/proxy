@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 
-if [[ "$1" =~ ^(:?[0-9]+|https?:.*|gingkoo|none)$ ]]; then
+readonly GINGKOO=http://10.1.2.12:8118
+readonly DEFAULT=7890  # sing-box
+# readonly DEFAULT=10000 # gost: nodes
+# readonly DEFAULT=10001 # gost: prefer
+# readonly DEFAULT=10002 # gost: us-nodes
+
+if [[ -z $1 || $1 =~ ^(:?[0-9]+|https?:.*|gingkoo|none)$ ]]; then
 	case $1 in
-	gingkoo) port=http://10.1.2.12:8118 ;;
+	gingkoo) port=$GINGKOO ;;
 	none) port=0 ;;
 	:*) port=${1:1} ;;
+	"") port=$DEFAULT ;;
 	*) port=$1 ;;
 	esac
 	shift
 else
-	#port=http://10.1.2.12:8118
-	port=7890
-	#port=10001
+	port=$DEFAULT
 fi
 
 export PROXY_ENABLED=1
@@ -49,12 +54,12 @@ else
 	fi
 fi
 
-if [[ -z $no_proxy ]]; then
-	# shellcheck source=../etc/no_proxy.sh
-	if [[ -z $ENV ]]; then
-		ENV="${BASH_SOURCE[0]%/*}/.."
-	fi
-	source "$ENV/etc/no_proxy.sh"
-fi
+#if [[ -z $no_proxy ]]; then
+#	# shellcheck source=../etc/no_proxy.sh
+#	if [[ -z $ENV ]]; then
+#		ENV="${BASH_SOURCE[0]%/*}/.."
+#	fi
+#	source "$ENV/etc/no_proxy.sh"
+#fi
 
 exec "$@"

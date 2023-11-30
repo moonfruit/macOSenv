@@ -18,13 +18,14 @@ benchmark-proixes() {
     local label proxy
     for proxy in "$@"; do
         ((i++))
-        http -q PUT "$URL" name="$proxy"
+        curlie -s PUT "$URL" name="$proxy"
+        sleep 0.5
         label=$(describe $i $# "$proxy")
         test-proxy "$label" 7891
     done
 
     if [[ -n "$previous" ]]; then
-        http -q PUT "$URL" name="$previous"
+        curlie -s PUT "$URL" name="$previous"
     fi
 }
 

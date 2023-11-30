@@ -14,9 +14,9 @@ export XML_CATALOG_FILES="$ENV/package/vim/XMLCatalog/catalog.xml"
 DEFAULT_USER=moon
 
 # for proxy
-if [[ -z $no_proxy ]]; then
-	source $ENV/etc/no_proxy.sh
-fi
+#if [[ -z $no_proxy ]]; then
+#	source $ENV/etc/no_proxy.sh
+#fi
 
 # for crypto
 export YY_PASSWORD="$ENV/etc/private.txt"

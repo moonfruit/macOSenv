@@ -86,8 +86,8 @@ benchmark-proxy() {
 }
 
 if (($# == 0)); then
-    echo "benchmark-proxy [LABEL] PROXY [TOTAL]" >&2
-    exit 1
+    LABEL="DEFAULT"
+    PROXY=""
 elif (($# == 1)); then
     PROXY="$1"
     if [[ $PROXY = 0 ]]; then

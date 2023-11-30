@@ -789,6 +789,7 @@
       {
         "inbound": "7890",
         "outbound": "Proxy (US)",
+        "domain_suffix": "hanime1.me",
         "geosite": [
           "bing",
           "jetbrains-ai",
