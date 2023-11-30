@@ -23,6 +23,10 @@
         "address_resolver": "System"
       },
       {
+        "tag": "Gingkoo DNS",
+        "address": "tcp://10.1.2.59"
+      },
+      {
         "tag": "System",
         "address": "local",
         "detour": "Direct"
@@ -31,7 +35,7 @@
     "rules": [
       {
         "domain_suffix": "server.gingkoo",
-        "server": "System"
+        "server": "Gingkoo"
       }
     ]
   },
@@ -767,7 +771,6 @@
         "mode": "and",
         "rules": [
           {
-            "outbound": "Direct",
             "domain_suffix": "server.gingkoo",
             "geosite": "private",
             "geoip": "private"
@@ -782,22 +785,6 @@
         "inbound": "7890",
         "outbound": "Block",
         "geosite": "category-ads-all"
-      },
-      {
-        "inbound": "7890",
-        "outbound": "Direct",
-        "geosite": [
-          "cn",
-          "apple-cn",
-          "google-cn",
-          "tld-cn",
-          "category-games@cn"
-        ]
-      },
-      {
-        "inbound": "7890",
-        "outbound": "Direct",
-        "geoip": "cn"
       },
       {
         "inbound": "7890",
@@ -820,6 +807,22 @@
         "inbound": "7890",
         "outbound": "Proxy",
         "geoip": "telegram"
+      },
+      {
+        "inbound": "7890",
+        "outbound": "Direct",
+        "geosite": [
+          "cn",
+          "apple-cn",
+          "google-cn",
+          "tld-cn",
+          "category-games@cn"
+        ]
+      },
+      {
+        "inbound": "7890",
+        "outbound": "Direct",
+        "geoip": "cn"
       },
       {
         "inbound": "7891",
