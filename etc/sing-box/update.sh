@@ -34,9 +34,9 @@ echo
 echo " --- === Update config.json === ---"
 
 find-sing() {
-    [[ -n "$1" ]] && ps -ef | head -1
-    ps -ef | rg -w sing-box | sed -En \
-        's/^(\s+\S+\s+)(\S+)(\s+1\s.*?)(sing-box)/\1\x1b[32m\2\x1b[0m\3\x1b[1;31m\4\x1b[0m/p'
+    local pattern='s/^(\s+\S+\s+)(\S+)(\s+1\s.*?)\b(sing-box)\b/\1\x1b[32m\2\x1b[0m\3\x1b[1;31m\4\x1b[0m/p'
+    [[ -n "$1" ]] && pattern+=";1p"
+    ps -ef | sed -En "$pattern"
 }
 
 restart() {
