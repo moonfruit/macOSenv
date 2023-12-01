@@ -75,7 +75,6 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)firefox\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)wikisource\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)liuli\./.test(host)) return "+AUTO";
-        if (/(?:^|\.)appcenter\.ms$/.test(host)) return "+AUTO";
         if (/(?:^|\.)azureedge\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)sourcegraph\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)fontawesome\.com$/.test(host)) return "+AUTO";

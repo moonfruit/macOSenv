@@ -352,7 +352,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "1.162.131.108",
+      "server": "111.243.93.178",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -780,6 +780,10 @@
             "invert": true
           }
         ]
+      },
+      {
+        "outbound": "Direct",
+        "process_name": "HSTracker"
       },
       {
         "inbound": "7890",
