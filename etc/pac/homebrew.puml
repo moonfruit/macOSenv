@@ -692,6 +692,7 @@ skinparam usecase {
 (libksba) << dep >>
 (libksba)-->(gettext)
 (libksba)-->(libgpg-error)
+(liblinear) << dep >>
 (libmagic) << dep >>
 (libnghttp2) << dep >>
 (libpng) << dep >>
@@ -978,6 +979,13 @@ skinparam usecase {
 (netpbm)-->(zstd)
 (nettle) << dep >>
 (nettle)-->(gmp)
+(nmap)
+(nmap)-->(ca-certificates)
+(nmap)-->(liblinear)
+(nmap)-->(libssh2)
+(nmap)-->(lua)
+(nmap)-->(openssl@3)
+(nmap)-->(pcre)
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
