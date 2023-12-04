@@ -40,18 +40,6 @@ else
 	export http_proxy="http://127.0.0.1:$port"
 	export https_proxy="$http_proxy"
 	export all_proxy="socks5://127.0.0.1:$port"
-
-	if [[ $1 == "gu" ]]; then
-		extra=(
-			--vm.Dhttp.proxyHost=127.0.0.1
-			--vm.Dhttp.proxyPort="$port"
-			--vm.Dhttps.proxyHost=127.0.0.1
-			--vm.Dhttps.proxyPort="$port"
-			--vm.Dhttp.nonProxyHosts="localhost|*.gingkoo|127.*|192.168.*|10.*"
-		)
-		shift
-		exec gu "${extra[@]}" "$@"
-	fi
 fi
 
 #if [[ -z $no_proxy ]]; then
