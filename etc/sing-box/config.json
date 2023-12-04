@@ -767,11 +767,14 @@
     "rules": [
       {
         "outbound": "Direct",
+        "domain_suffix": "server.gingkoo"
+      },
+      {
+        "outbound": "Direct",
         "type": "logical",
         "mode": "and",
         "rules": [
           {
-            "domain_suffix": "server.gingkoo",
             "geosite": "private",
             "geoip": "private"
           },
@@ -796,7 +799,11 @@
         "domain_suffix": [
           "hanime1.me",
           "poe.com"
-        ],
+        ]
+      },
+      {
+        "inbound": "7890",
+        "outbound": "Proxy (US)",
         "geosite": [
           "bing",
           "jetbrains-ai",
