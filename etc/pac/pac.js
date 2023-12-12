@@ -1869,6 +1869,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)backchina\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".backpackers.com.tw/forum") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf("backtotiananmen.com") >= 0) return "+AUTO";
+        if (/(?:^|\.)bad\.news$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".badiucao.com") >= 0) return "+AUTO";
         if (/(?:^|\.)badiucao\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".badjojo.com") >= 0) return "+AUTO";
@@ -3983,6 +3984,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)info-graf\.fr$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("website.informer.com") >= 0) return "+AUTO";
         if (/(?:^|\.)initiativesforchina\.org$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)inkbunny\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)inkui\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)inmediahk\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)inmediahk\.net$/.test(host)) return "+AUTO";
@@ -4519,7 +4521,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)mathiew-badimon\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)matrix\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)matsushimakaede\.com$/.test(host)) return "+AUTO";
-        if (/^http:\/\/maturejp\.com/.test(url)) return "+AUTO";
+        if (/(?:^|\.)matters\.town$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)maturejp\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf("mayimayi.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".maxing.jp") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".mcaf.ee") >= 0) return "+AUTO";
