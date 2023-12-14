@@ -54,7 +54,7 @@
 	<key>DeleteProfile_selection</key>
 	<integer>0</integer>
 	<key>DimBackgroundWindows</key>
-	<true/>
+	<false/>
 	<key>DimInactiveSplitPanes</key>
 	<true/>
 	<key>DimOnlyText</key>

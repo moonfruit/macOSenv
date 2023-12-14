@@ -352,7 +352,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "111.243.65.140",
+      "server": "111.243.64.66",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -798,6 +798,7 @@
         "outbound": "Proxy (US)",
         "domain_suffix": [
           "hanime1.me",
+          "perplexity.ai",
           "poe.com"
         ]
       },
