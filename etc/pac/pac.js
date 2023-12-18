@@ -11,6 +11,8 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)labs\.google$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)perplexity\.ai$/.test(host)) return "+AUTO";
         if (/(?:^|\.)steampowered\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)steamstatic\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)trackerslist\.com$/.test(host)) return "+AUTO";
