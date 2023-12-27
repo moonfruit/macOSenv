@@ -322,6 +322,7 @@ skinparam usecase {
 (glib)-->(pcre2)
 (gmp) << dep >>
 (gmssl)
+(gnu-getopt)
 (gnu-sed)
 (gnu-tar)
 (gnupg)

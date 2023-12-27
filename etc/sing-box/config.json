@@ -24,7 +24,8 @@
       },
       {
         "tag": "Gingkoo DNS",
-        "address": "tcp://10.1.2.59"
+        "address": "tcp://10.1.2.59",
+        "detour": "Direct"
       },
       {
         "tag": "System",
@@ -35,7 +36,7 @@
     "rules": [
       {
         "domain_suffix": "server.gingkoo",
-        "server": "Gingkoo"
+        "server": "Gingkoo DNS"
       }
     ]
   },
@@ -352,7 +353,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "1.162.159.89",
+      "server": "1.162.129.193",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -397,7 +398,7 @@
       "type": "shadowsocks",
       "tag": "US6X Shadowsocks (0.9x)",
       "udp_fragment": true,
-      "server": "38.54.25.199",
+      "server": "192.3.248.192",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -449,6 +450,15 @@
     },
     {
       "type": "shadowsocks",
+      "tag": "JP3-A Shadowsocks (1.2x)",
+      "udp_fragment": true,
+      "server": "5.226.48.39",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
       "tag": "JP4 Shadowsocks (1.2x)",
       "udp_fragment": true,
       "server": "103.232.214.44",
@@ -479,15 +489,6 @@
       "tag": "EU4 Shadowsocks (0.8x)",
       "udp_fragment": true,
       "server": "109.122.221.143",
-      "server_port": 55983,
-      "method": "chacha20-ietf-poly1305",
-      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
-    },
-    {
-      "type": "shadowsocks",
-      "tag": "VN1 Shadowsocks",
-      "udp_fragment": true,
-      "server": "103.173.155.193",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -558,11 +559,11 @@
         "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
+        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
         "EU4 Shadowsocks (0.8x)",
-        "VN1 Shadowsocks",
         "VN2-A Shadowsocks",
         "VN3-A Shadowsocks (0.8x)"
       ]
@@ -585,8 +586,8 @@
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "UKtest Shadowsocks",
-        "VN1 Shadowsocks",
         "VN2-A Shadowsocks",
+        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "IPLCEU3 V2Ray VMess (3x)",
@@ -640,11 +641,11 @@
         "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
+        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
         "EU4 Shadowsocks (0.8x)",
-        "VN1 Shadowsocks",
         "VN2-A Shadowsocks",
         "VN3-A Shadowsocks (0.8x)"
       ]
@@ -667,8 +668,8 @@
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "UKtest Shadowsocks",
-        "VN1 Shadowsocks",
         "VN2-A Shadowsocks",
+        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "Gingkoo",
@@ -753,11 +754,11 @@
         "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
+        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
         "EU4 Shadowsocks (0.8x)",
-        "VN1 Shadowsocks",
         "VN2-A Shadowsocks",
         "VN3-A Shadowsocks (0.8x)"
       ]
