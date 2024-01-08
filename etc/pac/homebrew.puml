@@ -223,7 +223,7 @@ skinparam usecase {
 (flake8)-->(ca-certificates)
 (flake8)-->(mpdecimal)
 (flake8)-->(openssl@3)
-(flake8)-->(python@3.11)
+(flake8)-->(python@3.12)
 (flake8)-->(readline)
 (flake8)-->(sqlite)
 (flake8)-->(xz)
@@ -1234,6 +1234,7 @@ skinparam usecase {
 (pyright)-->(node)
 (pyright)-->(openssl@3)
 (python-attrs) << dep >>
+(python-brotli) << dep >>
 (python-certifi) << dep >>
 (python-certifi)-->(ca-certificates)
 (python-click) << dep >>
@@ -1360,6 +1361,7 @@ skinparam usecase {
 (tailwindcss-language-server)-->(openssl@3)
 (taplo)
 (tcping)
+(teamookla/speedtest/speedtest)
 (testssl)
 (testssl)-->(ca-certificates)
 (testssl)-->(openssl@3)
@@ -1505,6 +1507,7 @@ skinparam usecase {
 (yt-dlp)-->(ca-certificates)
 (yt-dlp)-->(mpdecimal)
 (yt-dlp)-->(openssl@3)
+(yt-dlp)-->(python-brotli)
 (yt-dlp)-->(python-certifi)
 (yt-dlp)-->(python-mutagen)
 (yt-dlp)-->(python@3.12)

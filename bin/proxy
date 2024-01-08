@@ -32,7 +32,7 @@ elif [[ $port =~ https?:.* ]]; then
 	export https_proxy="$http_proxy"
 
 elif [[ -d "$ENV" && $port == 9999 ]]; then
-	auth=$(git -C "$ENV" secret cat etc/secret/proxy.txt.secret)
+	auth=$(security find-generic-password -s ENV -a proxy -w)
 	export http_proxy="http://$auth@127.0.0.1:$port"
 	export https_proxy="$http_proxy"
 
