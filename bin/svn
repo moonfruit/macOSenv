@@ -16,4 +16,4 @@ if [[ $# -gt 0 ]] && command -v colorsvn &>/dev/null; then
 		exec colorsvn "${ARGS[@]}"
 	fi
 fi
-exec /opt/homebrew/bin/svn "$@"
+exec "$(brew --prefix)/bin/svn" "$@"

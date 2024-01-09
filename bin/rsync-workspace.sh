@@ -6,7 +6,7 @@ if [[ -z $DEST ]]; then
 fi
 
 RSYNC=/opt/homebrew/bin/rsync
-SED=/opt/homebrew/opt/gnu-sed/libexec/gnubin/sed
+SED=/opt/homebrew/bin/gsed
 ARGS=(-aXh --delete --delete-excluded)
 
 if [[ -t 1 ]]; then

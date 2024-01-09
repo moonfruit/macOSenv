@@ -25,8 +25,9 @@ echo "$GREEN==>$RESET ${BOLD}Updating Homebrew$RESET"
 brew update $PREINSTALL -v
 export HOMEBREW_UPDATE_PREINSTALL=1
 
+PREFIX=$(brew --prefix)
 pull() {
-	local tap="/opt/homebrew/Library/Taps/$1"
+	local tap="$PREFIX/Library/Taps/$1"
 	if [[ $(git -C "$tap" branch --show-current) = "master" ]]; then
 		echo "$GREEN==>$RESET ${BOLD}Pull $1$RESET"
 		git -C "$tap" merge --ff-only origin/master

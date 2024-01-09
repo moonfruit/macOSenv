@@ -40,7 +40,7 @@
 	pulla = pull --recurse-submodules
 
 [gpg]
-	program = /opt/homebrew/bin/gpg
+	program = gpg
 
 [commit]
 	gpgsign = true
@@ -49,10 +49,10 @@
 	helper = osxkeychain
 
 [credential "https://github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
 
 [includeIf "hasconfig:remote.*.url:git@git.server.gingkoo:*/**"]
 	path = .gitconfig-gingkoo

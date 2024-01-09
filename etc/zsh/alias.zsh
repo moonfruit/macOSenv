@@ -19,8 +19,7 @@ alias 'cd-'='cd -'
 alias h='history | tail -58'
 alias hist='history'
 
-alias bash='SHELL=/opt/homebrew/bin/bash /opt/homebrew/bin/bash --login'
-# alias diff='colordiff'
+alias bash="SHELL=$BREW_PREFIX/bin/bash $BREW_PREFIX/bin/bash --login"
 alias ldd='otool -L'
 alias tmuxc='tmux -CC'
 
@@ -42,5 +41,3 @@ alias rgi='rg --no-ignore'
 # -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
 # -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\"" man $*
 # }
-
-# function dmalloc { eval `command dmalloc -b "$@"`; }

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if echo "$1" | rg -xq '[0-9]+'; then
 	port="$1"
@@ -14,8 +14,6 @@ fi
 if [[ $port == 0 ]]; then
 	exec "$@"
 fi
-
-export PATH=/opt/homebrew/opt/curl/bin:$PATH
 
 exec proxychains4 -q -f <(
 	cat <<END

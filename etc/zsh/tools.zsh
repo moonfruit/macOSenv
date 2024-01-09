@@ -40,18 +40,18 @@ export HOMEBREW_PRY=1
 
 # export HUB_REMOTE=moonfruit
 
-local prefix="/opt/homebrew" # $(brew --prefix)
-local script=${prefix}/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+local script=$BREW_PREFIX/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
 [[ -f "$script" ]] && . "$script"
-unset prefix script
+unset script
 
 # for maven
-export MAVEN_OPTS="-Xss2m -Duser.language=en_us -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
+export MAVEN_OPTS="-Xss2m -Duser.language=en_us \
+-Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
 
 # for java
 export GINGKOO_ENV=dev
 
 # for liquibase
-if [[ -d /opt/homebrew/opt/liquibase/libexec ]]; then
-	export LIQUIBASE_HOME=/opt/homebrew/opt/liquibase/libexec
-fi
+local dir=$BREW_PREFIX/opt/liquibase/libexec
+[[ -d "$dir" ]] && export LIQUIBASE_HOME=$dir
+unset dir

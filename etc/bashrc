@@ -2,28 +2,28 @@
 # shellcheck disable=SC1090
 
 load() {
-	 [[ -r $1 ]] && source "$1"
+	[[ -r $1 ]] && source "$1"
 }
 
 if [[ $- == *i* ]]; then
-	HOMEBREW_PREFIX="/opt/homebrew"	# $(brew --prefix)
+	BREW_PREFIX=$(brew --prefix)
 
-	SCRIPT="${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+	SCRIPT="${BREW_PREFIX}/etc/profile.d/bash_completion.sh"
 	if [[ -r $SCRIPT ]]; then
 		source "${SCRIPT}"
 	else
-		for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+		for COMPLETION in "${BREW_PREFIX}/etc/bash_completion.d/"*; do
 			[[ -r "$COMPLETION" ]] && source "$COMPLETION"
 		done
 	fi
 
-	SCRIPT="${HOMEBREW_PREFIX}/etc/profile.d/autojump.sh"
+	SCRIPT="${BREW_PREFIX}/etc/profile.d/autojump.sh"
 	[[ -f "$SCRIPT" ]] && . "$SCRIPT"
 
-	SCRIPT="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
+	SCRIPT="${BREW_PREFIX}/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
 	[[ -f "$SCRIPT" ]] && . "$SCRIPT"
 
-	unset SCRIPT HOMEBREW_PREFIX
+	unset BREW_PREFIX SCRIPT
 fi
 
 export GINGKOO_ENV=dev

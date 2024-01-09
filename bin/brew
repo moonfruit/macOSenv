@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-brew=(/opt/homebrew/bin/brew)
+readonly PREFIX=/opt/homebrew
+
+case $1 in
+--dev)
+	#export HOMEBREW_DEVELOPER=1
+	export HOMEBREW_NO_INSTALL_FROM_API=1
+	shift
+	;;
+--prefix)
+	echo $PREFIX
+	exit 0
+	;;
+esac
+
+brew=("$PREFIX/bin/brew")
 
 readonly -A NOPROXY=(
 	[--formula]=1
@@ -58,11 +72,6 @@ echo-direct() {
 }
 
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
-	if [[ $1 == "--dev" ]]; then
-		#export HOMEBREW_DEVELOPER=1
-		export HOMEBREW_NO_INSTALL_FROM_API=1
-		shift
-	fi
 	case $1 in
 	audit | bump | bundle | create | info | livecheck | outdated | search | tap | test | uninstall | update)
 		brew=(proxy "${brew[@]}")

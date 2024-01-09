@@ -38,14 +38,14 @@ for APP in "DataGrip" "GoLand" "PyCharm" "IntelliJ IDEA"; do
 done
 
 # for PATH and MANPATH
-# prepend-path "/opt/homebrew/opt/grep/libexec/gnubin"
-prepend-path "/opt/homebrew/opt/gnu-tar/libexec/gnubin"
-prepend-path "/opt/homebrew/opt/gnu-sed/libexec/gnubin"
-prepend-path "/opt/homebrew/opt/gawk/libexec/gnubin"
-# prepend-path "/opt/homebrew/opt/findutils/libexec/gnubin"
-prepend-path "/opt/homebrew/opt/gnu-getopt/bin"
-prepend-path "/opt/homebrew/opt/file-formula/bin"
-# prepend-path "/opt/homebrew/opt/curl/bin"
+prepend-path "$BREW_PREFIX/opt/grep/libexec/gnubin"
+prepend-path "$BREW_PREFIX/opt/gnu-tar/libexec/gnubin"
+prepend-path "$BREW_PREFIX/opt/gnu-sed/libexec/gnubin"
+prepend-path "$BREW_PREFIX/opt/gawk/libexec/gnubin"
+prepend-path "$BREW_PREFIX/opt/findutils/libexec/gnubin"
+prepend-path "$BREW_PREFIX/opt/gnu-getopt/bin"
+prepend-path "$BREW_PREFIX/opt/file-formula/bin"
+prepend-path "$BREW_PREFIX/opt/curl/bin"
 prepend-path "$ENV/bin"
 export PATH
 
@@ -54,6 +54,6 @@ eval "$(env | rg '_HOME' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
 
 # dylink "$DYLD_FALLBACK_LIBRARY_PATH"
 
-while [[ ${fpath[1]} == /opt/homebrew/share/zsh/site-functions ]]; do
+while [[ ${fpath[1]} == "$BREW_PREFIX/share/zsh/site-functions" ]]; do
 	shift fpath
 done

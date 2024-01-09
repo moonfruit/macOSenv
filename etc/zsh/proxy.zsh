@@ -10,6 +10,6 @@ set-proxy() {
 			eval "$(proxy env | sed -rn 's/^((https?|all)_proxy)/export \1/p')"
 		fi
 	else
-        eval "$(proxy "$1" env | sed -rn 's/^((https?|all)_proxy)/export \1/p')"
+		eval "$(proxy "$1" env | sed -rn 's/^((https?|all)_proxy)/export \1/p')"
 	fi
 }

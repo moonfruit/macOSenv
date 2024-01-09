@@ -1,9 +1,10 @@
 #!/usr/bin/env zsh
+echo $PATH | sd ':' '\n'
 
 # zmodload zsh/zprof
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ENV="$HOME/Workspace.localized/env"
@@ -102,6 +103,8 @@ plugins=(autojump colored-man-pages cp extract git golang gradle httpie macos mo
 HISTFILE="$ZDOTDIR/history.txt"
 ZSH_CACHE_DIR="$ZDOTDIR/cache"
 
+BREW_PREFIX=$(brew --prefix)
 source "$ZSH/oh-my-zsh.sh"
+unset BREW_PREFIX
 
 # zprof
