@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-echo $PATH | sd ':' '\n'
 
 # zmodload zsh/zprof
 
