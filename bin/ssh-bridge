@@ -21,7 +21,7 @@ RESULT=$(sqlite3 "$DATABASE" "select port, pid from ssh where ssh = '$TARGET'")
 if [[ -n $RESULT ]]; then
     array=(${RESULT//|/ })
     PORT=${array[0]}
-    PID=$(lsof -nPiTCP -sTCP:LISTEN | grep ":$PORT" | awk '{print $2}')
+    PID=$(lsof -nPiTCP -sTCP:LISTEN | rg ":$PORT" | awk '{print $2}')
     if [[ $PID != "${array[1]}" ]]; then
         sqlite3 "$DATABASE" "delete from ssh where ssh = '$TARGET'"
         PORT=

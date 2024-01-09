@@ -1,37 +1,78 @@
 #!/usr/bin/env bash
 readonly URL=http://127.0.0.1:9090/proxies/Forward
 
-describe() {
-    local index=$1
-    local total=$2
-    local message=$3
-    printf "%0${#total}d/%d: %s" "$index" "$total" "$message"
-}
+OPTS=$(getopt -n "$0" -o ar --long all,raw -- "$@") || exit 1
+eval set -- "$OPTS"
+while true; do
+    case "$1" in
+    -a | --all)
+        ALL=1
+        shift
+        ;;
+    -r | --raw)
+        RAW=1
+        shift
+        ;;
+    --)
+        shift
+        break
+        ;;
+    esac
+done
 
-benchmark-proixes() {
-    local previous
-    if (($# > 0)); then
-        previous=$(curl -s "$URL" | jq -r '.now')
-    fi
+if [[ -n $RAW ]]; then
+    benchmark-proixes() {
+        for PROXY in "$@"; do
+            echo "$PROXY"
+        done
+    }
 
-    local i=0
-    local label proxy
-    for proxy in "$@"; do
-        ((i++))
-        curlie -s PUT "$URL" name="$proxy"
-        sleep 0.5
-        label=$(describe $i $# "$proxy")
-        test-proxy "$label" 7891
-    done
+else
+    describe() {
+        local index=$1
+        local total=$2
+        local message=$3
+        printf "%0${#total}d/%d: %s" "$index" "$total" "$message"
+    }
 
-    if [[ -n "$previous" ]]; then
-        curlie -s PUT "$URL" name="$previous"
-    fi
-}
+    benchmark-proixes() {
+        local previous
+        if (($# > 0)); then
+            previous=$(curl -s "$URL" | jq -r '.now')
+        fi
+
+        local i=0
+        local label proxy
+        for proxy in "$@"; do
+            ((i++))
+            curlie -s PUT "$URL" name="$proxy"
+            sleep 0.5
+            label=$(describe $i $# "$proxy")
+            test-proxy "$label" 7891
+        done
+
+        if [[ -n "$previous" ]]; then
+            curlie -s PUT "$URL" name="$previous"
+        fi
+    }
+fi
 
 mapfile -t PROXIES < <(curl -s "$URL" | jq -r '.all.[]')
-if [[ $1 = "--all" ]]; then
+if (($# > 0)); then
+    FILTERD=()
+    for ARG in "$@"; do
+        for PROXY in "${PROXIES[@]}"; do
+            if [[ $ARG == "$PROXY" ]]; then
+                PROXIES=("${PROXIES[@]/$PROXY/}")
+                FILTERD+=("$PROXY")
+            fi
+        done
+    done
+    benchmark-proixes "${FILTERD[@]}"
+
+elif [[ -n $ALL ]]; then
     benchmark-proixes "${PROXIES[@]}"
+
 else
     FILTERD=()
     for PROXY in "${PROXIES[@]}"; do

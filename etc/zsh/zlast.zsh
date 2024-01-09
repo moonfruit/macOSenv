@@ -37,21 +37,20 @@ for APP in "DataGrip" "GoLand" "PyCharm" "IntelliJ IDEA"; do
     prepend-path "/Applications/$APP.app/Contents/MacOS"
 done
 
-# for CotEditor
-prepend-path "/Applications/CotEditor.app/Contents/SharedSupport/bin"
-
 # for PATH and MANPATH
-prepend-path "/opt/homebrew/opt/grep/libexec/gnubin"
+# prepend-path "/opt/homebrew/opt/grep/libexec/gnubin"
 prepend-path "/opt/homebrew/opt/gnu-tar/libexec/gnubin"
 prepend-path "/opt/homebrew/opt/gnu-sed/libexec/gnubin"
-prepend-path "/opt/homebrew/opt/findutils/libexec/gnubin"
+prepend-path "/opt/homebrew/opt/gawk/libexec/gnubin"
+# prepend-path "/opt/homebrew/opt/findutils/libexec/gnubin"
+prepend-path "/opt/homebrew/opt/gnu-getopt/bin"
 prepend-path "/opt/homebrew/opt/file-formula/bin"
-#prepend-path "/opt/homebrew/opt/curl/bin"
+# prepend-path "/opt/homebrew/opt/curl/bin"
 prepend-path "$ENV/bin"
 export PATH
 
 # Auto hash XXOO_HOME
-eval "$(env | grep '_HOME$' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
+eval "$(env | rg '_HOME' | sed 's/\(.*\)=.*/hash -d \1="$\1"/')"
 
 # dylink "$DYLD_FALLBACK_LIBRARY_PATH"
 

@@ -11,4 +11,7 @@ done
 [[ -z $FOUND ]] && exit
 
 SAVE=$HOME/.ssh/save_hosts
-grep -Fxq "$VAR" "$SAVE" || echo "$VAR" >>"$SAVE"
+if ! rg -Fxq "$VAR" "$SAVE"; then
+	echo "$VAR" >>"$SAVE"
+	sort -uo "$SAVE" "$SAVE"
+fi

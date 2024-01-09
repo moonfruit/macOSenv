@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 launchctl start moonfruit.gost.xipcloud
 
-until [[ $(launchctl list | grep moonfruit.gost.xipcloud | awk '{print $1}') = '-' ]]; do
+until [[ $(launchctl list | rg moonfruit.gost.xipcloud | awk '{print $1}') = '-' ]]; do
 	sleep 0.1
 done
 

@@ -27,6 +27,8 @@ EXTRA=(
 	c0re100-qbittorrent
 	dbvisualizer
 	discord
+	homebrew/core/docker
+	homebrew/cask/docker
 	kitty
 	macast
 	motrix
@@ -43,22 +45,25 @@ EXTRA=(
 	slack-beta
 	warp
 
-	appcode
 	android-studio
 	clion
 	datagrip
 	dataspell
 	goland
-	homebrew/core/docker
-	homebrew/cask/docker
 	fleet
 	intellij-idea
+	intellij-idea-ce
+	jetbrains-gateway
 	jetbrains-toolbox
+	mps
 	phpstorm
 	pycharm
+	pycharm-ce
 	rider
 	rubymine
+	rustrover
 	webstorm
+	writerside
 )
 
 EXCLUDED=(

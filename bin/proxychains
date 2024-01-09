@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if echo "$1" | grep -Exq '[0-9]+'; then
+if echo "$1" | rg -xq '[0-9]+'; then
 	port="$1"
 	shift
 else

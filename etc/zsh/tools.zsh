@@ -2,9 +2,11 @@
 # shellcheck disable=SC1090
 
 # for dmalloc
-function dmalloc {
-	eval "$(command dmalloc -b "$@")"
-}
+if (($+commands[dmalloc])); then
+	function dmalloc {
+		eval "$(command dmalloc -b "$@")"
+	}
+fi
 
 # for di
 export DI_ARGS="-f sMbuvpt"
@@ -16,7 +18,9 @@ export DI_ARGS="-f sMbuvpt"
 # eval "$(direnv hook zsh)"
 
 # for fzf
-export FZF_DEFAULT_OPTS=--cycle
+if (($+commands[fzf])); then
+	export FZF_DEFAULT_OPTS=--cycle
+fi
 
 # for hstr
 # export HSTR_CONFIG=hicolor        # get more colors
@@ -48,4 +52,6 @@ export MAVEN_OPTS="-Xss2m -Duser.language=en_us -Dstyle.debug=bold -Dstyle.info=
 export GINGKOO_ENV=dev
 
 # for liquibase
-export LIQUIBASE_HOME=/opt/homebrew/opt/liquibase/libexec
+if [[ -d /opt/homebrew/opt/liquibase/libexec ]]; then
+	export LIQUIBASE_HOME=/opt/homebrew/opt/liquibase/libexec
+fi
