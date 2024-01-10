@@ -536,7 +536,6 @@ skinparam usecase {
 (ruby)
 (ruby)-->(libyaml)
 (ruby)-->(openssl@3)
-(ruby)-->(readline)
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)

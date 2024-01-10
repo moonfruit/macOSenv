@@ -4,7 +4,7 @@ if echo "$1" | rg -xq '[0-9]+'; then
 	port="$1"
 	shift
 else
-	port="1080"
+	port="7890"
 fi
 
 if [[ $# == 0 ]]; then

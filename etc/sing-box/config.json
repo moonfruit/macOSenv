@@ -790,8 +790,7 @@
         "mode": "and",
         "rules": [
           {
-            "geosite": "private",
-            "geoip": "private"
+            "rule_set": "Private"
           },
           {
             "domain": "connectivitycheck.gstatic.com",
@@ -800,13 +799,9 @@
         ]
       },
       {
-        "outbound": "Direct",
-        "process_name": "HSTracker"
-      },
-      {
         "inbound": "7890",
         "outbound": "Block",
-        "geosite": "category-ads-all"
+        "rule_set": "Block"
       },
       {
         "inbound": "7890",
@@ -820,54 +815,65 @@
       {
         "inbound": "7890",
         "outbound": "Proxy (US)",
-        "geosite": [
-          "bing",
-          "jetbrains-ai",
-          "openai"
-        ]
+        "rule_set": "AI"
       },
       {
         "inbound": "7890",
         "outbound": "Proxy",
-        "geosite": [
-          "gfw",
-          "telegram"
-        ]
-      },
-      {
-        "inbound": "7890",
-        "outbound": "Proxy",
-        "geoip": "telegram"
+        "rule_set": "Proxy"
       },
       {
         "inbound": "7890",
         "outbound": "Direct",
-        "geosite": [
-          "cn",
-          "apple-cn",
-          "google-cn",
-          "tld-cn",
-          "category-games@cn"
-        ]
-      },
-      {
-        "inbound": "7890",
-        "outbound": "Direct",
-        "geoip": "cn"
+        "rule_set": "Direct"
       },
       {
         "inbound": "7891",
         "outbound": "Forward"
       }
     ],
+    "rule_set": [
+      {
+        "type": "remote",
+        "tag": "AI",
+        "format": "binary",
+        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/ai.srs"
+      },
+      {
+        "type": "remote",
+        "tag": "Block",
+        "format": "binary",
+        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/block.srs"
+      },
+      {
+        "type": "remote",
+        "tag": "Direct",
+        "format": "binary",
+        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/direct.srs"
+      },
+      {
+        "type": "remote",
+        "tag": "Private",
+        "format": "binary",
+        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/private.srs"
+      },
+      {
+        "type": "remote",
+        "tag": "Proxy",
+        "format": "binary",
+        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/proxy.srs"
+      }
+    ],
     "final": "Proxy",
     "find_process": true
   },
   "experimental": {
+    "cache_file": {
+      "enabled": true
+    },
     "clash_api": {
       "external_controller": "127.0.0.1:9090",
-      "external_ui": "ui",
-      "store_selected": true
+      "external_ui": "ui"
     }
   }
 }

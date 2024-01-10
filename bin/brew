@@ -73,10 +73,10 @@ echo-direct() {
 
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 	case $1 in
-	audit | bump | bundle | create | info | livecheck | outdated | search | tap | test | uninstall | update)
+	audit | bump | bundle | create | info | outdated | search | tap | test | uninstall | update)
 		brew=(proxy "${brew[@]}")
 		;;
-	bump-cask-pr | bump-formula-pr)
+	bump-cask-pr | bump-formula-pr | livecheck)
 		if any-test "${@:2}"; then
 			echo-direct
 		else
