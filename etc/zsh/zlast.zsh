@@ -32,11 +32,6 @@ local prepend-path() {
     fi
 }
 
-# for JetBrains
-for APP in "DataGrip" "GoLand" "PyCharm" "IntelliJ IDEA"; do
-    prepend-path "/Applications/$APP.app/Contents/MacOS"
-done
-
 # for PATH and MANPATH
 prepend-path "$BREW_PREFIX/opt/grep/libexec/gnubin"
 prepend-path "$BREW_PREFIX/opt/gnu-tar/libexec/gnubin"

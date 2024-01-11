@@ -586,8 +586,11 @@ skinparam usecase {
 (typescript-language-server)-->(node)
 (typescript-language-server)-->(typescript)
 (ugrep)
+(ugrep)-->(brotli)
+(ugrep)-->(lz4)
 (ugrep)-->(pcre2)
 (ugrep)-->(xz)
+(ugrep)-->(zstd)
 (unbound) << dep >>
 (unbound)-->(libevent)
 (unbound)-->(libnghttp2)

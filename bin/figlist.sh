@@ -11,11 +11,12 @@ if [[ -z $FONTS ]]; then
 	FONTS=$(figlist | sed '1,/Figlet fonts/d;/Figlet control files/,$d')
 fi
 
+width=$(tput cols)
 for FONT in $FONTS; do
 	echo "-------- $FONT --------"
 	display=$DISPLAY
 	if [[ -z $display ]]; then
 		display=$FONT
 	fi
-	figlet -w 120 -f "$FONT" "$display"
+	figlet -w "$width" -f "$FONT" "$display"
 done
