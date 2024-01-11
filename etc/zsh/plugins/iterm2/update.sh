@@ -16,14 +16,12 @@ fi
 create-temp-directory TEMP_DIR
 cd "$TEMP_DIR" || exit 1
 
-wget https://iterm2.com/shell_integration/zsh -O iterm2.zsh
-copy-if-diff iterm2.zsh "$BIN"
+eval "$(wget https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh -O- | rg '^UTILITIES=')"
 
-wget https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh -O utilities.sh
-eval "$(rg '^UTILITIES=' utilities.sh)"
+wget https://iterm2.com/shell_integration/zsh "${UTILITIES[@]/#/https://iterm2.com/utilities/}"
+copy-if-diff zsh "$BIN/iterm2.zsh"
 
 for UTILITY in "${UTILITIES[@]}"; do
-    wget "https://iterm2.com/utilities/$UTILITY"
     BANG=$(head -1 "$UTILITY")
     if [[ $BANG == *python* ]]; then
         sed -i '1s|.*|#!'"$PYTHON"'|' "$UTILITY"

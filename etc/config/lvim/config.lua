@@ -101,7 +101,7 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 --- Linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
-    { command = "shfmt" },
+    { command = "shfmt", extra_args = { "--indent", "4" } },
     { command = "black", extra_args = { "--line-length", "120" } },
     { command = "prettier", extra_args = { "--print-width", "120" } },
     { command = "stylua", extra_args = { "--indent-type", "Spaces" } },
