@@ -20,17 +20,17 @@ cd "$TEMP_DIR" || exit 1
 #echo " --- === Update geoip.db === ---"
 #download-latest-release "$DIR/geoip.db" SagerNet sing-geoip geoip.db
 #download-latest-release "$DIR/geoip.db" Loyalsoldier v2ray-rules-dat geoip.dat convert ip
-
 #echo
+
 #echo " --- === Update geosite.db === ---"
 #download-latest-release "$DIR/geosite.db" SagerNet sing-geosite geosite.db
 #download-latest-release "$DIR/geosite.db" Loyalsoldier v2ray-rules-dat geosite.dat convert site
+#echo
 
-echo
 echo " --- === Update ui === ---"
 download-branch "$DIR/ui" MetaCubeX Yacd-meta gh-pages
-
 echo
+
 echo " --- === Update config.json === ---"
 
 find-sing() {
