@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
-if [[ $LC_TERMINAL == iTerm2 ]]; then
-	#export DIRENV_LOG_FORMAT=
-	#VIM=(proxy direnv exec "$HOME/.local/bin/lvim")
-	export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-	VIM=(proxy ~/.local/bin/lvim)
+if [[ $LC_TERMINAL == iTerm2 || -n $HOMEBREW_DEV_CMD_RUN ]]; then
+    #export DIRENV_LOG_FORMAT=
+    #VIM=(proxy direnv exec "$HOME/.local/bin/lvim")
+    export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+    VIM=(proxy ~/.local/bin/lvim)
 else
-	VIM=(nvim)
+    VIM=(nvim)
 fi
 
 NAME="${0##*/}"
 if [[ $NAME == view ]]; then
-	VIM+=(-R)
+    VIM+=(-R)
 elif [[ $NAME == vimdiff ]]; then
-	VIM+=(-d)
+    VIM+=(-d)
 elif [[ $NAME == vimex ]]; then
-	VIM+=(-e)
+    VIM+=(-e)
 fi
 
 exec "${VIM[@]}" "$@"

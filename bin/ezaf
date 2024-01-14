@@ -52,7 +52,7 @@ while (($# > 0)); do
 done
 
 if [[ $MODE = auto ]]; then
-	if [[ -n $LONG ]]; then
+	if [[ -z $LONG ]]; then
 		MODE=oneline
 	else
 		MODE=grid
