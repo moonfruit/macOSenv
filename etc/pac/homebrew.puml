@@ -35,6 +35,8 @@ skinparam usecase {
 (bat)
 (bat)-->(libgit2)
 (bat)-->(oniguruma)
+(bfg)
+(bfg)-->(openjdk)
 (black)
 (black)-->(python-attrs)
 (black)-->(python-click)

@@ -353,7 +353,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "1.162.142.193",
+      "server": "1.162.129.88",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -362,7 +362,7 @@
       "type": "shadowsocks",
       "tag": "US1 Shadowsocks",
       "udp_fragment": true,
-      "server": "212.50.250.42",
+      "server": "144.168.62.109",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
