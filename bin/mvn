@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+MVN=/opt/homebrew/bin/mvn
+if [[ ! -t 1 ]]; then
+    exec $MVN "$@"
+fi
+$MVN -Dstyle.color=always "$@" | solarized.sh
