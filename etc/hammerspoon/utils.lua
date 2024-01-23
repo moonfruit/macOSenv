@@ -1,8 +1,8 @@
 local M = {}
 
-function printTable(tbl, indent)
+local function printTable(tbl, indent)
     for k, v in pairs(tbl) do
-        formatting = string.rep("  ", indent) .. k .. ": "
+        local formatting = string.rep("  ", indent) .. k .. ": "
         if type(v) == "table" then
             print(formatting)
             printTable(v, indent + 1)
@@ -19,11 +19,11 @@ function M.printTable(tbl)
 end
 
 function M.applescript(source, ...)
-    result, _, descriptor = hs.osascript.applescript(string.format(source, ...))
+    local result, _, descriptor = hs.osascript.applescript(string.format(source, ...))
     if result then
         return true;
     end
-    description = descriptor["NSLocalizedDescription"]:gsub("\\U(....)", function(cp)
+    local description = descriptor["NSLocalizedDescription"]:gsub("\\U(....)", function(cp)
         return utf8.char(tonumber(cp, 16))
     end)
     return nil, description

@@ -68,7 +68,7 @@ function M.forAddress(address, ...)
 
     function gost.start(self)
         if not self.reachability then
-            callback = function(_, flags)
+            local callback = function(_, flags)
                 print(self.address .. ": " .. flagsToString(flags))
                 if (flags & hs.network.reachability.flags.isDirect) > 0 then
                     self:startGost()
