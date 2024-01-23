@@ -27,6 +27,7 @@ skinparam usecase {
 (avro-c)-->(jansson)
 (avro-c)-->(snappy)
 (avro-c)-->(xz)
+(azhuchkov/tools/tunblkctl)
 (bash)
 (bash-completion@2)
 (bash-completion@2)-->(bash)

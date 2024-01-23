@@ -14,6 +14,11 @@ hs.pathwatcher.new(paths.etc .. "/hammerspoon", hs.reload):start()
 -- nutstore.watchDirectory(paths.home .. "/Nutstore Files")
 
 ---
+--- Quit tunnelblick when connect to gingkoo wifi
+--
+require("tunnelblick"):start()
+
+---
 --- Launch HSTracker when Hearthstone is launching
 ---
 -- hs.application.enableSpotlightForNameSearches(true)
