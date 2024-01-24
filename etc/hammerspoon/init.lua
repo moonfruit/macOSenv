@@ -3,8 +3,7 @@ local paths = require("paths")
 ---
 --- Reload config on change
 ---
-hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
-hs.pathwatcher.new(paths.etc .. "/hammerspoon", hs.reload):start()
+local reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
 
 ---
 --- Prevent nustore from creating some folders
@@ -16,7 +15,7 @@ hs.pathwatcher.new(paths.etc .. "/hammerspoon", hs.reload):start()
 ---
 --- Quit tunnelblick when connect to gingkoo wifi
 --
-require("tunnelblick"):start()
+local tunnelblick = require("tunnelblick"):start()
 
 ---
 --- Launch HSTracker when Hearthstone is launching

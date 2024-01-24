@@ -1,8 +1,8 @@
 local M = {}
 
 function M.killTunnelblick()
-    local app = hs.application.get("Tunnelblick")
-    if app then
+    local app = hs.application.get("net.tunnelblick.tunnelblick")
+    if app and app:isRunning() then
         print("Kill Tunnelblick " .. app:pid())
         app:kill()
     end

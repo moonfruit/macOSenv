@@ -470,7 +470,7 @@
       "type": "shadowsocks",
       "tag": "UKtest Shadowsocks",
       "udp_fragment": true,
-      "server": "209.97.190.240",
+      "server": "138.68.130.42",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"

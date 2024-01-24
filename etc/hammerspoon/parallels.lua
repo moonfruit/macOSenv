@@ -16,7 +16,7 @@ local flagDescriptions<const> = {
 local function flagsToString(flags)
     local result = "{";
     for k, v in pairs(flagDescriptions) do
-        if (flags & k) > 0 then
+        if flags & k > 0 then
             if #result > 1 then
                 result = result .. ", "
             end
@@ -33,7 +33,7 @@ local function asGostRoute(address, port)
     }
 end
 
-local function generateGostJson(file, address, ports)
+local function generateGostJson(address, ports)
     local json = asGostRoute(address, ports[1])
     if #ports > 1 then
         json.Routes = {}
@@ -41,7 +41,17 @@ local function generateGostJson(file, address, ports)
             table.insert(json.Routes, asGostRoute(address, ports[i]))
         end
     end
-    return hs.json.write(json, file)
+    return hs.json.encode(json, true)
+end
+
+local function writeToFile(filename, text)
+    local file, err = io.open(filename, "w")
+    if file then
+        file:write(text)
+        file:close()
+    else
+        error("Open file " + filename + " error: " + err)
+    end
 end
 
 function M.forAddress(address, ...)
@@ -97,8 +107,10 @@ function M.forAddress(address, ...)
 
     function gost.startGost(self)
         if not (self.task and self.task:isRunning()) then
-            self.config = hs.fs.temporaryDirectory() .. "gost-" .. hs.host.uuid() .. ".json"
-            generateGostJson(self.config, self.address, self.ports)
+            local json = generateGostJson(self.address, self.ports)
+            local hash = hs.hash.MD5(json)
+            self.config = hs.fs.temporaryDirectory() .. "gost-" .. hash .. ".json"
+            writeToFile(self.config, json)
             self.task = hs.task.new("/opt/homebrew/bin/gost", nil, {"-C", self.config}):start()
             print(string.format("Started gost(%s) -C %s", self.task:pid(), self.config))
         end

@@ -4,7 +4,7 @@ local M = {}
 
 function M.watchDirectory(path)
     utils.removeDirectory(path)
-    hs.pathwatcher.new(path, function(paths, flags)
+    return hs.pathwatcher.new(path, function(paths, flags)
         for i, v in ipairs(paths) do
             if v == path then
                 local itemIsDir = flags[i]["itemIsDir"]
