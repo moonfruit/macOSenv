@@ -1,6 +1,12 @@
 #!/bin/bash
-COLIMA=("$(brew --prefix)/bin/colima")
+source "$ENV/lib/bash/console.sh"
+
+COLIMA="$(brew --prefix)/bin/colima"
+exec-if-dark "$COLIMA" "$@"
+
 if command -v dark >/dev/null 2>&1 && [[ $1 == "start" || $1 == "stop" ]]; then
-	COLIMA=(dark "${COLIMA[@]}")
+    DARK=(dark)
+else
+    DARK=()
 fi
-exec "${COLIMA[@]}" "$@"
+exec "${DARK[@]}" "$COLIMA" "$@"

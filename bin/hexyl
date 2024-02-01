@@ -1,9 +1,6 @@
 #!/bin/bash
-PREFIX=$(brew --prefix)
-if [[ -z $DARK_ENABLED ]] && hash it2check 2>/dev/null && it2check; then
-    if ! hash it2profile 2>/dev/null || [[ $(it2profile -g) != dark ]]; then
-        "$PREFIX/bin/hexyl" "$@" | solarized.sh
-        exit
-    fi
-fi
-exec "$PREFIX/bin/hexyl" "$@"
+source "$ENV/lib/bash/console.sh"
+
+HEXYL="$(brew --prefix)/bin/hexyl"
+exec-if-dark "$HEXYL" "$@"
+"$HEXYL" "$@" | solarized.sh

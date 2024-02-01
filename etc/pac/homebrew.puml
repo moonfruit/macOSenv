@@ -140,6 +140,8 @@ skinparam usecase {
 (git-svn)
 (git-svn)-->(git)
 (git-svn)-->(subversion)
+(gitlab-ci-local)
+(gitlab-ci-local)-->(node)
 (glab)
 (glib) << dep >>
 (glib)-->(gettext)
