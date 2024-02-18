@@ -353,7 +353,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "1.162.163.195",
+      "server": "1.162.153.191",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
