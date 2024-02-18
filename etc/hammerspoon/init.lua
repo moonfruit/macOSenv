@@ -3,7 +3,12 @@ local paths = require("paths")
 ---
 --- Reload config on change
 ---
-local reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
+reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
+
+---
+--- Enable ipc module for `hs`
+---
+hs.ipc.cliSaveHistory(true)
 
 ---
 --- Prevent nustore from creating some folders

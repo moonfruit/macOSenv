@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 ARGS=()
-MODE=auto
-CLASSIFY=auto
+MODE=grid
 while (($# > 0)); do
 	NEXT=$1
 	case $NEXT in
@@ -10,14 +9,7 @@ while (($# > 0)); do
 	--grid) MODE=grid ;;
 	--tree) MODE=tree ;;
 	--long) LONG=1 ;;
-	--classify)
-		CLASSIFY=1
-		NEXT=
-		;;
-	--no-classify)
-		CLASSIFY=
-		NEXT=
-		;;
+	--no-classify) NEXT=--classify=never ;;
 	--no-icons) NEXT=--icons=never ;;
 	--*) ;;
 	-lrt)
@@ -25,51 +17,21 @@ while (($# > 0)); do
 		NEXT=-lsnew
 		;;
 	-*)
-		OPTS=
 		for ((i = 1; i < ${#NEXT}; i++)); do
-			C="${NEXT:$i:1}"
-			case $C in
+			case "${NEXT:$i:1}" in
 			1) MODE=oneline ;;
 			G) MODE=grid ;;
 			T) MODE=tree ;;
 			l) LONG=1 ;;
-			F)
-				CLASSIFY=1
-				C=
-				;;
 			esac
-			OPTS=$OPTS$C
 		done
-		if [[ -n "$OPTS" ]]; then
-			NEXT=-$OPTS
-		else
-			NEXT=
-		fi
 		;;
 	esac
 	[[ -n $NEXT ]] && ARGS+=("$NEXT")
 	shift
 done
 
-if [[ $MODE = auto ]]; then
-	if [[ -z $LONG ]]; then
-		MODE=oneline
-	else
-		MODE=grid
-	fi
-fi
-if [[ $CLASSIFY = auto ]]; then
-	if [[ $MODE = oneline ]]; then
-		CLASSIFY=
-	else
-		CLASSIFY=1
-	fi
-fi
-
-BASE=()
-if [[ -n $CLASSIFY ]]; then
-	BASE+=(-F)
-fi
+BASE=(-F)
 if [[ -n $LONG ]]; then
 	BASE+=(-gM --git --icons --time-style long-iso)
 elif [[ $MODE = tree ]]; then
