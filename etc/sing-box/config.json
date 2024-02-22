@@ -56,6 +56,14 @@
       "listen_port": 7891,
       "tcp_fast_open": true,
       "sniff": true
+    },
+    {
+      "type": "mixed",
+      "tag": "7898",
+      "listen": "127.0.0.1",
+      "listen_port": 7898,
+      "tcp_fast_open": true,
+      "sniff": true
     }
   ],
   "outbounds": [
@@ -353,7 +361,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "1.162.153.191",
+      "server": "1.162.133.248",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -785,37 +793,35 @@
         ]
       },
       {
-        "inbound": "7890",
+        "inbound": "7898",
+        "outbound": "Forward"
+      },
+      {
         "outbound": "Block",
         "rule_set": "Block"
       },
       {
-        "inbound": "7890",
         "outbound": "Proxy (US)",
         "domain_suffix": [
           "hanime1.me",
-          "perplexity.ai",
           "poe.com"
         ]
       },
       {
-        "inbound": "7890",
         "outbound": "Proxy (US)",
         "rule_set": "AI"
       },
       {
-        "inbound": "7890",
         "outbound": "Proxy",
         "rule_set": "Proxy"
       },
       {
-        "inbound": "7890",
         "outbound": "Direct",
         "rule_set": "Direct"
       },
       {
         "inbound": "7891",
-        "outbound": "Forward"
+        "outbound": "Direct"
       }
     ],
     "rule_set": [

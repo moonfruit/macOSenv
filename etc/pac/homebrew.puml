@@ -596,7 +596,7 @@ skinparam usecase {
 (ugrep)-->(pcre2)
 (ugrep)-->(xz)
 (ugrep)-->(zstd)
-(unbound) << dep >>
+(unbound) << req >>
 (unbound)-->(libevent)
 (unbound)-->(libnghttp2)
 (unbound)-->(openssl@3)

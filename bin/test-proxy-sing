@@ -48,7 +48,7 @@ else
             curlie -s PUT "$URL" name="$proxy"
             sleep 0.5
             label=$(describe $i $# "$proxy")
-            test-proxy "$label" 7891
+            test-proxy "$label" 7898
         done
 
         if [[ -n "$previous" ]]; then

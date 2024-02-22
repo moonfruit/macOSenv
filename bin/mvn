@@ -3,4 +3,4 @@ source "$ENV/lib/bash/console.sh"
 
 MVN="$(brew --prefix)/bin/mvn"
 exec-if-dark "$MVN" "$@"
-$MVN -Dstyle.color=always "$@" | solarized.sh
+$MVN -Dstyle.color=always -Ptest-only "$@" | solarized.sh

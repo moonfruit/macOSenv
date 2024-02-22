@@ -50,7 +50,7 @@ layout_python() {
                 ARGS+=(-r requirements.txt)
             fi
             if [[ "${#ARGS}" -gt 0 ]]; then
-                venv/bin/pip install -U "${ARGS[@]}"
+                proxy venv/bin/pip install -U "${ARGS[@]}"
             fi
         fi
     fi
