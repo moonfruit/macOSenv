@@ -15,7 +15,6 @@ skinparam usecase {
 (apr-util) << dep >>
 (apr-util)-->(apr)
 (apr-util)-->(openssl@3)
-(ares)
 (aria2)
 (aria2)-->(gettext)
 (aria2)-->(libssh2)
@@ -23,10 +22,6 @@ skinparam usecase {
 (aria2)-->(sqlite)
 (autojump)
 (autojump)-->(python@3.12)
-(avro-c) << dep >>
-(avro-c)-->(jansson)
-(avro-c)-->(snappy)
-(avro-c)-->(xz)
 (azhuchkov/tools/tunblkctl)
 (bash)
 (bash-completion@2)
@@ -140,8 +135,6 @@ skinparam usecase {
 (git-svn)
 (git-svn)-->(git)
 (git-svn)-->(subversion)
-(gitlab-ci-local)
-(gitlab-ci-local)-->(node)
 (glab)
 (glib) << dep >>
 (glib)-->(gettext)
@@ -221,7 +214,6 @@ skinparam usecase {
 (ipython)-->(pygments)
 (ipython)-->(python@3.12)
 (ipython)-->(six)
-(jansson) << dep >>
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
 (jdtls)
@@ -241,14 +233,6 @@ skinparam usecase {
 (jq)
 (jq)-->(oniguruma)
 (jsoncpp) << dep >>
-(kafka)
-(kafka)-->(openjdk)
-(kafka)-->(zookeeper)
-(kcat)
-(kcat)-->(avro-c)
-(kcat)-->(librdkafka)
-(kcat)-->(libserdes)
-(kcat)-->(yajl)
 (lazygit)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
@@ -273,19 +257,11 @@ skinparam usecase {
 (libmagic) << dep >>
 (libnghttp2) << dep >>
 (libpng) << dep >>
-(librdkafka) << dep >>
-(librdkafka)-->(lz4)
-(librdkafka)-->(lzlib)
-(librdkafka)-->(openssl@3)
-(librdkafka)-->(zstd)
 (librsvg) << dep >>
 (librsvg)-->(cairo)
 (librsvg)-->(gdk-pixbuf)
 (librsvg)-->(glib)
 (librsvg)-->(pango)
-(libserdes) << dep >>
-(libserdes)-->(avro-c)
-(libserdes)-->(jansson)
 (libslirp) << dep >>
 (libslirp)-->(glib)
 (libssh) << dep >>
@@ -339,7 +315,6 @@ skinparam usecase {
 (luv) << dep >>
 (luv)-->(libuv)
 (lz4) << dep >>
-(lzlib) << dep >>
 (lzo) << dep >>
 (m4) << dep >>
 (marksman)
@@ -473,7 +448,7 @@ skinparam usecase {
 (popt) << dep >>
 (prettier)
 (prettier)-->(node)
-(protobuf)
+(protobuf) << dep >>
 (protobuf)-->(abseil)
 (protobuf)-->(jsoncpp)
 (proxychains-ng)
@@ -619,7 +594,6 @@ skinparam usecase {
 (xq)
 (xxhash) << dep >>
 (xz) << dep >>
-(yajl) << dep >>
 (yaml-language-server)
 (yaml-language-server)-->(node)
 (yarn)
@@ -630,9 +604,6 @@ skinparam usecase {
 (yt-dlp)-->(python-mutagen)
 (yt-dlp)-->(python@3.12)
 (z3) << dep >>
-(zookeeper) << dep >>
-(zookeeper)-->(openjdk)
-(zookeeper)-->(openssl@3)
 (zopfli) << dep >>
 (zsh)
 (zsh)-->(ncurses)
