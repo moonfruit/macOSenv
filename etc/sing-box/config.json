@@ -776,7 +776,10 @@
     "rules": [
       {
         "outbound": "Direct",
-        "domain_suffix": "server.gingkoo"
+        "domain_suffix": [
+          "battle.net",
+          "server.gingkoo"
+        ]
       },
       {
         "outbound": "Direct",

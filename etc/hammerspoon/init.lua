@@ -3,7 +3,7 @@ local paths = require("paths")
 ---
 --- Reload config on change
 ---
-reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
+Reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
 
 ---
 --- Enable ipc module for `hs`

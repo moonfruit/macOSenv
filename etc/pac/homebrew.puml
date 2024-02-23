@@ -34,12 +34,6 @@ skinparam usecase {
 (bfg)
 (bfg)-->(openjdk)
 (black)
-(black)-->(python-attrs)
-(black)-->(python-click)
-(black)-->(python-idna)
-(black)-->(python-packaging)
-(black)-->(python-pathspec)
-(black)-->(python-platformdirs)
 (black)-->(python@3.12)
 (brotli) << dep >>
 (c-ares) << dep >>
@@ -458,16 +452,12 @@ skinparam usecase {
 (pygments) << dep >>
 (pyright)
 (pyright)-->(node)
-(python-attrs) << dep >>
 (python-brotli) << dep >>
 (python-certifi) << dep >>
 (python-certifi)-->(ca-certificates)
 (python-click) << dep >>
-(python-idna) << dep >>
 (python-mutagen) << dep >>
 (python-packaging) << dep >>
-(python-pathspec) << dep >>
-(python-platformdirs) << dep >>
 (python-setuptools) << dep >>
 (python@3.11) << req >>
 (python@3.11)-->(mpdecimal)
