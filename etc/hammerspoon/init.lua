@@ -1,6 +1,11 @@
 local paths = require("paths")
 
 ---
+--- Load EmmyLua
+---
+hs.loadSpoon("EmmyLua")
+
+---
 --- Reload config on change
 ---
 Reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
