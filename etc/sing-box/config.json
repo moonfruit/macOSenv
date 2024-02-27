@@ -777,8 +777,14 @@
       {
         "outbound": "Direct",
         "domain_suffix": [
-          "battle.net",
           "server.gingkoo"
+        ]
+      },
+      {
+        "outbound": "Direct",
+        "process_name": [
+          "Battle.net",
+          "Battle.net Helper"
         ]
       },
       {
