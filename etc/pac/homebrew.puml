@@ -200,6 +200,7 @@ skinparam usecase {
 (httpie)-->(pygments)
 (httpie)-->(python-certifi)
 (httpie)-->(python@3.12)
+(hyperfine)
 (icu4c) << dep >>
 (imath) << dep >>
 (iperf3)
@@ -405,6 +406,7 @@ skinparam usecase {
 (openldap)-->(openssl@3)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
+(oven-sh/bun/bun)
 (p11-kit) << dep >>
 (p11-kit)-->(ca-certificates)
 (p11-kit)-->(libtasn1)
