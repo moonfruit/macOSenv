@@ -59,11 +59,25 @@
     },
     {
       "type": "mixed",
-      "tag": "7898",
+      "tag": "7892",
       "listen": "127.0.0.1",
-      "listen_port": 7898,
+      "listen_port": 7892,
       "tcp_fast_open": true,
       "sniff": true
+    },
+    {
+      "type": "mixed",
+      "tag": "9999",
+      "listen": "0.0.0.0",
+      "listen_port": 9999,
+      "tcp_fast_open": true,
+      "sniff": true,
+      "users": [
+        {
+          "username": "dkmoonfruit",
+          "password": "QAZwsxEDC"
+        }
+      ]
     }
   ],
   "outbounds": [
@@ -857,7 +871,7 @@
         ]
       },
       {
-        "inbound": "7898",
+        "inbound": "7892",
         "outbound": "Forward"
       },
       {

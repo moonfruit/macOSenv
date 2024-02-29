@@ -3,47 +3,47 @@
 readonly GINGKOO=http://10.1.2.12:8118
 readonly DEFAULT=7890 # sing-box
 # readonly DEFAULT=7891 # sing-box: direct
-# readonly DEFAULT=7898 # sing-box: forward
+# readonly DEFAULT=7892 # sing-box: forward
 # readonly DEFAULT=10000 # gost: nodes
 # readonly DEFAULT=10001 # gost: prefer
 # readonly DEFAULT=10002 # gost: us-nodes
 
 if [[ -z $1 || $1 =~ ^(:?[0-9]+|https?:.*|gingkoo|none)$ ]]; then
-	case $1 in
-	gingkoo) port=$GINGKOO ;;
-	none) port=0 ;;
-	:*) port=${1:1} ;;
-	"") port=$DEFAULT ;;
-	*) port=$1 ;;
-	esac
-	shift
+    case $1 in
+    gingkoo) port=$GINGKOO ;;
+    none) port=0 ;;
+    :*) port=${1:1} ;;
+    "") port=$DEFAULT ;;
+    *) port=$1 ;;
+    esac
+    shift
 else
-	port=$DEFAULT
+    port=$DEFAULT
 fi
 
 export PROXY_ENABLED=1
 
 if [[ $port == 0 ]]; then
-	exec "$@"
+    exec "$@"
 
 elif [[ $port == 1080 ]]; then
-	exec proxychains "$port" "$@"
+    exec proxychains "$port" "$@"
 
 elif [[ $port =~ https?:.* ]]; then
-	export http_proxy="$port"
-	export https_proxy="$http_proxy"
+    export http_proxy="$port"
+    export https_proxy="$http_proxy"
 
 elif [[ -d "$ENV" && $port == 9999 ]]; then
-	auth=$(security find-generic-password -s ENV -a proxy -w)
-	export http_proxy="http://$auth@127.0.0.1:$port"
-	export https_proxy="$http_proxy"
+    auth=$(security find-generic-password -s ENV -a proxy -w)
+    export http_proxy="http://$auth@127.0.0.1:$port"
+    export https_proxy="$http_proxy"
 
 else
-	export http_proxy="http://127.0.0.1:$port"
-	export https_proxy="$http_proxy"
-	if [[ $1 != aria2c && $1 != */aria2c ]]; then
-		export all_proxy="socks5://127.0.0.1:$port"
-	fi
+    export http_proxy="http://127.0.0.1:$port"
+    export https_proxy="$http_proxy"
+    if [[ $1 != aria2c && $1 != */aria2c ]]; then
+        export all_proxy="socks5://127.0.0.1:$port"
+    fi
 fi
 
 #if [[ -z $no_proxy ]]; then

@@ -23,8 +23,8 @@ wget https://iterm2.com/shell_integration/zsh "${UTILITIES[@]/#/https://iterm2.c
 copy-if-diff zsh "$BIN/iterm2.zsh"
 
 for UTILITY in "${UTILITIES[@]}"; do
-    BANG=$(head -1 "$UTILITY")
-    if [[ $BANG == *python* ]]; then
+    SHEBANG=$(head -1 "$UTILITY")
+    if [[ $SHEBANG == *python* ]]; then
         sed -i '1s|.*|#!'"$PYTHON"'|' "$UTILITY"
     fi
     copy-if-diff "$UTILITY" "$BIN" chmod +x
