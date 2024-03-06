@@ -74,6 +74,7 @@ skinparam usecase {
 (deno)-->(sqlite)
 (di)
 (direnv)
+(direnv)-->(bash)
 (docker-completion)
 (dog)
 (dtc) << dep >>
@@ -197,7 +198,6 @@ skinparam usecase {
 (htop)
 (htop)-->(ncurses)
 (httpie)
-(httpie)-->(pygments)
 (httpie)-->(python-certifi)
 (httpie)-->(python@3.12)
 (hyperfine)
@@ -206,9 +206,7 @@ skinparam usecase {
 (iperf3)
 (iperf3)-->(openssl@3)
 (ipython)
-(ipython)-->(pygments)
 (ipython)-->(python@3.12)
-(ipython)-->(six)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
 (jdtls)
@@ -431,11 +429,7 @@ skinparam usecase {
 (pinentry-mac)-->(gettext)
 (pinentry-mac)-->(libassuan)
 (pipgrip)
-(pipgrip)-->(python-click)
-(pipgrip)-->(python-packaging)
-(pipgrip)-->(python-setuptools)
 (pipgrip)-->(python@3.12)
-(pipgrip)-->(six)
 (pixman) << dep >>
 (pkg-config) << dep >>
 (plantuml)
@@ -451,16 +445,10 @@ skinparam usecase {
 (pstree)
 (pup)
 (pv)
-(pygments) << dep >>
 (pyright)
 (pyright)-->(node)
-(python-brotli) << dep >>
 (python-certifi) << dep >>
 (python-certifi)-->(ca-certificates)
-(python-click) << dep >>
-(python-mutagen) << dep >>
-(python-packaging) << dep >>
-(python-setuptools) << dep >>
 (python@3.11) << req >>
 (python@3.11)-->(mpdecimal)
 (python@3.11)-->(openssl@3)
@@ -518,7 +506,6 @@ skinparam usecase {
 (shellcheck)
 (shfmt)
 (sing-box)
-(six) << dep >>
 (snappy) << dep >>
 (sqlite) << dep >>
 (sqlite)-->(readline)
@@ -591,9 +578,7 @@ skinparam usecase {
 (yarn)
 (yq)
 (yt-dlp)
-(yt-dlp)-->(python-brotli)
 (yt-dlp)-->(python-certifi)
-(yt-dlp)-->(python-mutagen)
 (yt-dlp)-->(python@3.12)
 (z3) << dep >>
 (zopfli) << dep >>

@@ -511,15 +511,6 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "JP3-A Shadowsocks (1.2x)",
-      "udp_fragment": true,
-      "server": "5.226.48.39",
-      "server_port": 55983,
-      "method": "chacha20-ietf-poly1305",
-      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
-    },
-    {
-      "type": "shadowsocks",
       "tag": "JP4 Shadowsocks (1.2x)",
       "udp_fragment": true,
       "server": "103.232.214.44",
@@ -541,15 +532,6 @@
       "tag": "EU3-UK Shadowsocks (0.8x)",
       "udp_fragment": true,
       "server": "64.176.178.184",
-      "server_port": 55983,
-      "method": "chacha20-ietf-poly1305",
-      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
-    },
-    {
-      "type": "shadowsocks",
-      "tag": "EU4 Shadowsocks (0.8x)",
-      "udp_fragment": true,
-      "server": "109.122.221.143",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -624,11 +606,9 @@
         "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
-        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
-        "EU4 Shadowsocks (0.8x)",
         "VN2-A Shadowsocks",
         "VN3-A Shadowsocks (0.8x)"
       ]
@@ -639,7 +619,6 @@
       "outbounds": [
         "US3 Shadowsocks (0.8x)",
         "EU3-UK Shadowsocks (0.8x)",
-        "EU4 Shadowsocks (0.8x)",
         "VN3-A Shadowsocks (0.8x)",
         "US5X Shadowsocks (0.9x)",
         "US6X Shadowsocks (0.9x)",
@@ -652,7 +631,6 @@
         "JP2-A Shadowsocks",
         "UKtest Shadowsocks",
         "VN2-A Shadowsocks",
-        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "IPLCUS4 Shadowsocks (3x)",
@@ -710,11 +688,9 @@
         "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
-        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
-        "EU4 Shadowsocks (0.8x)",
         "VN2-A Shadowsocks",
         "VN3-A Shadowsocks (0.8x)"
       ]
@@ -725,7 +701,6 @@
       "outbounds": [
         "US3 Shadowsocks (0.8x)",
         "EU3-UK Shadowsocks (0.8x)",
-        "EU4 Shadowsocks (0.8x)",
         "VN3-A Shadowsocks (0.8x)",
         "US5X Shadowsocks (0.9x)",
         "US6X Shadowsocks (0.9x)",
@@ -738,7 +713,6 @@
         "JP2-A Shadowsocks",
         "UKtest Shadowsocks",
         "VN2-A Shadowsocks",
-        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "Gingkoo",
@@ -831,11 +805,9 @@
         "US10X Shadowsocks",
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
-        "JP3-A Shadowsocks (1.2x)",
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
-        "EU4 Shadowsocks (0.8x)",
         "VN2-A Shadowsocks",
         "VN3-A Shadowsocks (0.8x)"
       ]
@@ -881,6 +853,7 @@
       {
         "outbound": "Proxy (US)",
         "domain_suffix": [
+          "coze.com",
           "hanime1.me",
           "poe.com"
         ]
