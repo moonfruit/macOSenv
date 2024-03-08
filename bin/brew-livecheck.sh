@@ -54,6 +54,7 @@ readonly EXTRA=(
 )
 
 readonly EXCLUDED=(
+    docker-completion
     hazelcast
     hazelcast-management-center
     microsoft-edge
