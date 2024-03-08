@@ -50,6 +50,8 @@ skinparam usecase {
 (cairo)-->(lzo)
 (cairo)-->(pixman)
 (capstone) << dep >>
+(certifi) << dep >>
+(certifi)-->(ca-certificates)
 (choose-rust)
 (clang-format)
 (cmake)
@@ -75,7 +77,6 @@ skinparam usecase {
 (di)
 (direnv)
 (direnv)-->(bash)
-(docker-completion)
 (dog)
 (dtc) << dep >>
 (dufs)
@@ -198,7 +199,7 @@ skinparam usecase {
 (htop)
 (htop)-->(ncurses)
 (httpie)
-(httpie)-->(python-certifi)
+(httpie)-->(certifi)
 (httpie)-->(python@3.12)
 (hyperfine)
 (icu4c) << dep >>
@@ -447,8 +448,6 @@ skinparam usecase {
 (pv)
 (pyright)
 (pyright)-->(node)
-(python-certifi) << dep >>
-(python-certifi)-->(ca-certificates)
 (python@3.11) << req >>
 (python@3.11)-->(mpdecimal)
 (python@3.11)-->(openssl@3)
@@ -578,7 +577,7 @@ skinparam usecase {
 (yarn)
 (yq)
 (yt-dlp)
-(yt-dlp)-->(python-certifi)
+(yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.12)
 (z3) << dep >>
 (zopfli) << dep >>

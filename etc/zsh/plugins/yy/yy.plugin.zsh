@@ -2,6 +2,7 @@
 
 # alias
 alias ls='ezaf'
+alias cat='batp'
 
 # compdef
 compdef _eza ezaf tree

@@ -47,6 +47,7 @@ unset script
 # for maven
 export MAVEN_OPTS="-Xss2m -Duser.language=en_us \
 -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
+alias mvncc='mvn clean compile'
 
 # for java
 export GINGKOO_ENV=dev
