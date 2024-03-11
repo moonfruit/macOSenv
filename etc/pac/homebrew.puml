@@ -135,6 +135,7 @@ skinparam usecase {
 (glib) << dep >>
 (glib)-->(gettext)
 (glib)-->(pcre2)
+(glib)-->(python@3.12)
 (gmp) << dep >>
 (gmssl)
 (gnu-getopt)
@@ -524,6 +525,7 @@ skinparam usecase {
 (taplo)
 (tcping)
 (teamookla/speedtest/speedtest)
+(telnet)
 (testssl)
 (testssl)-->(openssl@3)
 (tmux)

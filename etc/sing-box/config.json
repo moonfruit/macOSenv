@@ -414,7 +414,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "1.162.133.248",
+      "server": "111.243.80.86",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -854,6 +854,7 @@
         "outbound": "Proxy (US)",
         "domain_suffix": [
           "coze.com",
+          "groq.com",
           "hanime1.me",
           "poe.com"
         ]

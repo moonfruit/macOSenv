@@ -9,6 +9,10 @@
 </string>
 	<key>AdjustWindowForFontSizeChange</key>
 	<true/>
+	<key>AiMaxTokens</key>
+	<integer>4096</integer>
+	<key>AiModel</key>
+	<string>gpt-3.5-turbo</string>
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>AlternateMouseScroll</key>
@@ -199,7 +203,7 @@
 	<key>HideScrollbar</key>
 	<false/>
 	<key>HideTab</key>
-	<true/>
+	<false/>
 	<key>HideTabNumber</key>
 	<false/>
 	<key>HighlightTabLabels</key>

@@ -46,6 +46,9 @@ Host 192.168.0.238
 Host moons-ubuntu.local
     User parallels
 
+Host www.asusrouter.com
+    Port 20022
+
 Host moonfruit.top
 	Port 26800
 	ProxyCommand nc -X 5 -x 127.0.0.1:10001 %h %p
