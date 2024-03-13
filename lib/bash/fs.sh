@@ -5,22 +5,24 @@
 source "$ENV/lib/bash/native.sh"
 
 create-temp-directory() {
-    local _prefix
-    local _temp
-    _prefix=$(simple-basename "$0")
-    if _temp=$(mktemp -d -t "$_prefix.$1"); then
-        trap-add "rm -fr '$_temp'" EXIT
-        eval "$1='$_temp'"
+    local -n _variable=$1
+    local prefix
+    local temp
+    prefix=$(simple-basename "$0")
+    if temp=$(mktemp -d -t "$prefix.$1"); then
+        trap-add "rm -fr '$temp'" EXIT
+        _variable=$temp
     fi
 }
 
 create-temp-file() {
-    local _prefix
-    local _temp
-    _prefix=$(simple-basename "$0")
-    if _temp=$(mktemp -t "$_prefix.$1"); then
-        trap-add "rm -f '$_temp'" EXIT
-        eval "$1='$_temp'"
+    local -n _variable=$1
+    local prefix
+    local temp
+    prefix=$(simple-basename "$0")
+    if temp=$(mktemp -t "$prefix.$1"); then
+        trap-add "rm -f '$temp'" EXIT
+        _variable=$temp
     fi
 }
 

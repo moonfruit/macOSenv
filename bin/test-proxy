@@ -1,16 +1,31 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2155
 
-readonly CURL=(curl --connect-timeout 3 --max-time 10)
+readonly CURL=(curl --fail --connect-timeout 3 --max-time 10)
 readonly DELAY_URL=http://connectivitycheck.gstatic.com/generate_204
 readonly SPEED_URL=https://raw.githubusercontent.com/yourkin/fileupload-fastapi/a85a697cab2f887780b3278059a0dd52847d80f3/tests/data/test-10mb.bin
 readonly INFO_URL=http://ipinfo.io
 
-# shellcheck disable=SC2155
 readonly RED=$(tput setaf 1) GREEN=$(tput setaf 2) YELLOW=$(tput setaf 3)
-# shellcheck disable=SC2155
 readonly BLUE=$(tput setaf 4) MAGENTA=$(tput setaf 5) CYAN=$(tput setaf 6)
-# shellcheck disable=SC2155
 readonly BOLD=$(tput bold) RESET=$(tput sgr0)
+
+readonly -A _FLAGS=(
+    [CN]=🇨🇳
+    [TW]=🇨🇳
+    [HK]=🇭🇰
+    [JP]=🇯🇵
+    [SG]=🇸🇬
+    [VN]=🇻🇳
+    [US]=🇺🇸
+    [GB]=🇬🇧
+    [DE]=🇩🇪
+    [FI]=🇫🇮
+)
+
+source "$ENV/lib/bash/json.sh"
+
+readonly FLAGS=$(as-json _FLAGS)
 
 source "$ENV/lib/bash/fs.sh"
 
@@ -77,6 +92,18 @@ benchmark-speed() {
     SPEED=$((sum / i))
 }
 
+get-location() {
+    local proxy=$1
+    local location
+    if location=$(proxy "$proxy" "${CURL[@]}" -s "$INFO_URL"); then
+        echo "$location" | jq -r --argjson flags "$FLAGS" \
+            "(\$flags[.country] // \"$RED$BOLD\(.country)$RESET\") + \" \(.region)\" +
+            if .region != .city then \", \(.city)\" else \"\" end"
+    else
+        return $?
+    fi
+}
+
 benchmark-proxy() {
     local delay=$1
     local proxy=$2
@@ -95,8 +122,7 @@ benchmark-proxy() {
     echo "${BLUE}Speed$RESET: $color${SPEED}k/s$RESET"
 
     local location
-    if location=$(proxy "$proxy" "${CURL[@]}" -s "$INFO_URL" |
-        jq -r "\"$RED$BOLD\(.country)$RESET: \(.region), \(.city)\""); then
+    if location=$(get-location "$proxy"); then
         echo "${BLUE}Locat$RESET: $location"
     fi
 }

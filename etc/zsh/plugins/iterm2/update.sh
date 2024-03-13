@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/native.sh"
 

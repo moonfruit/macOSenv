@@ -8,9 +8,10 @@ readonly DEFAULT=7890 # sing-box
 # readonly DEFAULT=10001 # gost: prefer
 # readonly DEFAULT=10002 # gost: us-nodes
 
-if [[ -z $1 || $1 =~ ^(:?[0-9]+|https?:.*|gingkoo|none)$ ]]; then
+if [[ -z $1 || $1 =~ ^(:?[0-9]+|https?:.*|gingkoo|tor|none)$ ]]; then
     case $1 in
     gingkoo) port=$GINGKOO ;;
+    tor) port=9150;;
     none) port=0 ;;
     :*) port=${1:1} ;;
     "") port=$DEFAULT ;;
@@ -26,7 +27,8 @@ export PROXY_ENABLED=1
 if [[ $port == 0 ]]; then
     exec "$@"
 
-elif [[ $port == 1080 ]]; then
+elif [[ $port == 1080 || $port == 9150 ]]; then
+    # export all_proxy="socks5://127.0.0.1:$port"
     exec proxychains "$port" "$@"
 
 elif [[ $port =~ https?:.* ]]; then
@@ -41,9 +43,9 @@ elif [[ -d "$ENV" && $port == 9999 ]]; then
 else
     export http_proxy="http://127.0.0.1:$port"
     export https_proxy="$http_proxy"
-    if [[ $1 != aria2c && $1 != */aria2c ]]; then
-        export all_proxy="socks5://127.0.0.1:$port"
-    fi
+    # if [[ $1 != aria2c && $1 != */aria2c ]]; then
+        # export all_proxy="socks5://127.0.0.1:$port"
+    # fi
 fi
 
 #if [[ -z $no_proxy ]]; then

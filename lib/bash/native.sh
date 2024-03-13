@@ -58,3 +58,35 @@ trap-add() {
         )" "$sigspec" || return $?
     done
 }
+
+vartype() {
+    local variable
+    if ! variable=$(declare -p "$1" 2>/dev/null); then
+        echo "NULL"
+        return 1
+    fi
+    while [[ $variable =~ ^declare\ -n\ [^=]+=\"([^\"]+)\"$ ]]; do
+        variable=$(declare -p "${BASH_REMATCH[1]}")
+    done
+
+    case ${variable#declare -} in
+    a*)
+        echo "ARRAY"
+        ;;
+    A*)
+        echo "MAP"
+        ;;
+    i*)
+        echo "INTEGER"
+        ;;
+    *)
+        echo "STRING"
+        ;;
+    esac
+}
+
+join-by() {
+    local IFS="$1"
+    shift
+    echo "$*"
+}

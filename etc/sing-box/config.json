@@ -881,31 +881,31 @@
         "type": "remote",
         "tag": "AI",
         "format": "binary",
-        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/ai.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/ai.srs"
       },
       {
         "type": "remote",
         "tag": "Block",
         "format": "binary",
-        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/block.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/block.srs"
       },
       {
         "type": "remote",
         "tag": "Direct",
         "format": "binary",
-        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/direct.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/direct.srs"
       },
       {
         "type": "remote",
         "tag": "Private",
         "format": "binary",
-        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/private.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/private.srs"
       },
       {
         "type": "remote",
         "tag": "Proxy",
         "format": "binary",
-        "url": "https://media.githubusercontent.com/media/moonfruit/sing-geo/main/rules/proxy.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/proxy.srs"
       }
     ],
     "final": "Proxy",
