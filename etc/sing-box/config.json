@@ -414,7 +414,7 @@
       "type": "shadowsocks",
       "tag": "TW1 Shadowsocks (1.5x)",
       "udp_fragment": true,
-      "server": "111.243.80.86",
+      "server": "1.162.159.119",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -451,15 +451,6 @@
       "tag": "US6 Shadowsocks",
       "udp_fragment": true,
       "server": "45.146.235.244",
-      "server_port": 55983,
-      "method": "chacha20-ietf-poly1305",
-      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
-    },
-    {
-      "type": "shadowsocks",
-      "tag": "US6X Shadowsocks (0.9x)",
-      "udp_fragment": true,
-      "server": "192.3.248.192",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
@@ -538,7 +529,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "VN2-A Shadowsocks",
+      "tag": "VN2-A Shadowsocks (0.8x)",
       "udp_fragment": true,
       "server": "103.137.184.243",
       "server_port": 55983,
@@ -600,7 +591,6 @@
         "US5 Shadowsocks",
         "US5X Shadowsocks (0.9x)",
         "US6 Shadowsocks",
-        "US6X Shadowsocks (0.9x)",
         "US9 Shadowsocks (0.9x)",
         "US9X Shadowsocks",
         "US10X Shadowsocks",
@@ -609,7 +599,7 @@
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks",
+        "VN2-A Shadowsocks (0.8x)",
         "VN3-A Shadowsocks (0.8x)"
       ]
     },
@@ -619,9 +609,9 @@
       "outbounds": [
         "US3 Shadowsocks (0.8x)",
         "EU3-UK Shadowsocks (0.8x)",
+        "VN2-A Shadowsocks (0.8x)",
         "VN3-A Shadowsocks (0.8x)",
         "US5X Shadowsocks (0.9x)",
-        "US6X Shadowsocks (0.9x)",
         "US9 Shadowsocks (0.9x)",
         "US5 Shadowsocks",
         "US6 Shadowsocks",
@@ -630,7 +620,6 @@
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "UKtest Shadowsocks",
-        "VN2-A Shadowsocks",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "IPLCUS4 Shadowsocks (3x)",
@@ -682,7 +671,6 @@
         "US5 Shadowsocks",
         "US5X Shadowsocks (0.9x)",
         "US6 Shadowsocks",
-        "US6X Shadowsocks (0.9x)",
         "US9 Shadowsocks (0.9x)",
         "US9X Shadowsocks",
         "US10X Shadowsocks",
@@ -691,7 +679,7 @@
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks",
+        "VN2-A Shadowsocks (0.8x)",
         "VN3-A Shadowsocks (0.8x)"
       ]
     },
@@ -701,9 +689,9 @@
       "outbounds": [
         "US3 Shadowsocks (0.8x)",
         "EU3-UK Shadowsocks (0.8x)",
+        "VN2-A Shadowsocks (0.8x)",
         "VN3-A Shadowsocks (0.8x)",
         "US5X Shadowsocks (0.9x)",
-        "US6X Shadowsocks (0.9x)",
         "US9 Shadowsocks (0.9x)",
         "US5 Shadowsocks",
         "US6 Shadowsocks",
@@ -712,7 +700,6 @@
         "US16-CF Shadowsocks",
         "JP2-A Shadowsocks",
         "UKtest Shadowsocks",
-        "VN2-A Shadowsocks",
         "JP4 Shadowsocks (1.2x)",
         "TW1 Shadowsocks (1.5x)",
         "Gingkoo",
@@ -733,7 +720,6 @@
         "IPLCUS3B V2Ray VMess (4x)",
         "IPLCUS3C V2Ray VMess (4x)",
         "US5X Shadowsocks (0.9x)",
-        "US6X Shadowsocks (0.9x)",
         "US9X Shadowsocks",
         "US10X Shadowsocks",
         "US16-CF Shadowsocks"
@@ -744,7 +730,6 @@
       "tag": "Auto (US)",
       "outbounds": [
         "US5X Shadowsocks (0.9x)",
-        "US6X Shadowsocks (0.9x)",
         "US9X Shadowsocks",
         "US10X Shadowsocks",
         "US16-CF Shadowsocks",
@@ -799,7 +784,6 @@
         "US5 Shadowsocks",
         "US5X Shadowsocks (0.9x)",
         "US6 Shadowsocks",
-        "US6X Shadowsocks (0.9x)",
         "US9 Shadowsocks (0.9x)",
         "US9X Shadowsocks",
         "US10X Shadowsocks",
@@ -808,7 +792,7 @@
         "JP4 Shadowsocks (1.2x)",
         "UKtest Shadowsocks",
         "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks",
+        "VN2-A Shadowsocks (0.8x)",
         "VN3-A Shadowsocks (0.8x)"
       ]
     }
@@ -881,31 +865,31 @@
         "type": "remote",
         "tag": "AI",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/ai.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/ai.srs"
       },
       {
         "type": "remote",
         "tag": "Block",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/block.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/block.srs"
       },
       {
         "type": "remote",
         "tag": "Direct",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/direct.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/direct.srs"
       },
       {
         "type": "remote",
         "tag": "Private",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/private.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/private.srs"
       },
       {
         "type": "remote",
         "tag": "Proxy",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-geo/rules/proxy.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/proxy.srs"
       }
     ],
     "final": "Proxy",

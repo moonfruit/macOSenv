@@ -71,6 +71,7 @@ skinparam usecase {
 (curl)-->(rtmpdump)
 (curl)-->(zstd)
 (curlie)
+(dart-sdk)
 (delve)
 (deno)
 (deno)-->(sqlite)

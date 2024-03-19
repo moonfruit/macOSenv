@@ -9,9 +9,6 @@ TCPKeepAlive yes
 Host 10.0.6.64
 	User app
 
-Host 10.1.2.57
-	User root
-
 Host 10.1.2.16
 	User app
 	ProxyJump 10.1.2.57
@@ -19,6 +16,9 @@ Host 10.1.2.16
 Host 10.1.2.32
 	User dev
 	ProxyJump 10.1.2.57
+
+Host 10.1.2.57
+	User root
 
 Host 10.1.3.11
     User gpp
@@ -35,20 +35,31 @@ Host 10.1.3.25
 	HostKeyAlgorithms +ssh-rsa
 	PubkeyAcceptedKeyTypes +ssh-rsa
 
+Host 10.1.3.29
+    User gpp
+	HostKeyAlgorithms +ssh-rsa
+	PubkeyAcceptedKeyTypes +ssh-rsa
+
 Host 10.1.3.30
     User gpp
 	HostKeyAlgorithms +ssh-rsa
 	PubkeyAcceptedKeyTypes +ssh-rsa
 
-Host 192.168.0.238
-    Port 2222
-
 Host moons-ubuntu.local
     User parallels
+
+Host 192.168.50.1
+    Port 20022
+
+Host asusrouter.com
+    Port 20022
 
 Host www.asusrouter.com
     Port 20022
 
+Host router.asus.com
+    Port 20022
+
 Host moonfruit.top
 	Port 26800
-	ProxyCommand nc -X 5 -x 127.0.0.1:10001 %h %p
+	ProxyCommand nc -X 5 -x 127.0.0.1:7890 %h %p
