@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>org.techouse.alfred-convert</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>2F6849DA-7BAF-42CB-8502-EA7F75606985</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DF31843F-F908-4B26-BA46-A24A1C902306</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>572C1CAB-814A-4C59-8D8C-04C69F788090</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Only copy to clipboard</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>572C1CAB-814A-4C59-8D8C-04C69F788090</key>
+		<array/>
+		<key>DF31843F-F908-4B26-BA46-A24A1C902306</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>663E877B-ABDD-4AE3-97E1-CB0E6122C6D0</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>D850B7E1-B6F7-4A5E-8EF6-522CBF4E0A21</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>207C6354-422F-4E46-8D70-34A3B0D8EC97</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>951AA20A-5B2D-4C8A-885A-95BE6660EAD0</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>207C6354-422F-4E46-8D70-34A3B0D8EC97</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>CE9DC55C-ADBF-43C1-ACD4-9AD37038BA47</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>207C6354-422F-4E46-8D70-34A3B0D8EC97</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>AE48C113-0A75-4597-859D-26959DA44FAC</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>1BBB07BA-11B1-4386-AB63-A9CB78D9A1A9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Klemen Tušar</string>
+	<key>description</key>
+	<string>Convert between different units</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Convert</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>[ "$(uname -m)" = "arm64" ] &amp;&amp; ./workflow -u || ./workflow_intel -u</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>663E877B-ABDD-4AE3-97E1-CB0E6122C6D0</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string>update:workflow</string>
+						<key>outputlabel</key>
+						<string>Update Workflow</string>
+						<key>uid</key>
+						<string>D850B7E1-B6F7-4A5E-8EF6-522CBF4E0A21</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>^https?:\/\/(www.)?xe.com\/.*$</string>
+						<key>outputlabel</key>
+						<string>Open Xe.com</string>
+						<key>uid</key>
+						<string>951AA20A-5B2D-4C8A-885A-95BE6660EAD0</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>^https?:\/\/(www.)?oanda.com\/.*$</string>
+						<key>outputlabel</key>
+						<string>Open Oanda.com</string>
+						<key>uid</key>
+						<string>CE9DC55C-ADBF-43C1-ACD4-9AD37038BA47</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>^https?:\/\/(www.)?wolframalpha.com\/.*$</string>
+						<key>outputlabel</key>
+						<string>Open WolframAlpha.com</string>
+						<key>uid</key>
+						<string>AE48C113-0A75-4597-859D-26959DA44FAC</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>Copy to Clipboard</string>
+				<key>hideelse</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>DF31843F-F908-4B26-BA46-A24A1C902306</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>conv</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>2</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Working ...</string>
+				<key>script</key>
+				<string>case "{query}" in
+	"money")
+		[ "$(uname -m)" = "arm64" ] &amp;&amp; ./workflow -C || ./workflow_intel -C
+		;;
+	"units")
+		[ "$(uname -m)" = "arm64" ] &amp;&amp; ./workflow -U || ./workflow_intel -U
+		;;
+	"update:workflow")
+		[ "$(uname -m)" = "arm64" ] &amp;&amp; ./workflow -u || ./workflow_intel -u
+		;;
+	*)
+		[ "$(uname -m)" = "arm64" ] &amp;&amp; ./workflow -q "{query}" || ./workflow_intel -q "{query}"
+		;;
+esac</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Convert between different units</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>2F6849DA-7BAF-42CB-8502-EA7F75606985</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>207C6354-422F-4E46-8D70-34A3B0D8EC97</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>572C1CAB-814A-4C59-8D8C-04C69F788090</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>1BBB07BA-11B1-4386-AB63-A9CB78D9A1A9</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Convert between different units in Alfred.
+
+Heavily inspired by [deanishe/alfred-convert](https://github.com/deanishe/alfred-convert) 😊
+
+## Usage
+
+- `conv &lt;quantity&gt; &lt;from unit&gt; &lt;to unit&gt;` - Perform a conversion
+    - When performing a monetary conversion pressing `⌘Y` or &lt;kbd&gt;return&lt;/kbd&gt; (↵) will open the currency-pair chart on [Xe.com](http://www.xe.com).
+      - When pressing &lt;kbd&gt;option+return&lt;/kbd&gt; (⌥↵) you will get the inverse currency conversion, i.e. `12 USD to EUR` becomes `12 EUR to USD`.
+      - When pressing &lt;kbd&gt;cmd+return&lt;/kbd&gt; (⇧↵) you will copy the converted value to your clipboard.
+    - When performing a physical unit conversion pressing `⌘Y` or &lt;kbd&gt;return&lt;/kbd&gt; (↵) will open up detailed the conversion
+      explanation on [WolframAlpha.com](https://www.wolframalpha.com).
+- `conv money` - View a list of all the supported currencies
+    - When pressing `⌘Y` or &lt;kbd&gt;return&lt;/kbd&gt; (↵) on a certain currency you will be directed to the chart with the home currency on [Xe.com](http://www.xe.com).
+      - When pressing &lt;kbd&gt;option+return&lt;/kbd&gt; (⌥↵) you will get the inverse currency conversion, i.e. `1 AUD = 0.558 GBP` becomes `1 GBP = 1.792 AUD`.
+      - When pressing &lt;kbd&gt;cmd+return&lt;/kbd&gt; (⇧↵) you will copy the equivalent in the home currency to your clipboard.
+- `conv units` - View a list of all the supported physical units
+    - When selecting a certain unit and pressing &lt;kbd&gt;return&lt;/kbd&gt; (↵) that unit's symbol will get copied to the clipboard.</string>
+	<key>uidata</key>
+	<dict>
+		<key>1BBB07BA-11B1-4386-AB63-A9CB78D9A1A9</key>
+		<dict>
+			<key>xpos</key>
+			<real>630</real>
+			<key>ypos</key>
+			<real>720</real>
+		</dict>
+		<key>207C6354-422F-4E46-8D70-34A3B0D8EC97</key>
+		<dict>
+			<key>xpos</key>
+			<real>625</real>
+			<key>ypos</key>
+			<real>475</real>
+		</dict>
+		<key>2F6849DA-7BAF-42CB-8502-EA7F75606985</key>
+		<dict>
+			<key>xpos</key>
+			<real>125</real>
+			<key>ypos</key>
+			<real>475</real>
+		</dict>
+		<key>572C1CAB-814A-4C59-8D8C-04C69F788090</key>
+		<dict>
+			<key>xpos</key>
+			<real>375</real>
+			<key>ypos</key>
+			<real>720</real>
+		</dict>
+		<key>663E877B-ABDD-4AE3-97E1-CB0E6122C6D0</key>
+		<dict>
+			<key>xpos</key>
+			<real>625</real>
+			<key>ypos</key>
+			<real>170</real>
+		</dict>
+		<key>DF31843F-F908-4B26-BA46-A24A1C902306</key>
+		<dict>
+			<key>xpos</key>
+			<real>370</real>
+			<key>ypos</key>
+			<real>450</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>USD</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>Australian dollar (AUD)</string>
+						<string>AUD</string>
+					</array>
+					<array>
+						<string>Bulgarian lev (BGN)</string>
+						<string>BGN</string>
+					</array>
+					<array>
+						<string>Brazilian real (BRL)</string>
+						<string>BRL</string>
+					</array>
+					<array>
+						<string>Canadian dollar (CAD)</string>
+						<string>CAD</string>
+					</array>
+					<array>
+						<string>Swiss franc (CHF)</string>
+						<string>CHF</string>
+					</array>
+					<array>
+						<string>Chinese yuan renminbi (CNY)</string>
+						<string>CNY</string>
+					</array>
+					<array>
+						<string>Czech koruna (CZK)</string>
+						<string>CZK</string>
+					</array>
+					<array>
+						<string>Danish krone (DKK)</string>
+						<string>DKK</string>
+					</array>
+					<array>
+						<string>Euro (EUR)</string>
+						<string>EUR</string>
+					</array>
+					<array>
+						<string>Pound sterling (GBP)</string>
+						<string>GBP</string>
+					</array>
+					<array>
+						<string>Hong Kong dollar (HKD)</string>
+						<string>HKD</string>
+					</array>
+					<array>
+						<string>Hungarian forint (HUF)</string>
+						<string>HUF</string>
+					</array>
+					<array>
+						<string>Indonesian rupiah (IDR)</string>
+						<string>IDR</string>
+					</array>
+					<array>
+						<string>Israeli shekel (ILS)</string>
+						<string>ILS</string>
+					</array>
+					<array>
+						<string>Indian rupee (INR)</string>
+						<string>INR</string>
+					</array>
+					<array>
+						<string>Icelandic krona (ISK)</string>
+						<string>ISK</string>
+					</array>
+					<array>
+						<string>Japanese yen (JPY)</string>
+						<string>JPY</string>
+					</array>
+					<array>
+						<string>South Korean won (KRW)</string>
+						<string>KRW</string>
+					</array>
+					<array>
+						<string>Mexican peso (MXN)</string>
+						<string>MXN</string>
+					</array>
+					<array>
+						<string>Malaysian ringgit (MYR)</string>
+						<string>MYR</string>
+					</array>
+					<array>
+						<string>Norwegian krone (NOK)</string>
+						<string>NOK</string>
+					</array>
+					<array>
+						<string>New Zealand dollar (NZD)</string>
+						<string>NZD</string>
+					</array>
+					<array>
+						<string>Philippine peso (PHP)</string>
+						<string>PHP</string>
+					</array>
+					<array>
+						<string>Polish zloty (PLN)</string>
+						<string>PLN</string>
+					</array>
+					<array>
+						<string>Romanian leu (RON)</string>
+						<string>RON</string>
+					</array>
+					<array>
+						<string>Russian rouble (RUB)</string>
+						<string>RUB</string>
+					</array>
+					<array>
+						<string>Swedish krona (SEK)</string>
+						<string>SEK</string>
+					</array>
+					<array>
+						<string>Singapore dollar (SGD)</string>
+						<string>SGD</string>
+					</array>
+					<array>
+						<string>Thai baht (THB)</string>
+						<string>THB</string>
+					</array>
+					<array>
+						<string>Turkish lira (TRY)</string>
+						<string>TRY</string>
+					</array>
+					<array>
+						<string>US dollar (USD)</string>
+						<string>USD</string>
+					</array>
+					<array>
+						<string>South African rand (ZAR)</string>
+						<string>ZAR</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Default currency</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>default_currency</string>
+		</dict>
+	</array>
+	<key>version</key>
+	<string>1.2.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/techouse/alfred-convert</string>
+</dict>
+</plist>

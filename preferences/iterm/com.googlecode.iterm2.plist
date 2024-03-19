@@ -24198,6 +24198,8 @@
 			<array>
 				<string>gingkoo</string>
 				<string>c</string>
+				<string>cips</string>
+				<string>db</string>
 			</array>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
@@ -26038,7 +26040,8 @@
 			<array>
 				<string>gingkoo</string>
 				<string>c</string>
-				<string>cfets</string>
+				<string>cnaps</string>
+				<string>cfet</string>
 			</array>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
@@ -27879,6 +27882,8 @@
 			<array>
 				<string>gingkoo</string>
 				<string>c</string>
+				<string>cips</string>
+				<string>scb</string>
 			</array>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
