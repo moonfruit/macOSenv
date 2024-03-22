@@ -53,5 +53,6 @@ restart() {
 }
 
 curl https://xipcloud.org/client/subscribe/clash/3e331ff65b114d9b8734eea0c6a0653b |
-    DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" >config.json
+    DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" |
+    sing-box format -c /dev/stdin >config.json
 copy-if-diff config.json "$DIR" restart
