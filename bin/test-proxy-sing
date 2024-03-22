@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-readonly URL=http://127.0.0.1:9090/proxies/Forward
+readonly URL=http://127.0.0.1:9090/proxies/GLOBAL
 
 OPTS=$(getopt -n "$0" -o ar --long all,raw -- "$@") || exit 1
 eval set -- "$OPTS"
@@ -57,28 +57,28 @@ else
     }
 fi
 
-mapfile -t PROXIES < <(curl -s "$URL" | jq -r '.all.[]')
+mapfile -t PROXIES < <(curl -s "$URL" | jq -r '.all-["DIRECT","REJECT"]|.[]')
 if (($# > 0)); then
-    FILTERD=()
+    FILTERED=()
     for ARG in "$@"; do
         for PROXY in "${PROXIES[@]}"; do
             if [[ $ARG == "$PROXY" ]]; then
                 PROXIES=("${PROXIES[@]/$PROXY/}")
-                FILTERD+=("$PROXY")
+                FILTERED+=("$PROXY")
             fi
         done
     done
-    benchmark-proixes "${FILTERD[@]}"
+    benchmark-proixes "${FILTERED[@]}"
 
 elif [[ -n $ALL ]]; then
     benchmark-proixes "${PROXIES[@]}"
 
 else
-    FILTERD=()
+    FILTERED=()
     for PROXY in "${PROXIES[@]}"; do
         if [[ $PROXY != *" ("[34]"x)" ]]; then
-            FILTERD+=("$PROXY")
+            FILTERED+=("$PROXY")
         fi
     done
-    benchmark-proixes "${FILTERD[@]}"
+    benchmark-proixes "${FILTERED[@]}"
 fi
