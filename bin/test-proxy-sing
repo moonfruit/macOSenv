@@ -62,7 +62,7 @@ if (($# > 0)); then
     FILTERED=()
     for ARG in "$@"; do
         for PROXY in "${PROXIES[@]}"; do
-            if [[ $ARG == "$PROXY" ]]; then
+            if [[ $PROXY == *$ARG* ]]; then
                 PROXIES=("${PROXIES[@]/$PROXY/}")
                 FILTERED+=("$PROXY")
             fi
