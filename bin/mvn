@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 source "$ENV/lib/bash/console.sh"
 
-MVN="$(brew --prefix)/bin/mvn"
-exec-if-dark "$MVN" "$@"
-$MVN -Dstyle.color=always -Ptest-only "$@" | solarized.sh
+MVN=("$(brew --prefix)/bin/mvn")
+if [[ $PWD = */gingkoo-root || $PWD = */gingkoo-root/* ]]; then
+    MVN+=(-Ptest-only)
+fi
+
+exec-if-dark "${MVN[@]}" "$@"
+MVN+=(-Dstyle.color=always)
+
+echo "${MVN[@]}" "$@"
+"${MVN[@]}" "$@" | solarized.sh

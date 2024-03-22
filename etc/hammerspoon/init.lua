@@ -37,7 +37,7 @@ local tunnelblick = require("tunnelblick"):start()
 --- Launch gost for virtual machines
 ---
 local parallels = require("parallels")
-parallels.forAddress("10.211.55.2", 7890, 10002):start()
+parallels.forAddress("10.211.55.2", 7890):start()
 
 --- Launch local server
 local localserver = require("localserver")
