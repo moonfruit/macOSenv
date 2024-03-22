@@ -1,34 +1,32 @@
 {
   "log": {
-    "level": "trace",
+    "level": "info",
     "timestamp": true
   },
   "dns": {
     "servers": [
       {
-        "tag": "Alibaba Public DNS",
-        "address": "tls://dns.alidns.com",
-        "address_resolver": "System",
-        "detour": "Direct"
+        "tag": "dns-resolver",
+        "address": "223.5.5.5",
+        "detour": "DIRECT"
       },
       {
-        "tag": "DNSPod Public DNS",
-        "address": "tls://dot.pub",
-        "address_resolver": "System",
-        "detour": "Direct"
+        "tag": "dns-direct",
+        "address": "h3://dns.alidns.com/dns-query",
+        "address_resolver": "dns-resolver",
+        "detour": "DIRECT"
       },
       {
-        "tag": "Google Public DNS",
-        "address": "tls://dns.google",
-        "address_resolver": "System"
+        "tag": "dns-proxy",
+        "address": "tls://1.1.1.1"
       },
       {
-        "tag": "Gingkoo DNS",
+        "tag": "dns-gingkoo",
         "address": "tcp://10.1.2.59",
-        "detour": "Direct"
+        "detour": "DIRECT"
       },
       {
-        "tag": "System",
+        "tag": "dns-system",
         "address": "local",
         "detour": "Direct"
       }
@@ -36,42 +34,58 @@
     "rules": [
       {
         "domain_suffix": "server.gingkoo",
-        "server": "Gingkoo DNS"
+        "server": "dns-gingkoo"
+      },
+      {
+        "rule_set": "Proxy",
+        "server": "dns-proxy"
       }
-    ]
+    ],
+    "final": "dns-direct",
+    "strategy": "prefer_ipv4",
+    "independent_cache": true,
+    "reverse_mapping": true
   },
   "inbounds": [
     {
+      "type": "direct",
+      "tag": "dns-in",
+      "listen": "127.0.0.1",
+      "listen_port": 53,
+      "sniff": true,
+      "udp_fragment": true
+    },
+    {
       "type": "mixed",
-      "tag": "7890",
+      "tag": "mixed-in",
       "listen": "127.0.0.1",
       "listen_port": 7890,
-      "tcp_fast_open": true,
-      "sniff": true
+      "sniff": true,
+      "tcp_fast_open": true
     },
     {
       "type": "mixed",
-      "tag": "7891",
+      "tag": "direct-in",
       "listen": "127.0.0.1",
       "listen_port": 7891,
-      "tcp_fast_open": true,
-      "sniff": true
+      "sniff": true,
+      "tcp_fast_open": true
     },
     {
       "type": "mixed",
-      "tag": "7892",
+      "tag": "global-in",
       "listen": "127.0.0.1",
       "listen_port": 7892,
-      "tcp_fast_open": true,
-      "sniff": true
+      "sniff": true,
+      "tcp_fast_open": true
     },
     {
       "type": "mixed",
-      "tag": "9999",
-      "listen": "0.0.0.0",
+      "tag": "protected-in",
+      "listen": "::",
       "listen_port": 9999,
-      "tcp_fast_open": true,
       "sniff": true,
+      "tcp_fast_open": true,
       "users": [
         {
           "username": "dkmoonfruit",
@@ -83,28 +97,31 @@
   "outbounds": [
     {
       "type": "direct",
-      "tag": "Direct"
+      "tag": "DIRECT"
     },
     {
       "type": "block",
-      "tag": "Block"
+      "tag": "REJECT"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
     },
     {
       "type": "http",
-      "tag": "Gingkoo",
+      "tag": "⛰️ Gingkoo",
       "server": "10.1.2.12",
       "server_port": 8118
     },
     {
       "type": "socks",
-      "tag": "Tor Browser",
+      "tag": "🧅 Tor Browser",
       "server": "127.0.0.1",
       "server_port": 9150
     },
     {
       "type": "shadowsocks",
-      "tag": "IPLCUS4 Shadowsocks (3x)",
-      "udp_fragment": true,
+      "tag": "🇺🇸 IPLCUS4 Shadowsocks (3x)",
       "server": "None",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -112,8 +129,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS4 V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
       "server": "106.75.250.5",
       "server_port": 60081,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -122,8 +138,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS4B V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
       "server": "42.240.130.242",
       "server_port": 60081,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -132,8 +147,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS4C V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
       "server": "106.75.79.71",
       "server_port": 60081,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -142,8 +156,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCEU3 V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇪🇺 IPLCEU3 V2Ray VMess (3x)",
       "server": "106.75.249.78",
       "server_port": 60070,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -152,8 +165,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCEU3B V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇪🇺 IPLCEU3B V2Ray VMess (3x)",
       "server": "42.240.132.95",
       "server_port": 60070,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -162,8 +174,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCEU3C V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇪🇺 IPLCEU3C V2Ray VMess (3x)",
       "server": "106.75.25.73",
       "server_port": 60070,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -172,8 +183,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCEU4 V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇪🇺 IPLCEU4 V2Ray VMess (3x)",
       "server": "106.75.65.155",
       "server_port": 60062,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -182,8 +192,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCEU4B V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇪🇺 IPLCEU4B V2Ray VMess (3x)",
       "server": "106.75.210.223",
       "server_port": 60062,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -192,8 +201,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCEU4C V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇪🇺 IPLCEU4C V2Ray VMess (3x)",
       "server": "42.240.131.218",
       "server_port": 60062,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -202,8 +210,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCHK2 V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇭🇰 IPLCHK2 V2Ray VMess (4x)",
       "server": "42.240.130.201",
       "server_port": 60071,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -212,8 +219,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCHK2B V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇭🇰 IPLCHK2B V2Ray VMess (4x)",
       "server": "106.75.25.218",
       "server_port": 60071,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -222,8 +228,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCHK2C V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇭🇰 IPLCHK2C V2Ray VMess (4x)",
       "server": "113.31.111.244",
       "server_port": 60071,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -232,8 +237,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCHK3 V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇭🇰 IPLCHK3 V2Ray VMess (4x)",
       "server": "106.75.2.4",
       "server_port": 60072,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -242,8 +246,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCHK3B V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇭🇰 IPLCHK3B V2Ray VMess (4x)",
       "server": "113.31.119.62",
       "server_port": 60072,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -252,8 +255,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCHK3C V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇭🇰 IPLCHK3C V2Ray VMess (4x)",
       "server": "42.240.131.175",
       "server_port": 60072,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -262,8 +264,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCSG2 V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇸🇬 IPLCSG2 V2Ray VMess (4x)",
       "server": "106.75.154.37",
       "server_port": 60078,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -272,8 +273,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCSG2B V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇸🇬 IPLCSG2B V2Ray VMess (4x)",
       "server": "106.75.233.190",
       "server_port": 60078,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -282,8 +282,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCSG2C V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇸🇬 IPLCSG2C V2Ray VMess (4x)",
       "server": "106.75.65.35",
       "server_port": 60078,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -292,8 +291,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCSG3 V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇸🇬 IPLCSG3 V2Ray VMess (4x)",
       "server": "106.75.63.248",
       "server_port": 60065,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -302,8 +300,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCSG3B V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇸🇬 IPLCSG3B V2Ray VMess (4x)",
       "server": "106.75.153.45",
       "server_port": 60065,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -312,8 +309,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCSG3C V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇸🇬 IPLCSG3C V2Ray VMess (4x)",
       "server": "113.31.119.124",
       "server_port": 60065,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -322,8 +318,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS1 V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS1 V2Ray VMess (3x)",
       "server": "106.75.169.102",
       "server_port": 60063,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -332,8 +327,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS1B V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS1B V2Ray VMess (3x)",
       "server": "106.75.218.14",
       "server_port": 60063,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -342,8 +336,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS1C V2Ray VMess (3x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS1C V2Ray VMess (3x)",
       "server": "106.75.48.200",
       "server_port": 60063,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -352,8 +345,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS3 V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS3 V2Ray VMess (4x)",
       "server": "113.31.118.219",
       "server_port": 60077,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -362,8 +354,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS3B V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS3B V2Ray VMess (4x)",
       "server": "106.75.48.147",
       "server_port": 60077,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -372,8 +363,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCUS3C V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇺🇸 IPLCUS3C V2Ray VMess (4x)",
       "server": "106.75.172.45",
       "server_port": 60077,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -382,8 +372,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCJP5 V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇯🇵 IPLCJP5 V2Ray VMess (4x)",
       "server": "106.75.153.193",
       "server_port": 60073,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -392,8 +381,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCJP5B V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇯🇵 IPLCJP5B V2Ray VMess (4x)",
       "server": "106.75.245.188",
       "server_port": 60073,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -402,8 +390,7 @@
     },
     {
       "type": "vmess",
-      "tag": "IPLCJP5C V2Ray VMess (4x)",
-      "tcp_fast_open": true,
+      "tag": "🇯🇵 IPLCJP5C V2Ray VMess (4x)",
       "server": "106.75.20.254",
       "server_port": 60073,
       "uuid": "b8b6301c-7977-4999-9970-792fe8c05a75",
@@ -412,17 +399,15 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "TW1 Shadowsocks (1.5x)",
-      "udp_fragment": true,
-      "server": "1.162.159.119",
+      "tag": "🇨🇳 TW1 Shadowsocks (1.5x)",
+      "server": "1.162.179.144",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
       "password": "046fe9ecc5a94f98931ceb263d4d5e23"
     },
     {
       "type": "shadowsocks",
-      "tag": "US3 Shadowsocks (0.8x)",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US3 Shadowsocks (0.8x)",
       "server": "24.199.113.175",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -430,8 +415,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US5 Shadowsocks",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US5 Shadowsocks",
       "server": "107.178.118.84",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -439,8 +423,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US5X Shadowsocks (0.9x)",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US5X Shadowsocks (0.9x)",
       "server": "143.42.154.89",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -448,8 +431,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US6 Shadowsocks",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US6 Shadowsocks",
       "server": "45.146.235.244",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -457,8 +439,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US9 Shadowsocks (0.9x)",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US9 Shadowsocks (0.9x)",
       "server": "24.199.105.221",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -466,8 +447,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US9X Shadowsocks",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US9X Shadowsocks",
       "server": "146.190.121.154",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -475,8 +455,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US10X Shadowsocks",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US10X Shadowsocks",
       "server": "148.135.5.44",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -484,8 +463,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "US16-CF Shadowsocks",
-      "udp_fragment": true,
+      "tag": "🇺🇸 US16-CF Shadowsocks",
       "server": "173.249.200.172",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -493,8 +471,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "JP2-A Shadowsocks",
-      "udp_fragment": true,
+      "tag": "🇯🇵 JP2-A Shadowsocks",
       "server": "103.170.232.181",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -502,8 +479,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "JP4 Shadowsocks (1.2x)",
-      "udp_fragment": true,
+      "tag": "🇯🇵 JP4 Shadowsocks (1.2x)",
       "server": "103.232.214.44",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -511,8 +487,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "UKtest Shadowsocks",
-      "udp_fragment": true,
+      "tag": "🇬🇧 UKtest Shadowsocks",
       "server": "138.68.130.42",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -520,8 +495,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "EU3-UK Shadowsocks (0.8x)",
-      "udp_fragment": true,
+      "tag": "🇬🇧 EU3-UK Shadowsocks (0.8x)",
       "server": "64.176.178.184",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -529,8 +503,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "VN2-A Shadowsocks (0.8x)",
-      "udp_fragment": true,
+      "tag": "🇻🇳 VN2-A Shadowsocks (0.8x)",
       "server": "103.137.184.243",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -538,8 +511,7 @@
     },
     {
       "type": "shadowsocks",
-      "tag": "VN3-A Shadowsocks (0.8x)",
-      "udp_fragment": true,
+      "tag": "🇻🇳 VN3-A Shadowsocks (0.8x)",
       "server": "103.184.112.130",
       "server_port": 55983,
       "method": "chacha20-ietf-poly1305",
@@ -547,317 +519,540 @@
     },
     {
       "type": "selector",
-      "tag": "Proxy",
+      "tag": "🔰 默认出口",
       "outbounds": [
-        "Auto",
-        "Direct",
-        "Proxy (LO)",
-        "Proxy (US)",
-        "Gingkoo",
-        "Tor Browser",
-        "IPLCUS4 Shadowsocks (3x)",
-        "IPLCUS4 V2Ray VMess (3x)",
-        "IPLCUS4B V2Ray VMess (3x)",
-        "IPLCUS4C V2Ray VMess (3x)",
-        "IPLCEU3 V2Ray VMess (3x)",
-        "IPLCEU3B V2Ray VMess (3x)",
-        "IPLCEU3C V2Ray VMess (3x)",
-        "IPLCEU4 V2Ray VMess (3x)",
-        "IPLCEU4B V2Ray VMess (3x)",
-        "IPLCEU4C V2Ray VMess (3x)",
-        "IPLCHK2 V2Ray VMess (4x)",
-        "IPLCHK2B V2Ray VMess (4x)",
-        "IPLCHK2C V2Ray VMess (4x)",
-        "IPLCHK3 V2Ray VMess (4x)",
-        "IPLCHK3B V2Ray VMess (4x)",
-        "IPLCHK3C V2Ray VMess (4x)",
-        "IPLCSG2 V2Ray VMess (4x)",
-        "IPLCSG2B V2Ray VMess (4x)",
-        "IPLCSG2C V2Ray VMess (4x)",
-        "IPLCSG3 V2Ray VMess (4x)",
-        "IPLCSG3B V2Ray VMess (4x)",
-        "IPLCSG3C V2Ray VMess (4x)",
-        "IPLCUS1 V2Ray VMess (3x)",
-        "IPLCUS1B V2Ray VMess (3x)",
-        "IPLCUS1C V2Ray VMess (3x)",
-        "IPLCUS3 V2Ray VMess (4x)",
-        "IPLCUS3B V2Ray VMess (4x)",
-        "IPLCUS3C V2Ray VMess (4x)",
-        "IPLCJP5 V2Ray VMess (4x)",
-        "IPLCJP5B V2Ray VMess (4x)",
-        "IPLCJP5C V2Ray VMess (4x)",
-        "TW1 Shadowsocks (1.5x)",
-        "US3 Shadowsocks (0.8x)",
-        "US5 Shadowsocks",
-        "US5X Shadowsocks (0.9x)",
-        "US6 Shadowsocks",
-        "US9 Shadowsocks (0.9x)",
-        "US9X Shadowsocks",
-        "US10X Shadowsocks",
-        "US16-CF Shadowsocks",
-        "JP2-A Shadowsocks",
-        "JP4 Shadowsocks (1.2x)",
-        "UKtest Shadowsocks",
-        "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks (0.8x)",
-        "VN3-A Shadowsocks (0.8x)"
+        "♻️ 自动选择",
+        "🛢️ 省流节点",
+        "👍 高级节点",
+        "🚀 手动切换",
+        "🇺🇸 美国节点",
+        "🇺🇸 美国节点 🛢️",
+        "🇪🇺 欧洲节点",
+        "🇭🇰 香港节点",
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🇨🇳 台湾节点",
+        "🇬🇧 英国节点",
+        "🇻🇳 越南节点",
+        "🏳️ 其它节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🚀 手动切换",
+      "outbounds": [
+        "⛰️ Gingkoo",
+        "🧅 Tor Browser",
+        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
+        "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4C V2Ray VMess (3x)",
+        "🇭🇰 IPLCHK2 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2C V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3C V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS1 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1C V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS3 V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3B V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3C V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5 V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5B V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5C V2Ray VMess (4x)",
+        "🇨🇳 TW1 Shadowsocks (1.5x)",
+        "🇺🇸 US3 Shadowsocks (0.8x)",
+        "🇺🇸 US5 Shadowsocks",
+        "🇺🇸 US5X Shadowsocks (0.9x)",
+        "🇺🇸 US6 Shadowsocks",
+        "🇺🇸 US9 Shadowsocks (0.9x)",
+        "🇺🇸 US9X Shadowsocks",
+        "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US16-CF Shadowsocks",
+        "🇯🇵 JP2-A Shadowsocks",
+        "🇯🇵 JP4 Shadowsocks (1.2x)",
+        "🇬🇧 UKtest Shadowsocks",
+        "🇬🇧 EU3-UK Shadowsocks (0.8x)",
+        "🇻🇳 VN2-A Shadowsocks (0.8x)",
+        "🇻🇳 VN3-A Shadowsocks (0.8x)"
       ]
     },
     {
       "type": "urltest",
-      "tag": "Auto",
+      "tag": "♻️ 自动选择",
       "outbounds": [
-        "US3 Shadowsocks (0.8x)",
-        "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks (0.8x)",
-        "VN3-A Shadowsocks (0.8x)",
-        "US5X Shadowsocks (0.9x)",
-        "US9 Shadowsocks (0.9x)",
-        "US5 Shadowsocks",
-        "US6 Shadowsocks",
-        "US9X Shadowsocks",
-        "US10X Shadowsocks",
-        "US16-CF Shadowsocks",
-        "JP2-A Shadowsocks",
-        "UKtest Shadowsocks",
-        "JP4 Shadowsocks (1.2x)",
-        "TW1 Shadowsocks (1.5x)",
-        "IPLCUS4 Shadowsocks (3x)",
-        "IPLCUS4 V2Ray VMess (3x)",
-        "IPLCUS4B V2Ray VMess (3x)",
-        "IPLCUS4C V2Ray VMess (3x)",
-        "IPLCEU3 V2Ray VMess (3x)",
-        "IPLCEU3B V2Ray VMess (3x)",
-        "IPLCEU3C V2Ray VMess (3x)",
-        "IPLCEU4 V2Ray VMess (3x)",
-        "IPLCEU4B V2Ray VMess (3x)",
-        "IPLCEU4C V2Ray VMess (3x)",
-        "IPLCUS1 V2Ray VMess (3x)",
-        "IPLCUS1B V2Ray VMess (3x)",
-        "IPLCUS1C V2Ray VMess (3x)",
-        "IPLCHK2 V2Ray VMess (4x)",
-        "IPLCHK2B V2Ray VMess (4x)",
-        "IPLCHK2C V2Ray VMess (4x)",
-        "IPLCHK3 V2Ray VMess (4x)",
-        "IPLCHK3B V2Ray VMess (4x)",
-        "IPLCHK3C V2Ray VMess (4x)",
-        "IPLCSG2 V2Ray VMess (4x)",
-        "IPLCSG2B V2Ray VMess (4x)",
-        "IPLCSG2C V2Ray VMess (4x)",
-        "IPLCSG3 V2Ray VMess (4x)",
-        "IPLCSG3B V2Ray VMess (4x)",
-        "IPLCSG3C V2Ray VMess (4x)",
-        "IPLCUS3 V2Ray VMess (4x)",
-        "IPLCUS3B V2Ray VMess (4x)",
-        "IPLCUS3C V2Ray VMess (4x)",
-        "IPLCJP5 V2Ray VMess (4x)",
-        "IPLCJP5B V2Ray VMess (4x)",
-        "IPLCJP5C V2Ray VMess (4x)",
-        "Gingkoo",
-        "Tor Browser"
+        "⛰️ Gingkoo",
+        "🧅 Tor Browser",
+        "🇺🇸 US3 Shadowsocks (0.8x)",
+        "🇬🇧 EU3-UK Shadowsocks (0.8x)",
+        "🇻🇳 VN2-A Shadowsocks (0.8x)",
+        "🇻🇳 VN3-A Shadowsocks (0.8x)",
+        "🇺🇸 US5X Shadowsocks (0.9x)",
+        "🇺🇸 US9 Shadowsocks (0.9x)",
+        "🇺🇸 US5 Shadowsocks",
+        "🇺🇸 US6 Shadowsocks",
+        "🇺🇸 US9X Shadowsocks",
+        "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US16-CF Shadowsocks",
+        "🇯🇵 JP2-A Shadowsocks",
+        "🇬🇧 UKtest Shadowsocks",
+        "🇯🇵 JP4 Shadowsocks (1.2x)",
+        "🇨🇳 TW1 Shadowsocks (1.5x)",
+        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
+        "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4C V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1C V2Ray VMess (3x)",
+        "🇭🇰 IPLCHK2 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2C V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3C V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3 V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3B V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3C V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5 V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5B V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5C V2Ray VMess (4x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🛢️ 省流节点",
+      "outbounds": [
+        "⛰️ Gingkoo",
+        "🧅 Tor Browser",
+        "🇺🇸 US3 Shadowsocks (0.8x)",
+        "🇬🇧 EU3-UK Shadowsocks (0.8x)",
+        "🇻🇳 VN2-A Shadowsocks (0.8x)",
+        "🇻🇳 VN3-A Shadowsocks (0.8x)",
+        "🇺🇸 US5X Shadowsocks (0.9x)",
+        "🇺🇸 US9 Shadowsocks (0.9x)",
+        "🇺🇸 US5 Shadowsocks",
+        "🇺🇸 US6 Shadowsocks",
+        "🇺🇸 US9X Shadowsocks",
+        "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US16-CF Shadowsocks",
+        "🇯🇵 JP2-A Shadowsocks",
+        "🇬🇧 UKtest Shadowsocks",
+        "🇯🇵 JP4 Shadowsocks (1.2x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "👍 高级节点",
+      "outbounds": [
+        "🇨🇳 TW1 Shadowsocks (1.5x)",
+        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
+        "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4C V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1C V2Ray VMess (3x)",
+        "🇭🇰 IPLCHK2 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2C V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3C V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3 V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3B V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3C V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5 V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5B V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5C V2Ray VMess (4x)"
       ],
       "interval": "10m0s"
     },
     {
       "type": "selector",
-      "tag": "Proxy (LO)",
+      "tag": "🤖 人工智能",
       "outbounds": [
-        "Auto (LO)",
-        "Direct",
-        "Gingkoo",
-        "Tor Browser",
-        "TW1 Shadowsocks (1.5x)",
-        "US3 Shadowsocks (0.8x)",
-        "US5 Shadowsocks",
-        "US5X Shadowsocks (0.9x)",
-        "US6 Shadowsocks",
-        "US9 Shadowsocks (0.9x)",
-        "US9X Shadowsocks",
-        "US10X Shadowsocks",
-        "US16-CF Shadowsocks",
-        "JP2-A Shadowsocks",
-        "JP4 Shadowsocks (1.2x)",
-        "UKtest Shadowsocks",
-        "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks (0.8x)",
-        "VN3-A Shadowsocks (0.8x)"
+        "🔰 默认出口",
+        "👍 高级节点",
+        "🇺🇸 美国节点",
+        "🇺🇸 美国节点 🛢️",
+        "🇪🇺 欧洲节点",
+        "🇭🇰 香港节点",
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🇨🇳 台湾节点",
+        "🇬🇧 英国节点",
+        "🇻🇳 越南节点",
+        "🏳️ 其它节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🎥 Disney+",
+      "outbounds": [
+        "🔰 默认出口",
+        "👍 高级节点",
+        "🇺🇸 美国节点",
+        "🇺🇸 美国节点 🛢️",
+        "🇪🇺 欧洲节点",
+        "🇭🇰 香港节点",
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🇨🇳 台湾节点",
+        "🇬🇧 英国节点",
+        "🇻🇳 越南节点",
+        "🏳️ 其它节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🎥 Netflix",
+      "outbounds": [
+        "🔰 默认出口",
+        "👍 高级节点",
+        "🇺🇸 美国节点",
+        "🇺🇸 美国节点 🛢️",
+        "🇪🇺 欧洲节点",
+        "🇭🇰 香港节点",
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🇨🇳 台湾节点",
+        "🇬🇧 英国节点",
+        "🇻🇳 越南节点",
+        "🏳️ 其它节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🎥 Youtube",
+      "outbounds": [
+        "🔰 默认出口",
+        "👍 高级节点",
+        "🇺🇸 美国节点",
+        "🇺🇸 美国节点 🛢️",
+        "🇪🇺 欧洲节点",
+        "🇭🇰 香港节点",
+        "🇸🇬 新加坡节点",
+        "🇯🇵 日本节点",
+        "🇨🇳 台湾节点",
+        "🇬🇧 英国节点",
+        "🇻🇳 越南节点",
+        "🏳️ 其它节点",
+        "DIRECT"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🎯 全球直连",
+      "outbounds": [
+        "DIRECT",
+        "🔰 默认出口"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🛑 全球拦截",
+      "outbounds": [
+        "REJECT",
+        "DIRECT"
+      ]
+    },
+    {
+      "type": "selector",
+      "tag": "🐟 漏网之鱼",
+      "outbounds": [
+        "DIRECT",
+        "🔰 默认出口",
+        "REJECT"
       ]
     },
     {
       "type": "urltest",
-      "tag": "Auto (LO)",
+      "tag": "🇺🇸 美国节点",
       "outbounds": [
-        "US3 Shadowsocks (0.8x)",
-        "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks (0.8x)",
-        "VN3-A Shadowsocks (0.8x)",
-        "US5X Shadowsocks (0.9x)",
-        "US9 Shadowsocks (0.9x)",
-        "US5 Shadowsocks",
-        "US6 Shadowsocks",
-        "US9X Shadowsocks",
-        "US10X Shadowsocks",
-        "US16-CF Shadowsocks",
-        "JP2-A Shadowsocks",
-        "UKtest Shadowsocks",
-        "JP4 Shadowsocks (1.2x)",
-        "TW1 Shadowsocks (1.5x)",
-        "Gingkoo",
-        "Tor Browser"
+        "⛰️ Gingkoo",
+        "🇺🇸 US3 Shadowsocks (0.8x)",
+        "🇺🇸 US5X Shadowsocks (0.9x)",
+        "🇺🇸 US9 Shadowsocks (0.9x)",
+        "🇺🇸 US5 Shadowsocks",
+        "🇺🇸 US6 Shadowsocks",
+        "🇺🇸 US9X Shadowsocks",
+        "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US16-CF Shadowsocks",
+        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
+        "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1C V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS3 V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3B V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3C V2Ray VMess (4x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇺🇸 美国节点 🛢️",
+      "outbounds": [
+        "⛰️ Gingkoo",
+        "🇺🇸 US3 Shadowsocks (0.8x)",
+        "🇺🇸 US5X Shadowsocks (0.9x)",
+        "🇺🇸 US9 Shadowsocks (0.9x)",
+        "🇺🇸 US5 Shadowsocks",
+        "🇺🇸 US6 Shadowsocks",
+        "🇺🇸 US9X Shadowsocks",
+        "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US16-CF Shadowsocks"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇪🇺 欧洲节点",
+      "outbounds": [
+        "🇬🇧 EU3-UK Shadowsocks (0.8x)",
+        "🇬🇧 UKtest Shadowsocks",
+        "🇪🇺 IPLCEU3 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4C V2Ray VMess (3x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇭🇰 香港节点",
+      "outbounds": [
+        "🇭🇰 IPLCHK2 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2C V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3C V2Ray VMess (4x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇸🇬 新加坡节点",
+      "outbounds": [
+        "🇸🇬 IPLCSG2 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3C V2Ray VMess (4x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇯🇵 日本节点",
+      "outbounds": [
+        "🇯🇵 JP2-A Shadowsocks",
+        "🇯🇵 JP4 Shadowsocks (1.2x)",
+        "🇯🇵 IPLCJP5 V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5B V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5C V2Ray VMess (4x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇨🇳 台湾节点",
+      "outbounds": [
+        "🇨🇳 TW1 Shadowsocks (1.5x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇬🇧 英国节点",
+      "outbounds": [
+        "🇬🇧 EU3-UK Shadowsocks (0.8x)",
+        "🇬🇧 UKtest Shadowsocks"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🇻🇳 越南节点",
+      "outbounds": [
+        "🇻🇳 VN2-A Shadowsocks (0.8x)",
+        "🇻🇳 VN3-A Shadowsocks (0.8x)"
+      ],
+      "interval": "10m0s"
+    },
+    {
+      "type": "urltest",
+      "tag": "🏳️ 其它节点",
+      "outbounds": [
+        "🧅 Tor Browser"
       ],
       "interval": "10m0s"
     },
     {
       "type": "selector",
-      "tag": "Proxy (US)",
+      "tag": "GLOBAL",
       "outbounds": [
-        "Auto (US)",
-        "Direct",
-        "IPLCUS4B V2Ray VMess (3x)",
-        "IPLCUS4C V2Ray VMess (3x)",
-        "IPLCUS1B V2Ray VMess (3x)",
-        "IPLCUS1C V2Ray VMess (3x)",
-        "IPLCUS3B V2Ray VMess (4x)",
-        "IPLCUS3C V2Ray VMess (4x)",
-        "US5X Shadowsocks (0.9x)",
-        "US9X Shadowsocks",
-        "US10X Shadowsocks",
-        "US16-CF Shadowsocks"
-      ]
-    },
-    {
-      "type": "urltest",
-      "tag": "Auto (US)",
-      "outbounds": [
-        "US5X Shadowsocks (0.9x)",
-        "US9X Shadowsocks",
-        "US10X Shadowsocks",
-        "US16-CF Shadowsocks",
-        "IPLCUS4B V2Ray VMess (3x)",
-        "IPLCUS4C V2Ray VMess (3x)",
-        "IPLCUS1B V2Ray VMess (3x)",
-        "IPLCUS1C V2Ray VMess (3x)",
-        "IPLCUS3B V2Ray VMess (4x)",
-        "IPLCUS3C V2Ray VMess (4x)"
-      ],
-      "interval": "10m0s"
-    },
-    {
-      "type": "selector",
-      "tag": "Forward",
-      "outbounds": [
-        "Gingkoo",
-        "Tor Browser",
-        "IPLCUS4 Shadowsocks (3x)",
-        "IPLCUS4 V2Ray VMess (3x)",
-        "IPLCUS4B V2Ray VMess (3x)",
-        "IPLCUS4C V2Ray VMess (3x)",
-        "IPLCEU3 V2Ray VMess (3x)",
-        "IPLCEU3B V2Ray VMess (3x)",
-        "IPLCEU3C V2Ray VMess (3x)",
-        "IPLCEU4 V2Ray VMess (3x)",
-        "IPLCEU4B V2Ray VMess (3x)",
-        "IPLCEU4C V2Ray VMess (3x)",
-        "IPLCHK2 V2Ray VMess (4x)",
-        "IPLCHK2B V2Ray VMess (4x)",
-        "IPLCHK2C V2Ray VMess (4x)",
-        "IPLCHK3 V2Ray VMess (4x)",
-        "IPLCHK3B V2Ray VMess (4x)",
-        "IPLCHK3C V2Ray VMess (4x)",
-        "IPLCSG2 V2Ray VMess (4x)",
-        "IPLCSG2B V2Ray VMess (4x)",
-        "IPLCSG2C V2Ray VMess (4x)",
-        "IPLCSG3 V2Ray VMess (4x)",
-        "IPLCSG3B V2Ray VMess (4x)",
-        "IPLCSG3C V2Ray VMess (4x)",
-        "IPLCUS1 V2Ray VMess (3x)",
-        "IPLCUS1B V2Ray VMess (3x)",
-        "IPLCUS1C V2Ray VMess (3x)",
-        "IPLCUS3 V2Ray VMess (4x)",
-        "IPLCUS3B V2Ray VMess (4x)",
-        "IPLCUS3C V2Ray VMess (4x)",
-        "IPLCJP5 V2Ray VMess (4x)",
-        "IPLCJP5B V2Ray VMess (4x)",
-        "IPLCJP5C V2Ray VMess (4x)",
-        "TW1 Shadowsocks (1.5x)",
-        "US3 Shadowsocks (0.8x)",
-        "US5 Shadowsocks",
-        "US5X Shadowsocks (0.9x)",
-        "US6 Shadowsocks",
-        "US9 Shadowsocks (0.9x)",
-        "US9X Shadowsocks",
-        "US10X Shadowsocks",
-        "US16-CF Shadowsocks",
-        "JP2-A Shadowsocks",
-        "JP4 Shadowsocks (1.2x)",
-        "UKtest Shadowsocks",
-        "EU3-UK Shadowsocks (0.8x)",
-        "VN2-A Shadowsocks (0.8x)",
-        "VN3-A Shadowsocks (0.8x)"
+        "DIRECT",
+        "REJECT",
+        "⛰️ Gingkoo",
+        "🧅 Tor Browser",
+        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
+        "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU3C V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4 V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4B V2Ray VMess (3x)",
+        "🇪🇺 IPLCEU4C V2Ray VMess (3x)",
+        "🇭🇰 IPLCHK2 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK2C V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3 V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3B V2Ray VMess (4x)",
+        "🇭🇰 IPLCHK3C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG2C V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3 V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3B V2Ray VMess (4x)",
+        "🇸🇬 IPLCSG3C V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS1 V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1B V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS1C V2Ray VMess (3x)",
+        "🇺🇸 IPLCUS3 V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3B V2Ray VMess (4x)",
+        "🇺🇸 IPLCUS3C V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5 V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5B V2Ray VMess (4x)",
+        "🇯🇵 IPLCJP5C V2Ray VMess (4x)",
+        "🇨🇳 TW1 Shadowsocks (1.5x)",
+        "🇺🇸 US3 Shadowsocks (0.8x)",
+        "🇺🇸 US5 Shadowsocks",
+        "🇺🇸 US5X Shadowsocks (0.9x)",
+        "🇺🇸 US6 Shadowsocks",
+        "🇺🇸 US9 Shadowsocks (0.9x)",
+        "🇺🇸 US9X Shadowsocks",
+        "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US16-CF Shadowsocks",
+        "🇯🇵 JP2-A Shadowsocks",
+        "🇯🇵 JP4 Shadowsocks (1.2x)",
+        "🇬🇧 UKtest Shadowsocks",
+        "🇬🇧 EU3-UK Shadowsocks (0.8x)",
+        "🇻🇳 VN2-A Shadowsocks (0.8x)",
+        "🇻🇳 VN3-A Shadowsocks (0.8x)"
       ]
     }
   ],
   "route": {
     "rules": [
       {
-        "outbound": "Direct",
-        "domain_suffix": [
-          "server.gingkoo"
-        ]
+        "protocol": "dns",
+        "outbound": "dns-out"
       },
       {
-        "outbound": "Direct",
-        "process_name": [
-          "Battle.net",
-          "Battle.net Helper"
-        ]
+        "clash_mode": "Direct",
+        "outbound": "DIRECT"
       },
       {
-        "outbound": "Direct",
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "Private"
-          },
-          {
-            "domain": "connectivitycheck.gstatic.com",
-            "invert": true
-          }
-        ]
+        "clash_mode": "Global",
+        "outbound": "GLOBAL"
       },
       {
-        "inbound": "7892",
-        "outbound": "Forward"
+        "inbound": "global-in",
+        "outbound": "GLOBAL"
       },
       {
-        "outbound": "Block",
-        "rule_set": "Block"
+        "domain": "connectivitycheck.gstatic.com",
+        "outbound": "🐟 漏网之鱼"
       },
       {
-        "outbound": "Proxy (US)",
-        "domain_suffix": [
-          "coze.com",
-          "groq.com",
-          "hanime1.me",
-          "poe.com"
-        ]
+        "rule_set": "Private",
+        "outbound": "🎯 全球直连"
       },
       {
-        "outbound": "Proxy (US)",
-        "rule_set": "AI"
+        "rule_set": "Block",
+        "outbound": "🛑 全球拦截"
       },
       {
-        "outbound": "Proxy",
-        "rule_set": "Proxy"
+        "rule_set": "AI",
+        "outbound": "🤖 人工智能"
       },
       {
-        "outbound": "Direct",
-        "rule_set": "Direct"
+        "rule_set": "Disney+",
+        "outbound": "🎥 Disney+"
       },
       {
-        "inbound": "7891",
-        "outbound": "Direct"
+        "rule_set": "Netflix",
+        "outbound": "🎥 Netflix"
+      },
+      {
+        "rule_set": "Youtube",
+        "outbound": "🎥 Youtube"
+      },
+      {
+        "rule_set": "Proxy",
+        "outbound": "🔰 默认出口"
+      },
+      {
+        "rule_set": "Direct",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "inbound": "direct-in",
+        "outbound": "🎯 全球直连"
       }
     ],
     "rule_set": [
@@ -865,35 +1060,60 @@
         "type": "remote",
         "tag": "AI",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/ai.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/ai.srs",
+        "download_detour": "DIRECT"
+      },
+      {
+        "type": "remote",
+        "tag": "Disney+",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/disney-plus.srs",
+        "download_detour": "DIRECT"
+      },
+      {
+        "type": "remote",
+        "tag": "Netflix",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/netflix.srs",
+        "download_detour": "DIRECT"
+      },
+      {
+        "type": "remote",
+        "tag": "Youtube",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/youtube.srs",
+        "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Block",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/block.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/block.srs",
+        "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Direct",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/direct.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/direct.srs",
+        "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Private",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/private.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/private.srs",
+        "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Proxy",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/proxy.srs"
+        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/proxy.srs",
+        "download_detour": "DIRECT"
       }
     ],
-    "final": "Proxy",
-    "find_process": true
+    "final": "🐟 漏网之鱼"
   },
   "experimental": {
     "cache_file": {

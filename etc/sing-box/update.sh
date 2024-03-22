@@ -44,7 +44,7 @@ restart() {
     echo " --- === Restart sing-box === ---"
     if RESULT=$(sing-box -c "$DIR/config.json" check 2>&1); then
         find-sing 1
-        killall sing-box
+        sudo killall sing-box
         sleep 0.5
         find-sing
     else
@@ -52,5 +52,6 @@ restart() {
     fi
 }
 
-direnv exec "$ENV/package/yyscripts/xipcloud-sing.py" >config.json
+curl ***REMOVED*** |
+    DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" >config.json
 copy-if-diff config.json "$DIR" restart

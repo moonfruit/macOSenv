@@ -23,10 +23,13 @@ function M.applescript(source, ...)
     if result then
         return true;
     end
-    local description = descriptor["NSLocalizedDescription"]:gsub("\\U(....)", function(cp)
-        return utf8.char(tonumber(cp, 16))
-    end)
-    return nil, description
+    if descriptor then
+        local description = descriptor["NSLocalizedDescription"]:gsub("\\U(....)", function(cp)
+            return utf8.char(tonumber(cp, 16))
+        end)
+        return nil, description
+    end
+    return nil, "Unknown error"
 end
 
 function M.removeDirectory(path)
