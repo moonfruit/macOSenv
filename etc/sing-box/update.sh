@@ -53,5 +53,6 @@ restart() {
 }
 
 curl ***REMOVED*** |
-    DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" >config.json
+    DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" |
+    sing-box format -c /dev/stdin >config.json
 copy-if-diff config.json "$DIR" restart
