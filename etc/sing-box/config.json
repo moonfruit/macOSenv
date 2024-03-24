@@ -1,6 +1,6 @@
 {
   "log": {
-    "level": "info",
+    "level": "trace",
     "timestamp": true
   },
   "dns": {
@@ -26,6 +26,11 @@
         "detour": "DIRECT"
       },
       {
+        "tag": "dns-home",
+        "address": "192.168.50.1",
+        "detour": "DIRECT"
+      },
+      {
         "tag": "dns-system",
         "address": "local",
         "detour": "Direct"
@@ -35,6 +40,14 @@
       {
         "domain_suffix": "server.gingkoo",
         "server": "dns-gingkoo"
+      },
+      {
+        "domain": [
+          "asusrouter.com",
+          "router.asus.com",
+          "www.asusrouter.com"
+        ],
+        "server": "dns-home"
       },
       {
         "rule_set": "Proxy",
@@ -521,9 +534,9 @@
       "type": "selector",
       "tag": "🔰 默认出口",
       "outbounds": [
-        "♻️ 自动选择",
         "🛢️ 省流节点",
         "👍 高级节点",
+        "♻️ 自动选择",
         "🚀 手动切换",
         "🇺🇸 美国节点",
         "🇺🇸 美国节点 🛢️",
@@ -665,8 +678,7 @@
         "🇺🇸 US10X Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks",
         "🇯🇵 JP2-A Shadowsocks",
-        "🇬🇧 UKtest Shadowsocks",
-        "🇯🇵 JP4 Shadowsocks (1.2x)"
+        "🇬🇧 UKtest Shadowsocks"
       ],
       "interval": "10m0s"
     },
@@ -674,6 +686,7 @@
       "type": "urltest",
       "tag": "👍 高级节点",
       "outbounds": [
+        "🇯🇵 JP4 Shadowsocks (1.2x)",
         "🇨🇳 TW1 Shadowsocks (1.5x)",
         "🇺🇸 IPLCUS4 Shadowsocks (3x)",
         "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
@@ -798,6 +811,7 @@
       "tag": "🛑 全球拦截",
       "outbounds": [
         "REJECT",
+        "🔰 默认出口",
         "DIRECT"
       ]
     },
@@ -1060,56 +1074,56 @@
         "type": "remote",
         "tag": "AI",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/ai.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/ai.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Disney+",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/disney-plus.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/disney-plus.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Netflix",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/netflix.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/netflix.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Youtube",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/youtube.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/youtube.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Block",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/block.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/block.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Direct",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/direct.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/direct.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Private",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/private.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/private.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Proxy",
         "format": "binary",
-        "url": "https://cdn.jsdelivr.net/gh/moonfruit/sing-rules/rules/proxy.srs",
+        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/proxy.srs",
         "download_detour": "DIRECT"
       }
     ],
