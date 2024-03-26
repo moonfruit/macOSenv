@@ -9,5 +9,4 @@ fi
 exec-if-dark "${MVN[@]}" "$@"
 MVN+=(-Dstyle.color=always)
 
-echo "${MVN[@]}" "$@"
 "${MVN[@]}" "$@" | solarized.sh
