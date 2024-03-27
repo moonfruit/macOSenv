@@ -31,7 +31,7 @@ copy-if-diff() {
     [[ -d "$2" ]] && destination="$2/$(simple-basename "$1")" || destination=$2
 
     diff "$destination" "$1" && return
-    cp -v "$1" "$destination" || return
+    cp -pv "$1" "$destination" || return
 
     (($# > 2)) || return
     shift 2
