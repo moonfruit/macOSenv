@@ -18,8 +18,11 @@ cd "$TEMP_DIR" || exit 1
 
 eval "$(curl https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | rg '^UTILITIES=')"
 
+cp -p "$BIN"/* .
+mv iterm2.zsh zsh
+
 echo
-wget https://iterm2.com/shell_integration/zsh "${UTILITIES[@]/#/https://iterm2.com/utilities/}"
+wget -N https://iterm2.com/shell_integration/zsh "${UTILITIES[@]/#/https://iterm2.com/utilities/}"
 copy-if-diff zsh "$BIN/iterm2.zsh"
 
 for UTILITY in "${UTILITIES[@]}"; do
