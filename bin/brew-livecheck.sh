@@ -143,13 +143,19 @@ not-autobump() {
     rg -Fxvf <(autobump-patterns)
 }
 
+exclude-skipped() {
+    rg -v ': skipped - '
+}
+
+readonly LIVECHECK=(brew livecheck --json --extract-plist)
+
 echo "$GREEN==>$RESET ${BOLD}Live Check$RESET"
 if [[ $1 == --parallel ]]; then
-    handle-outdated < <(brew-ls | not-autobump | parallel -n8 --bar brew livecheck --json)
+    handle-outdated < <(brew-ls | not-autobump | parallel -n8 --bar "${LIVECHECK[@]}" | exclude-skipped)
 else
-    handle-outdated < <(brew livecheck --json --installed)
+    handle-outdated < <("${LIVECHECK[@]}" --installed | exclude-skipped)
     echo "$GREEN==>$RESET ${BOLD}Live Check (Extra)$RESET"
-    handle-outdated < <(brew-extra | xargs brew livecheck --json)
+    handle-outdated < <(brew-extra | xargs "${LIVECHECK[@]}" | exclude-skipped)
 fi
 
 if [[ ${#OUTDATED[@]} -gt 0 ]]; then
