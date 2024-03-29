@@ -476,6 +476,14 @@
     },
     {
       "type": "shadowsocks",
+      "tag": "🇺🇸 US15 Shadowsocks",
+      "server": "74.48.159.196",
+      "server_port": 55983,
+      "method": "chacha20-ietf-poly1305",
+      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
+    },
+    {
+      "type": "shadowsocks",
       "tag": "🇺🇸 US16-CF Shadowsocks",
       "server": "173.249.200.172",
       "server_port": 55983,
@@ -596,6 +604,7 @@
         "🇺🇸 US9 Shadowsocks (0.9x)",
         "🇺🇸 US9X Shadowsocks",
         "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US15 Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks",
         "🇯🇵 JP2-A Shadowsocks",
         "🇯🇵 JP4 Shadowsocks (1.2x)",
@@ -621,6 +630,7 @@
         "🇺🇸 US6 Shadowsocks",
         "🇺🇸 US9X Shadowsocks",
         "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US15 Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks",
         "🇯🇵 JP2-A Shadowsocks",
         "🇬🇧 UKtest Shadowsocks",
@@ -676,6 +686,7 @@
         "🇺🇸 US6 Shadowsocks",
         "🇺🇸 US9X Shadowsocks",
         "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US15 Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks",
         "🇯🇵 JP2-A Shadowsocks",
         "🇬🇧 UKtest Shadowsocks"
@@ -836,6 +847,7 @@
         "🇺🇸 US6 Shadowsocks",
         "🇺🇸 US9X Shadowsocks",
         "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US15 Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks",
         "🇺🇸 IPLCUS4 Shadowsocks (3x)",
         "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
@@ -862,6 +874,7 @@
         "🇺🇸 US6 Shadowsocks",
         "🇺🇸 US9X Shadowsocks",
         "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US15 Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks"
       ],
       "interval": "10m0s"
@@ -1000,6 +1013,7 @@
         "🇺🇸 US9 Shadowsocks (0.9x)",
         "🇺🇸 US9X Shadowsocks",
         "🇺🇸 US10X Shadowsocks",
+        "🇺🇸 US15 Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks",
         "🇯🇵 JP2-A Shadowsocks",
         "🇯🇵 JP4 Shadowsocks (1.2x)",

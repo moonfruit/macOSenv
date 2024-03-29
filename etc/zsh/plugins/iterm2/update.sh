@@ -25,10 +25,13 @@ echo
 wget -N https://iterm2.com/shell_integration/zsh "${UTILITIES[@]/#/https://iterm2.com/utilities/}"
 copy-if-diff zsh "$BIN/iterm2.zsh"
 
+create-temp-file TEMP_FILE
 for UTILITY in "${UTILITIES[@]}"; do
     SHEBANG=$(head -1 "$UTILITY")
     if [[ $SHEBANG == *python* ]]; then
+        touch -r "$UTILITY" "$TEMP_FILE"
         sed -i '1s|.*|#!'"$PYTHON"'|' "$UTILITY"
+        touch -r "$TEMP_FILE" "$UTILITY"
     fi
     copy-if-diff "$UTILITY" "$BIN" chmod +x
 done
