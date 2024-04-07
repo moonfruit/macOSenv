@@ -2,4 +2,5 @@
 /*.db
 /*.url
 /*.commit
+/config.json
 /config-format.json
