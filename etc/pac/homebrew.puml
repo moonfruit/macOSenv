@@ -327,7 +327,6 @@ skinparam usecase {
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/macos-totp-cli)
-(moonfruit/tap/openssl@1.0)
 (moonfruit/tap/sshpass)
 (moonfruit/tap/ugrep-indexer)
 (moonfruit/tap/ugrep-indexer)-->(brotli)
@@ -570,6 +569,7 @@ skinparam usecase {
 (wget)
 (wget)-->(libidn2)
 (wget)-->(openssl@3)
+(whalebrew)
 (xh)
 (xorgproto) << dep >>
 (xq)

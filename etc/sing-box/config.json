@@ -133,14 +133,6 @@
       "server_port": 9150
     },
     {
-      "type": "shadowsocks",
-      "tag": "🇺🇸 IPLCUS4 Shadowsocks (3x)",
-      "server": "None",
-      "server_port": 55983,
-      "method": "chacha20-ietf-poly1305",
-      "password": "046fe9ecc5a94f98931ceb263d4d5e23"
-    },
-    {
       "type": "vmess",
       "tag": "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
       "server": "106.75.250.5",
@@ -565,7 +557,6 @@
       "outbounds": [
         "⛰️ Gingkoo",
         "🧅 Tor Browser",
-        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
         "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
@@ -636,7 +627,6 @@
         "🇬🇧 UKtest Shadowsocks",
         "🇯🇵 JP4 Shadowsocks (1.2x)",
         "🇨🇳 TW1 Shadowsocks (1.5x)",
-        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
         "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
@@ -699,7 +689,6 @@
       "outbounds": [
         "🇯🇵 JP4 Shadowsocks (1.2x)",
         "🇨🇳 TW1 Shadowsocks (1.5x)",
-        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
         "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
@@ -868,7 +857,6 @@
         "🇺🇸 US10X Shadowsocks",
         "🇺🇸 US15 Shadowsocks",
         "🇺🇸 US16-CF Shadowsocks",
-        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
         "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
@@ -993,7 +981,6 @@
         "REJECT",
         "⛰️ Gingkoo",
         "🧅 Tor Browser",
-        "🇺🇸 IPLCUS4 Shadowsocks (3x)",
         "🇺🇸 IPLCUS4 V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4B V2Ray VMess (3x)",
         "🇺🇸 IPLCUS4C V2Ray VMess (3x)",
@@ -1111,63 +1098,63 @@
         "type": "remote",
         "tag": "AI",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/ai.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/ai.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Disney+",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/disney-plus.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/disney-plus.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Netflix",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/netflix.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/netflix.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "TikTok",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/tiktok.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/tiktok.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "YouTube",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/youtube.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/youtube.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Block",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/block.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/block.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Direct",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/direct.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/direct.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Private",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/private.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/private.srs",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "Proxy",
         "format": "binary",
-        "url": "https://fastly.jsdelivr.net/gh/moonfruit/sing-rules/rules/proxy.srs",
+        "url": "https://jsd.cdn.zzko.cn/npm/sing-rules/rules/proxy.srs",
         "download_detour": "DIRECT"
       }
     ],
