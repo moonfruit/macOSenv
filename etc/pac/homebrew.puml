@@ -35,6 +35,7 @@ skinparam usecase {
 (bfg)-->(openjdk)
 (black)
 (black)-->(python@3.12)
+(bottom)
 (brotli) << dep >>
 (c-ares) << dep >>
 (ca-certificates) << dep >>
@@ -320,13 +321,12 @@ skinparam usecase {
 (mkcert)
 (mongodb/brew/mongodb-community)
 (mongodb/brew/mongodb-community)-->(mongosh)
-(moonfruit/tap/colorsvn)
-(moonfruit/tap/ethr)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/macos-totp-cli)
+(moonfruit/tap/openssl@1.0)
 (moonfruit/tap/sshpass)
 (moonfruit/tap/ugrep-indexer)
 (moonfruit/tap/ugrep-indexer)-->(brotli)
