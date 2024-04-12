@@ -320,7 +320,6 @@ skinparam usecase {
 (miniserve)
 (mkcert)
 (mongodb/brew/mongodb-community)
-(mongodb/brew/mongodb-community)-->(mongosh)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
@@ -372,13 +371,6 @@ skinparam usecase {
 (node)-->(libnghttp2)
 (node)-->(libuv)
 (node)-->(openssl@3)
-(node@16) << req >>
-(node@16)-->(brotli)
-(node@16)-->(c-ares)
-(node@16)-->(icu4c)
-(node@16)-->(libnghttp2)
-(node@16)-->(libuv)
-(node@16)-->(openssl@3)
 (npth) << dep >>
 (oniguruma) << dep >>
 (opencc)
