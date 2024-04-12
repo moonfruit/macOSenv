@@ -2,32 +2,35 @@
 # shellcheck disable=SC2155
 readonly SVN=$(brew --prefix)/bin/svn
 
-readonly -A COMMANDS=(
-    [add]=1 [copy]=1 [cp]=1 [delete]=1 [del]=1 [remove]=1 [rm]=1 [move]=1 [mv]=1
-    [rename]=1 [ren]=1 [status]=1 [stat]=1 [st]=1
-)
+if [[ -t 1 ]]; then
+    readonly -A COMMANDS=(
+        [add]=1 [changelist]=1 [cl]=1 [copy]=1 [cp]=1
+        [delete]=1 [del]=1 [remove]=1 [rm]=1 [move]=1 [mv]=1
+        [rename]=1 [ren]=1 [status]=1 [stat]=1 [st]=1
+    )
 
-readonly RED=$(tput setaf 1) GREEN=$(tput setaf 2) YELLOW=$(tput setaf 3)
-readonly BLUE=$(tput setaf 4) MAGENTA=$(tput setaf 5) CYAN=$(tput setaf 6)
-readonly WHITE=$(tput setaf 7) BOLD=$(tput bold) RESET=$(tput sgr0)
+    if [[ -n $1 && -v ${COMMANDS[$1]} ]]; then
+        readonly RED=$(tput setaf 1) GREEN=$(tput setaf 2) YELLOW=$(tput setaf 3)
+        readonly BLUE=$(tput setaf 4) MAGENTA=$(tput setaf 5) CYAN=$(tput setaf 6)
+        readonly WHITE=$(tput setaf 7) BOLD=$(tput bold) RESET=$(tput sgr0)
 
-if [[ -n $1 && -v ${COMMANDS[$1]} ]]; then
-    $SVN "$@" | while IFS= read -r LINE; do
-        case ${LINE:0:1} in
-        A) echo "$GREEN$LINE$RESET" ;;
-        C) echo "$BOLD$RED$LINE$RESET" ;;
-        D) echo "$YELLOW$LINE$RESET" ;;
-        I) echo "$BOLD$GREEN$LINE$RESET" ;;
-        M) echo "$BLUE$LINE$RESET" ;;
-        R) echo "$CYAN$LINE$RESET" ;;
-        X) echo "$MAGENTA$LINE$RESET" ;;
-        \?) echo "$WHITE$LINE$RESET" ;;
-        \!) echo "$RED$LINE$RESET" ;;
-        \~) echo "$MAGENTA$LINE$RESET" ;;
-        *) echo "$LINE" ;;
-        esac
-    done
-    exit "${PIPESTATUS[0]}"
-else
-    exec $SVN "$@"
+        $SVN "$@" | while IFS= read -r LINE; do
+            case ${LINE:0:1} in
+            A) echo "$GREEN$LINE$RESET" ;;
+            C) echo "$BOLD$RED$LINE$RESET" ;;
+            D) echo "$YELLOW$LINE$RESET" ;;
+            I) echo "$BOLD$GREEN$LINE$RESET" ;;
+            M) echo "$BLUE$LINE$RESET" ;;
+            R) echo "$CYAN$LINE$RESET" ;;
+            X) echo "$MAGENTA$LINE$RESET" ;;
+            \?) echo "$WHITE$LINE$RESET" ;;
+            \!) echo "$RED$LINE$RESET" ;;
+            \~) echo "$MAGENTA$LINE$RESET" ;;
+            *) echo "$LINE" ;;
+            esac
+        done
+        exit "${PIPESTATUS[0]}"
+    fi
 fi
+
+exec $SVN "$@"
