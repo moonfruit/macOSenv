@@ -192,9 +192,7 @@ skinparam usecase {
 (harfbuzz)-->(graphite2)
 (harfbuzz)-->(icu4c)
 (hazelcast/hz/hazelcast)
-(hazelcast/hz/hazelcast)-->(openjdk)
 (hazelcast/hz/hazelcast-management-center)
-(hazelcast/hz/hazelcast-management-center)-->(openjdk)
 (helm)
 (hexyl)
 (highway) << dep >>
