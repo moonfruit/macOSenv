@@ -8,5 +8,7 @@
 	<string>MoonFruit</string>
 	<key>defaultReadme</key>
 	<string>SD Card Searcher</string>
+	<key>showCanvasHints</key>
+	<false/>
 </dict>
 </plist>

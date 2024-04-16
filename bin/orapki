@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+source "$ENV/lib/bash/java.sh"
+run-artifact com.gingkoo.tools gingkoo-oraclepki-runner 2.1.0-SNAPSHOT "$@"
