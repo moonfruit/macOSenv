@@ -45,9 +45,10 @@ local script=$BREW_PREFIX/Library/Taps/homebrew/homebrew-command-not-found/handl
 unset script
 
 # for maven
-export MAVEN_OPTS="-Xss2m -Duser.language=en_us \
+export MAVEN_OPTS="-Duser.language=en_us \
 -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
 alias mvncc='mvn clean compile'
+alias mvnccp='mvn clean compile -T1C'
 
 # for java
 export GINGKOO_ENV=dev
