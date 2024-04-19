@@ -489,7 +489,7 @@ skinparam usecase {
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm)
+(rust)-->(llvm@17)
 (rust)-->(openssl@3)
 (rust)-->(pkg-config)
 (sd)
