@@ -5,62 +5,99 @@
 	<key>application</key>
 	<integer>1</integer>
 	<key>custom</key>
-	<string>on write_to_file(this_data, target_file, append_data)
-	try
-		set the target_file to the target_file as string
-		set the open_target_file to open for access file target_file with write permission
-		if append_data is false then set eof of the open_target_file to 0
-		write this_data to the open_target_file starting at eof
-		close access the open_target_file
-		return true
-	on error
-		try
-			close access file target_file
-		end try
-		return false
-	end try
-end write_to_file
+	<string>-- For the latest version:
+-- https://github.com/vitorgalvao/custom-alfred-iterm-scripts
 
+-- Set this property to true to always open in a new window
+property open_in_new_window : false
 
-on alfred_script(q)
+-- Set this property to false to reuse current tab
+property open_in_new_tab : true
 
-	-- Write the command to run to a file. This is done because Applescript quoting is impossible to get right, esp. for backslashes.
-	set tmp_dir to path to temporary items as string from user domain
-	set applescript_alfred_file to tmp_dir &amp; "alfredscript"
-	set alfred_file to POSIX path of applescript_alfred_file
-	write_to_file(q &amp; return, applescript_alfred_file, false)
+-- Set this property to true if iTerm is configured to launch without opening a new window
+property iterm_opens_quietly : false
 
-	-- Create this file, which prevents iTerm2 from restoring a saved window arrangement.
-	do shell script "touch ~/Library/Application' Support/iTerm/quiet'"
+-- Handlers
+on new_window()
+  tell application "iTerm" to create window with profile "simple"
+end new_window
 
-	-- Test cases:
-	-- 1. iTerm2 running, has windows open. Should open a new window for Alfred command.
-	-- 2. iTerm2 running, no windows open. Should open a new window for Alfred command.
-	-- 3. iTerm2 not running, set to restores arrangement. Should not restore arrangement but open a new window for the Afred command.
-	-- 4. iTerm2 not running. No windows to restore. Should open a single window for the Alfred command.
-	-- 5. iTerm2 not running. Has windows to restore. Restores windows and then opens a new window for the Alfred command.
+on new_tab()
+  tell application "iTerm" to tell the first window to create tab with profile "simple"
+end new_tab
 
-	-- Compose a script. This is necessary because compiling in a 'tell application' command causes the app to be launched, which would happen prior to the creation of the quiet file.
-	set theScript to "tell application \"iTerm2.app\"
-    if (exists current window) then
-        tell current window to create tab with default profile
-		tell current session of current window
-			write contents of file \"" &amp; alfred_file &amp; "\"
-		end tell
+on call_forward()
+  tell application "iTerm" to activate
+end call_forward
+
+on is_running()
+  application "iTerm" is running
+end is_running
+
+on is_processing()
+  tell application "iTerm" to tell the first window to tell current session to return is processing
+end is_processing
+
+on has_windows()
+  if not is_running() then return false
+
+  tell application "iTerm"
+    if windows is {} then return false
+    if tabs of current window is {} then return false
+    if sessions of current tab of current window is {} then return false
+
+    set session_text to contents of current session of current tab of current window
+    if words of session_text is {} then return false
+  end tell
+
+  true
+end has_windows
+
+on send_text(custom_text)
+  tell application "iTerm" to tell the first window to tell current session to write text custom_text
+end send_text
+
+-- Main
+on alfred_script(query)
+  if has_windows() then
+    if open_in_new_window then
+      new_window()
+    else if open_in_new_tab then
+      new_tab()
     else
-		create window with default profile
-		tell current session of current window
-			write contents of file \"" &amp; alfred_file &amp; "\"
-		end tell
-	end if
-    activate
-end tell"
+      -- Reuse current tab
+    end if
+  else
+    -- If iTerm is not running and we tell it to create a new window, we get two:
+    -- one from opening the application, and the other from the command
+    if is_running() or iterm_opens_quietly then
+      new_window()
+    else
+      call_forward()
+    end if
+  end if
 
-	-- Invoke the script.
-	run script theScript
+  -- macOS buffers TTY input to 1024 bytes, so if input is larger wait for session to be ready
+  -- "with timeout" does not work with "repeat", so use a delay (0.01 * 500 means a timeout of 5 seconds)
+  if length of query &gt; 1024
+    repeat 500 times
+      if not is_processing() then exit repeat
+      delay 0.01
+    end repeat
+  end if
 
-	-- Clean up
---	do shell script "rm -f ~/Library/Application' Support/iTerm/quiet' /tmp/alfredscript"
+  -- Make sure a window exists before we continue, or the write may fail
+  -- "with timeout" does not work with "repeat", so use a delay (0.01 * 500 means a timeout of 5 seconds)
+  repeat 500 times
+    if has_windows() then
+      delay 0.5
+      send_text(query)
+      call_forward()
+      exit repeat
+    end if
+
+    delay 0.01
+  end repeat
 end alfred_script</string>
 </dict>
 </plist>
