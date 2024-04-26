@@ -26,3 +26,7 @@
 	path = package/zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
 	shallow = true
+[submodule "package/custom-alfred-iterm-scripts"]
+	path = package/custom-alfred-iterm-scripts
+	url = https://github.com/moonfruit/custom-alfred-iterm-scripts.git
+	shallow = true
