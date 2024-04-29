@@ -372,6 +372,8 @@ skinparam usecase {
 (node)-->(libuv)
 (node)-->(openssl@3)
 (npth) << dep >>
+(nushell)
+(nushell)-->(openssl@3)
 (oniguruma) << dep >>
 (opencc)
 (openexr) << dep >>
