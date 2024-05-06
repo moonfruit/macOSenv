@@ -300,10 +300,8 @@ skinparam usecase {
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
-(llvm) << dep >>
-(llvm)-->(python@3.12)
-(llvm)-->(z3)
-(llvm)-->(zstd)
+(llvm@17) << dep >>
+(llvm@17)-->(zstd)
 (lrzsz)
 (lua)
 (lua-language-server)
@@ -313,6 +311,7 @@ skinparam usecase {
 (lz4) << dep >>
 (lzo) << dep >>
 (m4) << dep >>
+(make)
 (marksman)
 (mas)
 (maven)
@@ -584,7 +583,6 @@ skinparam usecase {
 (yt-dlp)
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.12)
-(z3) << dep >>
 (zopfli) << dep >>
 (zsh)
 (zsh)-->(ncurses)
