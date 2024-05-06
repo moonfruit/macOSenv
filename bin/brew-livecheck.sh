@@ -24,11 +24,11 @@ readonly EXTRA=(
     qbittorrent
     rapidapi
     semeru-jdk-open
-    semeru-jdk8-open
-    semeru-jdk11-open
-    semeru-jdk17-open
+    semeru-jdk-open@8
+    semeru-jdk-open@11
+    semeru-jdk-open@17
     slack
-    slack-beta
+    slack@beta
 
     homebrew/cask/docker
     homebrew/cask/samsung-portable-ssd-t7
