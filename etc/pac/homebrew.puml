@@ -57,7 +57,7 @@ skinparam usecase {
 (clang-format)
 (cmake)
 (codespell)
-(codespell)-->(python@3.11)
+(codespell)-->(python@3.12)
 (colima)
 (colima)-->(lima)
 (cpanminus)
@@ -82,8 +82,6 @@ skinparam usecase {
 (dtc) << dep >>
 (dufs)
 (dust)
-(eslint)
-(eslint)-->(node)
 (eza)
 (eza)-->(libgit2)
 (fd)
@@ -193,7 +191,6 @@ skinparam usecase {
 (harfbuzz)-->(icu4c)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast-management-center)
-(helm)
 (hexyl)
 (highway) << dep >>
 (htop)
@@ -300,8 +297,10 @@ skinparam usecase {
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
-(llvm@17) << dep >>
-(llvm@17)-->(zstd)
+(llvm) << dep >>
+(llvm)-->(python@3.12)
+(llvm)-->(z3)
+(llvm)-->(zstd)
 (lrzsz)
 (lua)
 (lua-language-server)
@@ -326,11 +325,6 @@ skinparam usecase {
 (moonfruit/tap/macos-totp-cli)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/sshpass)
-(moonfruit/tap/ugrep-indexer)
-(moonfruit/tap/ugrep-indexer)-->(brotli)
-(moonfruit/tap/ugrep-indexer)-->(lz4)
-(moonfruit/tap/ugrep-indexer)-->(xz)
-(moonfruit/tap/ugrep-indexer)-->(zstd)
 (moonfruit/tap/uutils-selected)
 (moonfruit/tap/wlp-webprofile8)
 (moonfruit/tap/wlp-webprofile8)-->(openjdk)
@@ -450,11 +444,6 @@ skinparam usecase {
 (pv)
 (pyright)
 (pyright)-->(node)
-(python@3.11) << req >>
-(python@3.11)-->(mpdecimal)
-(python@3.11)-->(openssl@3)
-(python@3.11)-->(sqlite)
-(python@3.11)-->(xz)
 (python@3.12) << dep >>
 (python@3.12)-->(mpdecimal)
 (python@3.12)-->(openssl@3)
@@ -500,7 +489,7 @@ skinparam usecase {
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm@17)
+(rust)-->(llvm)
 (rust)-->(openssl@3)
 (rust)-->(pkg-config)
 (sd)
@@ -552,7 +541,7 @@ skinparam usecase {
 (ugrep)-->(pcre2)
 (ugrep)-->(xz)
 (ugrep)-->(zstd)
-(unbound) << req >>
+(unbound) << dep >>
 (unbound)-->(libevent)
 (unbound)-->(libnghttp2)
 (unbound)-->(openssl@3)
@@ -583,6 +572,7 @@ skinparam usecase {
 (yt-dlp)
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.12)
+(z3) << dep >>
 (zopfli) << dep >>
 (zsh)
 (zsh)-->(ncurses)

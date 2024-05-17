@@ -138,7 +138,6 @@ readonly HOMEBREW_CASK_FONTS="/opt/homebrew/Library/Taps/homebrew/homebrew-cask-
 autobump-patterns() {
     sed 's|^|homebrew/core/|' $HOMEBREW_CORE/.github/autobump.txt
     sed 's|^|homebrew/cask/|' $HOMEBREW_CASK/.github/autobump.txt
-    sed 's|^|homebrew/cask-fonts/|' $HOMEBREW_CASK_FONTS/.github/autobump.txt
 }
 
 not-autobump() {
