@@ -116,7 +116,7 @@ linters.setup({
     },
     -- { command = "shellcheck", extra_args = { "--severity", "warning" } }, -- included by bashls
     { command = "flake8", extra_args = { "--max-line-length=120" } },
-    { command = "eslint" },
+    -- { command = "eslint" },
 })
 
 --- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>

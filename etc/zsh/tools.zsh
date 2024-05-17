@@ -31,8 +31,6 @@ autoload -U zmv
 alias mmv='noglob zmv -W'
 
 # for homebrew
-export HOMEBREW_API_AUTO_UPDATE_SECS=3600
-export HOMEBREW_AUTOREMOVE=true
 export HOMEBREW_BAT=true
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 export HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS=7
