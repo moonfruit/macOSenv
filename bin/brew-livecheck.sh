@@ -54,14 +54,15 @@ readonly EXTRA=(
 )
 
 readonly EXCLUDED=(
-    hazelcast
-    hazelcast-management-center
-    microsoft-edge
-    nghttp2
-    libnghttp2
-    luajit
-    q
-    tencent-meeting
+    harelba/q/q
+    hazelcast/hz/hazelcast
+    hazelcast/hz/hazelcast-management-center
+    homebrew/cask/microsoft-edge
+    homebrew/cask/tencent-meeting
+    homebrew/core/luajit
+    homebrew/core/nghttp2
+    homebrew/core/libnghttp2
+    homebrew/core/redis
 )
 
 join-by() {
@@ -73,7 +74,7 @@ join-by() {
 as-json-keys() {
     local it
     for it in "$@"; do
-        echo "\"$it\":true"
+        echo "\"${it##*/}\":true"
     done
 }
 
@@ -134,8 +135,10 @@ brew-ls() {
 
 readonly HOMEBREW_CORE="/opt/homebrew/Library/Taps/homebrew/homebrew-core"
 readonly HOMEBREW_CASK="/opt/homebrew/Library/Taps/homebrew/homebrew-cask"
-readonly HOMEBREW_CASK_FONTS="/opt/homebrew/Library/Taps/homebrew/homebrew-cask-fonts"
 autobump-patterns() {
+    for it in "${EXCLUDED[@]}"; do
+        echo "$it"
+    done
     sed 's|^|homebrew/core/|' $HOMEBREW_CORE/.github/autobump.txt
     sed 's|^|homebrew/cask/|' $HOMEBREW_CASK/.github/autobump.txt
 }

@@ -113,6 +113,7 @@ skinparam usecase {
 (gd)-->(libtiff)
 (gd)-->(webp)
 (gdk-pixbuf) << dep >>
+(gdk-pixbuf)-->(gettext)
 (gdk-pixbuf)-->(glib)
 (gdk-pixbuf)-->(jpeg-turbo)
 (gdk-pixbuf)-->(libpng)
@@ -262,8 +263,6 @@ skinparam usecase {
 (libssh2) << dep >>
 (libssh2)-->(openssl@3)
 (libtasn1) << dep >>
-(libtermkey) << dep >>
-(libtermkey)-->(unibilium)
 (libtiff) << dep >>
 (libtiff)-->(jpeg-turbo)
 (libtiff)-->(xz)
@@ -301,9 +300,12 @@ skinparam usecase {
 (llvm)-->(python@3.12)
 (llvm)-->(z3)
 (llvm)-->(zstd)
+(lpeg) << dep >>
 (lrzsz)
 (lua)
 (lua-language-server)
+(luacheck)
+(luacheck)-->(lua)
 (luajit) << dep >>
 (luv) << dep >>
 (luv)-->(libuv)
@@ -325,6 +327,11 @@ skinparam usecase {
 (moonfruit/tap/macos-totp-cli)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/sshpass)
+(moonfruit/tap/tongsuo)
+(moonfruit/tap/tscurl)
+(moonfruit/tap/tscurl)-->(brotli)
+(moonfruit/tap/tscurl)-->(libnghttp2)
+(moonfruit/tap/tscurl)-->(zstd)
 (moonfruit/tap/uutils-selected)
 (moonfruit/tap/wlp-webprofile8)
 (moonfruit/tap/wlp-webprofile8)-->(openjdk)
@@ -342,9 +349,9 @@ skinparam usecase {
 (neovide)-->(neovim)
 (neovim)
 (neovim)-->(gettext)
-(neovim)-->(libtermkey)
 (neovim)-->(libuv)
 (neovim)-->(libvterm)
+(neovim)-->(lpeg)
 (neovim)-->(luajit)
 (neovim)-->(luv)
 (neovim)-->(msgpack)

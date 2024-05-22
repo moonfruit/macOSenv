@@ -41,6 +41,7 @@ prepend-path "$BREW_PREFIX/opt/findutils/libexec/gnubin"
 prepend-path "$BREW_PREFIX/opt/gnu-getopt/bin"
 prepend-path "$BREW_PREFIX/opt/file-formula/bin"
 prepend-path "$BREW_PREFIX/opt/curl/bin"
+prepend-path "$BREW_PREFIX/opt/tscurl/bin"
 prepend-path "$ENV/bin/extern"
 prepend-path "$ENV/bin"
 export PATH
