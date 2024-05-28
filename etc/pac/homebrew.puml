@@ -150,7 +150,6 @@ skinparam usecase {
 (gnupg)-->(libksba)
 (gnupg)-->(libusb)
 (gnupg)-->(npth)
-(gnupg)-->(openldap)
 (gnupg)-->(pinentry)
 (gnupg)-->(readline)
 (gnutls) << dep >>
@@ -298,6 +297,7 @@ skinparam usecase {
 (little-cms2)-->(libtiff)
 (llvm) << dep >>
 (llvm)-->(python@3.12)
+(llvm)-->(xz)
 (llvm)-->(z3)
 (llvm)-->(zstd)
 (lpeg) << dep >>
@@ -319,12 +319,15 @@ skinparam usecase {
 (maven)-->(openjdk)
 (miniserve)
 (mkcert)
+(mockserver)
+(mockserver)-->(openjdk)
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/macos-totp-cli)
+(moonfruit/tap/ngrrram)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/sshpass)
 (moonfruit/tap/tongsuo)
@@ -398,7 +401,7 @@ skinparam usecase {
 (openjdk@17)-->(little-cms2)
 (openldap) << dep >>
 (openldap)-->(openssl@3)
-(openssl@3) << dep >>
+(openssl@3) << req >>
 (openssl@3)-->(ca-certificates)
 (oven-sh/bun/bun)
 (p11-kit) << dep >>
