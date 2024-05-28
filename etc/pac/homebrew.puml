@@ -102,6 +102,7 @@ skinparam usecase {
 (fzf)
 (gawk)
 (gawk)-->(gettext)
+(gawk)-->(gmp)
 (gawk)-->(mpfr)
 (gawk)-->(readline)
 (gd) << dep >>
@@ -247,13 +248,19 @@ skinparam usecase {
 (libidn2)-->(libunistring)
 (libksba) << dep >>
 (libksba)-->(libgpg-error)
+(liblinear) << dep >>
 (libmagic) << dep >>
 (libnghttp2) << dep >>
 (libpng) << dep >>
 (librsvg) << dep >>
 (librsvg)-->(cairo)
+(librsvg)-->(fontconfig)
+(librsvg)-->(freetype)
 (librsvg)-->(gdk-pixbuf)
+(librsvg)-->(gettext)
 (librsvg)-->(glib)
+(librsvg)-->(harfbuzz)
+(librsvg)-->(libpng)
 (librsvg)-->(pango)
 (libslirp) << dep >>
 (libslirp)-->(glib)
@@ -330,10 +337,11 @@ skinparam usecase {
 (moonfruit/tap/ngrrram)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/sshpass)
-(moonfruit/tap/tongsuo)
+(moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tscurl)
 (moonfruit/tap/tscurl)-->(brotli)
 (moonfruit/tap/tscurl)-->(libnghttp2)
+(moonfruit/tap/tscurl)-->(moonfruit/tap/tongsuo)
 (moonfruit/tap/tscurl)-->(zstd)
 (moonfruit/tap/uutils-selected)
 (moonfruit/tap/wlp-webprofile8)
@@ -367,6 +375,12 @@ skinparam usecase {
 (netpbm)-->(libtiff)
 (nettle) << dep >>
 (nettle)-->(gmp)
+(nmap)
+(nmap)-->(liblinear)
+(nmap)-->(libssh2)
+(nmap)-->(lua)
+(nmap)-->(openssl@3)
+(nmap)-->(pcre2)
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)

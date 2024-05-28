@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import json
+import json, os
 
 
 def analyze(input):
@@ -17,6 +17,7 @@ skinparam usecase {
     lines = []
     for obj in data:
         name = obj["full_name"]
+        deps = obj["dependencies"]
         installed = obj.get("installed")
         if installed:
             installed = installed[0]
@@ -27,11 +28,13 @@ skinparam usecase {
                 lines.append("(%s) << dep >>" % name)
         else:
             lines.append("(%s)" % name)
-        deps = installed.get("runtime_dependencies")
-        if deps:
-            for dep in deps:
-                if dep["declared_directly"]:
-                    lines.append("(%s)-->(%s)" % (name, dep["full_name"]))
+        runtime_deps = installed.get("runtime_dependencies")
+        if runtime_deps:
+            for dep in runtime_deps:
+                dep_full_name = dep["full_name"]
+                dep_name = os.path.basename(dep_full_name)
+                if dep["declared_directly"] or dep_name in deps:
+                    lines.append("(%s)-->(%s)" % (name, dep_full_name))
     lines.sort()
     for line in lines:
         print(line)
