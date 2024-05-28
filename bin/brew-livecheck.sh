@@ -27,6 +27,7 @@ readonly EXTRA=(
     semeru-jdk-open@8
     semeru-jdk-open@11
     semeru-jdk-open@17
+    semeru-jdk-open@21
     slack
     slack@beta
 
