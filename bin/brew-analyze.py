@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import json, os
+import json
+import os
 
 
 def analyze(input):
