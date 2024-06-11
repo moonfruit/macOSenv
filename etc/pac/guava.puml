@@ -1,0 +1,78 @@
+@startuml guava
+!include java-base.puml
+
+package com.google.common.collect {
+    interface SortedIterable<E>
+    Iterable <|-- SortedIterable
+
+    abstract ImmutableCollection<E>
+    Collection <|-- ImmutableCollection
+
+    abstract ImmutableList<E>
+    ImmutableCollection <|-- ImmutableList
+    List <|-- ImmutableList
+    RandomAccess <|-- ImmutableList
+
+    abstract ImmutableSet<E>
+    abstract ImmutableSortedSet<E>
+    ImmutableCollection <|-- ImmutableSet
+    Set <|-- ImmutableSet
+    ImmutableSet <|-- ImmutableSortedSet
+    NavigableSet <|-- ImmutableSortedSet
+    SortedIterable <|-- ImmutableSortedSet
+
+    interface Multiset<E>
+    interface SortedMultiset<E>
+    abstract ImmutableMultiset<E>
+    abstract ImmutableSortedMultiset<E>
+    Collection <|-- Multiset
+    Multiset <|-- SortedMultiset
+    SortedIterable <|-- SortedMultiset
+    ImmutableCollection <|-- ImmutableMultiset
+    Multiset <|-- ImmutableMultiset
+    ImmutableMultiset <|-- ImmutableSortedMultiset
+    SortedMultiset <|-- ImmutableSortedMultiset
+
+    abstract ImmutableMap<K,V>
+    class ImmutableSortedMap<K,V>
+    Map <|-- ImmutableMap
+    ImmutableMap <|-- ImmutableSortedMap
+    NavigableMap <|-- ImmutableSortedMap
+
+    interface BiMap<K,V>
+    class HashBiMap<K,V>
+    abstract ImmutableBiMap<K,V>
+    Map <|-- BiMap
+    BiMap <|-- HashBiMap
+    ImmutableMap <|-- ImmutableBiMap
+    BiMap <|-- ImmutableBiMap
+
+    interface Multimap<K,V>
+    interface ListMultimap<K,V>
+    interface SetMultimap<K,V>
+    interface SortedSetMultimap<K,V>
+    abstract ImmutableMultimap<K,V>
+    class ImmutableListMultimap<K,V>
+    class ImmutableSetMultimap<K,V>
+    Multimap <|-- ListMultimap
+    Multimap <|-- SetMultimap
+    SetMultimap <|-- SortedSetMultimap
+    Multimap <|-- ImmutableMultimap
+    ImmutableMultimap <|-- ImmutableListMultimap
+    ListMultimap <|-- ImmutableListMultimap
+    ImmutableMultimap <|-- ImmutableSetMultimap
+    SetMultimap <|-- ImmutableSetMultimap
+
+    interface Table<R,C,V>
+    abstract ImmutableTable<R,C,V>
+    Table <|-- ImmutableTable
+
+    interface RangeSet<C extends Comparable>
+    interface RangeMap<K extends Comparable, V>
+    class ImmutableRangeSet<C extends Comparable>
+    class ImmutableRangeMap<K extends Comparable, V>
+    RangeSet <|-- ImmutableRangeSet
+    RangeMap <|-- ImmutableRangeMap
+}
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml java-base
+
+package java.util {
+    interface Iterable<E>
+    interface Collection<E>
+    Iterable <|-- Collection
+
+    interface List<E>
+    interface RandomAccess
+    Collection <|-- List
+
+    interface Set<E>
+    interface SortedSet<E>
+    interface NavigableSet<E>
+    Collection <|-- Set
+    Set <|-- SortedSet
+    SortedSet <|-- NavigableSet
+
+    interface Map<K,V>
+    interface SortedMap<K,V>
+    interface NavigableMap<K,V>
+    Map <|-- SortedMap
+    SortedMap <|-- NavigableMap
+
+    interface SequencedCollection<E> <<21>>
+    interface SequencedSet<E> <<21>>
+    interface SequencedMap<K,V> <<21>>
+    Collection <|-- SequencedCollection
+    Set <|-- SequencedSet
+    SequencedCollection <|-- SequencedSet
+    SequencedSet <|-- SortedSet
+    Map <|-- SequencedMap
+    SequencedMap <|-- SortedMap
+}
+
+@enduml
