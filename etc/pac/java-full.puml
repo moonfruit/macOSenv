@@ -1,0 +1,81 @@
+@startuml java-full
+!include java-base.puml
+
+package java.util {
+    class ArrayList<E>
+    class LinkedList<E>
+    List <|-- ArrayList
+    RandomAccess <|-- ArrayList
+    List <|-- LinkedList
+
+    class HashSet<E>
+    class LinkedHashSet<E>
+    class TreeSet<E>
+    Set <|-- HashSet
+    HashSet <|-- LinkedHashSet
+    SequencedSet <|-- LinkedHashSet
+    NavigableSet <|-- TreeSet
+
+    class HashMap<K,V>
+    class LinkedHashMap<K,V>
+    class TreeMap<K,V>
+    Map <|-- HashMap
+    HashMap <|-- LinkedHashMap
+    SequencedMap <|-- LinkedHashMap
+    NavigableMap <|-- TreeMap
+
+    interface Queue<E>
+    interface Deque<E>
+    Collection <|-- Queue
+    Queue <|-- Deque
+    SequencedCollection <|-- Deque
+
+    class ArrayDeque<E>
+    class PriorityQueue<E>
+    Deque <|-- ArrayDeque
+    Deque <|-- LinkedList
+    Queue <|-- PriorityQueue
+}
+
+package java.util.concurrent {
+    interface BlockingQueue<E>
+    interface BlockingDeque<E>
+    interface TransferQueue<E>
+    interface ConcurrentMap<K,V>
+    interface ConcurrentNavigableMap<K,V>
+    Queue <|-- BlockingQueue
+    Deque <|-- BlockingDeque
+    BlockingQueue <|-- BlockingDeque
+    BlockingQueue <|-- TransferQueue
+    Map <|-- ConcurrentMap
+    NavigableMap <|-- ConcurrentNavigableMap
+    ConcurrentMap <|-- ConcurrentNavigableMap
+
+    class LinkedBlockingQueue<E>
+    class ArrayBlockingQueue<E>
+    class PriorityBlockingQueue<E>
+    class DelayQueue<E>
+    class SynchronousQueue<E>
+    class LinkedBlockingDeque<E>
+    class LinkedTransferQueue<E>
+    class CopyOnWriteArrayList<E>
+    class CopyOnWriteArraySet<E>
+    class ConcurrentSkipListSet<E>
+    class ConcurrentHashMap<K,V>
+    class ConcurrentSkipListMap<K,V>
+    BlockingQueue <|-- LinkedBlockingQueue
+    BlockingQueue <|-- ArrayBlockingQueue
+    BlockingQueue <|-- PriorityBlockingQueue
+    BlockingQueue <|-- DelayQueue
+    BlockingQueue <|-- SynchronousQueue
+    BlockingDeque <|-- LinkedBlockingDeque
+    TransferQueue <|-- LinkedTransferQueue
+    List <|-- CopyOnWriteArrayList
+    RandomAccess <|-- CopyOnWriteArrayList
+    Set <|-- CopyOnWriteArraySet
+    NavigableSet <|-- ConcurrentSkipListSet
+    ConcurrentMap <|-- ConcurrentHashMap
+    ConcurrentNavigableMap <|-- ConcurrentSkipListMap
+}
+
+@enduml
