@@ -1,0 +1,56 @@
+@startuml commons
+!include java-base.puml
+
+package org.apache.commons.collections4 {
+    interface Unmodifiable
+
+    interface BoundedCollection<E>
+    interface Bag<E>
+    interface SortedBag<E>
+    interface MultiSet<E>
+    Collection <|-- BoundedCollection
+    Collection <|-- Bag
+    Bag <|-- SortedBag
+    Collection <|-- MultiSet
+
+    interface Put<K,V>
+    interface Get<K,V>
+    interface IterableGet<K,V>
+    interface IterableMap<K,V>
+    interface IterableSortedMap<K,V>
+    interface Trie<K,V>
+    interface BidiMap<K,V>
+    interface SortedBidiMap<K,V>
+    interface BoundedMap<K,V>
+    interface OrderedMap<K,V>
+    interface OrderedBidiMap<K,V>
+    Get <|-- IterableGet
+    Map <|-- IterableMap
+    Put <|-- IterableMap
+    IterableGet <|-- IterableMap
+    IterableMap <|-- IterableSortedMap
+    SortedMap <|-- IterableSortedMap
+    IterableSortedMap <|-- Trie
+    IterableMap <|-- BidiMap
+    BidiMap <|-- SortedBidiMap
+    SortedMap <|-- SortedBidiMap
+    IterableMap <|-- BoundedMap
+    IterableMap <|-- OrderedMap
+    BidiMap <|-- OrderedBidiMap
+    OrderedMap <|-- OrderedBidiMap
+
+    interface MultiValuedMap<K,V>
+    interface ListValuedMap<K,V>
+    interface SetValuedMap<K,V>
+    MultiValuedMap <|-- ListValuedMap
+    MultiValuedMap <|-- SetValuedMap
+}
+
+package org.apache.commons.collections4.map {
+    class HashedMap<K,V>
+    class LinkedMap<K,V>
+    IterableMap <|-- HashedMap
+    OrderedMap <|-- LinkedMap
+}
+
+@enduml

@@ -1,0 +1,257 @@
+@startuml eclipse
+!include java-base.puml
+
+package java.util.concurrent {
+    interface ConcurrentMap<K,V>
+    interface ConcurrentNavigableMap<K,V>
+    Map <|-- ConcurrentMap
+    NavigableMap <|-- ConcurrentNavigableMap
+    ConcurrentMap <|-- ConcurrentNavigableMap
+}
+
+package org.eclipse.collections.api {
+    interface RichIterable<T>
+    Iterable <|-- RichIterable
+
+    interface ParallelIterable<T>
+}
+
+package org.eclipse.collections.api.collection {
+    interface ImmutableCollection<T>
+    RichIterable <|-- ImmutableCollection
+
+    interface FixedSizeCollection<T>
+    MutableCollection <|-- FixedSizeCollection
+
+    interface MutableCollection<T>
+    Collection <|-- ImmutableCollection
+    RichIterable <|-- ImmutableCollection
+}
+
+package org.eclipse.collections.api.ordered {
+    interface OrderedIterable<T>
+    RichIterable <|-- OrderedIterable
+
+    interface ReversibleIterable<T>
+    OrderedIterable <|-- ReversibleIterable
+
+    interface SortedIterable<T>
+    OrderedIterable <|-- SortedIterable
+}
+
+package org.eclipse.collections.api.bag {
+    interface Bag<T>
+    RichIterable <|-- Bag
+
+    interface ImmutableBag<T>
+    UnsortedBag <|-- ImmutableBag
+    ImmutableBagIterable <|-- ImmutableBag
+
+    interface ImmutableBagIterable<T>
+    Bag <|-- ImmutableBagIterable
+    ImmutableCollection <|-- ImmutableBagIterable
+
+    interface MultiReaderBag<T>
+    MutableBag <|-- MultiReaderBag
+
+    interface MutableBag<T>
+    UnsortedBag <|-- MutableBag
+    MutableBagIterable <|-- MutableBag
+
+    interface MutableBagIterable<T>
+    Bag <|-- MutableBag
+    MutableCollection <|-- MutableBag
+
+    interface ParallelBag<T>
+    ParallelIterable <|-- ParallelBag
+
+    interface ParallelUnsortedBag<T>
+    ParallelBag <|-- ParallelUnsortedBag
+
+    interface UnsortedBag<T>
+    Bag <|-- UnsortedBag
+}
+
+package org.eclipse.collections.api.bag.sorted {
+    interface ImmutableSortedBag<T>
+    ImmutableBagIterable <|-- ImmutableSortedBag
+    SortedBag <|-- ImmutableSortedBag
+
+    interface MutableSortedBag<T>
+    SortedBag <|-- MutableSortedBag
+    MutableBagIterable <|-- MutableSortedBag
+
+    interface ParallelSortedBag<T>
+    ParallelBag <|-- ParallelSortedBag
+
+    interface SortedBag<T>
+    Bag <|-- SortedBag
+    SortedIterable <|-- SortedBag
+    ReversibleIterable <|-- SortedBag
+}
+
+package org.eclipse.collections.api.list {
+    interface FixedSizeList<T>
+    MutableList <|-- FixedSizeList
+    FixedSizeCollection <|-- FixedSizeList
+
+    interface ImmutableList<T>
+    ImmutableCollection <|-- ImmutableList
+    ListIterable <|-- ImmutableList
+
+    interface ListIterable<T>
+    ReversibleIterable <|-- ListIterable
+
+    interface MultiReaderList<T>
+    MutableList <|-- MultiReaderList
+
+    interface MutableList<T>
+    MutableCollection <|-- MutableList
+    List <|-- MutableList
+    ListIterable <|-- MutableList
+
+    interface ParallelListIterable<T>
+    ParallelIterable <|-- ParallelListIterable
+}
+
+package org.eclipse.collections.api.set {
+    interface FixedSizeSet<T>
+    MutableSet <|-- FixedSizeSet
+    FixedSizeCollection <|-- FixedSizeSet
+
+    interface ImmutableSet<T>
+    UnsortedSetIterable <|-- ImmutableSet
+    ImmutableSetIterable <|-- ImmutableSet
+
+    interface ImmutableSetIterable<T>
+    SetIterable <|-- ImmutableSetIterable
+    ImmutableCollection <|-- ImmutableSetIterable
+
+    interface MultiReaderSet<T>
+    MutableSet <|-- MultiReaderSet
+
+    interface MutableSet<T>
+    UnsortedSetIterable <|-- MutableSet
+    MutableSetIterable <|-- MutableSet
+
+    interface MutableSetIterable<T>
+    SetIterable <|-- MutableSetIterable
+    MutableCollection <|-- MutableSetIterable
+    Set <|-- MutableSetIterable
+
+    interface ParallelSetIterable<T>
+    ParallelIterable <|-- ParallelSetIterable
+
+    interface ParallelUnsortedSetIterable<T>
+    ParallelSetIterable <|-- ParallelUnsortedSetIterable
+
+    interface Pool<T>
+
+    interface SetIterable<T>
+    RichIterable <|-- SetIterable
+
+    interface UnsortedSetIterable<T>
+    SetIterable <|-- UnsortedSetIterable
+}
+
+package org.eclipse.collections.api.set.sorted {
+    interface ImmutableSortedSet<T>
+    SortedSetIterable <|-- ImmutableSortedSet
+    ImmutableSetIterable <|-- ImmutableSortedSet
+
+    interface MutableSortedSet<T>
+    MutableSetIterable <|-- MutableSortedSet
+    SortedSetIterable <|-- MutableSortedSet
+    SortedSet <|-- MutableSortedSet
+
+    interface ParallelSortedSetIterable<T>
+    ParallelSetIterable <|-- ParallelSortedSetIterable
+
+    interface SortedSetIterable<T>
+    SetIterable <|-- SortedSetIterable
+    SortedIterable <|-- SortedSetIterable
+    ReversibleIterable <|-- SortedSetIterable
+}
+
+package org.eclipse.collections.api.stack {
+    interface ImmutableStack<T>
+    StackIterable <|-- ImmutableStack
+
+    interface MutableStack<T>
+    StackIterable <|-- MutableStack
+
+    interface StackIterable<T>
+    OrderedIterable <|-- StackIterable
+}
+
+package org.eclipse.collections.api.map {
+    interface ConcurrentMutableMap<K,V>
+    MutableMap <|-- ConcurrentMutableMap
+    ConcurrentMap <|-- ConcurrentMutableMap
+
+    interface FixedSizeMap<K,V>
+    MutableMap <|-- FixedSizeMap
+
+    interface ImmutableMap<K,V>
+    UnsortedMapIterable <|-- ImmutableMap
+    ImmutableMapIterable <|-- ImmutableMap
+
+    interface ImmutableMapIterable<K,V>
+    MapIterable <|-- ImmutableMapIterable
+
+    interface ImmutableOrderedMap<K,V>
+    OrderedMap <|-- ImmutableOrderedMap
+    ImmutableMapIterable <|-- ImmutableOrderedMap
+
+    interface MapIterable<K,V>
+    RichIterable <|-- MapIterable
+
+    interface MutableMap<K,V>
+    MutableMapIterable <|-- MutableMap
+    UnsortedMapIterable <|-- MutableMap
+
+    interface MutableMapIterable<K,V>
+    MapIterable <|-- MutableMapIterable
+    Map <|-- MutableMapIterable
+
+    interface MutableOrderedMap<K,V>
+    OrderedMap <|-- MutableOrderedMap
+    MutableMapIterable <|-- MutableOrderedMap
+
+    interface OrderedMap<K,V>
+    MapIterable <|-- OrderedMap
+    ReversibleIterable <|-- OrderedMap
+
+    interface UnsortedMapIterable<K,V>
+    MapIterable <|-- UnsortedMapIterable
+}
+
+package org.eclipse.collections.api.map.sorted {
+    interface ImmutableSortedMap<K,V>
+    SortedMapIterable <|-- ImmutableSortedMap
+    ImmutableMapIterable <|-- ImmutableSortedMap
+
+    interface MutableSortedMap<K,V>
+    MutableMapIterable <|-- MutableSortedMap
+    SortedMapIterable <|-- MutableSortedMap
+    SortedMap <|-- MutableSortedMap
+
+    interface SortedMapIterable<K,V>
+    MapIterable <|-- SortedMapIterable
+    ReversibleIterable <|-- SortedMapIterable
+}
+
+package org.eclipse.collections.api.bimap {
+    interface BiMap<K,V>
+    MapIterable <|-- BiMap
+
+    interface ImmutableBiMap<K,V>
+    BiMap <|-- ImmutableBiMap
+    ImmutableMapIterable <|-- ImmutableBiMap
+
+    interface MutableBiMap<K,V>
+    BiMap <|-- MutableBiMap
+    MutableMapIterable <|-- MutableBiMap
+}
+
+@enduml
