@@ -4,7 +4,7 @@ source "$ENV/lib/bash/console.sh"
 COLIMA="$(brew --prefix)/bin/colima"
 exec-if-dark "$COLIMA" "$@"
 
-if command -v dark >/dev/null 2>&1 && [[ $1 == "start" || $1 == "stop" ]]; then
+if command -v dark >/dev/null 2>&1 && [[ $1 == start || $1 == stop || $1 == restart || $1 == ssh ]]; then
     DARK=(dark)
 else
     DARK=()

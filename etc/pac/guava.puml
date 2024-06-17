@@ -1,6 +1,18 @@
 @startuml guava
 !include java-base.puml
 
+package org.springframework.util {
+    class LinkedCaseInsensitiveMap<K,V>
+    Map <|-- LinkedCaseInsensitiveMap
+
+    interface MultiValueMap<K,V>
+    class MultiValueMapAdapter<K,V>
+    class LinkedMultiValueMap<K,V>
+    Map <|-- MultiValueMap
+    MultiValueMap <|-- MultiValueMapAdapter
+    MultiValueMapAdapter <|-- LinkedMultiValueMap
+}
+
 package com.google.common.collect {
     interface SortedIterable<E>
     Iterable <|-- SortedIterable
