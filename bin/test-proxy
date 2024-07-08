@@ -21,6 +21,7 @@ readonly -A _FLAGS=(
     [GB]=🇬🇧
     [DE]=🇩🇪
     [FI]=🇫🇮
+    [LU]=🇱🇺
 )
 
 source "$ENV/lib/bash/json.sh"
