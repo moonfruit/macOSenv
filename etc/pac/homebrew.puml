@@ -191,6 +191,7 @@ skinparam usecase {
 (harfbuzz)-->(graphite2)
 (harfbuzz)-->(icu4c)
 (hazelcast/hz/hazelcast)
+(hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
 (hexyl)
 (highway) << dep >>
@@ -325,8 +326,6 @@ skinparam usecase {
 (maven)-->(openjdk)
 (miniserve)
 (mkcert)
-(mockserver)
-(mockserver)-->(openjdk)
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
