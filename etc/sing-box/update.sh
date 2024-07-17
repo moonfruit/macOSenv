@@ -13,15 +13,15 @@ DIR=$(main-script-directory)
 create-temp-directory TEMP_DIR
 cd "$TEMP_DIR" || exit 1
 
-echo " --- === Update ui === ---"
+echo " --- === Updating ui === ---"
 download-branch "$DIR/ui" MetaCubeX Yacd-meta gh-pages
-
 echo
-echo " --- === Update config.json === ---"
+
+echo " --- === Updating config.json === ---"
 
 restart() {
     echo
-    echo " --- === Restart sing-box === ---"
+    echo " --- === Restarting sing-box === ---"
     if RESULT=$(sing-box -c "$DIR/config.json" check 2>&1); then
         "$DIR/restart.sh"
     else
@@ -33,3 +33,4 @@ curl ***REMOVED*** |
     DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" |
     sing-box format -c /dev/stdin >config.json
 copy-if-diff config.json "$DIR" restart
+echo
