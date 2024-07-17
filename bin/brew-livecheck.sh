@@ -17,10 +17,13 @@ readonly EXTRA=(
     ariang
     c0re100-qbittorrent
     dbvisualizer
+    discord
     kitty
     macast
     motrix
     oracle-jdk
+    oracle-jdk@17
+    oracle-jdk@21
     qbittorrent
     rapidapi
     semeru-jdk-open
@@ -29,7 +32,12 @@ readonly EXTRA=(
     semeru-jdk-open@17
     semeru-jdk-open@21
     slack
-    slack@beta
+    wezterm
+    zulu
+    zulu@8
+    zulu@11
+    zulu@17
+    zulu@21
 
     homebrew/cask/docker
     homebrew/cask/samsung-portable-ssd-t7

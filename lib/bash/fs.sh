@@ -6,23 +6,23 @@ source "$ENV/lib/bash/native.sh"
 
 create-temp-directory() {
     local -n _variable=$1
-    local prefix
-    local temp
-    prefix=$(simple-basename "$0")
-    if temp=$(mktemp -d -t "$prefix.$1"); then
-        trap-add "rm -fr '$temp'" EXIT
-        _variable=$temp
+    local _prefix
+    local _temp
+    _prefix=$(simple-basename "$0")
+    if _temp=$(mktemp -d -t "$_prefix.$1"); then
+        trap-add "rm -fr '$_temp'" EXIT
+        _variable=$_temp
     fi
 }
 
 create-temp-file() {
     local -n _variable=$1
-    local prefix
-    local temp
-    prefix=$(simple-basename "$0")
-    if temp=$(mktemp -t "$prefix.$1"); then
-        trap-add "rm -f '$temp'" EXIT
-        _variable=$temp
+    local _prefix
+    local _temp
+    _prefix=$(simple-basename "$0")
+    if _temp=$(mktemp -t "$_prefix.$1"); then
+        trap-add "rm -f '$_temp'" EXIT
+        _variable=$_temp
     fi
 }
 
