@@ -12,7 +12,7 @@ find-latest-release-url() {
     else
         expression="first(.assets[].browser_download_url|select(endswith(\"$3\")))"
     fi
-    curl "https://api.github.com/repos/$1/$2/releases/latest" | jq -r "$expression"
+    gh api "repos/$1/$2/releases/latest" --jq "$expression"
 }
 
 download-latest-release() {
@@ -55,7 +55,7 @@ download-latest-release() {
 }
 
 find-branch-commit() {
-    curl "https://api.github.com/repos/$1/$2/branches/$3" | jq -r ".commit.sha"
+    gh api "repos/$1/$2/branches/$3" --jq ".commit.sha"
 }
 
 download-branch() {
