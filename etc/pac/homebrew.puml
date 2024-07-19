@@ -29,7 +29,7 @@ skinparam usecase {
 (bash-language-server)
 (bash-language-server)-->(node)
 (bat)
-(bat)-->(libgit2)
+(bat)-->(libgit2@1.7)
 (bat)-->(oniguruma)
 (bfg)
 (bfg)-->(openjdk)
@@ -42,6 +42,7 @@ skinparam usecase {
 (cairo) << dep >>
 (cairo)-->(fontconfig)
 (cairo)-->(freetype)
+(cairo)-->(gettext)
 (cairo)-->(glib)
 (cairo)-->(libpng)
 (cairo)-->(libx11)
@@ -178,6 +179,8 @@ skinparam usecase {
 (graphviz)-->(librsvg)
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
+(grep)
+(grep)-->(pcre2)
 (grpcurl)
 (gts) << dep >>
 (gts)-->(gettext)
@@ -241,6 +244,9 @@ skinparam usecase {
 (libgit2) << dep >>
 (libgit2)-->(libssh2)
 (libgit2)-->(openssl@3)
+(libgit2@1.7) << dep >>
+(libgit2@1.7)-->(libssh2)
+(libgit2@1.7)-->(openssl@3)
 (libgpg-error) << dep >>
 (libgpg-error)-->(gettext)
 (libidn2) << dep >>
@@ -515,7 +521,7 @@ skinparam usecase {
 (ruby)-->(libyaml)
 (ruby)-->(openssl@3)
 (rust)
-(rust)-->(libgit2)
+(rust)-->(libgit2@1.7)
 (rust)-->(libssh2)
 (rust)-->(llvm)
 (rust)-->(openssl@3)
