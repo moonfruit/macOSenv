@@ -21,7 +21,7 @@ local prepend-path() {
     local bin=$1
     local dir
     if [[ -d $bin ]]; then
-        if [[ $bin = */gnubin ]]; then
+        if [[ $bin = */gnubin && ! -d "$bin/man" ]]; then
             dir=${bin%/*}
             bin=$dir/bin
             if [[ ! -e $bin ]]; then
