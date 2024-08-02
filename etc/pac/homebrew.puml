@@ -57,6 +57,7 @@ skinparam usecase {
 (choose-rust)
 (clang-format)
 (cmake)
+(cobalt)
 (codespell)
 (codespell)-->(python@3.12)
 (colima)
@@ -68,7 +69,6 @@ skinparam usecase {
 (curl)-->(libidn2)
 (curl)-->(libnghttp2)
 (curl)-->(libssh2)
-(curl)-->(openldap)
 (curl)-->(openssl@3)
 (curl)-->(rtmpdump)
 (curl)-->(zstd)
@@ -196,6 +196,7 @@ skinparam usecase {
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
+(hazelcast/hz/hazelcast-management-center)-->(openjdk@21)
 (hexyl)
 (highway) << dep >>
 (htop)
@@ -237,8 +238,12 @@ skinparam usecase {
 (libavif)-->(aom)
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
+(libcbor) << dep >>
 (libevent) << dep >>
 (libevent)-->(openssl@3)
+(libfido2) << dep >>
+(libfido2)-->(libcbor)
+(libfido2)-->(openssl@3)
 (libgcrypt) << dep >>
 (libgcrypt)-->(libgpg-error)
 (libgit2) << dep >>
@@ -315,6 +320,7 @@ skinparam usecase {
 (llvm)-->(zstd)
 (lpeg) << dep >>
 (lrzsz)
+(lsof)
 (lua)
 (lua-language-server)
 (luacheck)
@@ -338,7 +344,6 @@ skinparam usecase {
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/macos-totp-cli)
-(moonfruit/tap/ngrrram)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/sshpass)
 (moonfruit/tap/tongsuo) << dep >>
@@ -357,6 +362,12 @@ skinparam usecase {
 (mpfr) << dep >>
 (mpfr)-->(gmp)
 (msgpack) << dep >>
+(mysql-client)
+(mysql-client)-->(libevent)
+(mysql-client)-->(libfido2)
+(mysql-client)-->(openssl@3)
+(mysql-client)-->(zlib)
+(mysql-client)-->(zstd)
 (ncdu)
 (ncdu)-->(ncurses)
 (ncruces/tap/zenity)
@@ -424,8 +435,6 @@ skinparam usecase {
 (openjdk@21)-->(jpeg-turbo)
 (openjdk@21)-->(libpng)
 (openjdk@21)-->(little-cms2)
-(openldap) << dep >>
-(openldap)-->(openssl@3)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
 (oven-sh/bun/bun)
@@ -609,6 +618,7 @@ skinparam usecase {
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.12)
 (z3) << dep >>
+(zlib) << dep >>
 (zopfli) << dep >>
 (zsh)
 (zsh)-->(ncurses)
