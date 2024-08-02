@@ -68,10 +68,15 @@ readonly EXCLUDED=(
     hazelcast/hz/hazelcast-management-center
     homebrew/cask/microsoft-edge
     homebrew/cask/tencent-meeting
+    homebrew/core/bash
+    homebrew/core/git
+    homebrew/core/git-svn
     homebrew/core/luajit
+    homebrew/core/mysql
+    homebrew/core/mysql-client
     homebrew/core/nghttp2
     homebrew/core/libnghttp2
-    homebrew/core/redis
+    homebrew/core/libgit2@1.7
 )
 
 join-by() {
