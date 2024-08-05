@@ -57,7 +57,6 @@ skinparam usecase {
 (choose-rust)
 (clang-format)
 (cmake)
-(cobalt)
 (codespell)
 (codespell)-->(python@3.12)
 (colima)
@@ -179,8 +178,6 @@ skinparam usecase {
 (graphviz)-->(librsvg)
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
-(grep)
-(grep)-->(pcre2)
 (grpcurl)
 (gts) << dep >>
 (gts)-->(gettext)
@@ -320,7 +317,6 @@ skinparam usecase {
 (llvm)-->(zstd)
 (lpeg) << dep >>
 (lrzsz)
-(lsof)
 (lua)
 (lua-language-server)
 (luacheck)
@@ -356,7 +352,6 @@ skinparam usecase {
 (moonfruit/tap/wlp-webprofile8)
 (moonfruit/tap/wlp-webprofile8)-->(openjdk)
 (mosh)
-(mosh)-->(abseil)
 (mosh)-->(protobuf)
 (mpdecimal) << dep >>
 (mpfr) << dep >>
@@ -405,8 +400,6 @@ skinparam usecase {
 (node)-->(libuv)
 (node)-->(openssl@3)
 (npth) << dep >>
-(nushell)
-(nushell)-->(openssl@3)
 (oniguruma) << dep >>
 (opencc)
 (openexr) << dep >>
@@ -613,6 +606,9 @@ skinparam usecase {
 (yaml-language-server)
 (yaml-language-server)-->(node)
 (yarn)
+(you-get)
+(you-get)-->(python@3.12)
+(you-get)-->(rtmpdump)
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)
