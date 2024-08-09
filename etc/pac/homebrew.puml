@@ -78,7 +78,6 @@ skinparam usecase {
 (di)
 (direnv)
 (direnv)-->(bash)
-(dog)
 (dtc) << dep >>
 (dufs)
 (dust)
@@ -172,12 +171,20 @@ skinparam usecase {
 (gradle)-->(openjdk)
 (graphite2) << dep >>
 (graphviz) << dep >>
+(graphviz)-->(cairo)
+(graphviz)-->(fontconfig)
+(graphviz)-->(freetype)
 (graphviz)-->(gd)
+(graphviz)-->(gdk-pixbuf)
+(graphviz)-->(gettext)
+(graphviz)-->(glib)
 (graphviz)-->(gts)
+(graphviz)-->(harfbuzz)
 (graphviz)-->(libpng)
 (graphviz)-->(librsvg)
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
+(graphviz)-->(webp)
 (grpcurl)
 (gts) << dep >>
 (gts)-->(gettext)
@@ -231,6 +238,8 @@ skinparam usecase {
 (lazygit)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
+(libassuan@2) << dep >>
+(libassuan@2)-->(libgpg-error)
 (libavif) << dep >>
 (libavif)-->(aom)
 (libavif)-->(jpeg-turbo)
@@ -335,6 +344,7 @@ skinparam usecase {
 (miniserve)
 (mkcert)
 (mongodb/brew/mongodb-community)
+(moonfruit/tap/doge)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
@@ -453,7 +463,7 @@ skinparam usecase {
 (pinentry)-->(libgpg-error)
 (pinentry-mac)
 (pinentry-mac)-->(gettext)
-(pinentry-mac)-->(libassuan)
+(pinentry-mac)-->(libassuan@2)
 (pipgrip)
 (pipgrip)-->(python@3.12)
 (pixman) << dep >>
@@ -597,7 +607,6 @@ skinparam usecase {
 (wget)-->(libidn2)
 (wget)-->(libunistring)
 (wget)-->(openssl@3)
-(whalebrew)
 (xh)
 (xorgproto) << dep >>
 (xq)

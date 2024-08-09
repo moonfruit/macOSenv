@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
 	exec proxy "$0" "$@"
@@ -36,8 +36,27 @@ pull() {
 pull homebrew/homebrew-core
 pull homebrew/homebrew-cask
 
+brew-info() {
+	if (($# > 0)); then
+		brew info --json=v2 "$@"
+	else
+		xargs brew info --json=v2
+	fi
+}
+
+cleanup() {
+	readarray -t NOCHECK < <(
+		brew-info "$@" | jq -r '.casks[] | select(.sha256 == "no_check") | .full_token'
+	)
+	if [[ ${#NOCHECK[@]} -gt 0 ]]; then
+		echo "$GREEN==>$RESET ${BOLD}Cleaning casks: ${NOCHECK[*]} $RESET"
+		brew cleanup --prune=all "${NOCHECK[@]}"
+	fi
+}
+
 OUTDATED=$(brew outdated)
 if [[ $OUTDATED ]]; then
+	echo "$OUTDATED" | choose 0 | cleanup
 	if brew upgrade --force-bottle --display-times; then
 		brew autoremove
 		echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
@@ -50,7 +69,9 @@ if [[ $OUTDATED ]]; then
 	echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
 	echo "$OUTDATED"
 	echo "$GREEN==>$RESET ${BOLD}Upgrade casks$RESET"
-	awk 'NR>2{print $2}' <<<"$OUTDATED" | while read -r CASK; do
+	readarray -t CASKS < <(echo "$OUTDATED" | awk 'NR>2{print $2}')
+	for CASK in "${CASKS[@]}"; do
 		echo "brew ${BOLD}upgrade$RESET --cask $BLUE$CASK$RESET"
 	done
+	cleanup "${CASKS[@]}"
 fi
