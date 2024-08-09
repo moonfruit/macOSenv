@@ -67,6 +67,7 @@ readonly EXCLUDED=(
     hazelcast/hz/hazelcast
     hazelcast/hz/hazelcast-management-center
     homebrew/cask/microsoft-edge
+    homebrew/cask/sf-symbols
     homebrew/cask/tencent-meeting
     homebrew/core/bash
     homebrew/core/git
@@ -77,6 +78,7 @@ readonly EXCLUDED=(
     homebrew/core/nghttp2
     homebrew/core/libnghttp2
     homebrew/core/libgit2@1.7
+    homebrew/core/python@3.12
 )
 
 join-by() {
