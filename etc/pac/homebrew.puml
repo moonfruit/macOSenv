@@ -154,6 +154,7 @@ skinparam usecase {
 (gnupg)-->(readline)
 (gnutls) << dep >>
 (gnutls)-->(ca-certificates)
+(gnutls)-->(gettext)
 (gnutls)-->(gmp)
 (gnutls)-->(libidn2)
 (gnutls)-->(libtasn1)
