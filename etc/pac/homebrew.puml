@@ -52,6 +52,7 @@ skinparam usecase {
 (cairo)-->(lzo)
 (cairo)-->(pixman)
 (capstone) << dep >>
+(capstone)-->(gettext)
 (certifi) << dep >>
 (certifi)-->(ca-certificates)
 (choose-rust)

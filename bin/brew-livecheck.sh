@@ -79,6 +79,7 @@ readonly EXCLUDED=(
     homebrew/core/libnghttp2
     homebrew/core/libgit2@1.7
     homebrew/core/python@3.12
+    oven-sh/bun/bun
 )
 
 join-by() {
