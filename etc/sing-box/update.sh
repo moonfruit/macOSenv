@@ -29,8 +29,13 @@ restart() {
     fi
 }
 
-curl ***REMOVED*** |
-    DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" |
+NAMES=()
+while read -r NAME URL; do
+    proxy none wget "$URL" -O "$NAME"
+    NAMES+=("$NAME")
+done <"$(current-script-directory)/clash.txt"
+
+DIRENV_LOG_FORMAT="" direnv exec "$WORKSPACE/proxy/sing-rules/clash-to-sing.py" "${NAMES[@]}" - |
     sing-box format -c /dev/stdin >config.json
 copy-if-diff config.json "$DIR" restart
 echo
