@@ -23,7 +23,7 @@ simple-dirname() {
 }
 
 current-script-directory() {
-    to-absolute-path "$(simple-dirname "${BASH_SOURCE[0]}")"
+    to-absolute-path "$(simple-dirname "${BASH_SOURCE[1]}")"
 }
 
 main-script-directory() {

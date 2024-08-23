@@ -127,26 +127,26 @@ describe() {
 
 handle-outdated() {
     mapfile -t OUTPUT < <(jq -r --argjson excluded "$EXCLUDED_JSON" '.[] |
-		select(.version.outdated) | {
-			type: "\(if .formula then "formula" else "cask" end)",
-			name: "\(if .formula then .formula else .cask end)",
-			version: .version
-		} |
-		select(.name | in($excluded) | not) |
-		"\(.type);\(.name);\(.version.current);\(.version.latest)"')
+        select(.version.outdated) | {
+            type: "\(if .formula then "formula" else "cask" end)",
+            name: "\(if .formula then .formula else .cask end)",
+            version: .version
+        } |
+        select(.name | in($excluded) | not) |
+        "\(.type);\(.name);\(.version.current);\(.version.latest)"')
     OUTDATED+=("${OUTPUT[@]}")
     iterate describe "${OUTPUT[@]}"
 }
 
 brew-extra() {
     brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
-		select(.installed | length == 0) |
-		"\(if .tap == null then "homebrew/cask" else .tap end)/\(if has("token") then .token else .name end)"'
+        select(.installed | length == 0) |
+        "\(if .tap == null then "homebrew/cask" else .tap end)/\(if has("token") then .token else .name end)"'
 }
 
 brew-ls() {
     brew info --json=v2 --installed | jq -r '.formulae + .casks | .[] |
-		"\(.tap)/\(if has("token") then .token else .name end)"'
+        "\(.tap)/\(if has("token") then .token else .name end)"'
     brew-extra
 }
 

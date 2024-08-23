@@ -25,9 +25,13 @@ fi
 export PROXY_ENABLED=1
 
 if [[ $port == 0 ]]; then
+    unset http_proxy
+    unset https_proxy
     exec "$@"
 
 elif [[ $port == 1080 || $port == 9150 ]]; then
+    unset http_proxy
+    unset https_proxy
     # export all_proxy="socks5://127.0.0.1:$port"
     exec proxychains "$port" "$@"
 
