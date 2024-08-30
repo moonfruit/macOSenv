@@ -344,6 +344,7 @@ skinparam usecase {
 (maven)
 (maven)-->(openjdk)
 (miniserve)
+(miniupnpc)
 (mkcert)
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/doge)
