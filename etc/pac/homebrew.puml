@@ -35,10 +35,10 @@ skinparam usecase {
 (bfg)-->(openjdk)
 (black)
 (black)-->(python@3.12)
-(bottom)
 (brotli) << dep >>
 (c-ares) << dep >>
 (ca-certificates) << dep >>
+(caddy)
 (cairo) << dep >>
 (cairo)-->(fontconfig)
 (cairo)-->(freetype)
