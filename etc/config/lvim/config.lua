@@ -33,12 +33,12 @@ lvim.builtin.which_key.mappings["n"] = { "<Cmd>BufferLineCycleNext<CR>", "Next B
 lvim.builtin.which_key.mappings["N"] = { "<Cmd>BufferLineCyclePrev<CR>", "Previous Buffer" }
 lvim.builtin.which_key.mappings["t"] = {
     name = "+Trouble",
-    r = { "<cmd>Trouble lsp_references<cr>", "References" },
-    f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-    d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-    q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-    l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-    w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+    d = { "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics" },
+    b = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics" },
+    s = { "<cmd>Trouble symbols toggle focus=false<cr>", "Symbols" },
+    p = { "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", "LSP Definitions / references / ..." },
+    l = { "<cmd>Trouble loclist toggle<cr>", "Location List" },
+    q = { "<cmd>Trouble qflist toggle<cr>", "Quickfix List" },
 }
 lvim.builtin.which_key.mappings["T"]["n"] = { "<Cmd>TSInstallInfo<CR>", "InstallInfo" }
 lvim.builtin.which_key.mappings["T"]["t"] = { "<Cmd>TSToggle<CR>", "Toggle" }
@@ -58,8 +58,9 @@ lvim.lsp.installer.setup.automatic_installation = {
     exclude = {
         "bashls",
         "clangd",
+        "cmake",
         "cssls",
-        "eslint",
+        "dockerls",
         "gopls",
         "html",
         "jdtls",
@@ -67,6 +68,7 @@ lvim.lsp.installer.setup.automatic_installation = {
         "lua_ls",
         "marksman",
         "pyright",
+        "ruff",
         "solargraph",
         "sumneko_lua",
         "tailwindcss",
@@ -85,7 +87,7 @@ vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "solargraph"
 --- Remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
 --- `:LvimInfo` lists which server(s) are skipped for the current filetype
 lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
-    return server ~= "gradle_ls" and server ~= "ruby_ls"
+    return server ~= "gradle_ls" and server ~= "ruby_lsp"
 end, lvim.lsp.automatic_configuration.skipped_servers)
 
 --- You can set a custom on_attach function that will be used for all the language servers
@@ -115,7 +117,7 @@ linters.setup({
         extra_args = { "--builtin", "clear,rare,code", "--ignore-words", get_config_dir() .. "/dictionary.txt" },
     },
     -- { command = "shellcheck", extra_args = { "--severity", "warning" } }, -- included by bashls
-    { command = "flake8", extra_args = { "--max-line-length=120" } },
+    -- { command = "flake8", extra_args = { "--max-line-length=120" } }, -- replaced by ruff
     -- { command = "eslint" },
 })
 
@@ -125,7 +127,8 @@ lvim.plugins = {
     "folke/tokyonight.nvim",
     {
         "folke/trouble.nvim",
-        cmd = "TroubleToggle",
+        opts = {},
+        cmd = "Trouble",
     },
     {
         "ethanholz/nvim-lastplace",
