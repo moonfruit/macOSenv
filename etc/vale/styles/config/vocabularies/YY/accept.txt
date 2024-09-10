@@ -1,0 +1,9 @@
+filetype
+formatter
+gingkoo
+gitcommit
+lualine
+solarized
+treesitter
+uncomment
+zsh
