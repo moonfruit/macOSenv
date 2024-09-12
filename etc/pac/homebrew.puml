@@ -602,7 +602,6 @@ skinparam usecase {
 (unbound)-->(openssl@3)
 (unibilium) << dep >>
 (utf8proc) << dep >>
-(vale)
 (vde) << dep >>
 (vscode-langservers-extracted)
 (vscode-langservers-extracted)-->(node)
