@@ -69,6 +69,7 @@ readonly EXCLUDED=(
     homebrew/cask/microsoft-edge
     homebrew/cask/sf-symbols
     homebrew/cask/tencent-meeting
+    homebrew/cask/tencent-docs
     homebrew/core/bash
     homebrew/core/git
     homebrew/core/git-svn

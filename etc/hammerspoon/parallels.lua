@@ -26,22 +26,53 @@ local function flagsToString(flags)
     return result .. "}"
 end
 
-local function asGostRoute(address, port)
+local function asService(id, address, port)
     return {
-        ServeNodes = {address .. ":" .. port},
-        ChainNodes = {":" .. port}
+        name = "service-" .. id,
+        addr = address .. ":" .. port,
+        handler = {
+            type = "http",
+            chain = "chain-" .. id,
+        },
+        listener = {
+            type = "tcp",
+        },
     }
 end
 
-local function generateGostJson(address, ports)
-    local json = asGostRoute(address, ports[1])
-    if #ports > 1 then
-        json.Routes = {}
-        for i = 2, #ports do
-            table.insert(json.Routes, asGostRoute(address, ports[i]))
-        end
+local function asChain(id, port)
+    return {
+        name = "chain-" .. id,
+        hops = {{
+            name = "hop-" .. id,
+            nodes = {{
+                name = "node-" .. id,
+                addr = "127.0.0.1:" .. port,
+                connector = {
+                    type = "http"
+                },
+                dialer = {
+                    type = "tcp"
+                }
+            }}
+        }}
+    }
+end
+
+local function asGost(address, ports)
+    local config = {
+        services = {},
+        chains = {},
+    }
+    for i, port in ipairs(ports) do
+        table.insert(config.services, asService(i, address, port))
+        table.insert(config.chains, asChain(i, port))
     end
-    return hs.json.encode(json, true)
+    return config
+end
+
+local function generateGostJson(address, ports)
+    return hs.json.encode(asGost(address, ports), true)
 end
 
 local function writeToFile(filename, text)
@@ -111,7 +142,7 @@ function M.forAddress(address, ...)
             local hash = hs.hash.MD5(json)
             self.config = hs.fs.temporaryDirectory() .. "gost-" .. hash .. ".json"
             writeToFile(self.config, json)
-            self.task = hs.task.new("/opt/homebrew/bin/gost", nil, {"-C", self.config}):start()
+            self.task = hs.task.new("/opt/homebrew/opt/gost@3/bin/gost", nil, {"-C", self.config}):start()
             print(string.format("Started gost(%s) -C %s", self.task:pid(), self.config))
         end
     end
