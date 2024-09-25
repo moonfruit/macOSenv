@@ -32,7 +32,7 @@ restart() {
 mkdir -p dat
 while read -r NAME URL; do
     proxy none wget "$URL" -O "dat/$NAME"
-done <"$(current-script-directory)/clash.txt"
+done < <(rg -v '^#' "$(current-script-directory)/clash.txt")
 
 SING_RULES="$WORKSPACE/proxy/sing-rules"
 DIRENV_LOG_FORMAT="" direnv exec "$SING_RULES/clash-to-sing.py" -c "$SING_RULES/config/config.json" |
