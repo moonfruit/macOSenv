@@ -380,6 +380,7 @@ skinparam usecase {
 (mysql-client)-->(zstd)
 (ncdu)
 (ncdu)-->(ncurses)
+(ncdu)-->(zstd)
 (ncruces/tap/zenity)
 (ncurses) << dep >>
 (neovide)
@@ -433,6 +434,7 @@ skinparam usecase {
 (openjdk@11)-->(libpng)
 (openjdk@11)-->(little-cms2)
 (openjdk@17)
+(openjdk@17)-->(freetype)
 (openjdk@17)-->(giflib)
 (openjdk@17)-->(harfbuzz)
 (openjdk@17)-->(jpeg-turbo)

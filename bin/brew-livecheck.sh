@@ -73,12 +73,14 @@ readonly EXCLUDED=(
     homebrew/core/bash
     homebrew/core/git
     homebrew/core/git-svn
+    homebrew/core/libgit2@1.7
+    homebrew/core/icu4c
     homebrew/core/luajit
     homebrew/core/mysql
     homebrew/core/mysql-client
     homebrew/core/nghttp2
     homebrew/core/libnghttp2
-    homebrew/core/libgit2@1.7
+    homebrew/core/libgcrypt
     homebrew/core/python@3.12
     oven-sh/bun/bun
 )
