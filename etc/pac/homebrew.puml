@@ -428,6 +428,7 @@ skinparam usecase {
 (openjdk)-->(libpng)
 (openjdk)-->(little-cms2)
 (openjdk@11)
+(openjdk@11)-->(freetype)
 (openjdk@11)-->(giflib)
 (openjdk@11)-->(harfbuzz)
 (openjdk@11)-->(jpeg-turbo)
