@@ -21,7 +21,7 @@ skinparam usecase {
 (aria2)-->(openssl@3)
 (aria2)-->(sqlite)
 (autojump)
-(autojump)-->(python@3.12)
+(autojump)-->(python@3.13)
 (azhuchkov/tools/tunblkctl)
 (bash)
 (bash-completion@2)
@@ -34,7 +34,7 @@ skinparam usecase {
 (bfg)
 (bfg)-->(openjdk)
 (black)
-(black)-->(python@3.12)
+(black)-->(python@3.13)
 (brotli) << dep >>
 (c-ares) << dep >>
 (ca-certificates) << dep >>
@@ -61,7 +61,7 @@ skinparam usecase {
 (cmake-language-server)
 (cmake-language-server)-->(python@3.12)
 (codespell)
-(codespell)-->(python@3.12)
+(codespell)-->(python@3.13)
 (colima)
 (colima)-->(lima)
 (cpanminus)
@@ -94,7 +94,7 @@ skinparam usecase {
 (file-formula)
 (file-formula)-->(libmagic)
 (flake8)
-(flake8)-->(python@3.12)
+(flake8)-->(python@3.13)
 (fontconfig) << dep >>
 (fontconfig)-->(freetype)
 (fossil)
@@ -214,14 +214,14 @@ skinparam usecase {
 (htop)-->(ncurses)
 (httpie)
 (httpie)-->(certifi)
-(httpie)-->(python@3.12)
+(httpie)-->(python@3.13)
 (hyperfine)
 (icu4c@75) << dep >>
 (imath) << dep >>
 (iperf3)
 (iperf3)-->(openssl@3)
 (ipython)
-(ipython)-->(python@3.12)
+(ipython)-->(python@3.13)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
 (jdtls)
@@ -640,7 +640,7 @@ skinparam usecase {
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)
-(yt-dlp)-->(python@3.12)
+(yt-dlp)-->(python@3.13)
 (zlib) << dep >>
 (zopfli) << dep >>
 (zsh)
