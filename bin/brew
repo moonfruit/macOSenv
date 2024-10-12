@@ -94,4 +94,19 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
     esac
 fi
 
-exec "${brew[@]}" "$@"
+ARGS=()
+case $1 in
+info | abv | install | reinstall | uninstall | remove | rm | upgrade | test)
+    for ARG in "$@"; do
+        if [[ $ARG != "and" ]]; then
+            ARGS+=("${ARG%,}")
+        fi
+    done
+    ;;
+esac
+
+if [ ${#ARGS[@]} -eq 0 ]; then
+    exec "${brew[@]}" "$@"
+else
+    exec "${brew[@]}" "${ARGS[@]}"
+fi

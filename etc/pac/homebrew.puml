@@ -202,7 +202,7 @@ skinparam usecase {
 (harfbuzz)-->(freetype)
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
-(harfbuzz)-->(icu4c)
+(harfbuzz)-->(icu4c@75)
 (harfbuzz)-->(python@3.12)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
@@ -216,7 +216,7 @@ skinparam usecase {
 (httpie)-->(certifi)
 (httpie)-->(python@3.12)
 (hyperfine)
-(icu4c) << dep >>
+(icu4c@75) << dep >>
 (imath) << dep >>
 (iperf3)
 (iperf3)-->(openssl@3)
@@ -252,6 +252,7 @@ skinparam usecase {
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
 (libcbor) << dep >>
+(libdeflate) << dep >>
 (libevent) << dep >>
 (libevent)-->(openssl@3)
 (libfido2) << dep >>
@@ -411,7 +412,7 @@ skinparam usecase {
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
-(node)-->(icu4c)
+(node)-->(icu4c@75)
 (node)-->(libnghttp2)
 (node)-->(libuv)
 (node)-->(openssl@3)
@@ -420,6 +421,7 @@ skinparam usecase {
 (opencc)
 (openexr) << dep >>
 (openexr)-->(imath)
+(openexr)-->(libdeflate)
 (openjdk)
 (openjdk)-->(freetype)
 (openjdk)-->(giflib)
@@ -475,7 +477,7 @@ skinparam usecase {
 (pinentry-mac)-->(gettext)
 (pinentry-mac)-->(libassuan@2)
 (pipgrip)
-(pipgrip)-->(python@3.12)
+(pipgrip)-->(python@3.13)
 (pixman) << dep >>
 (pkg-config) << dep >>
 (plantuml)
@@ -484,7 +486,7 @@ skinparam usecase {
 (popt) << dep >>
 (postgresql@16)
 (postgresql@16)-->(gettext)
-(postgresql@16)-->(icu4c)
+(postgresql@16)-->(icu4c@75)
 (postgresql@16)-->(krb5)
 (postgresql@16)-->(lz4)
 (postgresql@16)-->(openssl@3)
@@ -506,6 +508,11 @@ skinparam usecase {
 (python@3.12)-->(openssl@3)
 (python@3.12)-->(sqlite)
 (python@3.12)-->(xz)
+(python@3.13) << dep >>
+(python@3.13)-->(mpdecimal)
+(python@3.13)-->(openssl@3)
+(python@3.13)-->(sqlite)
+(python@3.13)-->(xz)
 (qemu) << dep >>
 (qemu)-->(capstone)
 (qemu)-->(dtc)
