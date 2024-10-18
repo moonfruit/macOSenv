@@ -18,11 +18,12 @@ readonly EXTRA=(
     c0re100-qbittorrent
     dbvisualizer
     discord
+    graalvm-jdk
+    graalvm-jdk@21
     kitty
     macast
     motrix
     oracle-jdk
-    oracle-jdk@17
     oracle-jdk@21
     qbittorrent
     rapidapi
@@ -81,7 +82,7 @@ readonly EXCLUDED=(
     homebrew/core/nghttp2
     homebrew/core/libnghttp2
     homebrew/core/libgcrypt
-    homebrew/core/python@3.12
+    homebrew/core/python@3.13
     oven-sh/bun/bun
 )
 

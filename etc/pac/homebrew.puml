@@ -59,7 +59,7 @@ skinparam usecase {
 (clang-format)
 (cmake)
 (cmake-language-server)
-(cmake-language-server)-->(python@3.12)
+(cmake-language-server)-->(python@3.13)
 (codespell)
 (codespell)-->(python@3.13)
 (colima)
@@ -140,7 +140,7 @@ skinparam usecase {
 (glib)-->(gettext)
 (glib)-->(pcre2)
 (glib)-->(python-packaging)
-(glib)-->(python@3.12)
+(glib)-->(python@3.13)
 (gmp) << dep >>
 (gmssl)
 (gnu-getopt)
@@ -196,6 +196,8 @@ skinparam usecase {
 (gts)-->(gettext)
 (gts)-->(glib)
 (gts)-->(netpbm)
+(gwt)
+(gwt)-->(openjdk)
 (harelba/q/q)
 (harfbuzz) << dep >>
 (harfbuzz)-->(cairo)
@@ -203,7 +205,7 @@ skinparam usecase {
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
 (harfbuzz)-->(icu4c@75)
-(harfbuzz)-->(python@3.12)
+(harfbuzz)-->(python@3.13)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
@@ -226,7 +228,7 @@ skinparam usecase {
 (jasper)-->(jpeg-turbo)
 (jdtls)
 (jdtls)-->(openjdk)
-(jdtls)-->(python@3.12)
+(jdtls)-->(python@3.13)
 (jpeg-turbo) << dep >>
 (jpeg-xl) << dep >>
 (jpeg-xl)-->(brotli)
@@ -355,6 +357,7 @@ skinparam usecase {
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
+(moonfruit/tap/macmon)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/tongsuo) << dep >>
@@ -503,11 +506,6 @@ skinparam usecase {
 (pyright)
 (pyright)-->(node)
 (python-packaging) << dep >>
-(python@3.12) << dep >>
-(python@3.12)-->(mpdecimal)
-(python@3.12)-->(openssl@3)
-(python@3.12)-->(sqlite)
-(python@3.12)-->(xz)
 (python@3.13) << dep >>
 (python@3.13)-->(mpdecimal)
 (python@3.13)-->(openssl@3)
@@ -634,9 +632,6 @@ skinparam usecase {
 (yaml-language-server)
 (yaml-language-server)-->(node)
 (yarn)
-(you-get)
-(you-get)-->(python@3.12)
-(you-get)-->(rtmpdump)
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)
