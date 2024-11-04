@@ -34,8 +34,13 @@ while read -r NAME URL; do
     proxy none wget "$URL" -O "dat/$NAME"
 done < <(rg -v '^#' "$(current-script-directory)/clash.txt")
 
-SING_RULES="$WORKSPACE/proxy/sing-rules"
-DIRENV_LOG_FORMAT="" direnv exec "$SING_RULES/clash-to-sing.py" -c "$SING_RULES/config/config.json" |
-    sing-box format -c /dev/stdin >config.json
-copy-if-diff config.json "$DIR" restart
+clash-to-sing() {
+    local SING_RULES="$WORKSPACE/proxy/sing-rules"
+    DIRENV_LOG_FORMAT="" direnv exec \
+        "$SING_RULES/clash-to-sing.py" -c "$SING_RULES/config/config.json"
+}
+
+if clash-to-sing | sing-box format -c /dev/stdin >config.json; then
+    copy-if-diff config.json "$DIR" restart
+fi
 echo

@@ -28,6 +28,7 @@ create-temp-file() {
 
 copy-if-diff() {
     local destination
+    [[ -s "$1" ]] || return
     [[ -d "$2" ]] && destination="$2/$(simple-basename "$1")" || destination=$2
 
     diff "$destination" "$1" && return

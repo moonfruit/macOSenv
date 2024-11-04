@@ -36,6 +36,7 @@ local prepend-path() {
     fi
 }
 prepend-path "$BREW_PREFIX/opt/tscurl/bin"
+prepend-path "$BREW_PREFIX/opt/python@3.13/libexec/bin"
 prepend-path "$BREW_PREFIX/opt/lsof/bin"
 prepend-path "$BREW_PREFIX/opt/grep/libexec/gnubin"
 prepend-path "$BREW_PREFIX/opt/gnu-tar/libexec/gnubin"

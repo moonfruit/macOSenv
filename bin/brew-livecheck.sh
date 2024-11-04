@@ -67,6 +67,7 @@ readonly EXCLUDED=(
     harelba/q/q
     hazelcast/hz/hazelcast
     hazelcast/hz/hazelcast-management-center
+    homebrew/cask/istat-menus
     homebrew/cask/microsoft-edge
     homebrew/cask/sf-symbols
     homebrew/cask/tencent-meeting

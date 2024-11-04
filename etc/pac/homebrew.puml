@@ -80,6 +80,7 @@ skinparam usecase {
 (di)
 (direnv)
 (direnv)-->(bash)
+(dmalloc)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (dtc) << dep >>
@@ -204,7 +205,7 @@ skinparam usecase {
 (harfbuzz)-->(freetype)
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
-(harfbuzz)-->(icu4c@75)
+(harfbuzz)-->(icu4c@76)
 (harfbuzz)-->(python@3.13)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
@@ -218,7 +219,7 @@ skinparam usecase {
 (httpie)-->(certifi)
 (httpie)-->(python@3.13)
 (hyperfine)
-(icu4c@75) << dep >>
+(icu4c@76) << dep >>
 (imath) << dep >>
 (iperf3)
 (iperf3)-->(openssl@3)
@@ -329,8 +330,11 @@ skinparam usecase {
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
-(llvm@18) << dep >>
-(llvm@18)-->(zstd)
+(llvm) << dep >>
+(llvm)-->(python@3.13)
+(llvm)-->(xz)
+(llvm)-->(z3)
+(llvm)-->(zstd)
 (lpeg) << dep >>
 (lrzsz)
 (lua)
@@ -415,7 +419,7 @@ skinparam usecase {
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
-(node)-->(icu4c@75)
+(node)-->(icu4c@76)
 (node)-->(libnghttp2)
 (node)-->(libuv)
 (node)-->(openssl@3)
@@ -489,7 +493,7 @@ skinparam usecase {
 (popt) << dep >>
 (postgresql@16)
 (postgresql@16)-->(gettext)
-(postgresql@16)-->(icu4c@75)
+(postgresql@16)-->(icu4c@76)
 (postgresql@16)-->(krb5)
 (postgresql@16)-->(lz4)
 (postgresql@16)-->(openssl@3)
@@ -552,7 +556,7 @@ skinparam usecase {
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm@18)
+(rust)-->(llvm)
 (rust)-->(openssl@3)
 (rust)-->(pkg-config)
 (rust)-->(zstd)
@@ -636,6 +640,7 @@ skinparam usecase {
 (yt-dlp)
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.13)
+(z3) << dep >>
 (zlib) << dep >>
 (zopfli) << dep >>
 (zsh)
