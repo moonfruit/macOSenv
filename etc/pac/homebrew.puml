@@ -326,7 +326,6 @@ skinparam usecase {
 (libxrender)-->(xorgproto)
 (libyaml) << dep >>
 (lima) << dep >>
-(lima)-->(qemu)
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
@@ -486,7 +485,7 @@ skinparam usecase {
 (pipgrip)
 (pipgrip)-->(python@3.13)
 (pixman) << dep >>
-(pkg-config) << dep >>
+(pkgconf) << dep >>
 (plantuml)
 (plantuml)-->(graphviz)
 (plantuml)-->(openjdk)
@@ -515,7 +514,7 @@ skinparam usecase {
 (python@3.13)-->(openssl@3)
 (python@3.13)-->(sqlite)
 (python@3.13)-->(xz)
-(qemu) << dep >>
+(qemu)
 (qemu)-->(capstone)
 (qemu)-->(dtc)
 (qemu)-->(glib)
@@ -558,7 +557,6 @@ skinparam usecase {
 (rust)-->(libssh2)
 (rust)-->(llvm)
 (rust)-->(openssl@3)
-(rust)-->(pkg-config)
 (rust)-->(zstd)
 (sd)
 (shellcheck)

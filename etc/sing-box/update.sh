@@ -19,16 +19,6 @@ echo
 
 echo " --- === Updating config.json === ---"
 
-restart() {
-    echo
-    echo " --- === Restarting sing-box === ---"
-    if RESULT=$(sing-box -c "$DIR/config.json" check 2>&1); then
-        "$DIR/restart.sh"
-    else
-        echo "$RESULT" >&2
-    fi
-}
-
 mkdir -p dat
 while read -r NAME URL; do
     proxy none wget "$URL" -O "dat/$NAME"
@@ -40,7 +30,17 @@ clash-to-sing() {
         "$SING_RULES/clash-to-sing.py" -c "$SING_RULES/config/config.json"
 }
 
+restart-sing() {
+    echo
+    echo " --- === Restarting sing-box === ---"
+    if RESULT=$(sing-box -c "$DIR/config.json" check 2>&1); then
+        "$DIR/restart.sh"
+    else
+        echo "$RESULT" >&2
+    fi
+}
+
 if clash-to-sing | sing-box format -c /dev/stdin >config.json; then
-    copy-if-diff config.json "$DIR" restart
+    copy-if-diff config.json "$DIR" restart-sing
 fi
 echo
