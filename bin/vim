@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
-if [[ $LC_TERMINAL == iTerm2 || -n $HOMEBREW_DEV_CMD_RUN ]]; then
-    #export DIRENV_LOG_FORMAT=
-    #VIM=(proxy direnv exec "$HOME/.local/bin/lvim")
-    export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-    VIM=(proxy ~/.local/bin/lvim)
+
+NAME="${0##*/}"
+if [[ $NAME == g* ]]; then
+    VIM=(neovide --)
+    NAME=${NAME#g}
 else
     VIM=(nvim)
 fi
 
-NAME="${0##*/}"
 if [[ $NAME == view ]]; then
     VIM+=(-R)
 elif [[ $NAME == vimdiff ]]; then
