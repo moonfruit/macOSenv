@@ -33,6 +33,7 @@ skinparam usecase {
 (bat)-->(oniguruma)
 (bfg)
 (bfg)-->(openjdk)
+(biome)
 (black)
 (black)-->(python@3.13)
 (brotli) << dep >>
@@ -83,6 +84,9 @@ skinparam usecase {
 (dmalloc)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
+(dotnet@8) << dep >>
+(dotnet@8)-->(icu4c@76)
+(dotnet@8)-->(openssl@3)
 (dtc) << dep >>
 (dufs)
 (dust)
@@ -169,6 +173,8 @@ skinparam usecase {
 (gnutls)-->(p11-kit)
 (gnutls)-->(unbound)
 (go)
+(gofumpt)
+(gofumpt)-->(go)
 (gomodifytags)
 (gopls)
 (gost)
@@ -199,6 +205,7 @@ skinparam usecase {
 (gts)-->(netpbm)
 (gwt)
 (gwt)-->(openjdk)
+(hadolint)
 (harelba/q/q)
 (harfbuzz) << dep >>
 (harfbuzz)-->(cairo)
@@ -227,9 +234,6 @@ skinparam usecase {
 (ipython)-->(python@3.13)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
-(jdtls)
-(jdtls)-->(openjdk)
-(jdtls)-->(python@3.13)
 (jpeg-turbo) << dep >>
 (jpeg-xl) << dep >>
 (jpeg-xl)-->(brotli)
@@ -243,8 +247,12 @@ skinparam usecase {
 (jpeg-xl)-->(webp)
 (jq)
 (jq)-->(oniguruma)
+(kotlin-language-server)
+(kotlin-language-server)-->(openjdk@21)
 (krb5) << dep >>
 (krb5)-->(openssl@3)
+(ktlint)
+(ktlint)-->(openjdk)
 (lazygit)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
@@ -347,7 +355,12 @@ skinparam usecase {
 (lzo) << dep >>
 (m4) << dep >>
 (make)
+(markdown-toc)
+(markdown-toc)-->(node)
+(markdownlint-cli2)
+(markdownlint-cli2)-->(node)
 (marksman)
+(marksman)-->(dotnet@8)
 (mas)
 (maven)
 (maven)-->(openjdk)
@@ -390,8 +403,6 @@ skinparam usecase {
 (ncdu)-->(zstd)
 (ncruces/tap/zenity)
 (ncurses) << dep >>
-(neovide)
-(neovide)-->(neovim)
 (neovim)
 (neovim)-->(gettext)
 (neovim)-->(libuv)
@@ -562,7 +573,11 @@ skinparam usecase {
 (shellcheck)
 (shfmt)
 (sing-box)
+(sk)
 (snappy) << dep >>
+(sqlfluff)
+(sqlfluff)-->(libyaml)
+(sqlfluff)-->(python@3.13)
 (sqlite) << dep >>
 (sqlite)-->(readline)
 (sshpass)
@@ -577,8 +592,6 @@ skinparam usecase {
 (subversion)-->(openssl@3)
 (subversion)-->(utf8proc)
 (swift-format)
-(tailwindcss-language-server)
-(tailwindcss-language-server)-->(node)
 (taplo)
 (tcping)
 (teamookla/speedtest/speedtest)
@@ -598,9 +611,6 @@ skinparam usecase {
 (tree-sitter) << dep >>
 (typescript)
 (typescript)-->(node)
-(typescript-language-server)
-(typescript-language-server)-->(node)
-(typescript-language-server)-->(typescript)
 (ugrep)
 (ugrep)-->(brotli)
 (ugrep)-->(lz4)
