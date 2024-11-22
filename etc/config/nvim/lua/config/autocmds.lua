@@ -5,5 +5,6 @@
 vim.filetype.add({
   extension = {
     pc = "esqlc",
+    pom = "xml",
   },
 })

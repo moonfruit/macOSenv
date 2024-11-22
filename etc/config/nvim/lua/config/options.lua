@@ -16,6 +16,7 @@ vim.opt.clipboard = ""
 vim.opt.fileencodings = "ucs-bom,utf-8,gb18030,big5,default,latin1"
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
+vim.opt.spelllang = { "en", "cjk" }
 
 if not vim.env.PROXY_ENABLED then
   vim.env.http_proxy = "http://127.0.0.1:7890"
