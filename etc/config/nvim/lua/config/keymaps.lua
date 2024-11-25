@@ -13,11 +13,21 @@ local modes = {
   terminal = "t",
 }
 
+local default_opts = {
+  noremap = true,
+  silent = true,
+}
+
 local function set_keymap(mode, key, command)
-  vim.keymap.set(modes[mode], key, command, {
-    noremap = true,
-    silent = true,
-  })
+  local cmd, opts
+  if type(command) == "table" then
+    cmd = command[1]
+    opts = vim.tbl_extend("keep", command["opts"] or {}, default_opts)
+  else
+    cmd = command
+    opts = default_opts
+  end
+  vim.keymap.set(modes[mode], key, cmd, opts)
 end
 
 local function set_keymaps(keymaps)
@@ -34,6 +44,7 @@ set_keymaps({
     ["<M-A>s"] = "<Cmd>up<CR>",
     ["<M-A>z"] = "u",
     ["<M-A>Z"] = "<C-R>",
+    ["<Leader>W"] = { "<Cmd>noa w<CR>", opts = { desc = "Save without formatting" } },
   },
   visual = {
     ["<M-A>c"] = '"+y',
