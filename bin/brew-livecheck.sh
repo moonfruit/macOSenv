@@ -77,6 +77,7 @@ readonly EXCLUDED=(
     homebrew/core/git-svn
     homebrew/core/libgit2@1.7
     homebrew/core/icu4c
+    homebrew/core/llvm
     homebrew/core/luajit
     homebrew/core/mysql
     homebrew/core/mysql-client

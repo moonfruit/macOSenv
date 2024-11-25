@@ -568,6 +568,7 @@ skinparam usecase {
 (rust)-->(libssh2)
 (rust)-->(llvm)
 (rust)-->(openssl@3)
+(rust)-->(pkgconf)
 (rust)-->(zstd)
 (sd)
 (shellcheck)

@@ -6,12 +6,10 @@ local M = {
 local colorscheme = nil
 if not vim.neovide then
   if vim.env.COLORTERM ~= "truecolor" then
-    colorscheme = "gruvbox"
+    vim.opt.termguicolors = false
+    colorscheme = "retrobox"
   elseif vim.env.LC_TERMINAL == "iTerm2" then
-    -- colorscheme = "solarized"
-    if vim.env.ITERM_PROFILE == "dark" then
-      colorscheme = "habamax"
-    end
+    colorscheme = "catppuccin"
   end
 end
 

@@ -23,19 +23,10 @@ return {
     opts = function(_, opts)
       -- opts.log_level = vim.log.levels.TRACE
       opts.formatters_by_ft.fish = nil
-      -- opts.formatters.fish_indent = nil
       opts.formatters.shfmt = {
         prepend_args = { "-i", "4" }
       }
     end,
-    -- opts = {
-      -- log_level = vim.log.levels.TRACE,
-      -- formatters = {
-        -- shfmt = {
-          -- prepend_args = { "-i", "4" },
-        -- },
-      -- },
-    -- },
   },
   {
     "neovim/nvim-lspconfig",
