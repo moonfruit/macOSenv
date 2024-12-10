@@ -11,6 +11,8 @@ readonly BOLD=$(tput bold) RESET=$(tput sgr0)
 
 readonly EXTRA=(
     kettle
+    wlp-webprofile8
+    wlp-webprofile10
     zig
 
     alacritty
@@ -41,7 +43,7 @@ readonly EXTRA=(
     zulu@21
 
     homebrew/cask/docker
-    homebrew/cask/samsung-portable-ssd-t7
+    homebrew/cask/samsung-magician
 
     android-studio
     clion
@@ -131,7 +133,7 @@ describe() {
     echo "$BLUE$2$RESET : $3 ==> $GREEN$4$RESET"
 }
 
-handle-outdated() {
+add-to-outdated() {
     mapfile -t OUTPUT < <(jq -r --argjson excluded "$EXCLUDED_JSON" '.[] |
         select(.version.outdated) | {
             type: "\(if .formula then "formula" else "cask" end)",
@@ -141,7 +143,6 @@ handle-outdated() {
         select(.name | in($excluded) | not) |
         "\(.type);\(.name);\(.version.current);\(.version.latest)"')
     OUTDATED+=("${OUTPUT[@]}")
-    iterate describe "${OUTPUT[@]}"
 }
 
 brew-extra() {
@@ -159,6 +160,7 @@ brew-ls() {
 readonly HOMEBREW_CORE="/opt/homebrew/Library/Taps/homebrew/homebrew-core"
 readonly HOMEBREW_CASK="/opt/homebrew/Library/Taps/homebrew/homebrew-cask"
 autobump-patterns() {
+    echo "git"
     for it in "${EXCLUDED[@]}"; do
         echo "$it"
     done
@@ -178,13 +180,15 @@ readonly LIVECHECK=(brew livecheck --json --extract-plist)
 
 echo "$GREEN==>$RESET ${BOLD}Live Check$RESET"
 if [[ $1 == --parallel ]]; then
-    handle-outdated < <(brew-ls | not-autobump | parallel -n8 --bar "${LIVECHECK[@]}" | exclude-skipped)
+    add-to-outdated < <("${LIVECHECK[@]}" git)
+    add-to-outdated < <(brew-ls | not-autobump | parallel -n8 --bar "${LIVECHECK[@]}" | exclude-skipped)
 else
-    handle-outdated < <("${LIVECHECK[@]}" --installed | exclude-skipped)
+    add-to-outdated < <("${LIVECHECK[@]}" --installed | exclude-skipped)
     echo "$GREEN==>$RESET ${BOLD}Live Check (Extra)$RESET"
-    handle-outdated < <(brew-extra | xargs "${LIVECHECK[@]}" | exclude-skipped)
+    add-to-outdated < <(brew-extra | xargs "${LIVECHECK[@]}" | exclude-skipped)
 fi
 
+iterate describe "${OUTDATED[@]}"
 if [[ ${#OUTDATED[@]} -gt 0 ]]; then
     echo "$GREEN==>$RESET ${BOLD}Bump PR$RESET"
     iterate bump "${OUTDATED[@]}"
