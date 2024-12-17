@@ -129,6 +129,7 @@ skinparam usecase {
 (gdk-pixbuf)-->(libpng)
 (gdk-pixbuf)-->(libtiff)
 (gettext) << dep >>
+(gettext)-->(libunistring)
 (gh)
 (giflib) << dep >>
 (git)
@@ -356,6 +357,7 @@ skinparam usecase {
 (lz4) << dep >>
 (lzo) << dep >>
 (m4) << dep >>
+(macmon)
 (make)
 (markdown-toc)
 (markdown-toc)-->(node)
@@ -375,9 +377,9 @@ skinparam usecase {
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
-(moonfruit/tap/macmon)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
+(moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)
