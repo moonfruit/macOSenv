@@ -13,6 +13,10 @@ echo " --- === Updating ariang === ---"
 download-latest-release ariang mayswind AriaNg -AllInOne.zip
 echo
 
+echo " --- === Updating gost-ui === ---"
+download-branch gost go-gost gost-ui gh-pages
+echo
+
 echo " --- === Updating homebrew.png === ---"
 create-temp-file TEMP
 # shellcheck disable=SC2153
