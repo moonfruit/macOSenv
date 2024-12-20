@@ -1,19 +1,5 @@
 local nls = require("null-ls")
 
-local function remove_if(array, func)
-  for i = #array, 1, -1 do
-    if func(array[i]) then
-      table.remove(array, i)
-    end
-  end
-end
-
-local function remove_sources(sources, names)
-  remove_if(sources, function(source)
-    return names[source.name] ~= nil
-  end)
-end
-
 local function replace_source(sources, name, source)
   for i, item in ipairs(sources) do
     if item.name == name then
@@ -34,13 +20,6 @@ local function replace_builtins(sources, names)
 end
 
 return {
-  {
-    "stevearc/conform.nvim",
-    opts = function(_, opts)
-      -- opts.log_level = vim.log.levels.TRACE
-      opts.formatters_by_ft.fish = nil
-    end,
-  },
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -67,7 +46,6 @@ return {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
       -- opts.debug = true
-      remove_sources(opts.sources, { "fish", "fish_indent" })
       replace_builtins(opts.sources, {
         biome = {
           extra_args = { "--line-width=120" },

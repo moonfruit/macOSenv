@@ -1,113 +1,125 @@
 [user]
-	useConfigOnly = true
-	name = MoonFruit
-	email = dkmoonfruit@gmail.com
-	signingkey = dkmoonfruit@gmail.com
+    useConfigOnly = true
+    name = MoonFruit
+    email = dkmoonfruit@gmail.com
+    signingkey = dkmoonfruit@gmail.com
 
 [color]
-	ui = auto
+    ui = auto
 
 [core]
-	excludesfile = ~/.gitignore
-	pager = less -XRF -x5,9
-	quotepath = false
-	autocrlf = input
+    excludesfile = ~/.gitignore
+    #pager = less -XRF -x5,9
+    pager = delta
+    quotepath = false
+    autocrlf = input
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
+
+[commit]
+    gpgsign = true
 
 [pull]
-	rebase = true
+    rebase = true
 
 [push]
     autoSetupRemote = true
 
+[delta]
+    dark = true
+    navigate = true
+    side-by-side = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[diff]
+    colorMoved = true
+
+[merge]
+    conflictstyle = zdiff3
+
 [alias]
-	br = branch
-	ci = commit
-	co = checkout
-	di = diff
-	dic = diff --cached
-	glog = log --graph
-	mlog = log --stat --summary
-	h = help
-	mg = merge
-	rb = rebase
-	ss = stash
-	st = status
-	un = restore --staged
-	sb = submodule
-	sbs = submodule status
-	rpo = remote prune origin
-	pusha = push --recurse-submodules=on-demand
-	pulla = pull --recurse-submodules
-
-[gpg]
-	program = gpg
-
-[commit]
-	gpgsign = true
+    br = branch
+    ci = commit
+    co = checkout
+    di = diff
+    dic = diff --cached
+    glog = log --graph
+    mlog = log --stat --summary
+    h = help
+    mg = merge
+    rb = rebase
+    ss = stash
+    st = status
+    un = restore --staged
+    sb = submodule
+    sbs = submodule status
+    rpo = remote prune origin
+    pusha = push --recurse-submodules=on-demand
+    pulla = pull --recurse-submodules
 
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain
 
 [credential "https://github.com"]
-	helper = !gh auth git-credential
+    helper = !gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper = !gh auth git-credential
+    helper = !gh auth git-credential
 
 [includeIf "hasconfig:remote.*.url:git@git.server.gingkoo:*/**"]
-	path = .gitconfig-gingkoo
-	path = gitconfig-gingkoo
+    path = .gitconfig-gingkoo
+    path = gitconfig-gingkoo
 
 [includeIf "hasconfig:remote.*.url:http://git.server.gingkoo/**"]
-	path = .gitconfig-gingkoo
-	path = gitconfig-gingkoo
+    path = .gitconfig-gingkoo
+    path = gitconfig-gingkoo
 
 [includeIf "hasconfig:remote.*.url:https://gitlab.iquantex.com/**"]
-	path = .gitconfig-quantex
-	path = gitconfig-quantex
+    path = .gitconfig-quantex
+    path = gitconfig-quantex
 
 [includeIf "hasconfig:remote.*.url:https://gitlab.iquantex-ecd.com/**"]
-	path = .gitconfig-quantex-ecd
-	path = gitconfig-quantex-ecd
+    path = .gitconfig-quantex-ecd
+    path = gitconfig-quantex-ecd
 
 [url "https://github.com/"]
-	insteadOf = git@github.com:
+    insteadOf = git@github.com:
 
 [http "https://github.com"]
     proxy = http://127.0.0.1:7890
-	#proxy = http://10.1.2.12:8118
+    #proxy = http://10.1.2.12:8118
 
 [url "https://gitlab.com/"]
-	insteadOf = git@gitlab.com:
+    insteadOf = git@gitlab.com:
 
 [http "https://gitlab.com"]
     proxy = http://127.0.0.1:7890
-	#proxy = http://10.1.2.12:8118
+    #proxy = http://10.1.2.12:8118
 
 [url "https://bitbucket.org/"]
-	insteadOf = git@bitbucket.org:
+    insteadOf = git@bitbucket.org:
 
 [http "https://bitbucket.org"]
     proxy = http://127.0.0.1:7890
-	#proxy = http://10.1.2.12:8118
+    #proxy = http://10.1.2.12:8118
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 
 [difftool "vscode"]
-	cmd = code --wait --diff "$LOCAL" "$REMOTE"
+    cmd = code --wait --diff "$LOCAL" "$REMOTE"
 
 [mergetool "vscode"]
-	cmd = code --wait --merge "$REMOTE" "$LOCAL" "$BASE" "$MERGED"
+    cmd = code --wait --merge "$REMOTE" "$LOCAL" "$BASE" "$MERGED"
 
 [difftool "idea"]
-	cmd = idea diff "$LOCAL" "$REMOTE"
+    cmd = idea diff "$LOCAL" "$REMOTE"
 
 [mergetool "idea"]
-	cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+    cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"

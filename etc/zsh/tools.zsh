@@ -18,9 +18,9 @@ export DI_ARGS="-f sMbuvpt"
 # eval "$(direnv hook zsh)"
 
 # for fzf
-if (($+commands[fzf])); then
-	export FZF_DEFAULT_OPTS=--cycle
-fi
+# if (($+commands[fzf])); then
+# 	export FZF_DEFAULT_OPTS=--cycle
+# fi
 
 # for hstr
 # export HSTR_CONFIG=hicolor        # get more colors
