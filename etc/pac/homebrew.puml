@@ -148,6 +148,8 @@ skinparam usecase {
 (git)-->(gettext)
 (git)-->(pcre2)
 (git-delta)
+(git-delta)-->(libgit2)
+(git-delta)-->(oniguruma)
 (git-lfs)
 (git-secret)
 (git-secret)-->(gawk)
@@ -235,6 +237,7 @@ skinparam usecase {
 (hazelcast/hz/hazelcast-management-center)
 (hazelcast/hz/hazelcast-management-center)-->(openjdk@21)
 (hexyl)
+(hgrep)
 (highway) << dep >>
 (htop)
 (htop)-->(ncurses)
