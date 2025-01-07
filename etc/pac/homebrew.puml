@@ -29,13 +29,16 @@ skinparam usecase {
 (bash-language-server)
 (bash-language-server)-->(node)
 (bat)
-(bat)-->(libgit2@1.7)
+(bat)-->(libgit2@1.8)
 (bat)-->(oniguruma)
 (bfg)
 (bfg)-->(openjdk)
 (biome)
 (black)
 (black)-->(python@3.13)
+(bpytop)
+(bpytop)-->(osx-cpu-temp)
+(bpytop)-->(python@3.13)
 (brotli) << dep >>
 (c-ares) << dep >>
 (ca-certificates) << dep >>
@@ -104,7 +107,7 @@ skinparam usecase {
 (dufs)
 (dust)
 (eza)
-(eza)-->(libgit2)
+(eza)-->(libgit2@1.8)
 (fd)
 (fdupes)
 (fdupes)-->(pcre2)
@@ -148,7 +151,7 @@ skinparam usecase {
 (git)-->(gettext)
 (git)-->(pcre2)
 (git-delta)
-(git-delta)-->(libgit2)
+(git-delta)-->(libgit2@1.8)
 (git-delta)-->(oniguruma)
 (git-lfs)
 (git-secret)
@@ -290,12 +293,8 @@ skinparam usecase {
 (libfido2)-->(openssl@3)
 (libgcrypt) << dep >>
 (libgcrypt)-->(libgpg-error)
-(libgit2) << dep >>
-(libgit2)-->(libssh2)
-(libgit2)-->(openssl@3)
-(libgit2@1.7) << dep >>
-(libgit2@1.7)-->(libssh2)
-(libgit2@1.7)-->(openssl@3)
+(libgit2@1.8) << dep >>
+(libgit2@1.8)-->(libssh2)
 (libgpg-error) << dep >>
 (libgpg-error)-->(gettext)
 (libidn2) << dep >>
@@ -396,6 +395,7 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
+(moonfruit/tap/p7zip-all)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)
@@ -489,11 +489,11 @@ skinparam usecase {
 (openjdk@21)-->(little-cms2)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
+(osx-cpu-temp) << dep >>
 (oven-sh/bun/bun)
 (p11-kit) << dep >>
 (p11-kit)-->(ca-certificates)
 (p11-kit)-->(libtasn1)
-(p7zip)
 (pandoc)
 (pango) << dep >>
 (pango)-->(cairo)
@@ -584,7 +584,7 @@ skinparam usecase {
 (ruby)-->(openssl@3)
 (ruff)
 (rust)
-(rust)-->(libgit2)
+(rust)-->(libgit2@1.8)
 (rust)-->(libssh2)
 (rust)-->(llvm)
 (rust)-->(openssl@3)
