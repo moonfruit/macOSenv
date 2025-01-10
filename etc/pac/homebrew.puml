@@ -29,7 +29,7 @@ skinparam usecase {
 (bash-language-server)
 (bash-language-server)-->(node)
 (bat)
-(bat)-->(libgit2@1.8)
+(bat)-->(libgit2)
 (bat)-->(oniguruma)
 (bfg)
 (bfg)-->(openjdk)
@@ -293,6 +293,8 @@ skinparam usecase {
 (libfido2)-->(openssl@3)
 (libgcrypt) << dep >>
 (libgcrypt)-->(libgpg-error)
+(libgit2) << dep >>
+(libgit2)-->(libssh2)
 (libgit2@1.8) << dep >>
 (libgit2@1.8)-->(libssh2)
 (libgpg-error) << dep >>

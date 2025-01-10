@@ -39,6 +39,9 @@ return {
           mason = false,
         },
         lemminx = {},
+        sorbet = {
+          mason = false,
+        }
       },
     },
   },
