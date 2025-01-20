@@ -107,7 +107,7 @@ skinparam usecase {
 (dufs)
 (dust)
 (eza)
-(eza)-->(libgit2@1.8)
+(eza)-->(libgit2)
 (fd)
 (fdupes)
 (fdupes)-->(pcre2)
@@ -151,7 +151,7 @@ skinparam usecase {
 (git)-->(gettext)
 (git)-->(pcre2)
 (git-delta)
-(git-delta)-->(libgit2@1.8)
+(git-delta)-->(libgit2)
 (git-delta)-->(oniguruma)
 (git-lfs)
 (git-secret)
@@ -515,6 +515,7 @@ skinparam usecase {
 (pinentry-mac)
 (pinentry-mac)-->(gettext)
 (pinentry-mac)-->(libassuan@2)
+(pinentry-mac)-->(libgpg-error)
 (pipgrip)
 (pipgrip)-->(python@3.13)
 (pixman) << dep >>
@@ -539,6 +540,7 @@ skinparam usecase {
 (pstree)
 (pup)
 (pv)
+(pv)-->(gettext)
 (pyright)
 (pyright)-->(node)
 (python-packaging) << dep >>
