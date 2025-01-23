@@ -74,6 +74,9 @@ return {
         "markdownlint-cli2",
         -- Python
         "black",
+        -- Ruby
+        "erb-formatter",
+        "erb-lint",
         -- Shell
         "shellcheck",
         "shfmt",

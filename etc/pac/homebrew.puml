@@ -616,6 +616,7 @@ skinparam usecase {
 (subversion)-->(lz4)
 (subversion)-->(openssl@3)
 (subversion)-->(utf8proc)
+(superfile)
 (swift-format)
 (taplo)
 (tcping)
