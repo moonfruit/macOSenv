@@ -76,7 +76,7 @@ elif [[ -n $ALL ]]; then
 else
     FILTERED=()
     for PROXY in "${PROXIES[@]}"; do
-        if [[ $PROXY != *" ("[34]"x)" ]]; then
+        if [[ $PROXY != *" ("[23456789]"x)" ]]; then
             FILTERED+=("$PROXY")
         fi
     done

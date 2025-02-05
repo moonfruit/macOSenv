@@ -200,6 +200,10 @@ skinparam usecase {
 (gost)
 (gotags)
 (gotests)
+(gpgme) << dep >>
+(gpgme)-->(gnupg)
+(gpgme)-->(libassuan)
+(gpgme)-->(libgpg-error)
 (gradle)
 (gradle)-->(openjdk)
 (graphite2) << dep >>
@@ -456,6 +460,9 @@ skinparam usecase {
 (node)-->(libuv)
 (node)-->(openssl@3)
 (npth) << dep >>
+(nspr) << dep >>
+(nss) << dep >>
+(nss)-->(nspr)
 (oniguruma) << dep >>
 (opencc)
 (openexr) << dep >>
@@ -489,6 +496,10 @@ skinparam usecase {
 (openjdk@21)-->(jpeg-turbo)
 (openjdk@21)-->(libpng)
 (openjdk@21)-->(little-cms2)
+(openjpeg) << dep >>
+(openjpeg)-->(libpng)
+(openjpeg)-->(libtiff)
+(openjpeg)-->(little-cms2)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
 (osx-cpu-temp) << dep >>
@@ -513,8 +524,7 @@ skinparam usecase {
 (pinentry)-->(libassuan)
 (pinentry)-->(libgpg-error)
 (pinentry-mac)
-(pinentry-mac)-->(gettext)
-(pinentry-mac)-->(libassuan@2)
+(pinentry-mac)-->(libassuan)
 (pinentry-mac)-->(libgpg-error)
 (pipgrip)
 (pipgrip)-->(python@3.13)
@@ -523,6 +533,21 @@ skinparam usecase {
 (plantuml)
 (plantuml)-->(graphviz)
 (plantuml)-->(openjdk)
+(poppler)
+(poppler)-->(cairo)
+(poppler)-->(fontconfig)
+(poppler)-->(freetype)
+(poppler)-->(gettext)
+(poppler)-->(glib)
+(poppler)-->(gpgme)
+(poppler)-->(jpeg-turbo)
+(poppler)-->(libassuan)
+(poppler)-->(libpng)
+(poppler)-->(libtiff)
+(poppler)-->(little-cms2)
+(poppler)-->(nspr)
+(poppler)-->(nss)
+(poppler)-->(openjpeg)
 (popt) << dep >>
 (postgresql@16)
 (postgresql@16)-->(gettext)
