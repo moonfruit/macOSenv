@@ -282,8 +282,6 @@ skinparam usecase {
 (lazygit)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
-(libassuan@2) << dep >>
-(libassuan@2)-->(libgpg-error)
 (libavif) << dep >>
 (libavif)-->(aom)
 (libavif)-->(jpeg-turbo)
