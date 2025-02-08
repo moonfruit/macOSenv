@@ -16,7 +16,7 @@ cd "$TEMP_DIR" || exit 1
 sed 's|^\(bt-tracker=\).*$|\1'"$TRACKERS"'|' "$DIR/aria2.conf" >aria2.conf
 
 update-daemon() {
-    curlie http://127.0.0.1:6800/jsonrpc id=$RANDOM method=aria2.changeGlobalOption \
+    proxy none curlie http://127.0.0.1:6800/jsonrpc id=$RANDOM method=aria2.changeGlobalOption \
         params:='["token:yy1234",{"bt-tracker":"'"$TRACKERS"'"}]' >&2
 }
 
