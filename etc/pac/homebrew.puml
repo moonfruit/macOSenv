@@ -393,6 +393,8 @@ skinparam usecase {
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/doge)
 (moonfruit/tap/geo)
+(moonfruit/tap/goimports)
+(moonfruit/tap/goimports)-->(go)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
@@ -461,6 +463,8 @@ skinparam usecase {
 (nspr) << dep >>
 (nss) << dep >>
 (nss)-->(nspr)
+(nushell)
+(nushell)-->(openssl@3)
 (oniguruma) << dep >>
 (opencc)
 (openexr) << dep >>

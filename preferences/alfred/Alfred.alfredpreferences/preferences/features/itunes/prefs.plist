@@ -5,11 +5,11 @@
 	<key>hotkey</key>
 	<dict>
 		<key>key</key>
-		<integer>36</integer>
+		<integer>46</integer>
 		<key>mod</key>
-		<integer>1966080</integer>
+		<integer>1310720</integer>
 		<key>string</key>
-		<string>↩</string>
+		<string>M</string>
 	</dict>
 	<key>includePodcasts</key>
 	<false/>

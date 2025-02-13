@@ -60,6 +60,7 @@ return {
         "hadolint",
         -- Go
         "gofumpt",
+        "goimports",
         "gomodifytags",
         "impl",
         -- Javascript
