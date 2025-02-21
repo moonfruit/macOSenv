@@ -465,6 +465,7 @@ skinparam usecase {
 (nss)-->(nspr)
 (nushell)
 (nushell)-->(openssl@3)
+(ollama)
 (oniguruma) << dep >>
 (opencc)
 (openexr) << dep >>
