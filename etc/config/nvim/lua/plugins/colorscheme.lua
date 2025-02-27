@@ -1,15 +1,15 @@
 local M = {
-  "ishan9299/nvim-solarized-lua",
-  "ellisonleao/gruvbox.nvim",
+  "craftzdog/solarized-osaka.nvim",
+  "navarasu/onedark.nvim",
 }
 
 local colorscheme = nil
-if not vim.neovide then
+if not vim.g.neovide then
   if vim.env.COLORTERM ~= "truecolor" then
     vim.opt.termguicolors = false
     colorscheme = "retrobox"
-  elseif vim.env.LC_TERMINAL == "iTerm2" then
-    colorscheme = "catppuccin"
+  -- elseif vim.env.TERM_PROGRAM == "iTerm.app" then
+    -- colorscheme = "tokyonight"
   end
 end
 

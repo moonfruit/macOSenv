@@ -164,8 +164,6 @@ skinparam usecase {
 (glib) << dep >>
 (glib)-->(gettext)
 (glib)-->(pcre2)
-(glib)-->(python-packaging)
-(glib)-->(python@3.13)
 (gmp) << dep >>
 (gmssl)
 (gnu-getopt)
@@ -237,7 +235,6 @@ skinparam usecase {
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
 (harfbuzz)-->(icu4c@76)
-(harfbuzz)-->(python@3.13)
 (hashicorp/tap/consul)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
