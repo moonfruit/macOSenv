@@ -395,6 +395,8 @@ skinparam usecase {
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
+(moonfruit/tap/lzc-cli)
+(moonfruit/tap/lzc-cli)-->(node)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
@@ -625,6 +627,7 @@ skinparam usecase {
 (sing-box)
 (sk)
 (snappy) << dep >>
+(sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
 (sqlfluff)-->(python@3.13)

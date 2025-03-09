@@ -72,15 +72,19 @@ Host moons-ubuntu.local
     User parallels
 
 Host 192.168.50.1
+    User moon
     Port 20022
 
 Host asusrouter.com
+    User moon
     Port 20022
 
 Host www.asusrouter.com
+    User moon
     Port 20022
 
 Host router.asus.com
+    User moon
     Port 20022
 
 Host moonfruit.top
