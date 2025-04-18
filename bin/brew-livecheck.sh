@@ -26,6 +26,7 @@ readonly EXTRA=(
     macast
     motrix
     oracle-jdk
+    oracle-jdk@17
     oracle-jdk@21
     qbittorrent
     rapidapi
@@ -81,6 +82,7 @@ readonly EXCLUDED=(
     homebrew/core/icu4c
     homebrew/core/llvm
     homebrew/core/luajit
+    homebrew/core/mas
     homebrew/core/mysql
     homebrew/core/mysql-client
     homebrew/core/nghttp2

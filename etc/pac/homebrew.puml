@@ -92,6 +92,7 @@ skinparam usecase {
 (curlie)
 (delve)
 (deno)
+(deno)-->(little-cms2)
 (deno)-->(sqlite)
 (di)
 (direnv)
@@ -101,7 +102,7 @@ skinparam usecase {
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (dotnet@8) << dep >>
-(dotnet@8)-->(icu4c@76)
+(dotnet@8)-->(icu4c@77)
 (dotnet@8)-->(openssl@3)
 (dtc) << dep >>
 (dufs)
@@ -234,7 +235,7 @@ skinparam usecase {
 (harfbuzz)-->(freetype)
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
-(harfbuzz)-->(icu4c@76)
+(harfbuzz)-->(icu4c@77)
 (hashicorp/tap/consul)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
@@ -249,7 +250,7 @@ skinparam usecase {
 (httpie)-->(certifi)
 (httpie)-->(python@3.13)
 (hyperfine)
-(icu4c@76) << dep >>
+(icu4c@77) << dep >>
 (imath) << dep >>
 (iperf3)
 (iperf3)-->(openssl@3)
@@ -294,8 +295,6 @@ skinparam usecase {
 (libgcrypt)-->(libgpg-error)
 (libgit2) << dep >>
 (libgit2)-->(libssh2)
-(libgit2@1.8) << dep >>
-(libgit2@1.8)-->(libssh2)
 (libgpg-error) << dep >>
 (libgpg-error)-->(gettext)
 (libidn2) << dep >>
@@ -334,7 +333,6 @@ skinparam usecase {
 (libusb) << dep >>
 (libuv) << dep >>
 (libvmaf) << dep >>
-(libvterm) << dep >>
 (libx11) << dep >>
 (libx11)-->(libxcb)
 (libx11)-->(xorgproto)
@@ -356,11 +354,9 @@ skinparam usecase {
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
-(llvm) << dep >>
-(llvm)-->(python@3.13)
-(llvm)-->(xz)
-(llvm)-->(z3)
-(llvm)-->(zstd)
+(llvm@19) << dep >>
+(llvm@19)-->(xz)
+(llvm@19)-->(zstd)
 (lpeg) << dep >>
 (lrzsz)
 (lua)
@@ -416,7 +412,6 @@ skinparam usecase {
 (mpdecimal) << dep >>
 (mpfr) << dep >>
 (mpfr)-->(gmp)
-(msgpack) << dep >>
 (mysql-client)
 (mysql-client)-->(libevent)
 (mysql-client)-->(libfido2)
@@ -431,13 +426,12 @@ skinparam usecase {
 (neovim)
 (neovim)-->(gettext)
 (neovim)-->(libuv)
-(neovim)-->(libvterm)
 (neovim)-->(lpeg)
 (neovim)-->(luajit)
 (neovim)-->(luv)
-(neovim)-->(msgpack)
 (neovim)-->(tree-sitter)
 (neovim)-->(unibilium)
+(neovim)-->(utf8proc)
 (netpbm) << dep >>
 (netpbm)-->(jasper)
 (netpbm)-->(jpeg-turbo)
@@ -454,7 +448,7 @@ skinparam usecase {
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
-(node)-->(icu4c@76)
+(node)-->(icu4c@77)
 (node)-->(libnghttp2)
 (node)-->(libuv)
 (node)-->(openssl@3)
@@ -553,7 +547,7 @@ skinparam usecase {
 (popt) << dep >>
 (postgresql@16)
 (postgresql@16)-->(gettext)
-(postgresql@16)-->(icu4c@76)
+(postgresql@16)-->(icu4c@77)
 (postgresql@16)-->(krb5)
 (postgresql@16)-->(lz4)
 (postgresql@16)-->(openssl@3)
@@ -570,7 +564,6 @@ skinparam usecase {
 (pv)-->(gettext)
 (pyright)
 (pyright)-->(node)
-(python-packaging) << dep >>
 (python@3.13) << dep >>
 (python@3.13)-->(mpdecimal)
 (python@3.13)-->(openssl@3)
@@ -615,9 +608,9 @@ skinparam usecase {
 (ruby)-->(openssl@3)
 (ruff)
 (rust)
-(rust)-->(libgit2@1.8)
+(rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm)
+(rust)-->(llvm@19)
 (rust)-->(openssl@3)
 (rust)-->(pkgconf)
 (rust)-->(zstd)
@@ -656,10 +649,14 @@ skinparam usecase {
 (tmux)-->(ncurses)
 (tmux)-->(utf8proc)
 (tokei)
+(tomcat)
+(tomcat)-->(openjdk)
 (tomcat-native)
 (tomcat-native)-->(apr)
 (tomcat-native)-->(openjdk)
 (tomcat-native)-->(openssl@3)
+(tomcat@10)
+(tomcat@10)-->(openjdk)
 (tomcat@9)
 (tomcat@9)-->(openjdk)
 (tree-sitter) << dep >>
@@ -702,7 +699,6 @@ skinparam usecase {
 (yt-dlp)
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.13)
-(z3) << dep >>
 (zlib) << dep >>
 (zopfli) << dep >>
 (zsh)

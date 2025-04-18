@@ -1,0 +1,20 @@
+allprojects {
+    tasks.withType(Wrapper).configureEach {
+        doFirst {
+            var mirror = System.getProperty("gradle.wrapper.mirror")
+            if (mirror) {
+                distributionUrl = distributionUrl.replace("https://services.gradle.org/", mirror)
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            url "http://10.1.2.32/nexus/repository/public"
+            allowInsecureProtocol = true
+        }
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+}
