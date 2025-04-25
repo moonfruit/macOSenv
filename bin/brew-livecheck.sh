@@ -50,15 +50,17 @@ readonly EXTRA=(
     clion
     datagrip
     dataspell
-    goland
     fleet
+    goland
+    ijhttp
     intellij-idea
     intellij-idea-ce
-    jetbrains-toolbox
+    jetbrains-gateway
     mps
     phpstorm
     pycharm
     pycharm-ce
+    pycharm-edu
     rider
     rubymine
     rustrover

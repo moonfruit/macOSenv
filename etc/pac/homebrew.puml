@@ -194,6 +194,8 @@ skinparam usecase {
 (go)
 (gofumpt)
 (gofumpt)-->(go)
+(goimports)
+(goimports)-->(go)
 (gomodifytags)
 (gopls)
 (gost)
@@ -351,6 +353,8 @@ skinparam usecase {
 (libxrender)-->(xorgproto)
 (libyaml) << dep >>
 (lima) << dep >>
+(liquibase)
+(liquibase)-->(openjdk)
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
@@ -386,8 +390,6 @@ skinparam usecase {
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/doge)
 (moonfruit/tap/geo)
-(moonfruit/tap/goimports)
-(moonfruit/tap/goimports)-->(go)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
@@ -413,7 +415,6 @@ skinparam usecase {
 (mpfr) << dep >>
 (mpfr)-->(gmp)
 (mysql-client)
-(mysql-client)-->(libevent)
 (mysql-client)-->(libfido2)
 (mysql-client)-->(openssl@3)
 (mysql-client)-->(zlib)
