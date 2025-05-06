@@ -238,7 +238,6 @@ skinparam usecase {
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
 (harfbuzz)-->(icu4c@77)
-(hashicorp/tap/consul)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
