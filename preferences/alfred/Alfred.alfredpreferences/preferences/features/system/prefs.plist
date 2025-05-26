@@ -35,5 +35,7 @@
 	<string>lock</string>
 	<key>shutdownConfirm</key>
 	<true/>
+	<key>sleepConfirm</key>
+	<true/>
 </dict>
 </plist>

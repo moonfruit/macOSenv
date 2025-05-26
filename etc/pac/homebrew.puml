@@ -358,9 +358,11 @@ skinparam usecase {
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
-(llvm@19) << dep >>
-(llvm@19)-->(xz)
-(llvm@19)-->(zstd)
+(llvm) << dep >>
+(llvm)-->(python@3.13)
+(llvm)-->(xz)
+(llvm)-->(z3)
+(llvm)-->(zstd)
 (lpeg) << dep >>
 (lrzsz)
 (lua)
@@ -611,7 +613,7 @@ skinparam usecase {
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm@19)
+(rust)-->(llvm)
 (rust)-->(openssl@3)
 (rust)-->(pkgconf)
 (rust)-->(zstd)
@@ -701,6 +703,7 @@ skinparam usecase {
 (yt-dlp)
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.13)
+(z3) << dep >>
 (zlib) << dep >>
 (zopfli) << dep >>
 (zsh)

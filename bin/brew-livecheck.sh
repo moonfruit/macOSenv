@@ -60,12 +60,10 @@ readonly EXTRA=(
     phpstorm
     pycharm
     pycharm-ce
-    pycharm-edu
     rider
     rubymine
     rustrover
     webstorm
-    writerside
 )
 
 readonly EXCLUDED=(

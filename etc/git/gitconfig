@@ -20,6 +20,9 @@
 [commit]
     gpgsign = true
 
+[fetch]
+    prune = true
+
 [pull]
     rebase = true
 
@@ -30,6 +33,7 @@
     dark = true
     navigate = true
     side-by-side = true
+    tabs = 4
 
 [interactive]
     diffFilter = delta --color-only
