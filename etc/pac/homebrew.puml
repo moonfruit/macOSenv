@@ -609,6 +609,8 @@ skinparam usecase {
 (ruby)
 (ruby)-->(libyaml)
 (ruby)-->(openssl@3)
+(ruby-lsp)
+(ruby-lsp)-->(ruby)
 (ruff)
 (rust)
 (rust)-->(libgit2)
