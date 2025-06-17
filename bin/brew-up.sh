@@ -48,9 +48,36 @@ cleanup() {
     fi
 }
 
-OUTDATED=$(brew outdated)
-if [[ $OUTDATED ]]; then
-    echo "$OUTDATED" | choose 0 | cleanup
+KNOWN_BOTTLED=(
+    oven-sh/bun/bun
+)
+
+find-bottled() {
+    local result=()
+    for item in "$@"; do
+        for i in "${!KNOWN_BOTTLED[@]}"; do
+            if [[ "$item" == "${KNOWN_BOTTLED[i]}" ]]; then
+                result+=("$item")
+                unset 'KNOWN_BOTTLED[i]' # 删除已匹配元素，避免重复匹配
+                break
+            fi
+        done
+    done
+    if ((${#result[@]})); then
+        echo "${result[@]}"
+    else
+        return 1
+    fi
+}
+
+readarray -t OUTDATED < <(brew outdated)
+if ((${#OUTDATED[@]})); then
+    cleanup "${OUTDATED[@]}"
+
+    if BOTTLED=$(find-bottled "${OUTDATED[@]}"); then
+        brew upgrade --display-times "${BOTTLED[@]}"
+    fi
+
     if brew upgrade --force-bottle --display-times; then
         brew autoremove
         echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
@@ -58,14 +85,14 @@ if [[ $OUTDATED ]]; then
     fi
 fi
 
-OUTDATED=$(brew-outdated.py)
-if [[ $OUTDATED ]]; then
+OUTPUT=$(brew-outdated.py)
+if [[ $OUTPUT ]]; then
     echo "$GREEN==>$RESET ${BOLD}Outdated casks$RESET"
-    echo "$OUTDATED"
+    echo "$OUTPUT"
     echo "$GREEN==>$RESET ${BOLD}Upgrade casks$RESET"
-    readarray -t CASKS < <(echo "$OUTDATED" | awk 'NR>2{print $2}')
-    for CASK in "${CASKS[@]}"; do
+    readarray -t OUTDATED < <(echo "$OUTPUT" | awk 'NR>2{print $2}')
+    for CASK in "${OUTDATED[@]}"; do
         echo "brew ${BOLD}upgrade$RESET --cask $BLUE$CASK$RESET"
     done
-    cleanup "${CASKS[@]}"
+    cleanup "${OUTDATED[@]}"
 fi

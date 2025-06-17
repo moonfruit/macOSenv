@@ -21,7 +21,7 @@ while true; do
 done
 
 if [[ -n $RAW ]]; then
-    benchmark-proixes() {
+    benchmark-proxies() {
         for PROXY in "$@"; do
             echo "$PROXY"
         done
@@ -35,7 +35,7 @@ else
         printf "%0${#total}d/%d: %s" "$index" "$total" "$message"
     }
 
-    benchmark-proixes() {
+    benchmark-proxies() {
         local previous
         if (($# > 0)); then
             previous=$(curl -s "$URL" | jq -r '.now')
@@ -68,10 +68,10 @@ if (($# > 0)); then
             fi
         done
     done
-    benchmark-proixes "${FILTERED[@]}"
+    benchmark-proxies "${FILTERED[@]}"
 
 elif [[ -n $ALL ]]; then
-    benchmark-proixes "${PROXIES[@]}"
+    benchmark-proxies "${PROXIES[@]}"
 
 else
     FILTERED=()
@@ -80,5 +80,5 @@ else
             FILTERED+=("$PROXY")
         fi
     done
-    benchmark-proixes "${FILTERED[@]}"
+    benchmark-proxies "${FILTERED[@]}"
 fi

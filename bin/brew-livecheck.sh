@@ -89,6 +89,7 @@ readonly EXCLUDED=(
     homebrew/core/libnghttp2
     homebrew/core/libgcrypt
     homebrew/core/python@3.13
+    italomandara/cxpatcher/cxpatcher
     oven-sh/bun/bun
 )
 
