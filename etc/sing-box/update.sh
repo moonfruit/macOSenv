@@ -14,7 +14,7 @@ create-temp-directory TEMP_DIR
 cd "$TEMP_DIR" || exit 1
 
 echo " --- === Updating ui === ---"
-download-branch "$DIR/ui" MetaCubeX Yacd-meta gh-pages
+download-latest-release "$DIR/ui" Zephyruso zashboard dist-cdn-fonts.zip
 echo
 
 echo " --- === Updating config.json === ---"

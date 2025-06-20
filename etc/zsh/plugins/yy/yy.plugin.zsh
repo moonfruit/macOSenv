@@ -41,3 +41,15 @@ function _pip_completion {
 }
 compctl -K _pip_completion pip
 compctl -K _pip_completion pip3
+
+# for anaconda
+if [[ -x /opt/homebrew/Caskroom/miniconda/base/bin/conda ]]; then
+  export CONDA_EXE='/opt/homebrew/Caskroom/miniconda/base/bin/conda'
+  export CONDA_PYTHON_EXE='/opt/homebrew/Caskroom/miniconda/base/bin/python'
+elif [[ -x /opt/homebrew/anaconda3/bin/conda ]]; then
+  export CONDA_EXE='/opt/homebrew/anaconda3/bin/conda'
+  export CONDA_PYTHON_EXE='/opt/homebrew/anaconda3/bin/python'
+fi
+if [[ $CONDA_EXE ]]; then
+  source "${0:A:h}/conda.zsh"
+fi

@@ -60,6 +60,10 @@ layout_python() {
     unset PS1
 }
 
+layout_conda() {
+    eval "$(conda shell.zsh activate "$@")"
+}
+
 layout_java() {
     local version=$1
     if [[ -n $version ]]; then

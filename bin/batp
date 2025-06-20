@@ -1,2 +1,24 @@
-#!/bin/bash
-exec bat -p "$@"
+#!/usr/bin/env bash
+declare -A images=(
+    [bmp]=1
+    [gif]=1
+    [jpg]=1
+    [jpeg]=1
+    [png]=1
+    [webp]=1
+)
+
+for arg in "$@"; do
+    ext="${arg##*.}"
+    ext="${ext,,}"
+    if [[ ! ${images[$ext]} ]]; then
+        bat=1
+        break
+    fi
+done
+
+if [[ $bat ]]; then
+    exec bat -p "$@"
+else
+    exec imgcat "$@"
+fi

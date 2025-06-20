@@ -41,7 +41,3 @@ alias rgi='rg --no-ignore'
 # -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
 # -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\"" man $*
 # }
-
-
-# for autojmp
-alias jenv='j env'
