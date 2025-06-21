@@ -8,7 +8,7 @@ function M.new(interface)
     web:bonjour(false)
     web:directoryIndex({ "index.html", "log.html" })
     web:interface(interface)
-    web:port(7899)
+    web:port(7900)
     return web
 end
 

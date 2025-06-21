@@ -277,6 +277,10 @@ skinparam usecase {
 (gost)
 (gotags)
 (gotests)
+(gpgme) << dep >>
+(gpgme)-->(gnupg)
+(gpgme)-->(libassuan)
+(gpgme)-->(libgpg-error)
 (gradle)
 (gradle)-->(openjdk)
 (graphene) << dep >>
@@ -885,6 +889,8 @@ skinparam usecase {
 (shfmt)
 (sing-box)
 (sk)
+(skopeo)
+(skopeo)-->(gpgme)
 (snappy) << dep >>
 (speex) << dep >>
 (speex)-->(libogg)
