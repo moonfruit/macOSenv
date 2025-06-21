@@ -14,7 +14,7 @@ create-temp-directory TEMP_DIR
 cd "$TEMP_DIR" || exit 1
 
 echo " --- === Updating ui === ---"
-download-latest-release "$DIR/ui" Zephyruso zashboard dist-cdn-fonts.zip
+download-latest-release "$DIR/ui" Zephyruso zashboard dist.zip
 echo
 
 echo " --- === Updating config.json === ---"
@@ -33,14 +33,14 @@ clash-to-sing() {
 restart-sing() {
     echo
     echo " --- === Restarting sing-box === ---"
-    if RESULT=$(sing-box -c "$DIR/config.json" check 2>&1); then
-        "$DIR/restart.sh"
+    if RESULT=$(sing-box -C "$DIR/config" check 2>&1); then
+        sudo launchctl kill SIGHUP system/moonfruit.sing
     else
         echo "$RESULT" >&2
     fi
 }
 
-if clash-to-sing | sing-box format -c /dev/stdin >config.json; then
-    copy-if-diff config.json "$DIR" restart-sing
+if clash-to-sing | sing-box format -c /dev/stdin >zoo.json; then
+    copy-if-diff zoo.json "$DIR/config" restart-sing
 fi
 echo

@@ -1,0 +1,16 @@
+{
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "protected-in",
+      "listen": "::",
+      "listen_port": 7900,
+      "users": [
+        {
+          "Username": "username",
+          "Password": "password"
+        }
+      ]
+    }
+  ]
+}
