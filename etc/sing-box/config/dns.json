@@ -32,7 +32,9 @@
       {
         "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com"],
         "server": "dns-home"
-      }
+      },
+      { "clash_mode": "Global", "server": "doh-proxy" },
+      { "clash_mode": "Direct", "server": "doh-direct" }
     ],
     "final": "doh-direct",
     "reverse_mapping": true,
