@@ -1,0 +1,58 @@
+{
+  "dns": {
+    "servers": [
+      { "tag": "dns-resolver", "address": "223.5.5.5", "detour": "DIRECT" },
+      {
+        "tag": "dns-direct",
+        "address": "h3://dns.alidns.com/dns-query",
+        "address_resolver": "dns-resolver",
+        "detour": "DIRECT"
+      },
+      {
+        "tag": "doh-direct",
+        "address": "https://dns.alidns.com/dns-query",
+        "address_resolver": "dns-resolver",
+        "detour": "DIRECT"
+      },
+      {
+        "tag": "doh-proxy",
+        "address": "https://1.1.1.1/dns-query",
+        "detour": "🔰 默认出口"
+      },
+      {
+        "tag": "dns-gingkoo",
+        "address": "tcp://10.1.2.59",
+        "detour": "DIRECT"
+      },
+      { "tag": "dns-home", "address": "192.168.50.1", "detour": "DIRECT" },
+      { "tag": "dns-system", "address": "local", "detour": "DIRECT" }
+    ],
+    "rules": [
+      { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo" },
+      {
+        "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com"],
+        "server": "dns-home"
+      }
+    ],
+    "final": "doh-direct",
+    "reverse_mapping": true,
+    "strategy": "prefer_ipv4"
+  },
+  "inbounds": [
+    {
+      "type": "direct",
+      "tag": "dns-in",
+      "listen": "127.0.0.1",
+      "listen_port": 53
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    }
+  ],
+  "route": {
+    "rules": [{ "inbound": "dns-in", "outbound": "dns-out" }]
+  }
+}

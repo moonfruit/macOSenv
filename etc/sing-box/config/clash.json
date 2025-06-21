@@ -1,0 +1,8 @@
+{
+  "experimental": {
+    "clash_api": {
+      "external_controller": "127.0.0.1:9999",
+      "external_ui": "ui"
+    }
+  }
+}
