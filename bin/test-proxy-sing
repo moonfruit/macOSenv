@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-readonly URL=http://127.0.0.1:9090/proxies/GLOBAL
+readonly URL=http://127.0.0.1:9999/proxies/GLOBAL
 
 OPTS=$(getopt -n "$0" -o ar --long all,raw -- "$@") || exit 1
 eval set -- "$OPTS"

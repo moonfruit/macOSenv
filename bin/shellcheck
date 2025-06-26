@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+if [[ -z "$ENV" ]]; then
+    export ENV="${BASH_SOURCE[0]%/*/*}"
+fi
+exec /opt/homebrew/bin/shellcheck -P "$ENV" "$@"

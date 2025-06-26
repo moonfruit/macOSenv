@@ -20,16 +20,6 @@ skinparam usecase {
 (aria2)-->(libssh2)
 (aria2)-->(openssl@3)
 (aria2)-->(sqlite)
-(aribb24) << dep >>
-(aribb24)-->(libpng)
-(at-spi2-core) << dep >>
-(at-spi2-core)-->(dbus)
-(at-spi2-core)-->(gettext)
-(at-spi2-core)-->(glib)
-(at-spi2-core)-->(libx11)
-(at-spi2-core)-->(libxi)
-(at-spi2-core)-->(libxtst)
-(at-spi2-core)-->(xorgproto)
 (autojump)
 (autojump)-->(python@3.13)
 (azhuchkov/tools/tunblkctl)
@@ -82,7 +72,6 @@ skinparam usecase {
 (chafa)-->(libtiff)
 (chafa)-->(webp)
 (choose-rust)
-(cjson) << dep >>
 (clang-format)
 (cmake)
 (cmake-language-server)
@@ -91,6 +80,7 @@ skinparam usecase {
 (codespell)-->(python@3.13)
 (colima)
 (colima)-->(lima)
+(concurrencykit) << dep >>
 (cpanminus)
 (croc)
 (curl)
@@ -101,8 +91,6 @@ skinparam usecase {
 (curl)-->(rtmpdump)
 (curl)-->(zstd)
 (curlie)
-(dav1d) << dep >>
-(dbus) << dep >>
 (delve)
 (deno)
 (deno)-->(little-cms2)
@@ -111,6 +99,11 @@ skinparam usecase {
 (direnv)-->(bash)
 (dive)
 (dmalloc)
+(dnsperf)
+(dnsperf)-->(concurrencykit)
+(dnsperf)-->(ldns)
+(dnsperf)-->(libnghttp2)
+(dnsperf)-->(openssl@3)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (dotnet@8) << dep >>
@@ -125,61 +118,13 @@ skinparam usecase {
 (emacs)-->(tree-sitter)
 (eza)
 (eza)-->(libgit2)
-(faac) << dep >>
-(faad2) << dep >>
 (fd)
-(fdk-aac) << dep >>
 (fdupes)
 (fdupes)-->(pcre2)
-(ffmpeg) << dep >>
-(ffmpeg)-->(aom)
-(ffmpeg)-->(aribb24)
-(ffmpeg)-->(dav1d)
-(ffmpeg)-->(fontconfig)
-(ffmpeg)-->(freetype)
-(ffmpeg)-->(frei0r)
-(ffmpeg)-->(gnutls)
-(ffmpeg)-->(harfbuzz)
-(ffmpeg)-->(jpeg-xl)
-(ffmpeg)-->(lame)
-(ffmpeg)-->(libarchive)
-(ffmpeg)-->(libass)
-(ffmpeg)-->(libbluray)
-(ffmpeg)-->(libogg)
-(ffmpeg)-->(librist)
-(ffmpeg)-->(libsamplerate)
-(ffmpeg)-->(libsoxr)
-(ffmpeg)-->(libssh)
-(ffmpeg)-->(libvidstab)
-(ffmpeg)-->(libvmaf)
-(ffmpeg)-->(libvorbis)
-(ffmpeg)-->(libvpx)
-(ffmpeg)-->(libx11)
-(ffmpeg)-->(libxcb)
-(ffmpeg)-->(opencore-amr)
-(ffmpeg)-->(openjpeg)
-(ffmpeg)-->(opus)
-(ffmpeg)-->(rav1e)
-(ffmpeg)-->(rubberband)
-(ffmpeg)-->(sdl2)
-(ffmpeg)-->(snappy)
-(ffmpeg)-->(speex)
-(ffmpeg)-->(srt)
-(ffmpeg)-->(svt-av1)
-(ffmpeg)-->(tesseract)
-(ffmpeg)-->(theora)
-(ffmpeg)-->(webp)
-(ffmpeg)-->(x264)
-(ffmpeg)-->(x265)
-(ffmpeg)-->(xvid)
-(ffmpeg)-->(xz)
-(ffmpeg)-->(zeromq)
-(ffmpeg)-->(zimg)
 (figlet)
 (file-formula)
 (file-formula)-->(libmagic)
-(flac) << dep >>
-(flac)-->(libogg)
+(fio)
 (flake8)
 (flake8)-->(python@3.13)
 (fontconfig) << dep >>
@@ -188,7 +133,6 @@ skinparam usecase {
 (fossil)-->(openssl@3)
 (freetype) << dep >>
 (freetype)-->(libpng)
-(frei0r) << dep >>
 (fribidi) << dep >>
 (fzf)
 (gawk)
@@ -231,11 +175,6 @@ skinparam usecase {
 (glib) << dep >>
 (glib)-->(gettext)
 (glib)-->(pcre2)
-(glib-networking) << dep >>
-(glib-networking)-->(gettext)
-(glib-networking)-->(glib)
-(glib-networking)-->(gnutls)
-(glib-networking)-->(gsettings-desktop-schemas)
 (gmp) << dep >>
 (gmssl)
 (gnu-getopt)
@@ -263,11 +202,6 @@ skinparam usecase {
 (gnutls)-->(p11-kit)
 (gnutls)-->(unbound)
 (go)
-(gobject-introspection) << dep >>
-(gobject-introspection)-->(cairo)
-(gobject-introspection)-->(glib)
-(gobject-introspection)-->(pkgconf)
-(gobject-introspection)-->(python@3.13)
 (gofumpt)
 (gofumpt)-->(go)
 (goimports)
@@ -283,9 +217,6 @@ skinparam usecase {
 (gpgme)-->(libgpg-error)
 (gradle)
 (gradle)-->(openjdk)
-(graphene) << dep >>
-(graphene)-->(gettext)
-(graphene)-->(glib)
 (graphite2) << dep >>
 (graphviz) << dep >>
 (graphviz)-->(cairo)
@@ -303,98 +234,6 @@ skinparam usecase {
 (graphviz)-->(pango)
 (graphviz)-->(webp)
 (grpcurl)
-(gsettings-desktop-schemas) << dep >>
-(gsettings-desktop-schemas)-->(gettext)
-(gsettings-desktop-schemas)-->(glib)
-(gstreamer) << dep >>
-(gstreamer)-->(aom)
-(gstreamer)-->(cairo)
-(gstreamer)-->(dav1d)
-(gstreamer)-->(faac)
-(gstreamer)-->(faad2)
-(gstreamer)-->(fdk-aac)
-(gstreamer)-->(ffmpeg)
-(gstreamer)-->(flac)
-(gstreamer)-->(gdk-pixbuf)
-(gstreamer)-->(gettext)
-(gstreamer)-->(glib)
-(gstreamer)-->(gobject-introspection)
-(gstreamer)-->(graphene)
-(gstreamer)-->(gtk+3)
-(gstreamer)-->(gtk4)
-(gstreamer)-->(harfbuzz)
-(gstreamer)-->(imath)
-(gstreamer)-->(jpeg-turbo)
-(gstreamer)-->(json-glib)
-(gstreamer)-->(lame)
-(gstreamer)-->(libass)
-(gstreamer)-->(libnice)
-(gstreamer)-->(libogg)
-(gstreamer)-->(libpng)
-(gstreamer)-->(libshout)
-(gstreamer)-->(libsndfile)
-(gstreamer)-->(libsodium)
-(gstreamer)-->(libsoup)
-(gstreamer)-->(libusrsctp)
-(gstreamer)-->(libvorbis)
-(gstreamer)-->(libvpx)
-(gstreamer)-->(libx11)
-(gstreamer)-->(libxcb)
-(gstreamer)-->(libxext)
-(gstreamer)-->(libxfixes)
-(gstreamer)-->(libxi)
-(gstreamer)-->(libxtst)
-(gstreamer)-->(little-cms2)
-(gstreamer)-->(mpg123)
-(gstreamer)-->(musepack)
-(gstreamer)-->(nettle)
-(gstreamer)-->(opencore-amr)
-(gstreamer)-->(openexr)
-(gstreamer)-->(openjpeg)
-(gstreamer)-->(openssl@3)
-(gstreamer)-->(opus)
-(gstreamer)-->(orc)
-(gstreamer)-->(pango)
-(gstreamer)-->(pkgconf)
-(gstreamer)-->(pygobject3)
-(gstreamer)-->(python@3.13)
-(gstreamer)-->(rtmpdump)
-(gstreamer)-->(speex)
-(gstreamer)-->(srt)
-(gstreamer)-->(srtp)
-(gstreamer)-->(svt-av1)
-(gstreamer)-->(taglib)
-(gstreamer)-->(theora)
-(gstreamer)-->(webp)
-(gstreamer)-->(x264)
-(gstreamer)-->(x265)
-(gtk+3) << dep >>
-(gtk+3)-->(at-spi2-core)
-(gtk+3)-->(cairo)
-(gtk+3)-->(fribidi)
-(gtk+3)-->(gdk-pixbuf)
-(gtk+3)-->(gettext)
-(gtk+3)-->(glib)
-(gtk+3)-->(gsettings-desktop-schemas)
-(gtk+3)-->(harfbuzz)
-(gtk+3)-->(hicolor-icon-theme)
-(gtk+3)-->(libepoxy)
-(gtk+3)-->(pango)
-(gtk4) << dep >>
-(gtk4)-->(cairo)
-(gtk4)-->(fontconfig)
-(gtk4)-->(fribidi)
-(gtk4)-->(gdk-pixbuf)
-(gtk4)-->(gettext)
-(gtk4)-->(glib)
-(gtk4)-->(graphene)
-(gtk4)-->(harfbuzz)
-(gtk4)-->(hicolor-icon-theme)
-(gtk4)-->(jpeg-turbo)
-(gtk4)-->(libepoxy)
-(gtk4)-->(libpng)
-(gtk4)-->(libtiff)
-(gtk4)-->(pango)
 (gts) << dep >>
 (gts)-->(gettext)
 (gts)-->(glib)
@@ -416,7 +255,6 @@ skinparam usecase {
 (hazelcast/hz/hazelcast-management-center)-->(openjdk@21)
 (hexyl)
 (hgrep)
-(hicolor-icon-theme) << dep >>
 (highway) << dep >>
 (htop)
 (htop)-->(ncurses)
@@ -432,7 +270,6 @@ skinparam usecase {
 (ipython)-->(python@3.13)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
-(jpeg) << dep >>
 (jpeg-turbo) << dep >>
 (jpeg-xl) << dep >>
 (jpeg-xl)-->(brotli)
@@ -446,48 +283,24 @@ skinparam usecase {
 (jpeg-xl)-->(webp)
 (jq)
 (jq)-->(oniguruma)
-(json-glib) << dep >>
-(json-glib)-->(gettext)
-(json-glib)-->(glib)
 (kotlin-language-server)
 (kotlin-language-server)-->(openjdk@21)
 (krb5) << dep >>
 (krb5)-->(openssl@3)
 (ktlint)
 (ktlint)-->(openjdk)
-(lame) << dep >>
 (lazygit)
-(leptonica) << dep >>
-(leptonica)-->(giflib)
-(leptonica)-->(jpeg-turbo)
-(leptonica)-->(libpng)
-(leptonica)-->(libtiff)
-(leptonica)-->(openjpeg)
-(leptonica)-->(webp)
-(libarchive) << dep >>
-(libarchive)-->(libb2)
-(libarchive)-->(lz4)
-(libarchive)-->(xz)
-(libarchive)-->(zstd)
-(libass) << dep >>
-(libass)-->(freetype)
-(libass)-->(fribidi)
-(libass)-->(harfbuzz)
-(libass)-->(libunibreak)
+(ldns) << dep >>
+(ldns)-->(openssl@3)
+(ldns)-->(python@3.13)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
 (libavif) << dep >>
 (libavif)-->(aom)
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
-(libb2) << dep >>
-(libbluray) << dep >>
-(libbluray)-->(fontconfig)
-(libbluray)-->(freetype)
 (libcbor) << dep >>
-(libcuefile) << dep >>
 (libdeflate) << dep >>
-(libepoxy) << dep >>
 (libevent) << dep >>
 (libevent)-->(openssl@3)
 (libfido2) << dep >>
@@ -506,23 +319,8 @@ skinparam usecase {
 (libksba)-->(libgpg-error)
 (liblinear) << dep >>
 (libmagic) << dep >>
-(libmicrohttpd) << dep >>
-(libmicrohttpd)-->(gnutls)
 (libnghttp2) << dep >>
-(libnice) << dep >>
-(libnice)-->(gettext)
-(libnice)-->(glib)
-(libnice)-->(gnutls)
-(libogg) << dep >>
 (libpng) << dep >>
-(libpsl) << dep >>
-(libpsl)-->(libidn2)
-(libpsl)-->(libunistring)
-(libreplaygain) << dep >>
-(librist) << dep >>
-(librist)-->(cjson)
-(librist)-->(libmicrohttpd)
-(librist)-->(mbedtls)
 (librsvg) << dep >>
 (librsvg)-->(cairo)
 (librsvg)-->(fontconfig)
@@ -533,32 +331,8 @@ skinparam usecase {
 (librsvg)-->(harfbuzz)
 (librsvg)-->(libpng)
 (librsvg)-->(pango)
-(libsamplerate) << dep >>
-(libshout) << dep >>
-(libshout)-->(libogg)
-(libshout)-->(libvorbis)
-(libshout)-->(openssl@3)
-(libshout)-->(speex)
-(libshout)-->(theora)
 (libslirp) << dep >>
 (libslirp)-->(glib)
-(libsndfile) << dep >>
-(libsndfile)-->(flac)
-(libsndfile)-->(lame)
-(libsndfile)-->(libogg)
-(libsndfile)-->(libvorbis)
-(libsndfile)-->(mpg123)
-(libsndfile)-->(opus)
-(libsodium) << dep >>
-(libsoup) << dep >>
-(libsoup)-->(gettext)
-(libsoup)-->(glib)
-(libsoup)-->(glib-networking)
-(libsoup)-->(gnutls)
-(libsoup)-->(libnghttp2)
-(libsoup)-->(libpsl)
-(libsoup)-->(sqlite)
-(libsoxr) << dep >>
 (libssh) << dep >>
 (libssh)-->(openssl@3)
 (libssh2) << dep >>
@@ -570,16 +344,10 @@ skinparam usecase {
 (libtiff)-->(zstd)
 (libtool) << dep >>
 (libtool)-->(m4)
-(libunibreak) << dep >>
 (libunistring) << dep >>
 (libusb) << dep >>
-(libusrsctp) << dep >>
 (libuv) << dep >>
-(libvidstab) << dep >>
 (libvmaf) << dep >>
-(libvorbis) << dep >>
-(libvorbis)-->(libogg)
-(libvpx) << dep >>
 (libx11) << dep >>
 (libx11)-->(libxcb)
 (libx11)-->(xorgproto)
@@ -593,22 +361,9 @@ skinparam usecase {
 (libxext) << dep >>
 (libxext)-->(libx11)
 (libxext)-->(xorgproto)
-(libxfixes) << dep >>
-(libxfixes)-->(libx11)
-(libxfixes)-->(xorgproto)
-(libxi) << dep >>
-(libxi)-->(libx11)
-(libxi)-->(libxext)
-(libxi)-->(libxfixes)
-(libxi)-->(xorgproto)
 (libxrender) << dep >>
 (libxrender)-->(libx11)
 (libxrender)-->(xorgproto)
-(libxtst) << dep >>
-(libxtst)-->(libx11)
-(libxtst)-->(libxext)
-(libxtst)-->(libxi)
-(libxtst)-->(xorgproto)
 (libyaml) << dep >>
 (lima) << dep >>
 (liquibase)
@@ -644,7 +399,6 @@ skinparam usecase {
 (mas)
 (maven)
 (maven)-->(openjdk)
-(mbedtls) << dep >>
 (miniserve)
 (miniupnpc)
 (mkcert)
@@ -652,8 +406,6 @@ skinparam usecase {
 (moonfruit/tap/doge)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
-(moonfruit/tap/impl)
-(moonfruit/tap/impl)-->(go)
 (moonfruit/tap/lzc-cli)
 (moonfruit/tap/lzc-cli)-->(node)
 (moonfruit/tap/openssl@1.0)
@@ -675,10 +427,6 @@ skinparam usecase {
 (mpdecimal) << dep >>
 (mpfr) << dep >>
 (mpfr)-->(gmp)
-(mpg123) << dep >>
-(musepack) << dep >>
-(musepack)-->(libcuefile)
-(musepack)-->(libreplaygain)
 (mysql-client)
 (mysql-client)-->(libfido2)
 (mysql-client)-->(openssl@3)
@@ -724,7 +472,6 @@ skinparam usecase {
 (ollama)
 (oniguruma) << dep >>
 (opencc)
-(opencore-amr) << dep >>
 (openexr) << dep >>
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
@@ -756,14 +503,8 @@ skinparam usecase {
 (openjdk@21)-->(jpeg-turbo)
 (openjdk@21)-->(libpng)
 (openjdk@21)-->(little-cms2)
-(openjpeg) << dep >>
-(openjpeg)-->(libpng)
-(openjpeg)-->(libtiff)
-(openjpeg)-->(little-cms2)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
-(opus) << dep >>
-(orc) << dep >>
 (osx-cpu-temp) << dep >>
 (oven-sh/bun/bun)
 (p11-kit) << dep >>
@@ -813,15 +554,6 @@ skinparam usecase {
 (pup)
 (pv)
 (pv)-->(gettext)
-(py3cairo) << dep >>
-(py3cairo)-->(cairo)
-(pygobject3) << dep >>
-(pygobject3)-->(cairo)
-(pygobject3)-->(glib)
-(pygobject3)-->(gobject-introspection)
-(pygobject3)-->(pkgconf)
-(pygobject3)-->(py3cairo)
-(pygobject3)-->(python@3.13)
 (pyright)
 (pyright)-->(node)
 (python@3.13) << dep >>
@@ -843,14 +575,10 @@ skinparam usecase {
 (qemu)-->(ncurses)
 (qemu)-->(nettle)
 (qemu)-->(pixman)
-(qemu)-->(pkgconf)
-(qemu)-->(python@3.13)
 (qemu)-->(snappy)
-(qemu)-->(spice-server)
 (qemu)-->(vde)
 (qemu)-->(zstd)
 (qsv)
-(rav1e) << dep >>
 (rcs)
 (readline) << dep >>
 (redis)
@@ -867,9 +595,6 @@ skinparam usecase {
 (rsync)-->(zstd)
 (rtmpdump) << dep >>
 (rtmpdump)-->(openssl@3)
-(rubberband) << dep >>
-(rubberband)-->(libsamplerate)
-(rubberband)-->(libsndfile)
 (ruby)
 (ruby)-->(libyaml)
 (ruby)-->(openssl@3)
@@ -884,7 +609,6 @@ skinparam usecase {
 (rust)-->(pkgconf)
 (rust)-->(zstd)
 (sd)
-(sdl2) << dep >>
 (shellcheck)
 (shfmt)
 (sing-box)
@@ -892,29 +616,12 @@ skinparam usecase {
 (skopeo)
 (skopeo)-->(gpgme)
 (snappy) << dep >>
-(speex) << dep >>
-(speex)-->(libogg)
-(spice-server) << dep >>
-(spice-server)-->(gettext)
-(spice-server)-->(glib)
-(spice-server)-->(gstreamer)
-(spice-server)-->(jpeg)
-(spice-server)-->(lz4)
-(spice-server)-->(openssl@3)
-(spice-server)-->(opus)
-(spice-server)-->(orc)
-(spice-server)-->(pixman)
-(spice-server)-->(pkgconf)
 (sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
 (sqlfluff)-->(python@3.13)
 (sqlite) << dep >>
 (sqlite)-->(readline)
-(srt) << dep >>
-(srt)-->(openssl@3)
-(srtp) << dep >>
-(srtp)-->(openssl@3)
 (sshpass)
 (staticcheck)
 (staticcheck)-->(go)
@@ -928,29 +635,12 @@ skinparam usecase {
 (subversion)-->(openssl@3)
 (subversion)-->(utf8proc)
 (superfile)
-(svt-av1) << dep >>
 (swift-format)
-(taglib) << dep >>
-(taglib)-->(utf8cpp)
 (taplo)
 (tcping)
 (teamookla/speedtest/speedtest)
-(tesseract) << dep >>
-(tesseract)-->(cairo)
-(tesseract)-->(fontconfig)
-(tesseract)-->(freetype)
-(tesseract)-->(gettext)
-(tesseract)-->(glib)
-(tesseract)-->(harfbuzz)
-(tesseract)-->(icu4c@77)
-(tesseract)-->(leptonica)
-(tesseract)-->(libarchive)
-(tesseract)-->(pango)
 (testssl)
 (testssl)-->(openssl@3)
-(theora) << dep >>
-(theora)-->(libogg)
-(theora)-->(libvorbis)
 (tmux)
 (tmux)-->(libevent)
 (tmux)-->(ncurses)
@@ -980,7 +670,6 @@ skinparam usecase {
 (unbound)-->(libnghttp2)
 (unbound)-->(openssl@3)
 (unibilium) << dep >>
-(utf8cpp) << dep >>
 (utf8proc) << dep >>
 (uv)
 (vde) << dep >>
@@ -997,12 +686,9 @@ skinparam usecase {
 (wget)-->(libidn2)
 (wget)-->(libunistring)
 (wget)-->(openssl@3)
-(x264) << dep >>
-(x265) << dep >>
 (xh)
 (xorgproto) << dep >>
 (xq)
-(xvid) << dep >>
 (xxhash) << dep >>
 (xz) << dep >>
 (yaml-language-server)
@@ -1013,9 +699,6 @@ skinparam usecase {
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.13)
 (z3) << dep >>
-(zeromq) << dep >>
-(zeromq)-->(libsodium)
-(zimg) << dep >>
 (zlib) << dep >>
 (zopfli) << dep >>
 (zsh)

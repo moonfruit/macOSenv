@@ -2,6 +2,7 @@
 declare -A images=(
     [bmp]=1
     [gif]=1
+    [ico]=1
     [jpg]=1
     [jpeg]=1
     [png]=1
