@@ -88,10 +88,9 @@ Host router.asus.com
     Port 20022
 
 Host asusrouter.me
-    HostName 192.168.50.1
+    HostName dkmooncat.heiyu.space
     User moon
     Port 20022
-    ProxyJump ubuntu.dkmooncat.heiyu.space
 
 Host moonfruit.top
     Port 26800

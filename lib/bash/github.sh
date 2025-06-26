@@ -5,6 +5,10 @@
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/native.sh"
 
+find-latest-version() {
+    gh api "repos/$1/$2/releases/latest" --jq '.tag_name | sub("^v";"")'
+}
+
 find-latest-release-url() {
     local expression
     if [[ -z $3 ]]; then

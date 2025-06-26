@@ -49,6 +49,7 @@ cleanup() {
 }
 
 KNOWN_BOTTLED=(
+    hashicorp/tap/consul
     moonfruit/tap/wlp-webprofile8
     oven-sh/bun/bun
 )
