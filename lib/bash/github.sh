@@ -14,7 +14,7 @@ find-latest-release-url() {
     if [[ -z $3 ]]; then
         expression="first(.assets[].browser_download_url)"
     else
-        expression="first(.assets[].browser_download_url|select(endswith(\"$3\")))"
+        expression="first(.assets[].browser_download_url|select($3))"
     fi
     gh api "repos/$1/$2/releases/latest" --jq "$expression"
 }
@@ -23,12 +23,14 @@ download-latest-release() {
     local target=$1
     local user=$2
     local repo=$3
-    local suffix=$4
+    local filter=$4
+    local last_file=$5
 
-    shift 4 || shift $#
+    shift 5 || shift $#
 
-    local last_file
-    last_file="$(simple-dirname "$target")/$(simple-basename "$target").url"
+    if [[ -z $last_file ]]; then
+        last_file="$(simple-dirname "$target")/$(simple-basename "$target").url"
+    fi
 
     local last
     if [[ -f $last_file ]]; then
@@ -36,7 +38,7 @@ download-latest-release() {
     fi
 
     local url
-    url=$(find-latest-release-url "$user" "$repo" "$suffix") || return
+    url=$(find-latest-release-url "$user" "$repo" "$filter") || return
     [[ $url != "$last" ]] || return 0
 
     local temp

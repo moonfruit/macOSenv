@@ -14,7 +14,7 @@ create-temp-directory TEMP_DIR
 cd "$TEMP_DIR" || exit 1
 
 echo " --- === Updating ui === ---"
-download-latest-release "$DIR/ui" Zephyruso zashboard dist.zip
+download-latest-release "$DIR/ui" Zephyruso zashboard 'endswith("dist.zip")'
 echo
 
 echo " --- === Updating config.json === ---"

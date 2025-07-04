@@ -10,7 +10,7 @@ source "$ENV/lib/bash/github.sh"
 DIR=$(main-script-directory)
 
 echo " --- === Updating ariang === ---"
-download-latest-release ariang mayswind AriaNg -AllInOne.zip
+download-latest-release ariang mayswind AriaNg 'endswith("-AllInOne.zip")'
 echo
 
 echo " --- === Updating gost-ui === ---"
