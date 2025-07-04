@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+GIT=/opt/homebrew/bin/git
+
+if [[ $# -eq 2 && $1 == "checkout" && ($2 == "main" || $2 == "master") ]]; then
+    TARGET=$2
+    if [[ "$TARGET" == "main" ]]; then
+        FALLBACK=master
+    else
+        FALLBACK=main
+    fi
+
+    STDERR=$(mktemp -t git)
+    trap 'rm -f "$STDERR"' EXIT
+
+    $GIT checkout "$TARGET" 2>"$STDERR"
+    EXIT=$?
+    if ((EXIT)); then
+        if ! $GIT checkout "$FALLBACK" 2>/dev/null; then
+            cat "$STDERR" >&2
+            exit $EXIT
+        fi
+    fi
+
+else
+    exec $GIT "$@"
+fi

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
+    proxy /opt/homebrew/bin/gemini "$@"
+else
+    exec /opt/homebrew/bin/gemini "$@"
+fi

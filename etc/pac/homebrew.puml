@@ -73,6 +73,8 @@ skinparam usecase {
 (chafa)-->(webp)
 (choose-rust)
 (clang-format)
+(claude-code)
+(claude-code)-->(node)
 (cmake)
 (cmake-language-server)
 (cmake-language-server)-->(python@3.13)
@@ -154,6 +156,8 @@ skinparam usecase {
 (gdk-pixbuf)-->(jpeg-turbo)
 (gdk-pixbuf)-->(libpng)
 (gdk-pixbuf)-->(libtiff)
+(gemini-cli)
+(gemini-cli)-->(node)
 (gettext) << dep >>
 (gettext)-->(libunistring)
 (gh)
