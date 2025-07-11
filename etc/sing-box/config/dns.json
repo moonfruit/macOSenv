@@ -48,13 +48,15 @@
       "listen_port": 53
     }
   ],
-  "outbounds": [
-    {
-      "type": "dns",
-      "tag": "dns-out"
-    }
-  ],
   "route": {
-    "rules": [{ "inbound": "dns-in", "outbound": "dns-out" }]
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      }
+    ]
   }
 }
