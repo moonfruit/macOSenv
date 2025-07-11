@@ -150,25 +150,24 @@ add-to-outdated() {
 
 brew-extra() {
     brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
-        select(.installed | length == 0) |
+        select(.autobump and (.installed | length == 0)) |
         "\(if .tap == null then "homebrew/cask" else .tap end)/\(if has("token") then .token else .name end)"'
 }
 
 brew-ls() {
     brew info --json=v2 --installed | jq -r '.formulae + .casks | .[] |
+        select(.autobump) |
         "\(.tap)/\(if has("token") then .token else .name end)"'
     brew-extra
 }
 
 readonly HOMEBREW_CORE="/opt/homebrew/Library/Taps/homebrew/homebrew-core"
-readonly HOMEBREW_CASK="/opt/homebrew/Library/Taps/homebrew/homebrew-cask"
 autobump-patterns() {
     echo "git"
     for it in "${EXCLUDED[@]}"; do
         echo "$it"
     done
     sed 's|^|homebrew/core/|' $HOMEBREW_CORE/.github/autobump.txt
-    sed 's|^|homebrew/cask/|' $HOMEBREW_CASK/.github/autobump.txt
 }
 
 not-autobump() {
