@@ -26,6 +26,7 @@ skinparam usecase {
 (bash)
 (bash)-->(gettext)
 (bash)-->(ncurses)
+(bash)-->(readline)
 (bash-completion@2)
 (bash-completion@2)-->(bash)
 (bash-language-server)
@@ -131,6 +132,8 @@ skinparam usecase {
 (flake8)-->(python@3.13)
 (fontconfig) << dep >>
 (fontconfig)-->(freetype)
+(fonttools)
+(fonttools)-->(python@3.13)
 (fossil)
 (fossil)-->(openssl@3)
 (freetype) << dep >>
@@ -541,14 +544,14 @@ skinparam usecase {
 (plantuml)-->(graphviz)
 (plantuml)-->(openjdk)
 (popt) << dep >>
-(postgresql@16)
-(postgresql@16)-->(gettext)
-(postgresql@16)-->(icu4c@77)
-(postgresql@16)-->(krb5)
-(postgresql@16)-->(lz4)
-(postgresql@16)-->(openssl@3)
-(postgresql@16)-->(readline)
-(postgresql@16)-->(zstd)
+(postgresql@17)
+(postgresql@17)-->(gettext)
+(postgresql@17)-->(icu4c@77)
+(postgresql@17)-->(krb5)
+(postgresql@17)-->(lz4)
+(postgresql@17)-->(openssl@3)
+(postgresql@17)-->(readline)
+(postgresql@17)-->(zstd)
 (prettier)
 (prettier)-->(node)
 (protobuf) << dep >>
@@ -690,6 +693,8 @@ skinparam usecase {
 (wget)-->(libidn2)
 (wget)-->(libunistring)
 (wget)-->(openssl@3)
+(wildfly-as)
+(wildfly-as)-->(openjdk)
 (xh)
 (xorgproto) << dep >>
 (xq)
