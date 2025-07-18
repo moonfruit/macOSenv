@@ -9669,7 +9669,6 @@
 			<key>Tags</key>
 			<array>
 				<string>local</string>
-				<string>vm</string>
 			</array>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
@@ -11240,6 +11239,7 @@
 			<true/>
 			<key>Tags</key>
 			<array>
+				<string>home</string>
 				<string>lazycat</string>
 			</array>
 			<key>Terminal Type</key>
@@ -12811,8 +12811,8 @@
 			<true/>
 			<key>Tags</key>
 			<array>
+				<string>home</string>
 				<string>lazycat</string>
-				<string>vm</string>
 			</array>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
@@ -15222,7 +15222,7 @@
 			<key>Columns</key>
 			<integer>132</integer>
 			<key>Command</key>
-			<string>ssh asusrouter.me</string>
+			<string>ssh netmap.dkmooncat.heiyu.space</string>
 			<key>Cursor Boost</key>
 			<real>0.0</real>
 			<key>Cursor Boost (Dark)</key>
@@ -15470,7 +15470,7 @@
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
-			<string>moon@asusrouter.me</string>
+			<string>moon@netmap.dkmooncat.heiyu.space</string>
 			<key>Non Ascii Font</key>
 			<string>Menlo-Regular 11</string>
 			<key>Non-ASCII Anti Aliased</key>
@@ -15950,6 +15950,7 @@
 			<array>
 				<string>home</string>
 				<string>asus</string>
+				<string>lazycat</string>
 			</array>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
