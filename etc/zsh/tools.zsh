@@ -22,10 +22,6 @@ export DI_ARGS="-f sMbuvpt"
 # 	export FZF_DEFAULT_OPTS=--cycle
 # fi
 
-# for hstr
-# export HSTR_CONFIG=hicolor        # get more colors
-# bindkey -s "\C-r" "\eqhstr\n"     # bind hstr to Ctrl-r
-
 # for zmv
 autoload -U zmv
 alias mmv='noglob zmv -W'
