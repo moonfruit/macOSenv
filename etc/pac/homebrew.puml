@@ -327,6 +327,9 @@ skinparam usecase {
 (liblinear) << dep >>
 (libmagic) << dep >>
 (libnghttp2) << dep >>
+(libnghttp3) << dep >>
+(libngtcp2) << dep >>
+(libngtcp2)-->(openssl@3)
 (libpng) << dep >>
 (librsvg) << dep >>
 (librsvg)-->(cairo)
@@ -618,6 +621,7 @@ skinparam usecase {
 (sd)
 (shellcheck)
 (shfmt)
+(simdjson) << dep >>
 (sing-box)
 (sk)
 (skopeo)

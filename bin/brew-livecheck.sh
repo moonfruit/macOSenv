@@ -149,15 +149,17 @@ add-to-outdated() {
 }
 
 brew-extra() {
-    brew info --json=v2 "${EXTRA[@]}" | jq -r '.formulae + .casks | .[] |
-        select(.autobump and (.installed | length == 0)) |
-        "\(if .tap == null then "homebrew/cask" else .tap end)/\(if has("token") then .token else .name end)"'
+    brew info --json=v2 "${EXTRA[@]}" | jq -r '
+        [.formulae[] | select(.installed | length == 0) | "\(.tap)/\(.name)"] +
+        [.casks[] | select(.installed | not) | "\(.tap)/\(.token)"] |
+        .[]'
 }
 
 brew-ls() {
-    brew info --json=v2 --installed | jq -r '.formulae + .casks | .[] |
-        select(.autobump) |
-        "\(.tap)/\(if has("token") then .token else .name end)"'
+    brew info --json=v2 --installed | jq -r '
+        [.formulae[] | "\(.tap)/\(.name)"] +
+        [.casks[] | "\(.tap)/\(.token)"] |
+        .[]'
     brew-extra
 }
 
