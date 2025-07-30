@@ -35,6 +35,9 @@ local prepend-path() {
         PATH="$bin:$PATH"
     fi
 }
+prepend-path "$BREW_PREFIX/opt/postgresql@15/bin"
+prepend-path "$BREW_PREFIX/opt/postgresql@16/bin"
+prepend-path "$BREW_PREFIX/opt/postgresql@17/bin"
 prepend-path "$BREW_PREFIX/opt/tscurl/bin"
 prepend-path "$BREW_PREFIX/opt/ruby/bin"
 prepend-path "$BREW_PREFIX/opt/p7zip-all/bin"

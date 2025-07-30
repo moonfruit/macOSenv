@@ -27,13 +27,16 @@ alias sl='sl -e'
 alias LS='sl'
 alias ls-='sl'
 
-# alias gotop='gotop -c solarized -r 2s'
 alias gpft='git push --follow-tags'
 alias gpmf='git branch --show-current | xargs git push --set-upstream moonfruit'
 
 alias fdi='fd --unrestricted'
 alias fdp='fd --full-path'
 alias rgi='rg --no-ignore'
+alias rgj='rg --type=java'
+alias rgji='rg --type=java --ignore-case'
+
+# alias gotop='gotop -c solarized -r 2s'
 
 # vman() {
 #    env PAGER="/bin/sh -c \"unset PAGER;col -b -x | \

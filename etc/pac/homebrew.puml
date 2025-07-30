@@ -6,6 +6,8 @@ skinparam usecase {
     BackgroundColor<< dep >> DarkGoldenRod
 }
 (abseil) << dep >>
+(actionlint)
+(actionlint)-->(shellcheck)
 (ant)
 (ant)-->(openjdk)
 (aom) << dep >>
