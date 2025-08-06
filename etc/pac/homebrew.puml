@@ -262,6 +262,7 @@ skinparam usecase {
 (hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
 (hazelcast/hz/hazelcast-management-center)-->(openjdk@21)
+(helm)
 (hexyl)
 (hgrep)
 (highway) << dep >>
@@ -292,6 +293,7 @@ skinparam usecase {
 (jpeg-xl)-->(webp)
 (jq)
 (jq)-->(oniguruma)
+(kompose)
 (kotlin-language-server)
 (kotlin-language-server)-->(openjdk@21)
 (krb5) << dep >>
@@ -476,8 +478,13 @@ skinparam usecase {
 (node)-->(c-ares)
 (node)-->(icu4c@77)
 (node)-->(libnghttp2)
+(node)-->(libnghttp3)
+(node)-->(libngtcp2)
 (node)-->(libuv)
 (node)-->(openssl@3)
+(node)-->(simdjson)
+(node)-->(sqlite)
+(node)-->(zstd)
 (npth) << dep >>
 (nushell)
 (nushell)-->(openssl@3)

@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
-    proxy /opt/homebrew/bin/gemini "$@"
-else
-    exec /opt/homebrew/bin/gemini "$@"
+	exec proxy "$0" "$@"
 fi
+
+source "$ENV/lib/bash/native.sh"
+NAME="$(simple-basename "$0")"
+
+if [[ -f "$ENV/etc/secret/${NAME}.env" ]]; then
+    TOKEN="$ENV/etc/secret/${NAME}.env"
+else
+    TOKEN="$ENV/etc/secret/gemini.env"
+fi
+
+# shellcheck disable=SC1090
+source "$TOKEN"
+
+# shellcheck disable=SC2155
+readonly RED=$(tput setaf 1) BOLD=$(tput bold) RESET=$(tput sgr0)
+
+printf "%*s\n" 90 "$RED$BOLD<$GEMINI_USER>$RESET"
+exec /opt/homebrew/bin/gemini "$@"

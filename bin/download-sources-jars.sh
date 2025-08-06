@@ -4,7 +4,7 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
     exec proxy "$0" "$@"
 fi
 
-if [[ $1 = "force" ]]; then
+if [[ $1 = "-f" || $1 = "--force" ]]; then
     FORCE=1
     shift
 fi
