@@ -163,17 +163,16 @@ brew-ls() {
     brew-extra
 }
 
-readonly HOMEBREW_CORE="/opt/homebrew/Library/Taps/homebrew/homebrew-core"
-autobump-patterns() {
-    echo "git"
-    for it in "${EXCLUDED[@]}"; do
-        echo "$it"
-    done
-    sed 's|^|homebrew/core/|' $HOMEBREW_CORE/.github/autobump.txt
-}
+#autobump-patterns() {
+#    echo "git"
+#    for it in "${EXCLUDED[@]}"; do
+#        echo "$it"
+#    done
+#}
 
 not-autobump() {
-    rg -Fxvf <(autobump-patterns)
+    #    rg -Fxvf <(autobump-patterns)
+    rg -Fxvf <(printf "%s\n" "${EXCLUDED[@]}")
 }
 
 exclude-skipped() {

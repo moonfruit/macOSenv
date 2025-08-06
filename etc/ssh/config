@@ -13,16 +13,16 @@ Host 10.1.2.16
     User app
     ProxyJump 10.1.2.57
 
+Host 10.1.2.32
+    User dev
+    ProxyJump 10.1.2.57
+
 Host 10.1.2.34
     User app
     ProxyJump 10.1.2.57
 
 Host 10.1.2.35
     User app
-    ProxyJump 10.1.2.57
-
-Host 10.1.2.32
-    User dev
     ProxyJump 10.1.2.57
 
 Host 10.1.2.57
