@@ -109,8 +109,6 @@ skinparam usecase {
 (dnsperf)-->(ldns)
 (dnsperf)-->(libnghttp2)
 (dnsperf)-->(openssl@3)
-(dockerfile-language-server)
-(dockerfile-language-server)-->(node)
 (dotnet@8) << dep >>
 (dotnet@8)-->(icu4c@77)
 (dotnet@8)-->(openssl@3)
@@ -184,6 +182,7 @@ skinparam usecase {
 (glib) << dep >>
 (glib)-->(gettext)
 (glib)-->(pcre2)
+(glow)
 (gmp) << dep >>
 (gmssl)
 (gnu-getopt)
@@ -293,7 +292,6 @@ skinparam usecase {
 (jpeg-xl)-->(webp)
 (jq)
 (jq)-->(oniguruma)
-(kompose)
 (kotlin-language-server)
 (kotlin-language-server)-->(openjdk@21)
 (krb5) << dep >>
@@ -420,12 +418,16 @@ skinparam usecase {
 (moonfruit/tap/doge)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
+(moonfruit/tap/impl)
+(moonfruit/tap/impl)-->(go)
 (moonfruit/tap/lzc-cli)
 (moonfruit/tap/lzc-cli)-->(node)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
+(moonfruit/tap/qwen-code)
+(moonfruit/tap/qwen-code)-->(node)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)
@@ -629,6 +631,7 @@ skinparam usecase {
 (rust)-->(zstd)
 (sd)
 (shellcheck)
+(shellcheck)-->(gmp)
 (shfmt)
 (simdjson) << dep >>
 (sing-box)
@@ -677,6 +680,7 @@ skinparam usecase {
 (tomcat@9)
 (tomcat@9)-->(openjdk)
 (tree-sitter) << dep >>
+(tree-sitter-cli)
 (typescript)
 (typescript)-->(node)
 (ugrep)
