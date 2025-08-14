@@ -1,42 +1,53 @@
 {
   "dns": {
     "servers": [
-      { "tag": "dns-resolver", "address": "223.5.5.5", "detour": "DIRECT" },
+      {
+        "tag": "dns-resolver",
+        "type": "udp",
+        "server": "223.5.5.5"
+      },
       {
         "tag": "dns-direct",
-        "address": "h3://dns.alidns.com/dns-query",
-        "address_resolver": "dns-resolver",
-        "detour": "DIRECT"
+        "type": "h3",
+        "server": "dns.alidns.com",
+        "domain_resolver": "dns-resolver"
       },
       {
-        "tag": "doh-direct",
-        "address": "https://dns.alidns.com/dns-query",
-        "address_resolver": "dns-resolver",
-        "detour": "DIRECT"
-      },
-      {
-        "tag": "doh-proxy",
-        "address": "https://1.1.1.1/dns-query",
+        "tag": "dns-proxy",
+        "type": "https",
+        "server": "1.1.1.1",
         "detour": "🔰 默认出口"
       },
       {
         "tag": "dns-gingkoo",
-        "address": "tcp://10.1.2.59",
-        "detour": "DIRECT"
+        "type": "tcp",
+        "server": "10.1.2.59"
       },
-      { "tag": "dns-home", "address": "192.168.50.1", "detour": "DIRECT" },
-      { "tag": "dns-system", "address": "local", "detour": "DIRECT" }
+      {
+        "tag": "dns-home",
+        "type": "udp",
+        "server": "192.168.50.1"
+      },
+      {
+        "tag": "dns-hosts",
+        "type": "hosts",
+        "predefined": {
+          "asusrouter.com": "192.168.50.1",
+          "router.asus.com": "192.168.50.1",
+          "www.asusrouter.com": "192.168.50.1"
+        }
+      }
     ],
     "rules": [
-      { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo" },
       {
         "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com"],
-        "server": "dns-home"
+        "server": "dns-hosts"
       },
+      { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo" },
       { "clash_mode": "Global", "server": "doh-proxy" },
-      { "clash_mode": "Direct", "server": "doh-direct" }
+      { "clash_mode": "Direct", "server": "dns-direct" }
     ],
-    "final": "doh-direct",
+    "final": "dns-direct",
     "reverse_mapping": true,
     "strategy": "prefer_ipv4"
   },
@@ -57,6 +68,7 @@
         "protocol": "dns",
         "action": "hijack-dns"
       }
-    ]
+    ],
+    "default_domain_resolver": "dns-direct"
   }
 }

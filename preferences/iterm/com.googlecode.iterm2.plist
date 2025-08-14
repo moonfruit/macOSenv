@@ -69,6 +69,8 @@
 	<dict/>
 	<key>Default Bookmark Guid</key>
 	<string>550B3BC4-9D90-4016-B342-242B82E83738</string>
+	<key>Default Browser Profile Guid</key>
+	<string>758ED2BB-5F09-4F8F-919B-0E7F611AFDDA</string>
 	<key>DefaultTabBarHeight</key>
 	<real>24</real>
 	<key>DeleteProfile_SilenceUntil</key>
@@ -120,6 +122,19 @@
 			<integer>32</integer>
 			<key>Text</key>
 			<string></string>
+		</dict>
+		<key>0xd-0x20000-0x24</key>
+		<dict>
+			<key>Action</key>
+			<integer>12</integer>
+			<key>Keycode</key>
+			<integer>13</integer>
+			<key>Modifiers</key>
+			<integer>131072</integer>
+			<key>Text</key>
+			<string>\n</string>
+			<key>Version</key>
+			<integer>1</integer>
 		</dict>
 		<key>0xf700-0x300000</key>
 		<dict>
@@ -820,13 +835,13 @@
 			<key>Background Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.8901960784313725</real>
+				<real>0.21176470588235294</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.96470588235294119</real>
+				<real>0.16862745098039217</real>
 				<key>Red Component</key>
-				<real>0.99215686274509807</real>
+				<real>0.0</real>
 			</dict>
 			<key>Background Color (Dark)</key>
 			<dict>
@@ -918,13 +933,13 @@
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.45882352941176469</real>
+				<real>0.63137254901960782</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.43137254901960786</real>
+				<real>0.63137254901960782</real>
 				<key>Red Component</key>
-				<real>0.34509803921568627</real>
+				<real>0.57647058823529407</real>
 			</dict>
 			<key>Bold Color (Dark)</key>
 			<dict>
@@ -973,13 +988,13 @@
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.51372549019607838</real>
+				<real>0.58823529411764708</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.4823529411764706</real>
+				<real>0.58039215686274515</real>
 				<key>Red Component</key>
-				<real>0.396078431372549</real>
+				<real>0.51372549019607838</real>
 			</dict>
 			<key>Cursor Color (Dark)</key>
 			<dict>
@@ -1045,13 +1060,13 @@
 			<key>Cursor Text Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.83529411764705885</real>
+				<real>0.25882352941176473</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.90980392156862744</real>
+				<real>0.21176470588235294</real>
 				<key>Red Component</key>
-				<real>0.93333333333333335</real>
+				<real>0.027450980392156862</real>
 			</dict>
 			<key>Cursor Text Color (Dark)</key>
 			<dict>
@@ -1100,13 +1115,13 @@
 			<key>Foreground Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.51372549019607838</real>
+				<real>0.58823529411764708</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.4823529411764706</real>
+				<real>0.58039215686274515</real>
 				<key>Red Component</key>
-				<real>0.396078431372549</real>
+				<real>0.51372549019607838</real>
 			</dict>
 			<key>Foreground Color (Dark)</key>
 			<dict>
@@ -1334,13 +1349,13 @@
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.45882352941176469</real>
+				<real>0.63137254901960782</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.43137254901960786</real>
+				<real>0.63137254901960782</real>
 				<key>Red Component</key>
-				<real>0.34509803921568627</real>
+				<real>0.57647058823529407</real>
 			</dict>
 			<key>Selected Text Color (Dark)</key>
 			<dict>
@@ -1367,13 +1382,13 @@
 			<key>Selection Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.83529411764705885</real>
+				<real>0.25882352941176473</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.90980392156862744</real>
+				<real>0.21176470588235294</real>
 				<key>Red Component</key>
-				<real>0.93333333333333335</real>
+				<real>0.027450980392156862</real>
 			</dict>
 			<key>Selection Color (Dark)</key>
 			<dict>

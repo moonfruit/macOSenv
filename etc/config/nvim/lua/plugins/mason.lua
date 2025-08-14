@@ -28,8 +28,6 @@ return {
       disable_mason(opts.servers, {
         -- C
         "clangd",
-        -- Docker
-        "dockerls",
         -- Go
         "gopls",
         -- Javascript
