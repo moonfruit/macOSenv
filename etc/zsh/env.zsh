@@ -19,4 +19,4 @@ DEFAULT_USER=moon
 #fi
 
 # for crypto
-export YY_PASSWORD="$ENV/etc/private.txt"
+# export YY_PASSWORD="$ENV/etc/private.txt"
