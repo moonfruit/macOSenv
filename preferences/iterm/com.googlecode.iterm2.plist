@@ -10,27 +10,29 @@
 	<key>AIFeatureFunctionCalling</key>
 	<true/>
 	<key>AIFeatureHostedCodeInterpeter</key>
-	<true/>
+	<false/>
 	<key>AIFeatureHostedFileSearch</key>
-	<true/>
+	<false/>
 	<key>AIFeatureHostedWebSearch</key>
-	<true/>
+	<false/>
 	<key>AIFeatureStreamingResponses</key>
 	<true/>
 	<key>AITermAPI</key>
-	<integer>2</integer>
+	<integer>3</integer>
 	<key>AIVectorStore</key>
+	<integer>0</integer>
+	<key>AIVendor</key>
 	<integer>1</integer>
 	<key>AdjustWindowForFontSizeChange</key>
 	<true/>
 	<key>AiMaxTokens</key>
-	<integer>1000000</integer>
+	<integer>1048576</integer>
 	<key>AiModel</key>
-	<string>gpt-4.1</string>
+	<string>gemini-2.0-flash</string>
 	<key>AiResponseMaxTokens</key>
-	<integer>32768</integer>
+	<integer>8192</integer>
 	<key>AitermURL</key>
-	<string>https://api.openai.com/v1/responses</string>
+	<string>https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}</string>
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>AlternateMouseScroll</key>
@@ -1331,11 +1333,11 @@
 			<key>Normal Font</key>
 			<string>JetBrainsMono-Regular_SemiBold 14</string>
 			<key>Option Key Sends</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
 			<integer>0</integer>
 			<key>Right Option Key Sends</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Rows</key>
 			<integer>30</integer>
 			<key>Screen</key>
@@ -5920,7 +5922,7 @@
 			<key>Guid</key>
 			<string>D61C30A8-BD36-4B7C-9833-1C2EAA3D31DE</string>
 			<key>Has Hotkey</key>
-			<true/>
+			<false/>
 			<key>Hide After Opening</key>
 			<false/>
 			<key>Horizontal Spacing</key>
@@ -61595,7 +61597,9 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.20429300252993829</real>
+	<real>0.14836217173725533</real>
+	<key>SshIntegrationForURLs</key>
+	<false/>
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
 	<key>StretchTabsToFillBar</key>

@@ -1,2 +1,10 @@
 #!/usr/bin/env bash
-exec proxy /opt/homebrew/bin/claude "$@"
+if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
+    exec proxy "$0" "$@"
+fi
+
+if [[ $TERM_PROGRAM == iTerm.app ]]; then
+    export TERM_PROGRAM=""
+fi
+
+exec /opt/homebrew/bin/claude "$@"
