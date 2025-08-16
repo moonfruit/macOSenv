@@ -110,6 +110,9 @@
     proxy = http://127.0.0.1:7890
     #proxy = http://10.1.2.12:8118
 
+[url "git@git.server.gingkoo:"]
+    insteadOf = http://git.server.gingkoo/
+
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f

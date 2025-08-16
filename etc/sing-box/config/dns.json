@@ -34,13 +34,14 @@
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
-          "www.asusrouter.com": "192.168.50.1"
+          "www.asusrouter.com": "192.168.50.1",
+          "registry.server.gingkoo": "10.1.1.207"
         }
       }
     ],
     "rules": [
       {
-        "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com"],
+        "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com", "registry.server.gingkoo"],
         "server": "dns-hosts"
       },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo" },
