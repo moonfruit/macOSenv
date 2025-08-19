@@ -38,7 +38,6 @@ skinparam usecase {
 (bat)-->(oniguruma)
 (bfg)
 (bfg)-->(openjdk)
-(biome)
 (black)
 (black)-->(python@3.13)
 (bpytop)

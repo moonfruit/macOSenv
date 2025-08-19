@@ -1,17 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
 /usr/bin/ssh "$@" || exit
 
 for VAR in "$@"; do
-	if [[ "$VAR" == *@* ]]; then
-		FOUND=1
-		break
-	fi
+    if [[ $VAR == *@* && $VAR != *=* ]]; then
+        FOUND=1
+        break
+    fi
 done
 
 [[ -z $FOUND ]] && exit
 
 SAVE=$HOME/.ssh/save_hosts
 if ! rg -Fxq "$VAR" "$SAVE"; then
-	echo "$VAR" >>"$SAVE"
-	sort -uo "$SAVE" "$SAVE"
+    echo "$VAR" >>"$SAVE"
+    sort -uo "$SAVE" "$SAVE"
 fi

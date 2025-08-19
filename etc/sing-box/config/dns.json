@@ -1,32 +1,20 @@
 {
   "dns": {
     "servers": [
+      { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
+      { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-proxy", "type": "https", "server": "1.1.1.1", "detour": "🔰 默认出口" },
+      { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59", "server_port": 1053 },
+      { "tag": "dns-home", "type": "udp", "server": "192.168.50.1" },
       {
-        "tag": "dns-resolver",
-        "type": "udp",
-        "server": "223.5.5.5"
-      },
-      {
-        "tag": "dns-direct",
-        "type": "h3",
-        "server": "dns.alidns.com",
-        "domain_resolver": "dns-resolver"
-      },
-      {
-        "tag": "dns-proxy",
-        "type": "https",
-        "server": "1.1.1.1",
-        "detour": "🔰 默认出口"
-      },
-      {
-        "tag": "dns-gingkoo",
-        "type": "tcp",
-        "server": "10.1.2.59"
-      },
-      {
-        "tag": "dns-home",
-        "type": "udp",
-        "server": "192.168.50.1"
+        "tag": "dns-gingkoo-hosts",
+        "type": "hosts",
+        "predefined": {
+          "dns.server.gingkoo": "10.1.2.59",
+          "git.server.gingkoo": "10.1.2.57",
+          "jenkins.server.gingkoo": "10.1.1.101",
+          "registry.server.gingkoo": "10.1.1.207"
+        }
       },
       {
         "tag": "dns-hosts",
@@ -34,21 +22,22 @@
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
-          "www.asusrouter.com": "192.168.50.1",
-          "registry.server.gingkoo": "10.1.1.207"
+          "www.asusrouter.com": "192.168.50.1"
         }
       }
     ],
     "rules": [
       {
-        "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com", "registry.server.gingkoo"],
-        "server": "dns-hosts"
+        "domain": ["dns.server.gingkoo", "git.server.gingkoo", "jenkins.server.gingkoo", "registry.server.gingkoo"],
+        "server": "dns-gingkoo-hosts"
       },
+      { "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com"], "server": "dns-hosts" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo" },
       { "clash_mode": "Global", "server": "doh-proxy" },
       { "clash_mode": "Direct", "server": "dns-direct" }
     ],
     "final": "dns-direct",
+    "independent_cache": true,
     "reverse_mapping": true,
     "strategy": "prefer_ipv4"
   },

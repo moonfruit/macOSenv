@@ -18,6 +18,8 @@ if vim.g.neovide then
 end
 
 vim.g.ai_cmp = false
+-- vim.g.lazyvim_prettier_needs_config = true
+
 vim.opt.clipboard = ""
 vim.opt.fileencodings = "ucs-bom,utf-8,gb18030,big5,default,latin1"
 vim.opt.list = true
