@@ -41,7 +41,7 @@ return {
         lemminx = {},
         sorbet = {
           mason = false,
-        }
+        },
       },
     },
   },
@@ -57,7 +57,26 @@ return {
           extra_args = { "--line-length", "120" },
         },
         prettier = {
-          extra_args = { "--print-width", "120" },
+          extra_args = function(params)
+            local args = { "--print-width", "120" }
+
+            -- 如果 LSP 提供了 tabSize
+            if params.options and params.options.tabSize then
+              table.insert(args, "--tab-width")
+              table.insert(args, tostring(params.options.tabSize))
+            end
+
+            -- 如果 LSP 提供了是否用空格
+            if params.options and params.options.insertSpaces ~= nil then
+              if params.options.insertSpaces then
+                table.insert(args, "--use-tabs=false")
+              else
+                table.insert(args, "--use-tabs=true")
+              end
+            end
+
+            return args
+          end,
         },
         shfmt = {
           extra_args = { "--indent", "4" },

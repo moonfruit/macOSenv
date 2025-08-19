@@ -8,7 +8,7 @@
     },
     {
       "type": "mixed",
-      "tag": "direct-in",
+      "tag": "pac-in",
       "listen": "127.0.0.1",
       "listen_port": 7891
     },
