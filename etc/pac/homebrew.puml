@@ -713,7 +713,6 @@ skinparam usecase {
 (wildfly-as)-->(openjdk)
 (xh)
 (xorgproto) << dep >>
-(xq)
 (xxhash) << dep >>
 (xz) << dep >>
 (yaml-language-server)

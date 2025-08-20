@@ -50,6 +50,7 @@ cleanup() {
 
 KNOWN_BOTTLED=(
     hashicorp/tap/consul
+    mongodb/brew/mongodb-community
     moonfruit/tap/wlp-webprofile8
     oven-sh/bun/bun
 )
@@ -77,7 +78,8 @@ if ((${#OUTDATED[@]})); then
     cleanup "${OUTDATED[@]}"
 
     if BOTTLED=$(find-bottled "${OUTDATED[@]}"); then
-        brew upgrade --display-times "${BOTTLED[@]}"
+        # shellcheck disable=SC2086
+        brew upgrade --display-times $BOTTLED
     fi
 
     if brew upgrade --force-bottle --display-times; then
