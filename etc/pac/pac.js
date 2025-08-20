@@ -11,6 +11,8 @@ var FindProxyForURL = function(init, profiles) {
 }("+\u81ea\u52a8\u5207\u6362", {
     "+\u81ea\u52a8\u5207\u6362": function(url, host, scheme) {
         "use strict";
+        if (/(?:^|\.)claude\.ai$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)anthropic\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)x\.ai$/.test(host)) return "+AUTO";
         if (/(?:^|\.)dockerstatic\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)comfy\.org$/.test(host)) return "+AUTO";
@@ -37,7 +39,6 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)cookielaw\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)olympics\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)relingo\.net$/.test(host)) return "+AUTO";
-        if (/(?:^|\.)anthropic\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)v2ex\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)fengzg\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)sms-activate\.io$/.test(host)) return "+AUTO";
@@ -2619,6 +2620,8 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)ifan\.cz\.cc$/.test(host)) return "+AUTO";
         if (/(?:^|\.)mike\.cz\.cc$/.test(host)) return "+AUTO";
         if (/(?:^|\.)nic\.cz\.cc$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)deno\.dev$/.test(host)) return "+AUTO";
+        if (/(?:^|\.)docs\.deno\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)doom9\.org$/.test(host)) return "+AUTO";
         if (/(?:^|\.)dweb\.link$/.test(host)) return "+AUTO";
         if (/(?:^|\.)docker\.io$/.test(host)) return "+AUTO";
@@ -2999,6 +3002,7 @@ var FindProxyForURL = function(init, profiles) {
         if (scheme === "http" && url.indexOf(".eyny.com") >= 0) return "+AUTO";
         if (/(?:^|\.)eyny\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".ezpeer.com") >= 0) return "+AUTO";
+        if (/(?:^|\.)furrybar\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)forbes\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)financialexpress\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)fast\.com$/.test(host)) return "+AUTO";
@@ -4620,6 +4624,7 @@ var FindProxyForURL = function(init, profiles) {
         if (/(?:^|\.)myspacecdn\.com$/.test(host)) return "+AUTO";
         if (scheme === "http" && url.indexOf(".mytalkbox.com") >= 0) return "+AUTO";
         if (scheme === "http" && url.indexOf(".mytizi.com") >= 0) return "+AUTO";
+        if (/(?:^|\.)naver\.com$/.test(host)) return "+AUTO";
         if (/(?:^|\.)maven\.neoforged\.net$/.test(host)) return "+AUTO";
         if (/(?:^|\.)nftstorage\.link$/.test(host)) return "+AUTO";
         if (/(?:^|\.)newindianexpress\.com$/.test(host)) return "+AUTO";
