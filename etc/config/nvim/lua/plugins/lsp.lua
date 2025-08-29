@@ -35,10 +35,16 @@ return {
         cssls = {
           mason = false,
         },
+        gradle_ls = {},
+        groovyls = {},
         html = {
           mason = false,
         },
-        lemminx = {},
+        lemminx = {
+          settings = {
+            maxLineWidth = 120,
+          },
+        },
         sorbet = {
           mason = false,
         },
