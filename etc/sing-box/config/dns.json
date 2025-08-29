@@ -17,12 +17,8 @@
       }
     ],
     "rules": [
-      {
-        "domain": ["asusrouter.com", "router.asus.com", "www.asusrouter.com"],
-        "server": "dns-hosts",
-        "rewrite_ttl": 2592000
-      },
-      { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo" },
+      { "ip_accept_any": true, "server": "dns-hosts" },
+      { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
       { "clash_mode": "Global", "server": "dns-proxy" },
       { "clash_mode": "Direct", "server": "dns-direct" }
     ],

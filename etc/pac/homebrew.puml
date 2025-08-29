@@ -40,6 +40,7 @@ skinparam usecase {
 (bfg)-->(openjdk)
 (black)
 (black)-->(python@3.13)
+(bottom)
 (bpytop)
 (bpytop)-->(osx-cpu-temp)
 (bpytop)-->(python@3.13)
@@ -158,6 +159,7 @@ skinparam usecase {
 (gdk-pixbuf)-->(jpeg-turbo)
 (gdk-pixbuf)-->(libpng)
 (gdk-pixbuf)-->(libtiff)
+(gdu)
 (gemini-cli)
 (gemini-cli)-->(node)
 (gettext) << dep >>
@@ -425,8 +427,6 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
-(moonfruit/tap/qwen-code)
-(moonfruit/tap/qwen-code)-->(node)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)
@@ -435,8 +435,6 @@ skinparam usecase {
 (moonfruit/tap/tscurl)-->(moonfruit/tap/tongsuo)
 (moonfruit/tap/tscurl)-->(zstd)
 (moonfruit/tap/uutils-selected)
-(moonfruit/tap/wlp-webprofile8)
-(moonfruit/tap/wlp-webprofile8)-->(openjdk)
 (mosh)
 (mosh)-->(protobuf)
 (mpdecimal) << dep >>
@@ -599,6 +597,8 @@ skinparam usecase {
 (qemu)-->(vde)
 (qemu)-->(zstd)
 (qsv)
+(qwen-code)
+(qwen-code)-->(node)
 (rcs)
 (readline) << dep >>
 (redis)
@@ -709,8 +709,6 @@ skinparam usecase {
 (wget)-->(libidn2)
 (wget)-->(libunistring)
 (wget)-->(openssl@3)
-(wildfly-as)
-(wildfly-as)-->(openjdk)
 (xh)
 (xorgproto) << dep >>
 (xxhash) << dep >>
