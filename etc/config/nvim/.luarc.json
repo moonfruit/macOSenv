@@ -1,0 +1,7 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "format.enable": false,
+  "workspace.library": [
+    "/opt/homebrew/opt/neovim/share/nvim/runtime"
+  ]
+}
