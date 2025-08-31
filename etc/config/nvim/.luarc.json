@@ -1,7 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "format.enable": false,
+  "runtime.version": "LuaJIT",
   "workspace.library": [
-    "/opt/homebrew/opt/neovim/share/nvim/runtime"
+    "/opt/homebrew/opt/neovim/share/nvim/runtime/lua",
+    "${3rd}/luv/library",
+    "/Users/moon/.local/share/nvim/lazy/lazy.nvim/lua",
+    "/Users/moon/.local/share/nvim/lazy/astrocore/lua",
+    "/Users/moon/.local/share/nvim/lazy/astrolsp/lua",
+    "/Users/moon/.local/share/nvim/lazy/astrocommunity/lua"
   ]
 }

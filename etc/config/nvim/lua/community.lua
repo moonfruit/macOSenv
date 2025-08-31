@@ -7,6 +7,7 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.pack.lua" },
   -- import/override with your plugins folder
 }
