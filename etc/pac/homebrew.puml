@@ -132,6 +132,7 @@ skinparam usecase {
 (flake8)-->(python@3.13)
 (fontconfig) << dep >>
 (fontconfig)-->(freetype)
+(fontconfig)-->(gettext)
 (fonttools)
 (fonttools)-->(python@3.13)
 (fossil)
@@ -483,6 +484,7 @@ skinparam usecase {
 (node)-->(openssl@3)
 (node)-->(simdjson)
 (node)-->(sqlite)
+(node)-->(uvwasi)
 (node)-->(zstd)
 (npth) << dep >>
 (nushell)
@@ -629,6 +631,7 @@ skinparam usecase {
 (rust)-->(pkgconf)
 (rust)-->(zstd)
 (sd)
+(selene)
 (shellcheck)
 (shellcheck)-->(gmp)
 (shfmt)
@@ -695,6 +698,8 @@ skinparam usecase {
 (unibilium) << dep >>
 (utf8proc) << dep >>
 (uv)
+(uvwasi) << dep >>
+(uvwasi)-->(libuv)
 (vde) << dep >>
 (vscode-langservers-extracted)
 (vscode-langservers-extracted)-->(node)

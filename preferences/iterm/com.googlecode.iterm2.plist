@@ -63185,7 +63185,7 @@
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.14836217173725533</real>
 	<key>SshIntegrationForURLs</key>
-	<false/>
+	<true/>
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
 	<key>StretchTabsToFillBar</key>
