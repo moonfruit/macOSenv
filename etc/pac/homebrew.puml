@@ -380,6 +380,9 @@ skinparam usecase {
 (libxrender)-->(xorgproto)
 (libyaml) << dep >>
 (lima) << dep >>
+(lima-additional-guestagents)
+(lima-additional-guestagents)-->(lima)
+(lima-additional-guestagents)-->(qemu)
 (liquibase)
 (liquibase)-->(openjdk)
 (little-cms2) << dep >>
