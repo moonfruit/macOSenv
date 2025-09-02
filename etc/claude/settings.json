@@ -1,23 +1,25 @@
 {
-	"hooks": {
-		"Notification": [
-			{
-				"hooks": [
-					{
-						"type": "command",
-						"command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/notification.sh"
-					}
-				]
-			}
-		]
-	},
-	"permissions": {
-		"allow": ["WebFetch(domain:docs.anthropic.com)"],
-		"deny": [],
-		"ask": []
-	},
-	"statusLine": {
-		"type": "command",
-		"command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh"
-	}
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/notification.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh"
+  }
 }

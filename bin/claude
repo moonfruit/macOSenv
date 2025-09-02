@@ -7,4 +7,10 @@ if [[ $TERM_PROGRAM == iTerm.app ]]; then
     export TERM_PROGRAM=""
 fi
 
+if [[ $1 == "--bianxie" ]]; then
+    export ANTHROPIC_BASE_URL="https://api.bianxie.ai"
+    export ANTHROPIC_AUTH_TOKEN="sk-ZAnj8EH0ZYCJF9YwoZRyNjVHadZZ2vPPikigCcAKCnQvkjTf"
+    shift
+fi
+
 exec /opt/homebrew/bin/claude "$@"

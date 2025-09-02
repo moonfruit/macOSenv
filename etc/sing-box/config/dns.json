@@ -25,18 +25,18 @@
     "rules": [
       { "ip_accept_any": true, "server": "dns-hosts" },
       { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
-      { "domain_suffix": "lazycat.cloud", "server": "dns-direct" },
+      { "domain_suffix": ["cdn.jsdelivr.net", "lazycat.cloud", "v2ray.in"], "server": "dns-direct" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
       { "clash_mode": "Global", "server": "dns-proxy" },
       { "clash_mode": "Direct", "server": "dns-direct" },
-      { "query_type": ["A", "AAAA"], "server": "dns-fakeip" },
       { "rule_set": "GeoSites@CN", "server": "dns-direct" },
       {
         "type": "logical",
         "mode": "and",
         "rules": [{ "rule_set": "GeoSites@!CN", "invert": true }, { "rule_set": "GeoIP@CN" }],
         "server": "dns-direct"
-      }
+      },
+      { "query_type": ["A", "AAAA"], "server": "dns-fakeip" }
     ],
     "final": "dns-proxy",
     "independent_cache": true,
@@ -59,9 +59,6 @@
       {
         "protocol": "dns",
         "action": "hijack-dns"
-      },
-      {
-        "action": "resolve"
       }
     ],
     "rule_set": [
