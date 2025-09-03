@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
@@ -12,12 +12,12 @@ return {
   opts = {
     -- Configure core features of AstroNvim
     features = {
-      large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
-      autopairs = true, -- enable autopairs at start
-      cmp = true, -- enable completion at start
-      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
-      highlighturl = true, -- highlight URLs at start
-      notifications = true, -- enable notifications at start
+      large_buf = { size = 1024 * 256, lines = 10000 },            -- set global limits for large files for disabling features like treesitter
+      autopairs = true,                                            -- enable autopairs at start
+      cmp = true,                                                  -- enable completion at start
+      diagnostics = { virtual_text = true, virtual_lines = true }, -- diagnostic settings on startup
+      highlighturl = true,                                         -- highlight URLs at start
+      notifications = true,                                        -- enable notifications at start
     },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
@@ -31,20 +31,26 @@ return {
         pc = "esqlc",
       },
       -- filename = {
-        -- [".foorc"] = "fooscript",
+      -- [".foorc"] = "fooscript",
       -- },
       -- pattern = {
-        -- [".*/etc/foo/.*"] = "fooscript",
+      -- [".*/etc/foo/.*"] = "fooscript",
       -- },
     },
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
-        relativenumber = true, -- sets vim.opt.relativenumber
-        number = true, -- sets vim.opt.number
-        spell = false, -- sets vim.opt.spell
-        signcolumn = "yes", -- sets vim.opt.signcolumn to yes
-        wrap = false, -- sets vim.opt.wrap
+        clipboard = "",
+        fileencodings = "ucs-bom,utf-8,gb18030,big5,default,latin1",
+        guifont = "JetBrainsMono Nerd Font",
+        list = true,
+        listchars = "tab:<->,trail:.,nbsp:+,extends:>,precedes:<",
+        number = true,
+        relativenumber = true,
+        signcolumn = "yes",
+        spelllang = { "en", "cjk" },
+        tabstop = 4,
+        wrap = false,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -79,6 +85,27 @@ return {
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
+
+        ["<M-A>a"] = "ggVG",
+        ["<M-A>s"] = "<Cmd>up<CR>",
+        ["<M-A>z"] = "u",
+        ["<M-A>Z"] = "<C-R>",
+        ["<Leader>W"] = { "<Cmd>noa w<CR>", desc = "Save without formatting" },
+
+        ["<D-a>"] = "ggVG",
+        ["<D-s>"] = "<Cmd>up<CR>",
+        ["<D-v>"] = '"+p',
+        ["<D-z>"] = "u",
+        ["<S-D-z>"] = "<C-R>",
+      },
+      v = {
+        ["<M-A>c"] = '"+y',
+        ["<D-c>"] = '"+y',
+      },
+      i = {
+        ["<M-A>s"] = "<C-o><Cmd>up<CR>",
+        ["<D-s>"] = "<C-o><Cmd>up<CR>",
+        ["<D-v>"] = '<C-o>"+p',
       },
     },
   },

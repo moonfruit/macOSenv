@@ -1,6 +1,8 @@
 {
   "log": {
+    // "level": "trace",
     "level": "info",
     "timestamp": true
   }
 }
+// vim: ft=jsonc
