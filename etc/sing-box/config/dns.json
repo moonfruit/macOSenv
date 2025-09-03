@@ -4,7 +4,6 @@
       { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
       { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       { "tag": "dns-proxy", "type": "tls", "server": "1.1.1.1" },
-      { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
       { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       {
         "tag": "dns-hosts",
@@ -24,19 +23,23 @@
     ],
     "rules": [
       { "ip_accept_any": true, "server": "dns-hosts" },
-      { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
+      { "domain_suffix": ["local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
       { "domain_suffix": ["cdn.jsdelivr.net", "lazycat.cloud", "v2ray.in"], "server": "dns-direct" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
       { "clash_mode": "Global", "server": "dns-proxy" },
       { "clash_mode": "Direct", "server": "dns-direct" },
+      { "query_type": ["A", "AAAA"], "server": "dns-fakeip" },
       { "rule_set": "GeoSites@CN", "server": "dns-direct" },
       {
         "type": "logical",
         "mode": "and",
-        "rules": [{ "rule_set": "GeoSites@!CN", "invert": true }, { "rule_set": "GeoIP@CN" }],
+        "rules": [
+          { "process_name": ["ChatGPT", "ChatGPTHelper", "Claude"], "invert": true },
+          { "rule_set": "GeoSites@!CN", "invert": true },
+          { "rule_set": "GeoIP@CN" }
+        ],
         "server": "dns-direct"
-      },
-      { "query_type": ["A", "AAAA"], "server": "dns-fakeip" }
+      }
     ],
     "final": "dns-proxy",
     "independent_cache": true,
@@ -53,13 +56,17 @@
   ],
   "route": {
     "rules": [
-      {
-        "action": "sniff"
-      },
-      {
-        "protocol": "dns",
-        "action": "hijack-dns"
-      }
+      { "action": "sniff" },
+      { "network": "icmp", "outbound": "DIRECT" },
+      { "protocol": "dns", "action": "hijack-dns" },
+      { "protocol": "stun", "action": "reject" },
+      // {
+      //   "type": "logical",
+      //   "mode": "or",
+      //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],
+      //   "action": "reject"
+      // }
+      { "domain_suffix": ["cdn.jsdelivr.net", "v2ray.in"], "ip_is_private": true, "outbound": "DIRECT" }
     ],
     "rule_set": [
       {
@@ -84,3 +91,4 @@
     "default_domain_resolver": "dns-direct"
   }
 }
+// vim: ft=jsonc

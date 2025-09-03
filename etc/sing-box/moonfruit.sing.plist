@@ -8,7 +8,7 @@
 	<string>moonfruit.sing</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/opt/homebrew/bin/sing-box</string>
+		<string>/opt/homebrew/opt/sing-box@2/bin/sing-box</string>
 		<string>run</string>
 		<string>-C</string>
 		<string>config</string>
