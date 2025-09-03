@@ -429,6 +429,7 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
+(moonfruit/tap/sing-box@2)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)

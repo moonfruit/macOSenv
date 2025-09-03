@@ -22,8 +22,8 @@
       }
     ],
     "rules": [
-      { "ip_accept_any": true, "server": "dns-hosts" },
-      { "domain_suffix": ["local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
+      { "ip_accept_any": true, "server": "dns-hosts", "rewrite_ttl": 2592000 },
+      { "domain_suffix": ["arpa", "local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
       { "domain_suffix": ["cdn.jsdelivr.net", "lazycat.cloud", "v2ray.in"], "server": "dns-direct" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
       { "clash_mode": "Global", "server": "dns-proxy" },
