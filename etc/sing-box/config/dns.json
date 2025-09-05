@@ -24,11 +24,14 @@
     "rules": [
       { "ip_accept_any": true, "server": "dns-hosts", "rewrite_ttl": 2592000 },
       { "domain_suffix": ["arpa", "local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
-      { "domain_suffix": ["cdn.jsdelivr.net", "lazycat.cloud", "v2ray.in"], "server": "dns-direct" },
+      {
+        "domain_suffix": ["cdn.jsdelivr.net", "ip.sb", "ipip.net", "lazycat.cloud", "v2ray.in"],
+        "server": "dns-direct"
+      },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
+      { "query_type": ["A", "AAAA"], "server": "dns-fakeip" },
       { "clash_mode": "Global", "server": "dns-proxy" },
       { "clash_mode": "Direct", "server": "dns-direct" },
-      { "query_type": ["A", "AAAA"], "server": "dns-fakeip" },
       { "rule_set": "GeoSites@CN", "server": "dns-direct" },
       {
         "type": "logical",
@@ -66,7 +69,8 @@
       //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],
       //   "action": "reject"
       // }
-      { "domain_suffix": ["cdn.jsdelivr.net", "v2ray.in"], "ip_is_private": true, "outbound": "DIRECT" }
+      { "protocol": "bittorrent", "outbound": "DIRECT" },
+      { "domain_suffix": ["cdn.jsdelivr.net", "v2ray.in"], "outbound": "DIRECT" }
     ],
     "rule_set": [
       {
