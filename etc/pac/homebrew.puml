@@ -294,6 +294,8 @@ skinparam usecase {
 (jpeg-xl)-->(webp)
 (jq)
 (jq)-->(oniguruma)
+(json5)
+(json5)-->(node)
 (kotlin-language-server)
 (kotlin-language-server)-->(openjdk@21)
 (krb5) << dep >>
@@ -497,6 +499,7 @@ skinparam usecase {
 (openexr) << dep >>
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
+(openexr)-->(openjph)
 (openjdk)
 (openjdk)-->(freetype)
 (openjdk)-->(giflib)
@@ -525,6 +528,8 @@ skinparam usecase {
 (openjdk@21)-->(jpeg-turbo)
 (openjdk@21)-->(libpng)
 (openjdk@21)-->(little-cms2)
+(openjph) << dep >>
+(openjph)-->(libtiff)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
 (osx-cpu-temp) << dep >>
