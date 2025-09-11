@@ -4,6 +4,14 @@
 
 source "$ENV/lib/bash/native.sh"
 
+smart-diff() {
+    if command -v delta &>/dev/null; then
+        delta --paging=never "$@"
+    else
+        diff "$@"
+    fi
+}
+
 create-temp-directory() {
     local -n _variable=$1
     local _prefix
@@ -31,7 +39,7 @@ copy-if-diff() {
     [[ -s "$1" ]] || return
     [[ -d "$2" ]] && destination="$2/$(simple-basename "$1")" || destination=$2
 
-    diff "$destination" "$1" && return
+    smart-diff "$destination" "$1" && return
     cp -pv "$1" "$destination" || return
 
     (($# > 2)) || return
