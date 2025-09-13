@@ -21,7 +21,7 @@ echo " --- === Updating config.json === ---"
 
 mkdir -p dat
 while read -r NAME URL; do
-    proxy none wget "$URL" -O "dat/$NAME"
+    proxy none wget "$URL" -U "clash/*" -O "dat/$NAME"
 done < <(rg -v '^#' "$(current-script-directory)/clash.txt")
 
 clash-to-sing() {
@@ -34,7 +34,7 @@ restart-sing() {
     echo
     echo " --- === Restarting sing-box === ---"
     if RESULT=$(sing-box -C "$DIR/config" check 2>&1); then
-        sudo launchctl kill SIGHUP system/moonfruit.sing
+        sudo launchctl kill TERM system/moonfruit.sing
     else
         echo "$RESULT" >&2
     fi

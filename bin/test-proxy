@@ -11,21 +11,23 @@ readonly BLUE=$(tput setaf 4) MAGENTA=$(tput setaf 5) CYAN=$(tput setaf 6)
 readonly BOLD=$(tput bold) RESET=$(tput sgr0)
 
 readonly -A _FLAGS=(
+    [AT]=🇦🇹
     [CN]=🇨🇳
-    [TW]=🇨🇳
-    [HK]=🇭🇰
-    [JP]=🇯🇵
-    [SG]=🇸🇬
-    [VN]=🇻🇳
-    [US]=🇺🇸
-    [GB]=🇬🇧
     [DE]=🇩🇪
     [FI]=🇫🇮
-    [LU]=🇱🇺
+    [GB]=🇬🇧
+    [HK]=🇭🇰
     [ID]=🇮🇩
+    [JP]=🇯🇵
+    [KR]=🇰🇷
+    [LU]=🇱🇺
     [MY]=🇲🇾
     [NO]=🇳🇴
     [SE]=🇸🇪
+    [SG]=🇸🇬
+    [TW]=🇨🇳
+    [US]=🇺🇸
+    [VN]=🇻🇳
 )
 
 source "$ENV/lib/bash/json.sh"
@@ -50,10 +52,12 @@ kilo() {
     local n=$1
     if [[ -z $n ]]; then
         n=0
+    elif [[ $n == *M ]]; then
+        n=$(echo "${n/%M/}" '*' 1024 | bc)
     elif [[ $n == *k ]]; then
         n=${n/%k/}
     else
-        n=$((n / 1024))
+        n=$(echo "scale=1;" "$n" / 1024 | bc)
     fi
     echo "$n"
 }
@@ -91,10 +95,10 @@ benchmark-speed() {
         if [[ $SPEED = 0 ]]; then
             return
         fi
-        sum=$((sum + $(kilo "$SPEED")))
+        sum=$(echo "$sum" + "$(kilo "$SPEED")" | bc)
     done
 
-    SPEED=$((sum / i))
+    SPEED=$(echo "$sum" / "$i" | bc)
 }
 
 get-location() {

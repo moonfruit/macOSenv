@@ -7,8 +7,8 @@ fi
 set -o pipefail
 
 find-trackers() {
-    curl https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection/best_aria2.txt
-    #curl -fL https://cdn.jsdelivr.net/gh/ngosang/trackerslist/trackers_best.txt |
+    curl https://fastly.jsdelivr.net/gh/XIU2/TrackersListCollection/best_aria2.txt
+    #curl -fL https://fastly.jsdelivr.net/gh/ngosang/trackerslist/trackers_best.txt |
     #    sed '/^[[:space:]]*$/d' | sed ':a;N;$!ba;s/\n/,/g'
 }
 
