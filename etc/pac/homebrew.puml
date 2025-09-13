@@ -91,6 +91,8 @@ skinparam usecase {
 (curl)
 (curl)-->(brotli)
 (curl)-->(libnghttp2)
+(curl)-->(libnghttp3)
+(curl)-->(libngtcp2)
 (curl)-->(libssh2)
 (curl)-->(openssl@3)
 (curl)-->(rtmpdump)
@@ -390,9 +392,11 @@ skinparam usecase {
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
-(llvm@20) << dep >>
-(llvm@20)-->(xz)
-(llvm@20)-->(zstd)
+(llvm) << dep >>
+(llvm)-->(python@3.13)
+(llvm)-->(xz)
+(llvm)-->(z3)
+(llvm)-->(zstd)
 (lpeg) << dep >>
 (lrzsz)
 (lua)
@@ -420,6 +424,8 @@ skinparam usecase {
 (miniupnpc)
 (mkcert)
 (mongodb/brew/mongodb-community)
+(moonfruit/tap/codebuddy-code)
+(moonfruit/tap/codebuddy-code)-->(node)
 (moonfruit/tap/doge)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
@@ -633,7 +639,7 @@ skinparam usecase {
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm@20)
+(rust)-->(llvm)
 (rust)-->(openssl@3)
 (rust)-->(pkgconf)
 (rust)-->(zstd)
@@ -732,6 +738,7 @@ skinparam usecase {
 (yt-dlp)
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(python@3.13)
+(z3) << dep >>
 (zlib) << dep >>
 (zopfli) << dep >>
 (zsh)
