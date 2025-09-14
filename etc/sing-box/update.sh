@@ -20,8 +20,12 @@ cd "$TEMP_DIR" || exit 1
 echo " --- === Updating config.json === ---"
 
 mkdir -p dat
-while read -r NAME URL; do
-    proxy none wget "$URL" -U "clash/*" -O "dat/$NAME"
+while read -r NAME URL UA; do
+    if [[ -n $UA ]]; then
+        proxy none wget "$URL" -U "$UA/*" -O "dat/$NAME"
+    else
+        proxy none wget "$URL" -O "dat/$NAME"
+    fi
 done < <(rg -v '^#' "$(current-script-directory)/clash.txt")
 
 clash-to-sing() {
