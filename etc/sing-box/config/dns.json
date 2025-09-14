@@ -4,10 +4,15 @@
       { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
       { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       { "tag": "dns-proxy", "type": "tls", "server": "1.1.1.1" },
-      { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
+      // { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
+      { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": {"insecure": false} },
       {
         "tag": "dns-hosts",
         "type": "hosts",
+        "path": [
+          "/etc/hosts",
+          "/Users/moon/Workspace.localized/env/etc/hosts"
+        ],
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
@@ -28,6 +33,7 @@
         "domain_suffix": [
           "cdn.jsdelivr.net",
           "fastly.jsdelivr.net",
+          "gingkoo.com",
           "ip.sb",
           "ipip.net",
           "lazycat.cloud",
@@ -78,7 +84,14 @@
       //   "action": "reject"
       // }
       { "protocol": ["bittorrent", "ntp"], "outbound": "DIRECT" },
-      { "domain_suffix": ["xipcloud.org", "v2ray.in"], "outbound": "DIRECT" }
+      {
+        "domain_suffix": [
+          "gingkoo.com",
+          "xipcloud.org",
+          "v2ray.in"
+        ],
+        "outbound": "DIRECT"
+      }
     ],
     "rule_set": [
       {

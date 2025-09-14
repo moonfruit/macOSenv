@@ -1,0 +1,7 @@
+127.0.0.1	default.gpms.local
+127.0.0.1	1st.gpms.local
+127.0.0.1	2nd.gpms.local
+
+::1	default.gpms.local
+::1	1st.gpms.local
+::1	2nd.gpms.local

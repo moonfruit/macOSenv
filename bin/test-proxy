@@ -11,6 +11,7 @@ readonly BLUE=$(tput setaf 4) MAGENTA=$(tput setaf 5) CYAN=$(tput setaf 6)
 readonly BOLD=$(tput bold) RESET=$(tput sgr0)
 
 readonly -A _FLAGS=(
+    [AR]=🇦🇷
     [AT]=🇦🇹
     [CN]=🇨🇳
     [DE]=🇩🇪
@@ -128,7 +129,14 @@ benchmark-proxy() {
     echo "${BLUE}Delay$RESET: $color${delay}s$RESET"
 
     color=$(speed-color "$SPEED")
-    echo "${BLUE}Speed$RESET: $color${SPEED}k/s$RESET"
+    local result=$(echo "$SPEED" ">=" "10000" | bc)
+    local speed
+    if [[ $result == 1 ]]; then
+        speed="$(echo "scale=1;" "$SPEED" / 1024 | bc)M"
+    else
+        speed="${SPEED}k"
+    fi
+    echo "${BLUE}Speed$RESET: $color${speed}/s$RESET"
 
     local location
     if location=$(get-location "$proxy"); then
