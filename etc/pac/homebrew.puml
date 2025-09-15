@@ -25,6 +25,8 @@ skinparam usecase {
 (autojump)
 (autojump)-->(python@3.13)
 (azhuchkov/tools/tunblkctl)
+(basedpyright)
+(basedpyright)-->(node)
 (bash)
 (bash)-->(gettext)
 (bash)-->(ncurses)
@@ -111,6 +113,8 @@ skinparam usecase {
 (dnsperf)-->(ldns)
 (dnsperf)-->(libnghttp2)
 (dnsperf)-->(openssl@3)
+(dockerfile-language-server)
+(dockerfile-language-server)-->(node)
 (dotnet@8) << dep >>
 (dotnet@8)-->(icu4c@77)
 (dotnet@8)-->(openssl@3)
@@ -266,6 +270,7 @@ skinparam usecase {
 (hazelcast/hz/hazelcast-management-center)
 (hazelcast/hz/hazelcast-management-center)-->(openjdk@21)
 (helm)
+(helm-ls)
 (hexyl)
 (hgrep)
 (highway) << dep >>
@@ -544,6 +549,7 @@ skinparam usecase {
 (p11-kit)-->(ca-certificates)
 (p11-kit)-->(libtasn1)
 (pandoc)
+(pandoc)-->(gmp)
 (pango) << dep >>
 (pango)-->(cairo)
 (pango)-->(fontconfig)
@@ -580,6 +586,8 @@ skinparam usecase {
 (postgresql@17)-->(zstd)
 (prettier)
 (prettier)-->(node)
+(prettierd)
+(prettierd)-->(node)
 (protobuf) << dep >>
 (protobuf)-->(abseil)
 (proxychains-ng)
@@ -587,8 +595,6 @@ skinparam usecase {
 (pup)
 (pv)
 (pv)-->(gettext)
-(pyright)
-(pyright)-->(node)
 (python@3.13) << dep >>
 (python@3.13)-->(mpdecimal)
 (python@3.13)-->(openssl@3)

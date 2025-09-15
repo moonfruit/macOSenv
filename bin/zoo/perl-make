@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+/usr/bin/make PERL_INC=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Perl/5.30/darwin-thread-multi-2level/CORE "$@"

@@ -3,9 +3,9 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
     exec proxy "$0" "$@"
 fi
 
-if [[ $TERM_PROGRAM == iTerm.app ]]; then
-    export TERM_PROGRAM=""
-fi
+#if [[ $TERM_PROGRAM == iTerm.app ]]; then
+#    export TERM_PROGRAM=""
+#fi
 
 if [[ $1 == "--bianxie" ]]; then
     export ANTHROPIC_BASE_URL="https://api.bianxie.ai"
