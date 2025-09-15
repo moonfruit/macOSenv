@@ -10,6 +10,7 @@ return {
   "AstroNvim/astrolsp",
   ---@type AstroLSPOpts
   opts = {
+    native_lsp_config = true,
     -- Configuration table of features provided by AstroLSP
     features = {
       codelens = true,        -- enable/disable codelens refresh on start
@@ -82,11 +83,9 @@ return {
             positionEncodings = { "utf-16" }
           },
         },
-        settings = {
-          init_options = {
-            settings = {
-              lineLength = 120
-            }
+        init_options = {
+          settings = {
+            lineLength = 120,
           },
         },
       },
