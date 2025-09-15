@@ -16,36 +16,81 @@ local function remove_all(array, items)
   end
 end
 
+local list_insert_unique = require("astrocore").list_insert_unique
+
 ---@type LazySpec
 return {
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = function(_, opts)
-      remove_all(opts.ensure_installed, {
-        -- Lua
-        "lua_ls",
-      })
-    end,
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    opts = function(_, opts)
-      remove_all(opts.ensure_installed, {
-        -- Lua
-        "stylua",
-        "selene",
-      })
-    end,
-  },
+  -- {
+  --   "jay-babu/mason-null-ls.nvim",
+  --   opts = {
+  --     ensure_installed = { "rubocop" },
+  --   }
+  -- },
+  -- {
+  --   "williamboman/mason-lspconfig.nvim",
+  --   opts = {
+  --     ensure_installed = { "rubocop" },
+  --   }
+  -- },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = function(_, opts)
       remove_all(opts.ensure_installed, {
+        -- Bash
+        "bash-language-server",
+        "shellcheck",
+        "shfmt",
+        -- CPP
+        "clangd",
+        -- CSS
+        "css-lsp",
+        -- Docker
+        "dockerfile-language-server",
+        "hadolint",
+        -- ESLint
+        "eslint-lsp",
+        -- Go
+        "delve",
+        "gopls",
+        "gomodifytags",
+        "gotests",
+        "impl",
+        "goimports",
+        -- Helm
+        "helm-ls",
+        -- HTML
+        "html-lsp",
+        -- Javascript
+        "deno",
+        -- JSON
+        "json-lsp",
         -- Lua
         "lua-language-server",
         "stylua",
         "selene",
+        -- Kotlin
+        "kotlin-language-server",
+        "ktlint",
+        -- Markdown
+        "marksman",
+        -- Prettier
+        "prettierd",
+        -- Python
+        "basedpyright",
+        "ruff",
+        -- Ruby
+        "solargraph",
+        "standardrb",
+        -- SQL
+        "sqlfluff",
+        -- Tailwindcss
+        "tailwindcss-language-server",
+        -- TOML
+        "taplo",
+        -- YAML
+        "yaml-language-server",
       })
+      -- list_insert_unique(opts.ensure_installed, { "rubocop" })
     end,
   },
 }

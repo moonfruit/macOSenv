@@ -8,6 +8,7 @@
     "/Users/moon/.local/share/nvim/lazy/lazy.nvim/lua",
     "/Users/moon/.local/share/nvim/lazy/astrocore/lua",
     "/Users/moon/.local/share/nvim/lazy/astrolsp/lua",
+    "/Users/moon/.local/share/nvim/lazy/astroui/lua",
     "/Users/moon/.local/share/nvim/lazy/astrocommunity/lua"
   ]
 }

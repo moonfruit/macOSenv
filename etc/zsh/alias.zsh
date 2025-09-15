@@ -30,9 +30,11 @@ alias ls-='sl'
 alias gpft='git push --follow-tags'
 alias gpmf='git branch --show-current | xargs git push --set-upstream moonfruit'
 
-alias fdi='fd --unrestricted'
-alias fdp='fd --full-path'
-alias rgi='rg --no-ignore'
+alias fdu='fd -u'
+alias fdp='fd -p'
+
+alias rgu='rg -uu'
+alias rguu='rg -uuu'
 alias rgj='rg --type=java'
 alias rgji='rg --type=java --ignore-case'
 
