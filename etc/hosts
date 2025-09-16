@@ -5,3 +5,9 @@
 ::1	default.gpms.local
 ::1	1st.gpms.local
 ::1	2nd.gpms.local
+
+127.0.0.1	uobc.cips.com
+127.0.0.1	uobs.cips.com
+
+::1	uobc.cips.com
+::1	uobs.cips.com
