@@ -5,7 +5,7 @@
       { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       { "tag": "dns-proxy", "type": "tls", "server": "1.1.1.1" },
       // { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
-      { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": {"insecure": false} },
+      { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": { "insecure": false } },
       {
         "tag": "dns-hosts",
         "type": "hosts",
@@ -31,8 +31,6 @@
       { "domain_suffix": ["arpa", "local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
       {
         "domain_suffix": [
-          "cdn.jsdelivr.net",
-          "fastly.jsdelivr.net",
           "gingkoo.com",
           "ip.sb",
           "ipip.net",
@@ -43,7 +41,7 @@
         "server": "dns-direct"
       },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
-      { "query_type": ["A", "AAAA"], "server": "dns-fakeip" },
+      { "query_type": ["A", "AAAA"], "server": "dns-fakeip", "rewrite_ttl": 60 },
       { "clash_mode": "Direct", "server": "dns-direct" },
       { "clash_mode": "Global", "server": "dns-proxy" },
       { "rule_set": "GeoSites@CN", "server": "dns-direct" },
@@ -61,7 +59,7 @@
     "final": "dns-proxy",
     "independent_cache": true,
     "reverse_mapping": true,
-    "strategy": "prefer_ipv4"
+    "strategy": "prefer_ipv6"
   },
   "inbounds": [
     {
@@ -97,19 +95,19 @@
       {
         "type": "remote",
         "tag": "GeoIP@CN",
-        "url": "https://fastly.jsdelivr.net/npm/sing-rules/rules/geoip-cn.srs",
+        "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/geoip-cn.srs?access_token=c1f6ba66dd5b8620b26ac68f2fad7a52&ref=main",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "GeoSites@CN",
-        "url": "https://fastly.jsdelivr.net/npm/sing-rules/rules/geosites-cn.srs",
+        "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/geosites-cn.srs?access_token=c1f6ba66dd5b8620b26ac68f2fad7a52&ref=main",
         "download_detour": "DIRECT"
       },
       {
         "type": "remote",
         "tag": "GeoSites@!CN",
-        "url": "https://fastly.jsdelivr.net/npm/sing-rules/rules/geosites-not-cn.srs",
+        "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/geosites-not-cn.srs?access_token=c1f6ba66dd5b8620b26ac68f2fad7a52&ref=main",
         "download_detour": "DIRECT"
       }
     ],

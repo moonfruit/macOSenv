@@ -31,7 +31,9 @@ done < <(rg -v '^#' "$(current-script-directory)/clash.txt")
 clash-to-sing() {
     local SING_RULES="$WORKSPACE/proxy/sing-rules"
     DIRENV_LOG_FORMAT="" direnv exec \
-        "$SING_RULES/clash-to-sing.py" -lc "$SING_RULES/config/config.json"
+        "$SING_RULES/clash-to-sing.py" -l \
+        -c "$SING_RULES/config/config.json" \
+        -t "c1f6ba66dd5b8620b26ac68f2fad7a52"
 }
 
 restart-sing() {
