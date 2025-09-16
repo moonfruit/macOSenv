@@ -85,6 +85,8 @@ skinparam usecase {
 (cmake-language-server)-->(python@3.13)
 (codespell)
 (codespell)-->(python@3.13)
+(codex)
+(codex)-->(ripgrep)
 (colima)
 (colima)-->(lima)
 (concurrencykit) << dep >>
