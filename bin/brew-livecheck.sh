@@ -85,6 +85,7 @@ readonly EXCLUDED=(
     homebrew/core/mas
     homebrew/core/mysql
     homebrew/core/mysql-client
+    homebrew/core/netpbm
     homebrew/core/nghttp2
     homebrew/core/libnghttp2
     homebrew/core/libgcrypt
