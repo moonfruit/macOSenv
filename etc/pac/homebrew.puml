@@ -234,7 +234,7 @@ skinparam usecase {
 (gpgme)-->(libassuan)
 (gpgme)-->(libgpg-error)
 (gradle)
-(gradle)-->(openjdk)
+(gradle)-->(openjdk@21)
 (graphite2) << dep >>
 (graphviz) << dep >>
 (graphviz)-->(cairo)
