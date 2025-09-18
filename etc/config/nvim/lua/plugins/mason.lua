@@ -21,15 +21,26 @@ local function remove_all(array, items)
   end
 end
 
+---@type LazySpec
 return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       disable_mason(opts.servers, {
+        -- Bash
+        "bashls",
         -- C
         "clangd",
+        -- CSS
+        "cssls",
+        -- Docker
+        "dockerls",
         -- Go
         "gopls",
+        -- Helm
+        "helm_ls",
+        -- HTML
+        "html",
         -- Javascript
         "eslint",
         -- Json
@@ -41,17 +52,22 @@ return {
         -- Markdown
         "marksman",
         -- Python
+        "basedpyright",
         "pyright",
         "ruff",
+        -- Ruby
+        "ruby_lsp",
         -- TOML
         "taplo",
+        -- XML
+        "lemminx",
         -- YAML
         "yamlls",
       })
     end,
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       remove_all(opts.ensure_installed, {
         -- Docker

@@ -11,6 +11,7 @@ local colors = {
   red = "#ec5f67",
 }
 
+---@type LazySpec
 return {
   {
     "nvim-lualine/lualine.nvim",
