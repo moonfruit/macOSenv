@@ -19,34 +19,37 @@ local function replace_builtins(sources, names)
   end
 end
 
+---@type LazySpec
 return {
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
         bashls = {
-          mason = false,
           settings = {
             bashIde = {
               shellcheckArguments = "--external-sources",
             },
           },
         },
-        cssls = {
-          mason = false,
-        },
         gradle_ls = {},
         groovyls = {},
-        html = {
-          mason = false,
-        },
         lemminx = {
           settings = {
             maxLineWidth = 120,
           },
         },
-        sorbet = {
-          mason = false,
+        ruff = {
+          capabilities = {
+            general = {
+              positionEncodings = { "utf-16" },
+            },
+          },
+          init_options = {
+            settings = {
+              lineLength = 120,
+            },
+          },
         },
       },
     },
@@ -54,7 +57,7 @@ return {
   {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
-      -- opts.debug = true
+      opts.debug = true
       replace_builtins(opts.sources, {
         biome = {
           extra_args = { "--line-width=120" },
@@ -88,6 +91,7 @@ return {
           extra_args = { "--indent", "4" },
         },
       })
+      table.insert(opts.sources, nls.builtins.diagnostics.selene)
     end,
   },
 }

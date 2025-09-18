@@ -40,6 +40,7 @@ end
 
 set_keymaps({
   normal = {
+    ["<Leader>z"] = "<Cmd>set wrap!<CR>",
     ["<M-A>a"] = "ggVG",
     ["<M-A>s"] = "<Cmd>up<CR>",
     ["<M-A>z"] = "u",
