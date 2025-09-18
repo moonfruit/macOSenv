@@ -57,7 +57,7 @@ return {
   {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
-      opts.debug = true
+      -- opts.debug = true
       replace_builtins(opts.sources, {
         biome = {
           extra_args = { "--line-width=120" },
