@@ -5,7 +5,7 @@
       { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       { "tag": "dns-proxy", "type": "tls", "server": "1.1.1.1" },
       // { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
-      { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": { "insecure": false } },
+      { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
       {
         "tag": "dns-hosts",
         "type": "hosts",
@@ -41,7 +41,7 @@
         "server": "dns-direct"
       },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
-      { "query_type": ["A", "AAAA"], "server": "dns-fakeip", "rewrite_ttl": 60 },
+      { "query_type": ["A", "AAAA"], "server": "dns-fakeip", "rewrite_ttl": 1 },
       { "clash_mode": "Direct", "server": "dns-direct" },
       { "clash_mode": "Global", "server": "dns-proxy" },
       { "rule_set": "GeoSites@CN", "server": "dns-direct" },
