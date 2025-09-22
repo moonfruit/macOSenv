@@ -1,0 +1,26 @@
+{
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "global-in",
+      "listen": "127.0.0.1",
+      "listen_port": 7899
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "clash_mode": "Direct",
+        "outbound": "DIRECT"
+      },
+      {
+        "clash_mode": "Global",
+        "outbound": "GLOBAL"
+      },
+      {
+        "inbound": "global-in",
+        "outbound": "GLOBAL"
+      }
+    ]
+  }
+}
