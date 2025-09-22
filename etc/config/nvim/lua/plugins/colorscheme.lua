@@ -8,8 +8,8 @@ if not vim.g.neovide then
   if vim.env.COLORTERM ~= "truecolor" then
     vim.opt.termguicolors = false
     colorscheme = "retrobox"
-  -- elseif vim.env.TERM_PROGRAM == "iTerm.app" then
-    -- colorscheme = "tokyonight"
+    -- elseif vim.env.TERM_PROGRAM == "iTerm.app" then
+    --   colorscheme = "tokyonight"
   end
 end
 
