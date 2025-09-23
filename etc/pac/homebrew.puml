@@ -683,8 +683,6 @@ skinparam usecase {
 (superfile)
 (swift-format)
 (swiftlint)
-(tailwindcss-language-server)
-(tailwindcss-language-server)-->(node)
 (taplo)
 (tcping)
 (teamookla/speedtest/speedtest)
