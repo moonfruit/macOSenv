@@ -259,6 +259,7 @@ skinparam usecase {
 (gwt)
 (gwt)-->(openjdk)
 (hadolint)
+(hadolint)-->(gmp)
 (harelba/q/q)
 (harfbuzz) << dep >>
 (harfbuzz)-->(cairo)
@@ -418,6 +419,7 @@ skinparam usecase {
 (m4) << dep >>
 (macmon)
 (make)
+(marisa) << dep >>
 (markdown-toc)
 (markdown-toc)-->(node)
 (markdownlint-cli2)
@@ -490,6 +492,7 @@ skinparam usecase {
 (nmap)-->(lua)
 (nmap)-->(openssl@3)
 (nmap)-->(pcre2)
+(nmap)-->(python@3.13)
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
@@ -509,6 +512,7 @@ skinparam usecase {
 (ollama)
 (oniguruma) << dep >>
 (opencc)
+(opencc)-->(marisa)
 (openexr) << dep >>
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
@@ -560,7 +564,6 @@ skinparam usecase {
 (pango)-->(glib)
 (pango)-->(harfbuzz)
 (parallel)
-(pcre) << dep >>
 (pcre2) << dep >>
 (pigz)
 (pigz)-->(zopfli)
@@ -568,6 +571,7 @@ skinparam usecase {
 (pinentry)-->(libassuan)
 (pinentry)-->(libgpg-error)
 (pinentry-mac)
+(pinentry-mac)-->(gettext)
 (pinentry-mac)-->(libassuan)
 (pinentry-mac)-->(libgpg-error)
 (pipgrip)
@@ -752,7 +756,7 @@ skinparam usecase {
 (zopfli) << dep >>
 (zsh)
 (zsh)-->(ncurses)
-(zsh)-->(pcre)
+(zsh)-->(pcre2)
 (zstd) << dep >>
 (zstd)-->(lz4)
 (zstd)-->(xz)

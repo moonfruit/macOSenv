@@ -8,7 +8,7 @@ case $1 in
     export HOMEBREW_NO_INSTALL_FROM_API=1
     shift
     ;;
---prefix)
+--prefix | --repository)
     echo $PREFIX
     exit 0
     ;;
@@ -16,6 +16,7 @@ esac
 
 brew=("$PREFIX/bin/brew")
 
+# shellcheck disable=SC2154
 readonly -A NOPROXY=(
     [--formula]=1
     [--formulae]=1

@@ -32,9 +32,7 @@ export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 export HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS=7
 export HOMEBREW_PRY=1
 
-# export HUB_REMOTE=moonfruit
-
-local script=$BREW_PREFIX/Library/Taps/homebrew/homebrew-command-not-found/handler.sh
+local script=$BREW_PREFIX/Library/Homebrew/command-not-found/handler.sh
 [[ -f "$script" ]] && . "$script"
 unset script
 
