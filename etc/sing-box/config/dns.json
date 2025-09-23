@@ -35,6 +35,8 @@
           "ip.sb",
           "ipip.net",
           "lazycat.cloud",
+          "alicdn.win",
+          "demo-chat-airport.com",
           "xipcloud.org",
           "v2ray.in"
         ],
@@ -85,6 +87,8 @@
       {
         "domain_suffix": [
           "gingkoo.com",
+          "alicdn.win",
+          "demo-chat-airport.com",
           "xipcloud.org",
           "v2ray.in"
         ],
