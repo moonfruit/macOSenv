@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ -z $__ENV_LIB_GITHUB ]] && __ENV_LIB_GITHUB=1 || return
+[[ -z ${__ENV_LIB_GITHUB:-} ]] && __ENV_LIB_GITHUB=1 || return
 
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/native.sh"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ -z $__ENV_LIB_DOCKER ]] && __ENV_LIB_DOCKER=1 || return
+[[ -z ${__ENV_LIB_DOCKER:-} ]] && __ENV_LIB_DOCKER=1 || return
 
 find-image-latest-version() {
     skopeo list-tags "docker://$1" | jq -r '.Tags

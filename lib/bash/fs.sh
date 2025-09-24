@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ -z $__ENV_LIB_FS ]] && __ENV_LIB_FS=1 || return
+[[ -z ${__ENV_LIB_FS:-} ]] && __ENV_LIB_FS=1 || return
 
 source "$ENV/lib/bash/native.sh"
 
