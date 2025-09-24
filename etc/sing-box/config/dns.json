@@ -3,9 +3,16 @@
     "servers": [
       { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
       { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
-      { "tag": "dns-proxy", "type": "tls", "server": "1.1.1.1" },
+      { "tag": "dns-proxy", "type": "tls", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
+
+      // { "tag": "dns-pod", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-one", "type": "https", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-one", "type": "https", "server": "cloudflare-dns.com", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-one", "type": "https", "server": "dns.google", "domain_resolver": "dns-resolver" },
+
       // { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
+
       {
         "tag": "dns-hosts",
         "type": "hosts",
