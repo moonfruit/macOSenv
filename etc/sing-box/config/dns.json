@@ -3,7 +3,7 @@
     "servers": [
       { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
       { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
-      { "tag": "dns-proxy", "type": "tls", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-proxy", "type": "udp", "server": "1.1.1.1" },
 
       // { "tag": "dns-pod", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
       // { "tag": "dns-one", "type": "https", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
