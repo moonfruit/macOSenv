@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ -z $__ENV_LIB_JAVA ]] && __ENV_LIB_JAVA=1 || return
+[[ -z ${__ENV_LIB_JAVA:-} ]] && __ENV_LIB_JAVA=1 || return
 
 readonly MVN_REPOSITORY=~/.m2/repository
 

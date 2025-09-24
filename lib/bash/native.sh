@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ -z $__ENV_LIB_NATIVE ]] && __ENV_LIB_NATIVE=1 || return
+[[ -z ${__ENV_LIB_NATIVE:-} ]] && __ENV_LIB_NATIVE=1 || return
 
 simple-basename() {
     case $1 in

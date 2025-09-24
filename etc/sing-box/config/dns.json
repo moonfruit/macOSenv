@@ -9,10 +9,7 @@
       {
         "tag": "dns-hosts",
         "type": "hosts",
-        "path": [
-          "/etc/hosts",
-          "/Users/moon/Workspace.localized/env/etc/hosts"
-        ],
+        "path": ["/etc/hosts", "/Users/moon/Workspace.localized/env/etc/hosts"],
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
@@ -75,7 +72,12 @@
     "rules": [
       { "network": "icmp", "outbound": "DIRECT" },
       { "action": "sniff" },
-      { "protocol": "dns", "action": "hijack-dns" },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [{ "protocol": "dns" }, { "process_name": "doge", "invert": true }],
+        "action": "hijack-dns"
+      },
       // { "protocol": "stun", "action": "reject" },
       // {
       //   "type": "logical",
@@ -85,13 +87,7 @@
       // }
       { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
       {
-        "domain_suffix": [
-          "gingkoo.com",
-          "alicdn.win",
-          "demo-chat-airport.com",
-          "xipcloud.org",
-          "v2ray.in"
-        ],
+        "domain_suffix": ["gingkoo.com", "alicdn.win", "demo-chat-airport.com", "xipcloud.org", "v2ray.in"],
         "outbound": "DIRECT"
       }
     ],
