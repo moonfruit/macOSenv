@@ -2,13 +2,13 @@
   "dns": {
     "servers": [
       { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
-      { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
-      { "tag": "dns-proxy", "type": "udp", "server": "1.1.1.1" },
 
-      // { "tag": "dns-pod", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-one", "type": "https", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-one", "type": "https", "server": "cloudflare-dns.com", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-one", "type": "https", "server": "dns.google", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-direct", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
+
+      { "tag": "dns-proxy", "type": "udp", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-proxy", "type": "h3", "server": "cloudflare-dns.com", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-proxy", "type": "h3", "server": "dns.google", "domain_resolver": "dns-resolver" },
 
       // { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
@@ -33,6 +33,10 @@
     "rules": [
       { "ip_accept_any": true, "server": "dns-hosts", "rewrite_ttl": 2592000 },
       { "domain_suffix": ["arpa", "local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
+      {
+        "domain": ["dns.alidns.com", "doh.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
+        "server": "dns-resolver"
+      },
       {
         "domain_suffix": [
           "gingkoo.com",

@@ -741,6 +741,8 @@ skinparam usecase {
 (wget)-->(libidn2)
 (wget)-->(libunistring)
 (wget)-->(openssl@3)
+(wildfly-as)
+(wildfly-as)-->(openjdk)
 (xh)
 (xorgproto) << dep >>
 (xxhash) << dep >>
