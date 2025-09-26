@@ -118,6 +118,7 @@ skinparam usecase {
 (dnsperf)-->(openssl@3)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
+(doge)
 (dotnet@8) << dep >>
 (dotnet@8)-->(icu4c@77)
 (dotnet@8)-->(openssl@3)
@@ -436,7 +437,6 @@ skinparam usecase {
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/codebuddy-code)
 (moonfruit/tap/codebuddy-code)-->(node)
-(moonfruit/tap/doge)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
