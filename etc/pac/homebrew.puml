@@ -437,6 +437,7 @@ skinparam usecase {
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/codebuddy-code)
 (moonfruit/tap/codebuddy-code)-->(node)
+(moonfruit/tap/codebuddy-code)-->(pcre2)
 (moonfruit/tap/geo)
 (moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
