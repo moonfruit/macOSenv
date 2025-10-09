@@ -21,6 +21,7 @@ end
 
 ---@type LazySpec
 return {
+  { "mfussenegger/nvim-lint", enabled = false },
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -91,7 +92,15 @@ return {
           extra_args = { "--indent", "4" },
         },
       })
-      table.insert(opts.sources, nls.builtins.diagnostics.selene)
+      vim.list_extend(opts.sources, {
+        nls.builtins.diagnostics.selene,
+        nls.builtins.diagnostics.sqlfluff.with({
+          extra_args = { "--dialect", "ansi" },
+        }),
+        nls.builtins.formatting.sqlfluff.with({
+          extra_args = { "--dialect", "ansi" },
+        }),
+      })
     end,
   },
 }
