@@ -33,6 +33,7 @@ return {
         "clangd",
         -- CSS
         "cssls",
+        "tailwindcss",
         -- Docker
         "dockerls",
         -- Go

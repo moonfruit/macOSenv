@@ -104,6 +104,7 @@ skinparam usecase {
 (curl)-->(rtmpdump)
 (curl)-->(zstd)
 (curlie)
+(dav1d) << dep >>
 (delve)
 (deno)
 (deno)-->(little-cms2)
@@ -691,6 +692,8 @@ skinparam usecase {
 (superfile)
 (swift-format)
 (swiftlint)
+(tailwindcss-language-server)
+(tailwindcss-language-server)-->(node)
 (taplo)
 (tcping)
 (teamookla/speedtest/speedtest)
