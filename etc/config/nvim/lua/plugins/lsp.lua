@@ -97,9 +97,11 @@ return {
         nls.builtins.diagnostics.sqlfluff.with({
           extra_args = { "--dialect", "ansi" },
         }),
+        nls.builtins.diagnostics.swiftlint,
         nls.builtins.formatting.sqlfluff.with({
           extra_args = { "--dialect", "ansi" },
         }),
+        nls.builtins.formatting.swift_format,
       })
     end,
   },

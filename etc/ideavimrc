@@ -1,0 +1,11 @@
+set hlsearch
+set incsearch
+"set selectmode=mouse,key
+"set selectmode=mouse,key,ideaselection
+
+set ideajoin
+set idearefactormode=visual
+
+set keep-english-in-normal-and-restore-in-insert
+
+nmap <silent> <ESC><ESC> :nohlsearch<CR>

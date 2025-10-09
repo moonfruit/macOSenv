@@ -22,13 +22,12 @@ brew update -v
 PREFIX=$(brew --prefix)
 pull() {
     local tap="$PREFIX/Library/Taps/$1"
-    if [[ $(git -C "$tap" branch --show-current) = "master" ]]; then
+    if [[ $(git -C "$tap" branch --show-current) = "main" ]]; then
         echo "$GREEN==>$RESET ${BOLD}Pull $1$RESET"
-        git -C "$tap" merge --ff-only origin/master
+        git -C "$tap" pull --ff-only
     fi
 }
-pull homebrew/homebrew-core
-pull homebrew/homebrew-cask
+pull moonfruit/homebrew-tap
 
 brew-info() {
     if (($# > 0)); then

@@ -38,6 +38,7 @@ export SAMSUNG_T5="/Volumes/SamsungT5"
 hash -d SAMSUNG_T5="$SAMSUNG_T5"
 
 hash -d HOMEBREW="/opt/homebrew"
+hash -d HOMEBREW_LIBS="/opt/homebrew/Library/Homebrew"
 hash -d HOMEBREW_TAPS="/opt/homebrew/Library/Taps"
 hash -d HOMEBREW_CORE="/opt/homebrew/Library/Taps/homebrew/homebrew-core"
 hash -d HOMEBREW_CASK="/opt/homebrew/Library/Taps/homebrew/homebrew-cask"
