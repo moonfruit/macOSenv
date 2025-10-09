@@ -447,6 +447,7 @@ skinparam usecase {
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/lzc-cli)
 (moonfruit/tap/lzc-cli)-->(node)
+(moonfruit/tap/macism)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
@@ -460,6 +461,8 @@ skinparam usecase {
 (moonfruit/tap/tscurl)-->(moonfruit/tap/tongsuo)
 (moonfruit/tap/tscurl)-->(zstd)
 (moonfruit/tap/uutils-selected)
+(moonfruit/tap/wlp-webprofile10)
+(moonfruit/tap/wlp-webprofile10)-->(openjdk)
 (mosh)
 (mosh)-->(protobuf)
 (mpdecimal) << dep >>
