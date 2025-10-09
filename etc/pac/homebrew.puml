@@ -231,7 +231,6 @@ skinparam usecase {
 (goimports)-->(go)
 (gomodifytags)
 (gopls)
-(gost)
 (gotags)
 (gotests)
 (gpgme) << dep >>
