@@ -4,7 +4,7 @@
       "type": "tun",
       "tag": "tun-in",
       "address": ["172.20.0.1/30", "fdfe:dcba:9876::1/126"],
-      "route_address": ["198.18.0.0/15", "fc00::/18"],
+      // "route_address": ["198.18.0.0/15", "fc00::/18"],
       // "route_exclude_address": [
       //   "10.0.0.0/8",
       //   "172.16.0.0/12",

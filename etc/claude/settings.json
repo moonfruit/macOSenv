@@ -1,6 +1,11 @@
 {
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  },
   "permissions": {
-    "allow": ["WebFetch(domain:docs.anthropic.com)"],
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)"
+    ],
     "deny": [],
     "ask": []
   },
@@ -20,7 +25,5 @@
     "type": "command",
     "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh"
   },
-  "env": {
-    "DISABLE_AUTOUPDATER": "1"
-  }
+  "alwaysThinkingEnabled": false
 }
