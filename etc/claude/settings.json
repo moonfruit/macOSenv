@@ -1,29 +1,36 @@
 {
+  "alwaysThinkingEnabled": false,
   "env": {
-    "DISABLE_AUTOUPDATER": "1"
-  },
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:docs.anthropic.com)"
-    ],
-    "deny": [],
-    "ask": []
+    "DISABLE_AUTOUPDATER": "1",
+    "PATH": "$PATH:$HOME/.local/bin"
   },
   "hooks": {
     "Notification": [
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/notification.sh"
+            "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/notification.sh",
+            "type": "command"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "osascript -e \"display notification \\\"$(jq -r .message)\\\" with title \\\"$(jq -r .title)\\\" sound name \\\"Glass\\\"\"",
+            "type": "command"
           }
         ]
       }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh"
+  "permissions": {
+    "allow": ["WebFetch(domain:docs.anthropic.com)"],
+    "deny": []
   },
-  "alwaysThinkingEnabled": false
+  "statusLine": {
+    "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh",
+    "type": "command"
+  },
+  "verbose": false
 }
