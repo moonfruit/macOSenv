@@ -231,6 +231,7 @@ skinparam usecase {
 (goimports)-->(go)
 (gomodifytags)
 (gopls)
+(gost)
 (gotags)
 (gotests)
 (gpgme) << dep >>
@@ -441,7 +442,6 @@ skinparam usecase {
 (moonfruit/tap/codebuddy-code)-->(node)
 (moonfruit/tap/codebuddy-code)-->(pcre2)
 (moonfruit/tap/geo)
-(moonfruit/tap/gost@3)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/lzc-cli)
