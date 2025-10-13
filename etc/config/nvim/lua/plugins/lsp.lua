@@ -33,6 +33,7 @@ return {
             },
           },
         },
+        cspell_ls = {},
         gradle_ls = {},
         groovyls = {},
         lemminx = {
@@ -66,7 +67,6 @@ return {
           },
         },
         sourcekit = {},
-        vale_ls = {},
       },
     },
   },
