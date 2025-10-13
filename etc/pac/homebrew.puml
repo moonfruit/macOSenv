@@ -310,6 +310,7 @@ skinparam usecase {
 (libassuan)-->(libgpg-error)
 (libavif) << dep >>
 (libavif)-->(aom)
+(libavif)-->(dav1d)
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
 (libcbor) << dep >>
