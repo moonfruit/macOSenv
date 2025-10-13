@@ -6,13 +6,8 @@ if [[ $FILE == "" || ! -r $FILE ]]; then
 	exit 1
 fi
 
-absname() {
-	cd "$(dirname "$1")" || return
-	echo "$(pwd)/$(basename "$1")"
-}
-
 exec osascript \
 	-e 'on run args' \
 	-e 'set the clipboard to POSIX file (first item of args)' \
 	-e end \
-	"$(absname "$FILE")"
+	"$(realpath "$FILE")"

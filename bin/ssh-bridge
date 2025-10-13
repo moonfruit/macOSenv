@@ -8,7 +8,7 @@ fi
 BRIDGE=$1
 TARGET=$2
 
-array=(${TARGET//@/ })
+array=("${TARGET//@/ }")
 TARGET_USER=${array[0]}
 TARGET_HOST=${array[1]}
 
@@ -19,7 +19,7 @@ fi
 
 RESULT=$(sqlite3 "$DATABASE" "select port, pid from ssh where ssh = '$TARGET'")
 if [[ -n $RESULT ]]; then
-    array=(${RESULT//|/ })
+    array=("${RESULT//|/ }")
     PORT=${array[0]}
     PID=$(lsof -nPiTCP -sTCP:LISTEN | rg ":$PORT" | awk '{print $2}')
     if [[ $PID != "${array[1]}" ]]; then
@@ -29,7 +29,7 @@ if [[ -n $RESULT ]]; then
 fi
 
 if [[ -z $PORT ]]; then
-    USED_PORTS=($(lsof -nPiTCP -sTCP:LISTEN | awk '{print $9}' | sed '1d;s/.*://' | sort -nru))
+    USED_PORTS=("$(lsof -nPiTCP -sTCP:LISTEN | awk '{print $9}' | sed '1d;s/.*://' | sort -nru)")
 
     for PORT in {22001..22099}; do
         for port in "${USED_PORTS[@]}"; do

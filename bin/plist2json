@@ -5,7 +5,7 @@ CMD=(plutil -convert json -o - "$FILE")
 
 shift
 if [[ $# == 0 ]]; then
-	"${CMD[@]}" | jq -S		
+	"${CMD[@]}" | jq -S
 else
 	"${CMD[@]}" | jq "$@"
 fi

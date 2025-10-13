@@ -35,10 +35,6 @@ to-absolute-path() {
         echo "$PWD"
     elif [[ $1 = '..' ]]; then
         simple-dirname "$PWD"
-    elif [[ $1 = './'* ]]; then
-        echo "$PWD/${1:2}"
-    elif [[ $1 = '../'* ]]; then
-        echo "$(simple-dirname "$PWD")/${1:3}"
     else
         realpath "$1"
     fi

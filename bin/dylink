@@ -9,7 +9,7 @@ mkdir -p "$LIBHOME"
 cd "$LIBHOME" || exit 1
 for DYDIR in $(echo "$LIBPATH" | sed 's/^\.://;s/:/ /g'); do
 	find "$DYDIR" -name "*.dylib" -o -name "*.dylib.*" 2>/dev/null | while read -r DYLIB; do
-		ln -sf "$DYLIB"
+		ln -sf "$DYLIB" .
 	done
 done
 find . -xtype l -print0 | xargs -0 rm 2>/dev/null
