@@ -12,6 +12,18 @@ case $1 in
     echo $PREFIX
     exit 0
     ;;
+--cache)
+    echo "$HOME/Library/Caches/Homebrew"
+    exit 0
+    ;;
+--caskroom)
+    echo "$PREFIX/Caskroom"
+    exit 0
+    ;;
+--cellar)
+    echo "$PREFIX/Cellar"
+    exit 0
+    ;;
 esac
 
 brew=("$PREFIX/bin/brew")

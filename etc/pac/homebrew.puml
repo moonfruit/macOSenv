@@ -467,6 +467,7 @@ skinparam usecase {
 (mpdecimal) << dep >>
 (mpfr) << dep >>
 (mpfr)-->(gmp)
+(msedit)
 (mysql-client)
 (mysql-client)-->(libfido2)
 (mysql-client)-->(openssl@3)
@@ -735,6 +736,7 @@ skinparam usecase {
 (uv)
 (uvwasi) << dep >>
 (uvwasi)-->(libuv)
+(vale)
 (vde) << dep >>
 (vscode-langservers-extracted)
 (vscode-langservers-extracted)-->(node)

@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 number=$1
-if [[ -z $number ]]; then
-	# shellcheck disable=SC2001
-	number=$(echo "$0" | sed 's/.*\([1-9]\)/\1/')
+if [[ -z $number && $0 =~ ^.*[^0-9]([1-9][0-9]*)$ ]]; then
+	number="${BASH_REMATCH[1]}"
 fi
 if [[ ! $number =~ ^[1-9][0-9]*$ ]]; then
 	echo "Invalid number \"$number\"" >&2

@@ -7,5 +7,5 @@ for FILE in "$@"; do
 	FILES+=("$(realpath "$FILE")")
 done
 
-SCPT=$(realpath "${BASH_SOURCE[0]}/../trash.scpt")
-osascript "$SCPT" "${FILES[@]}" >/dev/null
+SCRIPT=$(realpath "${BASH_SOURCE[0]}/../trash.scpt")
+osascript "$SCRIPT" "${FILES[@]}" >/dev/null

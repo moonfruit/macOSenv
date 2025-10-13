@@ -1,2 +1,2 @@
-#!/bin/sh
-http "--session-read-only=$ENV/etc/config/httpie/gpms.json" "$@"
+#!/bin/bash
+exec http "--session-read-only=$ENV/etc/config/httpie/gpms.json" "$@"

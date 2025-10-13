@@ -5,8 +5,7 @@ COLIMA="$(brew --prefix)/bin/colima"
 exec-if-dark "$COLIMA" "$@"
 
 if command -v dark >/dev/null 2>&1 && [[ $1 == start || $1 == stop || $1 == restart || $1 == ssh ]]; then
-    DARK=(dark)
+    dark "$COLIMA" "$@"
 else
-    DARK=()
+    exec "$COLIMA" "$@"
 fi
-exec "${DARK[@]}" "$COLIMA" "$@"

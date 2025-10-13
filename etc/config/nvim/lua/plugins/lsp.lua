@@ -40,6 +40,13 @@ return {
             maxLineWidth = 120,
           },
         },
+        marksman = {
+          init_options = {
+            format = {
+              lineLength = 120,
+            }
+          }
+        },
         ruff = {
           capabilities = {
             general = {
@@ -49,9 +56,17 @@ return {
           init_options = {
             settings = {
               lineLength = 120,
+              lint = {
+                preview = true,
+              },
+              format = {
+                preview = true,
+              },
             },
           },
         },
+        sourcekit = {},
+        vale_ls = {},
       },
     },
   },
@@ -93,6 +108,7 @@ return {
         },
       })
       vim.list_extend(opts.sources, {
+        nls.builtins.diagnostics.actionlint,
         nls.builtins.diagnostics.selene,
         nls.builtins.diagnostics.sqlfluff.with({
           extra_args = { "--dialect", "ansi" },

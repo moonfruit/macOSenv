@@ -1,8 +1,7 @@
 {
   "alwaysThinkingEnabled": false,
   "env": {
-    "DISABLE_AUTOUPDATER": "1",
-    "PATH": "$PATH:$HOME/.local/bin"
+    "DISABLE_AUTOUPDATER": "1"
   },
   "hooks": {
     "Notification": [

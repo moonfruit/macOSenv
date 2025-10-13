@@ -5,7 +5,9 @@ import platform
 import sys
 import time
 
-SYSTEM_FLAGS = {
+from collections.abc import Generator
+
+SYSTEM_FLAGS: dict[str, dict[str, list[str]]] = {
     # 'Darwin': {
     #     'cc': [
     #         '-nostdinc',
@@ -77,26 +79,25 @@ def is_cleanup(commands_file):
 
 
 def rewrite(name, arguments):
-    result = []
+    result: list[str] = []
     flag_c = False
     flag_d = False
 
     for item in _rewrite(arguments):
-        if item.startswith('__REVISION__='):
+        if item.startswith("__REVISION__="):
             return None
 
         elif flag_d:
             flag_d = False
-            if (item.startswith('SYSTEM_NAME=')
-                    or item.startswith('MODULE_NAME=')):
+            if item.startswith("SYSTEM_NAME=") or item.startswith("MODULE_NAME="):
                 continue
-            result.append('-D')
+            result.append("-D")
 
-        elif item == '-c':
+        elif item == "-c":
             flag_c = True
             continue
 
-        elif item == '-D':
+        elif item == "-D":
             flag_d = True
             continue
 
@@ -105,7 +106,7 @@ def rewrite(name, arguments):
     if not flag_c:
         return None
 
-    result.insert(1, '-c')
+    result.insert(1, "-c")
 
     flags = SYSTEM_FLAGS.get(platform.system())
     if flags:
@@ -116,12 +117,12 @@ def rewrite(name, arguments):
     return result
 
 
-def _rewrite(arguments):
+def _rewrite(arguments) -> Generator[str]:
     for item in arguments:
         if len(item) > 2:
             start = item[:2]
             end = item[2:]
-            if start in ('-D', '-U', '-I', '-F'):
+            if start in ("-D", "-U", "-I", "-F"):
                 yield start
                 yield end
                 continue
@@ -135,14 +136,12 @@ def main(name, argv):
     save_arguments = rewrite(name, arguments)
     if not (os.path.isfile(path) and save_arguments):
         os.execvp(name, arguments)
-        return  # Never run
 
     directory, filename = os.path.split(path)
 
-    commands_file = compile_commands(
-        os.path.join(directory, 'compile_commands.json'))
+    commands_file = compile_commands(os.path.join(directory, "compile_commands.json"))
 
-    commands = []
+    commands: list[dict[str, str | list[str]]] = []
     if os.path.isfile(commands_file):
         try:
             commands = json.load(open(commands_file))
@@ -156,20 +155,16 @@ def main(name, argv):
             found = True
 
     if not found:
-        commands.append({
-            "directory": directory,
-            "file": filename,
-            "arguments": save_arguments
-        })
+        commands.append( {"directory": directory, "file": filename, "arguments": save_arguments})
 
     if is_cleanup(commands_file):
         print("Cleanup compile_commands.json")
         commands = cleanup(commands)
 
-    json.dump(commands, open(commands_file, 'w'), ensure_ascii=False)
+    json.dump(commands, open(commands_file, "w"), ensure_ascii=False)
 
     os.execvp(name, arguments)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(sys.argv[0], sys.argv[1:])

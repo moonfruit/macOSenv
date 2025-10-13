@@ -1,12 +1,3 @@
 #!/usr/bin/env bash
-
-PREFIX=()
-if [[ -z $NVIM && -z $DARK_ENABLED ]] && hash dark 2>/dev/null; then
-    PREFIX+=(dark)
-fi
-
-if ((${#PREFIX[@]})); then
-    exec "${PREFIX[@]}" "$0" "$@"
-fi
-
-exec "$(brew --prefix)/bin/codebuddy" "$@"
+source "$ENV/lib/bash/console.sh"
+dark "$(brew --prefix)/bin/codebuddy" "$@"
