@@ -23,7 +23,7 @@ skinparam usecase {
 (aria2)-->(openssl@3)
 (aria2)-->(sqlite)
 (autojump)
-(autojump)-->(python@3.13)
+(autojump)-->(python@3.14)
 (azhuchkov/tools/tunblkctl)
 (basedpyright)
 (basedpyright)-->(node)
@@ -41,11 +41,11 @@ skinparam usecase {
 (bfg)
 (bfg)-->(openjdk)
 (black)
-(black)-->(python@3.13)
+(black)-->(python@3.14)
 (bottom)
 (bpytop)
 (bpytop)-->(osx-cpu-temp)
-(bpytop)-->(python@3.13)
+(bpytop)-->(python@3.14)
 (brotli) << dep >>
 (c-ares) << dep >>
 (ca-certificates) << dep >>
@@ -83,13 +83,8 @@ skinparam usecase {
 (chrome-devtools-mcp)-->(node)
 (clang-format)
 (cmake)
-(cmake-language-server)
-(cmake-language-server)-->(python@3.13)
-(codespell)
-(codespell)-->(python@3.13)
 (colima)
 (colima)-->(lima)
-(concurrencykit) << dep >>
 (context7-mcp)
 (context7-mcp)-->(node)
 (cpanminus)
@@ -114,11 +109,6 @@ skinparam usecase {
 (direnv)-->(bash)
 (dive)
 (dmalloc)
-(dnsperf)
-(dnsperf)-->(concurrencykit)
-(dnsperf)-->(ldns)
-(dnsperf)-->(libnghttp2)
-(dnsperf)-->(openssl@3)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
@@ -141,13 +131,11 @@ skinparam usecase {
 (file-formula)
 (file-formula)-->(libmagic)
 (fio)
-(flake8)
-(flake8)-->(python@3.13)
 (fontconfig) << dep >>
 (fontconfig)-->(freetype)
 (fontconfig)-->(gettext)
 (fonttools)
-(fonttools)-->(python@3.13)
+(fonttools)-->(python@3.14)
 (fossil)
 (fossil)-->(openssl@3)
 (freetype) << dep >>
@@ -293,7 +281,7 @@ skinparam usecase {
 (iperf3)
 (iperf3)-->(openssl@3)
 (ipython)
-(ipython)-->(python@3.13)
+(ipython)-->(python@3.14)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
 (jpeg-turbo) << dep >>
@@ -318,9 +306,6 @@ skinparam usecase {
 (ktlint)
 (ktlint)-->(openjdk)
 (lazygit)
-(ldns) << dep >>
-(ldns)-->(openssl@3)
-(ldns)-->(python@3.13)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
 (libavif) << dep >>
@@ -345,7 +330,6 @@ skinparam usecase {
 (libidn2)-->(libunistring)
 (libksba) << dep >>
 (libksba)-->(libgpg-error)
-(liblinear) << dep >>
 (libmagic) << dep >>
 (libnghttp2) << dep >>
 (libnghttp3) << dep >>
@@ -494,13 +478,6 @@ skinparam usecase {
 (netpbm)-->(libtiff)
 (nettle) << dep >>
 (nettle)-->(gmp)
-(nmap)
-(nmap)-->(liblinear)
-(nmap)-->(libssh2)
-(nmap)-->(lua)
-(nmap)-->(openssl@3)
-(nmap)-->(pcre2)
-(nmap)-->(python@3.13)
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
@@ -583,7 +560,7 @@ skinparam usecase {
 (pinentry-mac)-->(libassuan)
 (pinentry-mac)-->(libgpg-error)
 (pipgrip)
-(pipgrip)-->(python@3.13)
+(pipgrip)-->(python@3.14)
 (pixman) << dep >>
 (pkgconf) << dep >>
 (plantuml)
@@ -614,6 +591,12 @@ skinparam usecase {
 (python@3.13)-->(openssl@3)
 (python@3.13)-->(sqlite)
 (python@3.13)-->(xz)
+(python@3.14) << dep >>
+(python@3.14)-->(mpdecimal)
+(python@3.14)-->(openssl@3)
+(python@3.14)-->(sqlite)
+(python@3.14)-->(xz)
+(python@3.14)-->(zstd)
 (qemu)
 (qemu)-->(capstone)
 (qemu)-->(dtc)
@@ -677,7 +660,7 @@ skinparam usecase {
 (sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
-(sqlfluff)-->(python@3.13)
+(sqlfluff)-->(python@3.14)
 (sqlite) << dep >>
 (sqlite)-->(readline)
 (sshpass)
@@ -763,7 +746,7 @@ skinparam usecase {
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)
-(yt-dlp)-->(python@3.13)
+(yt-dlp)-->(python@3.14)
 (z3) << dep >>
 (zlib) << dep >>
 (zopfli) << dep >>
