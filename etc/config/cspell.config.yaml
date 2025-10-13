@@ -1,0 +1,34 @@
+language: en
+allowCompoundWords: true
+words:
+  - augroup
+  - autocmd
+  - autocmds
+  - basedpyright
+  - bashls
+  - clangd
+  - cssls
+  - dockerls
+  - esqlc
+  - gitmodules
+  - gofumpt
+  - goimports
+  - gomodifytags
+  - gopls
+  - groovyls
+  - jsonls
+  - ktlint
+  - lazyvim
+  - lspconfig
+  - lualine
+  - noremap
+  - nvim
+  - nvimtools
+  - plaintex
+  - pyright
+  - shfmt
+  - taplo
+  - typst
+  - venv
+  - yamlls
+  - yanky
