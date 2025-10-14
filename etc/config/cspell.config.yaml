@@ -8,8 +8,10 @@ words:
   - bashls
   - clangd
   - cssls
+  - dmalloc
   - dockerls
   - esqlc
+  - gitee
   - gitmodules
   - gofumpt
   - goimports
@@ -21,7 +23,9 @@ words:
   - lazyvim
   - lspconfig
   - lualine
+  - nanocloud
   - noremap
+  - npmjs
   - nvim
   - nvimtools
   - plaintex
