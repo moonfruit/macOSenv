@@ -578,8 +578,6 @@ skinparam usecase {
 (postgresql@17)-->(zstd)
 (prettier)
 (prettier)-->(node)
-(prettierd)
-(prettierd)-->(node)
 (protobuf) << dep >>
 (protobuf)-->(abseil)
 (proxychains-ng)
@@ -720,7 +718,6 @@ skinparam usecase {
 (uv)
 (uvwasi) << dep >>
 (uvwasi)-->(libuv)
-(vale)
 (vde) << dep >>
 (vscode-langservers-extracted)
 (vscode-langservers-extracted)-->(node)

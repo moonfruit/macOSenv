@@ -31,6 +31,7 @@ export HOMEBREW_BAT=true
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7
 export HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS=7
 export HOMEBREW_PRY=1
+source "$ENV/etc/secret/homebrew.env"
 
 local script=$BREW_PREFIX/Library/Homebrew/command-not-found/handler.sh
 [[ -f "$script" ]] && . "$script"
