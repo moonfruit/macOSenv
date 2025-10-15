@@ -10,6 +10,8 @@ words:
   - cssls
   - dmalloc
   - dockerls
+  - env
+  - envrc
   - esqlc
   - gitee
   - gitmodules
@@ -23,16 +25,20 @@ words:
   - lazyvim
   - lspconfig
   - lualine
+  - lzc
+  - mcpserver
   - nanocloud
   - noremap
   - npmjs
   - nvim
   - nvimtools
+  - pcre
   - plaintex
   - pyright
   - shfmt
   - taplo
   - typst
   - venv
+  - xctoolchain
   - yamlls
   - yanky

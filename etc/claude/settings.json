@@ -1,35 +1,37 @@
 {
-  "alwaysThinkingEnabled": false,
   "env": {
     "DISABLE_AUTOUPDATER": "1"
+  },
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)"
+    ],
+    "deny": []
   },
   "hooks": {
     "Notification": [
       {
         "hooks": [
           {
-            "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/notification.sh",
-            "type": "command"
+            "type": "command",
+            "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/notification.sh"
           }
         ]
       },
       {
         "hooks": [
           {
-            "command": "osascript -e \"display notification \\\"$(jq -r .message)\\\" with title \\\"$(jq -r .title)\\\" sound name \\\"Glass\\\"\"",
-            "type": "command"
+            "type": "command",
+            "command": "osascript -e \"display notification \\\"$(jq -r .message)\\\" with title \\\"$(jq -r .title)\\\" sound name \\\"Glass\\\"\""
           }
         ]
       }
     ]
   },
-  "permissions": {
-    "allow": ["WebFetch(domain:docs.anthropic.com)"],
-    "deny": []
-  },
   "statusLine": {
-    "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh",
-    "type": "command"
+    "type": "command",
+    "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh"
   },
+  "alwaysThinkingEnabled": false,
   "verbose": false
 }
