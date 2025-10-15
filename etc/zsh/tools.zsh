@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090
 
+# claude
+alias claude='PATH=$PATH:$HOME/.local/bin claude'
+
 # for dmalloc
 if (($+commands[dmalloc])); then
 	function dmalloc {
