@@ -49,6 +49,8 @@ cleanup() {
 
 KNOWN_BOTTLED=(
     hashicorp/tap/consul
+    hazelcast/hz/hazelcast
+    hazelcast/hz/hazelcast-management-center
     mongodb/brew/mongodb-community
     moonfruit/tap/wlp-webprofile8
     oven-sh/bun/bun

@@ -60,7 +60,8 @@
         "type": "logical",
         "mode": "and",
         "rules": [
-          { "process_name": ["ChatGPT", "ChatGPTHelper", "Claude"], "invert": true },
+          { "process_name": ["ChatGPT", "ChatGPTHelper", "Claude", "claude", "codex", "gemini"], "invert": true },
+          { "process_path_regex": ["/Applications/(ChatGPT|Claude).app/.*"], "invert": true },
           { "rule_set": "GeoSites@!CN", "invert": true },
           { "rule_set": "GeoIP@CN" }
         ],
@@ -97,11 +98,7 @@
       //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],
       //   "action": "reject"
       // }
-      { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
-      {
-        "domain_suffix": ["gingkoo.com", "alicdn.win", "demo-chat-airport.com", "xipcloud.org", "v2ray.in"],
-        "outbound": "DIRECT"
-      }
+      { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" }
     ],
     "rule_set": [
       {

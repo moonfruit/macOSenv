@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+help() {
+    cat <<EOF
+Usage: $(basename "$0") [command] [arguments]
+
+Commands:
+  get         Get current DNS server settings for all network interfaces
+  set <dns>   Set DNS server to specified address for all network interfaces
+  clear       Clear DNS server settings for all network interfaces
+  help        Display this help information
+
+Examples:
+  $(basename "$0")              # Get current DNS settings
+  $(basename "$0") get          # Get current DNS settings
+  $(basename "$0") set 8.8.8.8  # Set DNS to 8.8.8.8
+  $(basename "$0") clear        # Clear DNS settings
+EOF
+}
+
+get-dns() {
+    networksetup -listallnetworkservices | grep -v '\*' | while read -r line; do
+        dns=$(networksetup -getdnsservers "$line" | rg -v "^There aren't any DNS Servers set on")
+        if [[ -n "$dns" ]]; then
+            echo "$line: $dns"
+        fi
+    done
+}
+
+set-dns() {
+    networksetup -listallnetworkservices | grep -v '\*' | while read -r line; do
+        networksetup -setdnsservers "$line" "$1"
+    done
+}
+
+clear-dns() {
+    set-dns "Empty"
+}
+
+cmd=${1:-}
+
+case "${cmd}" in
+"" | get) get-dns ;;
+set)
+    ip=${2:-}
+    if [[ -z "$ip" ]]; then
+        echo "Error: set command requires DNS server address" >&2
+        echo "" >&2
+        help
+        exit 1
+    fi
+    set-dns "$ip"
+    ;;
+clear) clear-dns ;;
+help | -h | --help) help ;;
+*)
+    echo "Error: unknown command '$cmd'" >&2
+    echo "" >&2
+    help
+    exit 1
+    ;;
+esac

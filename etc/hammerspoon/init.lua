@@ -8,7 +8,7 @@ hs.loadSpoon("EmmyLua")
 ---
 --- Reload config on change
 ---
-Reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
+local reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
 
 ---
 --- Enable ipc module for `hs`
@@ -40,5 +40,7 @@ local tunnelblick = require("tunnelblick"):start()
 -- parallels.forAddress("10.211.55.2", 7890):start()
 
 --- Launch local server
-local localserver = require("localserver")
-localserver.new("127.0.0.1"):start()
+local localserver = require("localserver").new("127.0.0.1"):start()
+
+--- Monitor sing-box service
+local singMonitor = require("sing-box")
