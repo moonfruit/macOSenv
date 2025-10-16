@@ -73,13 +73,16 @@ readonly EXCLUDED=(
     homebrew/cask/istat-menus
     homebrew/cask/microsoft-edge
     homebrew/cask/sf-symbols
-    homebrew/cask/tencent-meeting
     homebrew/cask/tencent-docs
+    homebrew/cask/tencent-meeting
     homebrew/core/bash
+    homebrew/core/gh
     homebrew/core/git
     homebrew/core/git-svn
-    homebrew/core/libgit2@1.7
     homebrew/core/icu4c
+    homebrew/core/libgcrypt
+    homebrew/core/libgit2@1.7
+    homebrew/core/libnghttp2
     homebrew/core/llvm
     homebrew/core/luajit
     homebrew/core/mas
@@ -87,9 +90,8 @@ readonly EXCLUDED=(
     homebrew/core/mysql-client
     homebrew/core/netpbm
     homebrew/core/nghttp2
-    homebrew/core/libnghttp2
-    homebrew/core/libgcrypt
     homebrew/core/python@3.13
+    homebrew/core/swiftlint
     italomandara/cxpatcher/cxpatcher
     oven-sh/bun/bun
 )

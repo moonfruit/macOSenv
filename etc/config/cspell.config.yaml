@@ -9,16 +9,20 @@ words:
   - clangd
   - cssls
   - dmalloc
+  - dnsctl
   - dockerls
+  - eip
   - env
   - envrc
   - esqlc
+  - gingkoo
   - gitee
   - gitmodules
   - gofumpt
   - goimports
   - gomodifytags
   - gopls
+  - gpms
   - groovyls
   - jsonls
   - ktlint
@@ -27,6 +31,7 @@ words:
   - lualine
   - lzc
   - mcpserver
+  - mybatis
   - nanocloud
   - noremap
   - npmjs
@@ -35,8 +40,12 @@ words:
   - pcre
   - plaintex
   - pyright
+  - setaf
   - shfmt
   - taplo
+  - tavily
+  - tput
+  - tunnelblick
   - typst
   - venv
   - xctoolchain
