@@ -24,6 +24,7 @@ words:
   - gopls
   - gpms
   - groovyls
+  - inreplace
   - jsonls
   - ktlint
   - lazyvim
@@ -40,8 +41,10 @@ words:
   - pcre
   - plaintex
   - pyright
+  - qwen
   - setaf
   - shfmt
+  - sonoma
   - taplo
   - tavily
   - tput

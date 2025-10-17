@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
-	exec proxy "$0" "$@"
+    exec proxy "$0" "$@"
 fi
 
 source "$ENV/lib/bash/native.sh"
@@ -18,5 +18,7 @@ source "$TOKEN"
 # shellcheck disable=SC2155
 readonly RED=$(tput setaf 1) BOLD=$(tput bold) RESET=$(tput sgr0)
 
-printf "%*s\n" 90 "$RED$BOLD<$GEMINI_USER>$RESET"
+if [[ $# -eq 0 ]]; then
+    printf "%*s\r" 90 "$RED$BOLD<$GEMINI_USER>$RESET"
+fi
 exec /opt/homebrew/bin/gemini "$@"

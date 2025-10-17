@@ -19,7 +19,7 @@ local function log(message)
 end
 
 -- 执行脚本
-local function executeScript(command)
+local function executeScript(command, callback)
     local fullCommand = string.format("%s %s", CONFIG.scriptPath, command)
     log(string.format("执行命令: %s", fullCommand))
 
@@ -29,6 +29,7 @@ local function executeScript(command)
             if stdOut and stdOut ~= "" then
                 log(string.format("输出: %s", stdOut))
             end
+            callback()
         else
             log(string.format("命令执行失败 (退出码: %d): %s", exitCode, command))
             if stdErr and stdErr ~= "" then
@@ -38,6 +39,15 @@ local function executeScript(command)
     end, { "-c", fullCommand })
 
     task:start()
+end
+
+-- 发送通知
+local function sendNotification(title, message)
+    hs.notify.new({
+        title = title,
+        informativeText = message,
+        withdrawAfter = 3
+    }):send()
 end
 
 -- 处理状态变化
@@ -53,11 +63,15 @@ local function handleStatusChange(currentStatus)
         if currentStatus then
             -- 从离线变为在线
             log("状态变化: 服务离线 -> 服务在线")
-            executeScript("set 127.0.0.1")
+            executeScript("set 127.0.0.1", function()
+                sendNotification("DNS 设置已更新", "DNS 已设置为 127.0.0.1")
+            end)
         else
             -- 从在线变为离线
             log("状态变化: 服务在线 -> 服务离线")
-            executeScript("clear")
+            executeScript("clear", function()
+                sendNotification("DNS 设置已清除", "DNS 设置已恢复为默认")
+            end)
         end
         isServiceOnline = currentStatus
     end
@@ -65,7 +79,7 @@ end
 
 -- 检查服务状态
 local function checkServiceStatus()
-    hs.http.asyncGet(CONFIG.url, nil, function(status, body, headers)
+    hs.http.asyncGet(CONFIG.url, nil, function(status)
         if status == 200 then
             -- 服务在线
             handleStatusChange(true)
