@@ -8,7 +8,7 @@ hs.loadSpoon("EmmyLua")
 ---
 --- Reload config on change
 ---
-local reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
+Reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
 
 ---
 --- Enable ipc module for `hs`

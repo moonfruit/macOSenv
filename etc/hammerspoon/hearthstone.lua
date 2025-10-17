@@ -14,8 +14,8 @@ local events<const> = {
 local M = {}
 
 function M:start()
-    if not self.wathcer then
-        self.wathcer = hs.application.watcher.new(function(name, event, app)
+    if not self.watcher then
+        self.watcher = hs.application.watcher.new(function(name, event, app)
             if event == hs.application.watcher.launching or event == hs.application.watcher.launched then
                 print(string.format("[%s] is <%s>", app:bundleID(), events[event]))
                 if app:bundleID() == hearthstone then
@@ -26,15 +26,15 @@ function M:start()
                 end
             end
         end)
-        self.wathcer:start()
+        self.watcher:start()
     end
     return self
 end
 
 function M:stop()
-    if self.wathcer then
-        self.wathcer:stop()
-        self.wathcer = nil
+    if self.watcher then
+        self.watcher:stop()
+        self.watcher = nil
     end
     return self
 end
