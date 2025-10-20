@@ -1,5 +1,6 @@
 language: en
 allowCompoundWords: true
+ignoreRandomStrings: true
 words:
   - augroup
   - autocmd
@@ -12,8 +13,10 @@ words:
   - dnsctl
   - dockerls
   - eip
+  - elif
   - env
   - envrc
+  - esac
   - esqlc
   - gingkoo
   - gitee

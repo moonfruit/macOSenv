@@ -89,6 +89,8 @@ skinparam usecase {
 (context7-mcp)-->(node)
 (cpanminus)
 (croc)
+(cspell)
+(cspell)-->(node)
 (curl)
 (curl)-->(brotli)
 (curl)-->(libnghttp2)
@@ -274,7 +276,7 @@ skinparam usecase {
 (htop)-->(ncurses)
 (httpie)
 (httpie)-->(certifi)
-(httpie)-->(python@3.13)
+(httpie)-->(python@3.14)
 (hyperfine)
 (icu4c@77) << dep >>
 (imath) << dep >>
@@ -337,6 +339,7 @@ skinparam usecase {
 (libngtcp2) << dep >>
 (libngtcp2)-->(openssl@3)
 (libpng) << dep >>
+(libptytty) << dep >>
 (librsvg) << dep >>
 (librsvg)-->(cairo)
 (librsvg)-->(fontconfig)
@@ -391,7 +394,7 @@ skinparam usecase {
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
 (llvm) << dep >>
-(llvm)-->(python@3.13)
+(llvm)-->(python@3.14)
 (llvm)-->(xz)
 (llvm)-->(z3)
 (llvm)-->(zstd)
@@ -585,11 +588,6 @@ skinparam usecase {
 (pup)
 (pv)
 (pv)-->(gettext)
-(python@3.13) << dep >>
-(python@3.13)-->(mpdecimal)
-(python@3.13)-->(openssl@3)
-(python@3.13)-->(sqlite)
-(python@3.13)-->(xz)
 (python@3.14) << dep >>
 (python@3.14)-->(mpdecimal)
 (python@3.14)-->(openssl@3)
@@ -623,6 +621,7 @@ skinparam usecase {
 (ripgrep)
 (ripgrep)-->(pcre2)
 (rlwrap)
+(rlwrap)-->(libptytty)
 (rlwrap)-->(readline)
 (rsync)
 (rsync)-->(lz4)
