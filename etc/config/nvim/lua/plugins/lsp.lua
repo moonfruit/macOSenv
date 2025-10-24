@@ -1,22 +1,12 @@
 local nls = require("null-ls")
-
-local function replace_source(sources, name, source)
-  for i, item in ipairs(sources) do
-    if item.name == name then
-      sources[i] = source
-      return item
-    end
-  end
-end
-
-local function replace_builtin(sources, name, opts)
-  replace_source(sources, name, nls.builtins.formatting[name].with(opts))
-end
+local yy = require("yy")
 
 local function replace_builtins(sources, names)
-  for name, opts in pairs(names) do
-    replace_builtin(sources, name, opts)
-  end
+  yy.replace_sources(sources, names, function(_, opts)
+    return function(source)
+      return source.with(opts)
+    end
+  end)
 end
 
 ---@type LazySpec
@@ -38,15 +28,19 @@ return {
         groovyls = {},
         lemminx = {
           settings = {
-            maxLineWidth = 120,
+            xml = {
+              format = {
+                maxLineWidth = 120,
+              },
+            },
           },
         },
         marksman = {
           init_options = {
             format = {
               lineLength = 120,
-            }
-          }
+            },
+          },
         },
         ruff = {
           capabilities = {
@@ -74,6 +68,10 @@ return {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
       -- opts.debug = true
+      yy.remove_sources(opts.sources, {
+        "fish",
+        "fish_indent",
+      })
       replace_builtins(opts.sources, {
         biome = {
           extra_args = { "--line-width=120" },

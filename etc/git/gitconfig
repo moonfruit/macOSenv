@@ -86,21 +86,18 @@
 
 [http "https://github.com"]
     proxy = http://127.0.0.1:7890
-    #proxy = http://10.1.2.12:8118
 
 [url "https://gitlab.com/"]
     insteadOf = git@gitlab.com:
 
 [http "https://gitlab.com"]
     proxy = http://127.0.0.1:7890
-    #proxy = http://10.1.2.12:8118
 
 [url "https://bitbucket.org/"]
     insteadOf = git@bitbucket.org:
 
 [http "https://bitbucket.org"]
     proxy = http://127.0.0.1:7890
-    #proxy = http://10.1.2.12:8118
 
 [url "git@git.server.gingkoo:"]
     insteadOf = http://git.server.gingkoo/
