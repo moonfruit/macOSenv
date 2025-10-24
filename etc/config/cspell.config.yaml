@@ -9,6 +9,7 @@ words:
   - bashls
   - clangd
   - cssls
+  - dkmoonfruit
   - dmalloc
   - dnsctl
   - dockerls
@@ -34,7 +35,9 @@ words:
   - lspconfig
   - lualine
   - lzc
+  - maven
   - mcpserver
+  - moonfruit
   - mybatis
   - nanocloud
   - noremap
@@ -50,6 +53,7 @@ words:
   - sonoma
   - taplo
   - tavily
+  - temurin
   - tput
   - tunnelblick
   - typst
