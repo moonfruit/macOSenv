@@ -2,6 +2,7 @@ language: en
 allowCompoundWords: true
 ignoreRandomStrings: true
 words:
+  - astrovim
   - augroup
   - autocmd
   - autocmds
@@ -48,6 +49,7 @@ words:
   - plaintex
   - pyright
   - qwen
+  - rubocop
   - setaf
   - shfmt
   - sonoma
