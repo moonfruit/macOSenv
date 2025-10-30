@@ -33,8 +33,6 @@ skinparam usecase {
 (bash)-->(gettext)
 (bash)-->(ncurses)
 (bash)-->(readline)
-(bash-completion@2)
-(bash-completion@2)-->(bash)
 (bash-language-server)
 (bash-language-server)-->(node)
 (bat)
@@ -277,7 +275,7 @@ skinparam usecase {
 (gpgmepp) << dep >>
 (gpgmepp)-->(gpgme)
 (gradle)
-(gradle)-->(openjdk@21)
+(gradle)-->(openjdk)
 (graphite2) << dep >>
 (graphviz) << dep >>
 (graphviz)-->(cairo)
@@ -533,7 +531,6 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
-(moonfruit/tap/p7zip-all)
 (moonfruit/tap/sing-box@2)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
@@ -648,6 +645,7 @@ skinparam usecase {
 (p11-kit) << dep >>
 (p11-kit)-->(ca-certificates)
 (p11-kit)-->(libtasn1)
+(p7zip) << dep >>
 (pandoc)
 (pandoc)-->(gmp)
 (pango) << dep >>
@@ -862,6 +860,8 @@ skinparam usecase {
 (unbound)-->(libnghttp2)
 (unbound)-->(openssl@3)
 (unibilium) << dep >>
+(unp)
+(unp)-->(p7zip)
 (utf8proc) << dep >>
 (uv)
 (uvwasi) << dep >>

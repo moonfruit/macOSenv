@@ -2,12 +2,12 @@
 shopt -s extglob
 
 NAME="${0##*/}"
-if [[ $NAME =~ -*([0-9]+)(\..+)?$ ]]; then
-	CMD=${NAME:0:-${#BASH_REMATCH[0]}}${BASH_REMATCH[2]}
-	VERSION=${BASH_REMATCH[1]}
+if [[ $NAME =~ -?([0-9]+)(\.sh)?$ ]]; then
+    CMD=${NAME:0:-${#BASH_REMATCH[0]}}${BASH_REMATCH[2]}
+    VERSION=${BASH_REMATCH[1]}
 else
-	echo "Invalid command name: $NAME" >&2
-	exit 1
+    echo "Invalid command name: $NAME" >&2
+    exit 1
 fi
 
 exec java-home -v "$VERSION" -- "$CMD" "$@"

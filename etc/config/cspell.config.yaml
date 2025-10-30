@@ -1,4 +1,4 @@
-language: en
+language: en,en-GB
 allowCompoundWords: true
 ignoreRandomStrings: true
 words:
@@ -8,7 +8,9 @@ words:
   - autocmds
   - basedpyright
   - bashls
+  - cips
   - clangd
+  - cnaps
   - cssls
   - dkmoonfruit
   - dmalloc
@@ -20,6 +22,7 @@ words:
   - envrc
   - esac
   - esqlc
+  - fakeip
   - gingkoo
   - gitee
   - gitmodules
@@ -28,8 +31,11 @@ words:
   - gomodifytags
   - gopls
   - gpms
+  - graalvm
   - groovyls
+  - heiyu
   - inreplace
+  - jdbc
   - jsonls
   - ktlint
   - lazyvim
@@ -45,6 +51,7 @@ words:
   - npmjs
   - nvim
   - nvimtools
+  - oradb
   - pcre
   - plaintex
   - pyright
@@ -52,6 +59,7 @@ words:
   - rubocop
   - setaf
   - shfmt
+  - shopt
   - sonoma
   - taplo
   - tavily
@@ -61,5 +69,6 @@ words:
   - typst
   - venv
   - xctoolchain
+  - xipcloud
   - yamlls
   - yanky
