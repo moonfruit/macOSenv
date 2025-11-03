@@ -6,11 +6,8 @@
 	<true/>
 	<key>Label</key>
 	<string>moonfruit.aria2</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>/opt/homebrew/bin/aria2c</string>
-		<string>--conf-path=/Users/moon/Workspace.localized/env/etc/aria2/aria2.conf</string>
-	</array>
+	<key>Program</key>
+	<string>/Users/moon/Workspace.localized/env/etc/aria2/aria2.sh</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
