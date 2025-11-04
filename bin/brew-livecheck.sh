@@ -79,7 +79,8 @@ readonly EXCLUDED=(
     homebrew/core/gh
     homebrew/core/git
     homebrew/core/git-svn
-    homebrew/core/icu4c
+    homebrew/core/icu4c@77
+    homebrew/core/icu4c@78
     homebrew/core/libgcrypt
     homebrew/core/libgit2@1.7
     homebrew/core/libnghttp2
