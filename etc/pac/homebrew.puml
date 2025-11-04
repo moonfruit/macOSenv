@@ -107,7 +107,6 @@ skinparam usecase {
 (deno)
 (deno)-->(little-cms2)
 (deno)-->(sqlite)
-(di)
 (direnv)
 (direnv)-->(bash)
 (dive)
