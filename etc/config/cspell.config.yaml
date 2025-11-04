@@ -23,6 +23,7 @@ words:
   - esac
   - esqlc
   - fakeip
+  - ghostty
   - gingkoo
   - gitee
   - gitmodules
@@ -61,6 +62,7 @@ words:
   - shfmt
   - shopt
   - sonoma
+  - swiftc
   - taplo
   - tavily
   - temurin

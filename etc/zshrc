@@ -14,7 +14,7 @@ ZDOTDIR="$HOME/.zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-if [[ $TERM_PROGRAM == iTerm.app ]]; then
+if [[ $TERM_PROGRAM == iTerm.app || $TERM_PROGRAM == ghostty ]]; then
     # Show system information before Powerlevel10k instant prompt.
     if [[ -z $VIMRUNTIM && -z $ARCHEY_DISABLED ]]; then
         "$ENV/bin/archey" -l
