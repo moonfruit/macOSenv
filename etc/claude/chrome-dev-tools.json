@@ -1,0 +1,5 @@
+{
+  "chrome-devtools": {
+    "command": "/opt/homebrew/bin/chrome-devtools-mcp"
+  }
+}
