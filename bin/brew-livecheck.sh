@@ -79,6 +79,7 @@ readonly EXCLUDED=(
     homebrew/core/gh
     homebrew/core/git
     homebrew/core/git-svn
+    homebrew/core/glab
     homebrew/core/icu4c@77
     homebrew/core/icu4c@78
     homebrew/core/libgcrypt

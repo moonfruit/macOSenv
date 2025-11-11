@@ -32,6 +32,9 @@
     "type": "command",
     "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh"
   },
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true
+  },
   "alwaysThinkingEnabled": false,
   "verbose": false
 }
