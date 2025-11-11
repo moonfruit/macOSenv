@@ -97,8 +97,9 @@
       //   "mode": "or",
       //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],
       //   "action": "reject"
-      // }
-      { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" }
+      // },
+      { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
+      { "process_name": "lzc-core.darwin", "outbound": "DIRECT" }
     ],
     "rule_set": [
       {
