@@ -50,3 +50,10 @@
 
 font-family = JetBrainsMono Nerd Font
 font-size = 14
+
+window-width = 139
+window-height = 39
+
+copy-on-select = clipboard
+quit-after-last-window-closed = true
+
