@@ -96,8 +96,6 @@ if [[ $OUTPUT ]]; then
     echo "$OUTPUT"
     echo "$GREEN==>$RESET ${BOLD}Upgrade casks$RESET"
     readarray -t OUTDATED < <(echo "$OUTPUT" | awk 'NR>2{print $2}')
-    for CASK in "${OUTDATED[@]}"; do
-        echo "brew ${BOLD}upgrade$RESET --cask $BLUE$CASK$RESET"
-    done
+    echo "brew ${BOLD}upgrade$RESET --cask $BLUE${OUTDATED[*]}$RESET"
     cleanup "${OUTDATED[@]}"
 fi

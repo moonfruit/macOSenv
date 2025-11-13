@@ -43,9 +43,6 @@ skinparam usecase {
 (black)
 (black)-->(python@3.14)
 (bottom)
-(bpytop)
-(bpytop)-->(osx-cpu-temp)
-(bpytop)-->(python@3.14)
 (brotli) << dep >>
 (c-ares) << dep >>
 (ca-certificates) << dep >>
@@ -173,6 +170,8 @@ skinparam usecase {
 (file-formula)
 (file-formula)-->(libmagic)
 (fio)
+(fish)
+(fish)-->(pcre2)
 (flac) << dep >>
 (flac)-->(libogg)
 (fontconfig) << dep >>
@@ -180,8 +179,6 @@ skinparam usecase {
 (fontconfig)-->(gettext)
 (fonttools)
 (fonttools)-->(python@3.14)
-(fossil)
-(fossil)-->(openssl@3)
 (freetype) << dep >>
 (freetype)-->(libpng)
 (frei0r) << dep >>
@@ -307,7 +304,6 @@ skinparam usecase {
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
 (harfbuzz)-->(icu4c@77)
-(hashicorp/tap/consul)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
@@ -315,7 +311,6 @@ skinparam usecase {
 (helm)
 (helm-ls)
 (hexyl)
-(hgrep)
 (highway) << dep >>
 (htop)
 (htop)-->(ncurses)
@@ -515,7 +510,6 @@ skinparam usecase {
 (maven)-->(openjdk)
 (mbedtls) << dep >>
 (miniserve)
-(miniupnpc)
 (mkcert)
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/codebuddy-code)
@@ -547,7 +541,6 @@ skinparam usecase {
 (mpfr) << dep >>
 (mpfr)-->(gmp)
 (mpg123) << dep >>
-(msedit)
 (mysql-client)
 (mysql-client)-->(libfido2)
 (mysql-client)-->(openssl@3)
@@ -591,8 +584,6 @@ skinparam usecase {
 (nspr) << dep >>
 (nss) << dep >>
 (nss)-->(nspr)
-(nushell)
-(nushell)-->(openssl@3)
 (ollama)
 (oniguruma) << dep >>
 (opencc)
@@ -639,7 +630,6 @@ skinparam usecase {
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
 (opus) << dep >>
-(osx-cpu-temp) << dep >>
 (oven-sh/bun/bun)
 (p11-kit) << dep >>
 (p11-kit)-->(ca-certificates)
@@ -795,7 +785,6 @@ skinparam usecase {
 (sshpass)
 (staticcheck)
 (staticcheck)-->(go)
-(stuntman)
 (stylua)
 (subversion)
 (subversion)-->(apr)
@@ -812,7 +801,6 @@ skinparam usecase {
 (tailwindcss-language-server)-->(node)
 (taplo)
 (tcping)
-(teamookla/speedtest/speedtest)
 (tesseract) << dep >>
 (tesseract)-->(cairo)
 (tesseract)-->(fontconfig)
@@ -873,7 +861,6 @@ skinparam usecase {
 (webp)-->(jpeg-turbo)
 (webp)-->(libpng)
 (webp)-->(libtiff)
-(websocat)
 (wget)
 (wget)-->(gettext)
 (wget)-->(libidn2)
@@ -894,6 +881,7 @@ skinparam usecase {
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)
+(yt-dlp)-->(deno)
 (yt-dlp)-->(python@3.14)
 (z3) << dep >>
 (zeromq) << dep >>
