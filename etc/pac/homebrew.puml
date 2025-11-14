@@ -112,7 +112,7 @@ skinparam usecase {
 (dockerfile-language-server)-->(node)
 (doge)
 (dotnet@8) << dep >>
-(dotnet@8)-->(icu4c@77)
+(dotnet@8)-->(icu4c@78)
 (dotnet@8)-->(openssl@3)
 (dtc) << dep >>
 (dufs)
@@ -288,6 +288,8 @@ skinparam usecase {
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
 (graphviz)-->(webp)
+(grep) << dep >>
+(grep)-->(pcre2)
 (grpcurl)
 (gts) << dep >>
 (gts)-->(gettext)
@@ -303,7 +305,7 @@ skinparam usecase {
 (harfbuzz)-->(freetype)
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
-(harfbuzz)-->(icu4c@77)
+(harfbuzz)-->(icu4c@78)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
@@ -312,6 +314,7 @@ skinparam usecase {
 (helm-ls)
 (hexyl)
 (highway) << dep >>
+(htmlq)
 (htop)
 (htop)-->(ncurses)
 (httpie)
@@ -319,6 +322,7 @@ skinparam usecase {
 (httpie)-->(python@3.14)
 (hyperfine)
 (icu4c@77) << dep >>
+(icu4c@78) << dep >>
 (imath) << dep >>
 (iperf3)
 (iperf3)-->(openssl@3)
@@ -570,7 +574,7 @@ skinparam usecase {
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
-(node)-->(icu4c@77)
+(node)-->(icu4c@78)
 (node)-->(libnghttp2)
 (node)-->(libnghttp3)
 (node)-->(libngtcp2)
@@ -681,7 +685,7 @@ skinparam usecase {
 (popt) << dep >>
 (postgresql@17)
 (postgresql@17)-->(gettext)
-(postgresql@17)-->(icu4c@77)
+(postgresql@17)-->(icu4c@78)
 (postgresql@17)-->(krb5)
 (postgresql@17)-->(lz4)
 (postgresql@17)-->(openssl@3)
@@ -693,7 +697,6 @@ skinparam usecase {
 (protobuf)-->(abseil)
 (proxychains-ng)
 (pstree)
-(pup)
 (pv)
 (pv)-->(gettext)
 (python@3.14) << dep >>
@@ -808,7 +811,7 @@ skinparam usecase {
 (tesseract)-->(gettext)
 (tesseract)-->(glib)
 (tesseract)-->(harfbuzz)
-(tesseract)-->(icu4c@77)
+(tesseract)-->(icu4c@78)
 (tesseract)-->(leptonica)
 (tesseract)-->(libarchive)
 (tesseract)-->(pango)

@@ -74,6 +74,19 @@ find-bottled() {
     fi
 }
 
+clean-fonts() {
+    FIND_FONTS=(fd -e otf -e ttc -e ttf -e woff -e woff2 . "$(brew --caskroom)/font-"*)
+    if "${FIND_FONTS[@]}" -q; then
+        echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew Fonts$RESET"
+        "${FIND_FONTS[@]}" | while read -r FONT; do
+            if [[ ! -L $FONT ]]; then
+                echo "Removing font file: $FONT"
+                rm "$FONT"
+            fi
+        done
+    fi
+}
+
 readarray -t OUTDATED < <(brew outdated)
 if ((${#OUTDATED[@]})); then
     cleanup "${OUTDATED[@]}"
@@ -89,6 +102,8 @@ if ((${#OUTDATED[@]})); then
         brew cleanup
     fi
 fi
+
+clean-fonts
 
 OUTPUT=$(brew-outdated.py)
 if [[ $OUTPUT ]]; then
