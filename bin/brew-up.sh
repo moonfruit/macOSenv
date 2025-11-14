@@ -75,14 +75,12 @@ find-bottled() {
 }
 
 clean-fonts() {
-    FIND_FONTS=(fd -e otf -e ttc -e ttf -e woff -e woff2 . "$(brew --caskroom)/font-"*)
+    FIND_FONTS=(fd -tf -e otf -e ttc -e ttf -e woff -e woff2 . "$(brew --caskroom)/font-"*)
     if "${FIND_FONTS[@]}" -q; then
         echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew Fonts$RESET"
         "${FIND_FONTS[@]}" | while read -r FONT; do
-            if [[ ! -L $FONT ]]; then
-                echo "Removing font file: $FONT"
-                rm "$FONT"
-            fi
+            echo "Removing font file: $FONT"
+            rm "$FONT"
         done
     fi
 }
