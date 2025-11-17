@@ -42,6 +42,7 @@ restart-sing() {
     echo " --- === Restarting sing-box === ---"
     if RESULT=$(sing-box -C "$DIR/config" check 2>&1); then
         sudo launchctl kill TERM system/moonfruit.sing
+        sleep 0.5
     else
         echo "$RESULT" >&2
     fi
