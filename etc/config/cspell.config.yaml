@@ -36,6 +36,7 @@ words:
   - groovyls
   - heiyu
   - inreplace
+  - iterm
   - jdbc
   - jsonls
   - ktlint
@@ -53,6 +54,7 @@ words:
   - nvim
   - nvimtools
   - oradb
+  - osascript
   - pcre
   - plaintex
   - pyright

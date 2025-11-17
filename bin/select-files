@@ -1,52 +1,54 @@
 #!/bin/bash
 
 usage() {
-	echo "Usage: $0 [-d] [-m] type..." 1>&2
-	exit 1
+    echo "Usage: $0 [-d] [-m] type..." 1>&2
+    exit 1
 }
 
-APP=iTerm
-ITEM="file"
-while getopts "a:dm" OPT; do
-	case "$OPT" in
-	a) APP=$OPTARG ;;
-	d) ITEM=folder ;;
-	m) MULTIPLE=1 ;;
-	*) usage ;;
-	esac
+ITEM="File"
+PARAMS=()
+CONVERTER="toString()"
+OSASCRIPT=("osascript" "-l" "JavaScript")
+while getopts "dmx" OPT; do
+    case "$OPT" in
+    d) ITEM=Folder ;;
+    m)
+        PARAMS+=("multipleSelectionsAllowed:true")
+        CONVERTER="join('\n')"
+        ;;
+    x) OSASCRIPT=("cat") ;;
+    *) usage ;;
+    esac
 done
 shift $((OPTIND - 1))
 
-if [[ $ITEM = file ]]; then
-	while [[ $# -gt 0 ]]; do
-		if [[ -z $OF_TYPE ]]; then
-			OF_TYPE=" of type {\"$1\""
-		else
-			OF_TYPE="$OF_TYPE, \"$1\""
-		fi
-		shift
-	done
-	if [[ -n "$OF_TYPE" ]]; then
-		OF_TYPE="$OF_TYPE}"
-	fi
+join() {
+    local IFS=","
+    echo "$*"
+}
+
+join_quoted() {
+    local result=()
+    for arg in "$@"; do
+        result+=("'$arg'")
+    done
+    join "${result[@]}"
+}
+
+if (($#)); then
+    if [[ $ITEM = File ]]; then
+        PARAMS+=("ofType:[$(join_quoted "$@")]")
+    else
+        usage
+    fi
 fi
 
-if [[ -z "$MULTIPLE" ]]; then
-	osascript <<END
-tell application "$APP" to set output to choose $ITEM$OF_TYPE
-copy POSIX path of output to stdout
-END
-else
-	osascript <<END
-tell application "$APP" to set theFiles to choose $ITEM$OF_TYPE with multiple selections allowed
-set output to null
-repeat with theFile in theFiles
-	if output is null then
-		set output to POSIX path of theFile
-	else
-		set output to output & "\n" & POSIX path of theFile
-	end if
-end repeat
-copy output to stdout
-END
+if ((${#PARAMS[@]})); then
+    PARAM="{$(join "${PARAMS[@]}")}"
 fi
+
+"${OSASCRIPT[@]}" <<END
+const app = Application.currentApplication();
+app.includeStandardAdditions = true;
+app.choose$ITEM($PARAM).$CONVERTER;
+END

@@ -1,7 +1,4 @@
 if [[ $TERM_PROGRAM == iTerm.app ]]; then
-    BIN=${0:A:h}/bin
-    if [[ -f "$BIN/iterm2.zsh" ]]; then
-        export PATH="$BIN:$PATH"
-        source $BIN/iterm2.zsh
-    fi
+    source "/Applications/iTerm.app/Contents/Resources/iterm2_shell_integration.zsh"
+    export PATH="${0:A:h}/bin:$PATH"
 fi
