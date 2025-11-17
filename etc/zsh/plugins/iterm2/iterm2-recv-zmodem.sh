@@ -1,8 +1,9 @@
-#!/bin/bash
-if DIR=$(osascript -e '
-		tell application "iTerm" to set output to choose folder
-		copy POSIX path of output to stdout
+#!/usr/bin/env bash
+if DIR=$(osascript -l JavaScript -e '
+	const app = Application.currentApplication();
+	app.includeStandardAdditions = true;
+	app.chooseFolder().toString();
 ' 2>/dev/null); then
-	cd "$DIR" && exec /opt/homebrew/bin/rz -beE
+    cd "$DIR" && exec /opt/homebrew/bin/rz -beE
 fi
 echo -e '\x18\x18\x18\x18\x18'
