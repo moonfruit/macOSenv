@@ -651,7 +651,6 @@ skinparam usecase {
 (parallel)
 (pcre2) << dep >>
 (pigz)
-(pigz)-->(zopfli)
 (pinentry) << dep >>
 (pinentry)-->(libassuan)
 (pinentry)-->(libgpg-error)
@@ -891,7 +890,6 @@ skinparam usecase {
 (zeromq)-->(libsodium)
 (zimg) << dep >>
 (zlib) << dep >>
-(zopfli) << dep >>
 (zsh)
 (zsh)-->(ncurses)
 (zsh)-->(pcre2)
