@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+if [[ $1 == "--bianxie" ]]; then
+    export ANTHROPIC_BASE_URL="https://api.bianxie.ai"
+    export ANTHROPIC_AUTH_TOKEN="sk-ZAnj8EH0ZYCJF9YwoZRyNjVHadZZ2vPPikigCcAKCnQvkjTf"
+    shift
+fi
+export PATH=$PATH:$HOME/.local/bin
+exec /opt/homebrew/bin/claude "$@"
