@@ -33,6 +33,8 @@ skinparam usecase {
 (bash)-->(gettext)
 (bash)-->(ncurses)
 (bash)-->(readline)
+(bash-completion@2)
+(bash-completion@2)-->(bash)
 (bash-language-server)
 (bash-language-server)-->(node)
 (bat)
@@ -271,7 +273,9 @@ skinparam usecase {
 (gpgmepp) << dep >>
 (gpgmepp)-->(gpgme)
 (gradle)
+(gradle)-->(gradle-completion)
 (gradle)-->(openjdk)
+(gradle-completion) << dep >>
 (graphite2) << dep >>
 (graphviz) << dep >>
 (graphviz)-->(cairo)
