@@ -11,6 +11,7 @@ words:
   - cips
   - clangd
   - cnaps
+  - codelldb
   - cssls
   - dkmoonfruit
   - dmalloc
@@ -41,6 +42,7 @@ words:
   - jsonls
   - ktlint
   - lazyvim
+  - lldb
   - lspconfig
   - lualine
   - lzc

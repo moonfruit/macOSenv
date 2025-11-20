@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>moonfruit.sing-log</string>
+	<key>Program</key>
+	<string>/Users/moon/Workspace.localized/env/etc/sing-box/logrotate.sh</string>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.sing-log.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.sing-log.stdout</string>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+</dict>
+</plist>
