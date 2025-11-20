@@ -71,6 +71,8 @@ return {
         "prettier",
         -- Kotlin
         "ktlint",
+        -- LLDB
+        "codelldb",
         -- Lua
         "stylua",
         -- Markdown
