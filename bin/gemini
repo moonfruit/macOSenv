@@ -16,9 +16,9 @@ fi
 source "$TOKEN"
 
 # shellcheck disable=SC2155
-readonly RED=$(tput setaf 1) BOLD=$(tput bold) RESET=$(tput sgr0)
+#readonly RED=$(tput setaf 1) BOLD=$(tput bold) RESET=$(tput sgr0)
+#if [[ $# -eq 0 ]]; then
+#    printf "%*s\r" 90 "$RED$BOLD<$GEMINI_USER>$RESET"
+#fi
 
-if [[ $# -eq 0 ]]; then
-    printf "%*s\r" 90 "$RED$BOLD<$GEMINI_USER>$RESET"
-fi
 exec /opt/homebrew/bin/gemini "$@"

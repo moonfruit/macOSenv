@@ -47,7 +47,7 @@ trap-add() {
     local sigspec
     for sigspec in "$@"; do
         trap -- "$(
-            # shellcheck disable=SC2317
+            # shellcheck disable=SC2329
             extract() { [[ -n "$3" ]] && printf '%s\n' "$3"; }
             eval "extract $(trap -p "$sigspec")"
             printf '%s\n' "$cmd"

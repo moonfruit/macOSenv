@@ -184,9 +184,9 @@ Be concise and helpful in all responses.
 	<key>AiMaxTokens</key>
 	<integer>1048576</integer>
 	<key>AiModel</key>
-	<string>gemini-2.0-flash</string>
+	<string>gemini-2.5-flash</string>
 	<key>AiResponseMaxTokens</key>
-	<integer>8192</integer>
+	<integer>65536</integer>
 	<key>AitermURL</key>
 	<string>https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}</string>
 	<key>AllowClipboardAccess</key>
