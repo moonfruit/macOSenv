@@ -53,11 +53,13 @@ KNOWN_BOTTLED=(
     hazelcast/hz/hazelcast-management-center
     mongodb/brew/mongodb-community
     moonfruit/tap/wlp-webprofile8
+    moonfruit/tap/wlp-webprofile11
     oven-sh/bun/bun
 )
 
 find-bottled() {
     local result=()
+    local item
     for item in "$@"; do
         for i in "${!KNOWN_BOTTLED[@]}"; do
             if [[ "$item" == "${KNOWN_BOTTLED[i]}" ]]; then
@@ -74,7 +76,7 @@ find-bottled() {
     fi
 }
 
-clean-fonts() {
+cleanup-fonts() {
     FIND_FONTS=(fd -tf -e otf -e ttc -e ttf -e woff -e woff2 . "$(brew --caskroom)/font-"*)
     if "${FIND_FONTS[@]}" -q; then
         echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew Fonts$RESET"
@@ -82,6 +84,32 @@ clean-fonts() {
             echo "Removing font file: $FONT"
             rm "$FONT"
         done
+    fi
+}
+
+readonly CASKS=(
+    firefox
+    intellij-idea
+    iterm2@beta
+    visual-studio-code
+    wechat
+)
+
+upgrade-cask() {
+    local left=()
+    local item
+    for item in "$@"; do
+        local cask
+        for cask in "${CASKS[@]}"; do
+            if [[ $item == "$cask" ]]; then
+                echo "brew ${BOLD}upgrade$RESET --cask $BLUE${item}$RESET"
+                continue 2
+            fi
+        done
+        left+=("$item")
+    done
+    if ((${#left[@]})); then
+        echo "brew ${BOLD}upgrade$RESET --cask $BLUE${left[*]}$RESET"
     fi
 }
 
@@ -101,7 +129,7 @@ if ((${#OUTDATED[@]})); then
     fi
 fi
 
-clean-fonts
+cleanup-fonts
 
 OUTPUT=$(brew-outdated.py)
 if [[ $OUTPUT ]]; then
@@ -109,6 +137,7 @@ if [[ $OUTPUT ]]; then
     echo "$OUTPUT"
     echo "$GREEN==>$RESET ${BOLD}Upgrade casks$RESET"
     readarray -t OUTDATED < <(echo "$OUTPUT" | awk 'NR>2{print $2}')
-    echo "brew ${BOLD}upgrade$RESET --cask $BLUE${OUTDATED[*]}$RESET"
+
+    upgrade-cask "${OUTDATED[@]}"
     cleanup "${OUTDATED[@]}"
 fi

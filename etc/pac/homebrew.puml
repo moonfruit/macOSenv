@@ -113,6 +113,10 @@ skinparam usecase {
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
+(dotnet) << dep >>
+(dotnet)-->(brotli)
+(dotnet)-->(icu4c@77)
+(dotnet)-->(openssl@3)
 (dotnet@8) << dep >>
 (dotnet@8)-->(icu4c@78)
 (dotnet@8)-->(openssl@3)
@@ -261,6 +265,8 @@ skinparam usecase {
 (gofumpt)-->(go)
 (goimports)
 (goimports)-->(go)
+(golangci-lint)
+(golangci-lint)-->(go)
 (gomodifytags)
 (gopls)
 (gost)
@@ -417,7 +423,7 @@ skinparam usecase {
 (librist) << dep >>
 (librist)-->(cjson)
 (librist)-->(libmicrohttpd)
-(librist)-->(mbedtls)
+(librist)-->(mbedtls@3)
 (librsvg) << dep >>
 (librsvg)-->(cairo)
 (librsvg)-->(fontconfig)
@@ -492,6 +498,8 @@ skinparam usecase {
 (llvm)-->(xz)
 (llvm)-->(z3)
 (llvm)-->(zstd)
+(logrotate)
+(logrotate)-->(popt)
 (lpeg) << dep >>
 (lrzsz)
 (lua)
@@ -512,11 +520,11 @@ skinparam usecase {
 (markdownlint-cli2)
 (markdownlint-cli2)-->(node)
 (marksman)
-(marksman)-->(dotnet@8)
+(marksman)-->(dotnet)
 (mas)
 (maven)
 (maven)-->(openjdk)
-(mbedtls) << dep >>
+(mbedtls@3) << dep >>
 (miniserve)
 (mkcert)
 (mongodb/brew/mongodb-community)
@@ -669,6 +677,7 @@ skinparam usecase {
 (plantuml)
 (plantuml)-->(graphviz)
 (plantuml)-->(openjdk)
+(pnpm)
 (poppler)
 (poppler)-->(cairo)
 (poppler)-->(fontconfig)
@@ -728,6 +737,7 @@ skinparam usecase {
 (qsv)
 (qwen-code)
 (qwen-code)-->(node)
+(qwen-code)-->(ripgrep)
 (rav1e) << dep >>
 (rcs)
 (readline) << dep >>
@@ -862,6 +872,8 @@ skinparam usecase {
 (vde) << dep >>
 (vscode-langservers-extracted)
 (vscode-langservers-extracted)-->(node)
+(wails)
+(wails)-->(go)
 (webp) << dep >>
 (webp)-->(giflib)
 (webp)-->(jpeg-turbo)

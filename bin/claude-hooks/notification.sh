@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-it2attention start
+if command -v it2attention &>/dev/null; then
+    it2attention start
+fi

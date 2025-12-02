@@ -1,6 +1,10 @@
 local nls = require("null-ls")
 local yy = require("yy")
 
+local script_path = debug.getinfo(1, "S").source:sub(2)
+local script_dir = vim.fn.fnamemodify(script_path, ":h")
+local lua_dir = vim.fn.fnamemodify(script_dir, ":h")
+
 local function replace_builtins(sources, names)
   yy.replace_sources(sources, names, function(_, opts)
     return function(source)
@@ -8,6 +12,7 @@ local function replace_builtins(sources, names)
     end
   end)
 end
+
 
 ---@type LazySpec
 return {
@@ -26,6 +31,18 @@ return {
         cspell_ls = {},
         gradle_ls = {},
         groovyls = {},
+        jsonls = {
+          settings = {
+            json = {
+              schemas = {
+                {
+                  fileMatch = { "wails.json" },
+                  url = lua_dir .. "/schemas/wails-config.v2.json"
+                },
+              },
+            },
+          },
+        },
         lemminx = {
           settings = {
             xml = {
