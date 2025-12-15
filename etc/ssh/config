@@ -87,19 +87,22 @@ Host router.asus.com
     User moon
     Port 20022
 
-Host netmap.dkmooncat.heiyu.space
-    User moon
-    Port 20022
-
-Host moonfruit.top
-    Port 26800
-    ProxyCommand nc -X 5 -x 127.0.0.1:7890 %h %p
-
 Host dkmooncat.heiyu.space
     User root
+
+Host aipod.dkmooncat.heiyu.space
+    User nvidia
+
+Host router.dkmooncat.heiyu.space
+    User moon
+    Port 20022
 
 Host ubuntu.dkmooncat.heiyu.space
     User moon
     ControlMaster no
     ControlPath none
     ControlPersist no
+
+Host moonfruit.top
+    Port 26800
+    ProxyCommand nc -X 5 -x 127.0.0.1:7890 %h %p
