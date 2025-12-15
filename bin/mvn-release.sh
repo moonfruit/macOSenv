@@ -44,7 +44,7 @@ if [[ $INPUT ]]; then
 fi
 
 mvn clean release:clean
-mvn release:prepare -Dtag="$RELEASE" -DreleaseVersion="$RELEASE" -DdevelopmentVersion="$DEVELOP"
+mvn release:prepare -Dtag="$RELEASE" -DreleaseVersion="$RELEASE" -DdevelopmentVersion="$DEVELOP" "$@"
 mvn release:clean
 
 it2attention start

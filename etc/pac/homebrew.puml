@@ -540,7 +540,7 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
-(moonfruit/tap/sing-box@2)
+(moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)
@@ -549,8 +549,6 @@ skinparam usecase {
 (moonfruit/tap/tscurl)-->(moonfruit/tap/tongsuo)
 (moonfruit/tap/tscurl)-->(zstd)
 (moonfruit/tap/uutils-selected)
-(moonfruit/tap/wlp-webprofile10)
-(moonfruit/tap/wlp-webprofile10)-->(openjdk)
 (mosh)
 (mosh)-->(protobuf)
 (mpdecimal) << dep >>
@@ -573,7 +571,7 @@ skinparam usecase {
 (neovim)-->(lpeg)
 (neovim)-->(luajit)
 (neovim)-->(luv)
-(neovim)-->(tree-sitter)
+(neovim)-->(tree-sitter@0.25)
 (neovim)-->(unibilium)
 (neovim)-->(utf8proc)
 (netpbm) << dep >>
@@ -647,6 +645,8 @@ skinparam usecase {
 (openssl@3)-->(ca-certificates)
 (opus) << dep >>
 (oven-sh/bun/bun)
+(oxlint)
+(oxlint)-->(node)
 (p11-kit) << dep >>
 (p11-kit)-->(ca-certificates)
 (p11-kit)-->(libtasn1)
@@ -848,8 +848,8 @@ skinparam usecase {
 (tomcat@10)-->(openjdk)
 (tomcat@9)
 (tomcat@9)-->(openjdk)
-(tree-sitter) << dep >>
 (tree-sitter-cli)
+(tree-sitter@0.25) << dep >>
 (typescript)
 (typescript)-->(node)
 (ugrep)

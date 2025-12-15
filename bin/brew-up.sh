@@ -53,6 +53,7 @@ KNOWN_BOTTLED=(
     hazelcast/hz/hazelcast-management-center
     mongodb/brew/mongodb-community
     moonfruit/tap/wlp-webprofile8
+    moonfruit/tap/wlp-webprofile10
     moonfruit/tap/wlp-webprofile11
     oven-sh/bun/bun
 )

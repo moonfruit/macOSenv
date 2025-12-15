@@ -40,6 +40,7 @@ if [[ $TERM_PROGRAM != ghostty ]]; then
 fi
 prepend-path "$BREW_PREFIX/opt/tscurl/bin"
 prepend-path "$BREW_PREFIX/opt/sing-box@2/bin"
+prepend-path "$BREW_PREFIX/opt/sing-box-ref1nd/bin"
 prepend-path "$BREW_PREFIX/opt/ruby/bin"
 prepend-path "$BREW_PREFIX/opt/p7zip-all/bin"
 prepend-path "$BREW_PREFIX/opt/lsof/bin"
