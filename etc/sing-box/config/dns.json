@@ -6,7 +6,8 @@
       { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       // { "tag": "dns-direct", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
 
-      { "tag": "dns-proxy", "type": "udp", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-proxy", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-proxy", "type": "udp", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
       // { "tag": "dns-proxy", "type": "h3", "server": "cloudflare-dns.com", "domain_resolver": "dns-resolver" },
       // { "tag": "dns-proxy", "type": "h3", "server": "dns.google", "domain_resolver": "dns-resolver" },
 

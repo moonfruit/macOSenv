@@ -3,7 +3,9 @@
     "DISABLE_AUTOUPDATER": "1"
   },
   "permissions": {
-    "allow": ["WebFetch(domain:docs.anthropic.com)"],
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)"
+    ],
     "deny": []
   },
   "hooks": {

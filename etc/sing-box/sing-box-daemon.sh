@@ -1,7 +1,8 @@
 #!/opt/homebrew/bin/bash
 
 # sing-box
-SING_BOX="/opt/homebrew/opt/sing-box@2/bin/sing-box"
+#SING_BOX="/opt/homebrew/opt/sing-box@2/bin/sing-box"
+SING_BOX="/opt/homebrew/opt/sing-box-ref1nd/bin/sing-box"
 
 # 健康检查配置
 HEALTH_CHECK_URL="http://127.0.0.1:9999/version"
