@@ -218,6 +218,7 @@ skinparam usecase {
 (giflib) << dep >>
 (git)
 (git)-->(gettext)
+(git)-->(libiconv)
 (git)-->(pcre2)
 (git-delta)
 (git-delta)-->(libgit2)
@@ -405,6 +406,7 @@ skinparam usecase {
 (libgit2)-->(libssh2)
 (libgpg-error) << dep >>
 (libgpg-error)-->(gettext)
+(libiconv) << dep >>
 (libidn2) << dep >>
 (libidn2)-->(gettext)
 (libidn2)-->(libunistring)
