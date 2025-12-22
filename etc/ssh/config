@@ -1,15 +1,17 @@
 Include ~/.colima/ssh_config
 Include ~/.orbstack/ssh/config
 
-ControlMaster auto
-ControlPath /tmp/%r@%h:%p
-ControlPersist 10m
 TCPKeepAlive yes
+
+Host * !dkmooncat.heiyu.space !*.dkmooncat.heiyu.space
+    ControlMaster auto
+    ControlPath /tmp/%r@%h:%p
+    ControlPersist 10m
 
 Host 10.0.6.64
     User app
 
-Host 10.1.2.16
+Host 10.1.2.16 10.1.2.34 10.1.2.35
     User app
     ProxyJump 10.1.2.57
 
@@ -17,91 +19,23 @@ Host 10.1.2.32
     User dev
     ProxyJump 10.1.2.57
 
-Host 10.1.2.34
-    User app
-    ProxyJump 10.1.2.57
-
-Host 10.1.2.35
-    User app
-    ProxyJump 10.1.2.57
-
-Host 10.1.2.57
+Host 10.1.2.57 192.168.50.11 dkmooncat.heiyu.space
     User root
 
-Host 10.1.3.11
+Host 10.1.3.11 10.2.3.22 10.1.3.24 10.1.3.25 10.1.3.28 10.1.3.29 10.1.3.30 10.1.3.34
     User gpp
     HostKeyAlgorithms +ssh-rsa
     PubkeyAcceptedKeyTypes +ssh-rsa
 
-Host 10.1.3.22
-    User gpp
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
-Host 10.1.3.24
-    User gpp
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
-Host 10.1.3.25
-    User gpp
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
-Host 10.1.3.28
-    User gpp
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
-Host 10.1.3.29
-    User gpp
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
-Host 10.1.3.30
-    User gpp
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
-Host 10.1.3.34
-    User gpp
-    HostKeyAlgorithms +ssh-rsa
-    PubkeyAcceptedKeyTypes +ssh-rsa
-
-Host moons-ubuntu.local
-    User parallels
-
-Host 192.168.50.1
+Host 192.168.50.1 asusrouter.com www.asusrouter.com router.asus.com router.dkmooncat.heiyu.space
     User moon
     Port 20022
 
-Host asusrouter.com
-    User moon
-    Port 20022
-
-Host www.asusrouter.com
-    User moon
-    Port 20022
-
-Host router.asus.com
-    User moon
-    Port 20022
-
-Host dkmooncat.heiyu.space
-    User root
-
-Host aipod.dkmooncat.heiyu.space
+Host 192.168.50.12 aipod.dkmooncat.heiyu.space
     User nvidia
-
-Host router.dkmooncat.heiyu.space
-    User moon
-    Port 20022
 
 Host ubuntu.dkmooncat.heiyu.space
     User moon
-    ControlMaster no
-    ControlPath none
-    ControlPersist no
 
 Host moonfruit.top
     Port 26800
