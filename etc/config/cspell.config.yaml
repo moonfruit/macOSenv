@@ -13,6 +13,8 @@ words:
   - cnaps
   - codelldb
   - cssls
+  - dkmooncat
+  - dkmoonfruit
   - dkmoonfruit
   - dmalloc
   - dnsctl
@@ -49,6 +51,7 @@ words:
   - maven
   - mcpserver
   - moonfruit
+  - moonfruit
   - mybatis
   - nanocloud
   - noremap
@@ -80,3 +83,4 @@ words:
   - yamlls
   - yanky
   - zashboard
+  - zstd

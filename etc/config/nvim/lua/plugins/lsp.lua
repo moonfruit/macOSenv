@@ -47,7 +47,7 @@ return {
           settings = {
             xml = {
               format = {
-                maxLineWidth = 120,
+                maxLineWidth = 120, -- This will trigger a error, but it seems to work
               },
             },
           },
