@@ -44,6 +44,13 @@ skinparam usecase {
 (bfg)-->(openjdk)
 (black)
 (black)-->(python@3.14)
+(boost) << dep >>
+(boost)-->(icu4c@78)
+(boost)-->(xz)
+(boost)-->(zstd)
+(boost-python3) << dep >>
+(boost-python3)-->(boost)
+(boost-python3)-->(python@3.14)
 (bottom)
 (brotli) << dep >>
 (c-ares) << dep >>
@@ -459,6 +466,11 @@ skinparam usecase {
 (libtiff)-->(zstd)
 (libtool) << dep >>
 (libtool)-->(m4)
+(libtorrent-rasterbar)
+(libtorrent-rasterbar)-->(boost)
+(libtorrent-rasterbar)-->(boost-python3)
+(libtorrent-rasterbar)-->(openssl@3)
+(libtorrent-rasterbar)-->(python@3.14)
 (libudfread) << dep >>
 (libunibreak) << dep >>
 (libunistring) << dep >>
@@ -505,7 +517,6 @@ skinparam usecase {
 (lpeg) << dep >>
 (lrzsz)
 (lua)
-(lua-language-server)
 (luacheck)
 (luacheck)-->(lua)
 (luajit) << dep >>
