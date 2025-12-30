@@ -44,13 +44,6 @@ skinparam usecase {
 (bfg)-->(openjdk)
 (black)
 (black)-->(python@3.14)
-(boost) << dep >>
-(boost)-->(icu4c@78)
-(boost)-->(xz)
-(boost)-->(zstd)
-(boost-python3) << dep >>
-(boost-python3)-->(boost)
-(boost-python3)-->(python@3.14)
 (bottom)
 (brotli) << dep >>
 (c-ares) << dep >>
@@ -317,7 +310,6 @@ skinparam usecase {
 (gwt)-->(openjdk)
 (hadolint)
 (hadolint)-->(gmp)
-(harelba/q/q)
 (harfbuzz) << dep >>
 (harfbuzz)-->(cairo)
 (harfbuzz)-->(freetype)
@@ -466,11 +458,6 @@ skinparam usecase {
 (libtiff)-->(zstd)
 (libtool) << dep >>
 (libtool)-->(m4)
-(libtorrent-rasterbar)
-(libtorrent-rasterbar)-->(boost)
-(libtorrent-rasterbar)-->(boost-python3)
-(libtorrent-rasterbar)-->(openssl@3)
-(libtorrent-rasterbar)-->(python@3.14)
 (libudfread) << dep >>
 (libunibreak) << dep >>
 (libunistring) << dep >>
@@ -730,6 +717,7 @@ skinparam usecase {
 (python@3.14)-->(sqlite)
 (python@3.14)-->(xz)
 (python@3.14)-->(zstd)
+(q)
 (qemu)
 (qemu)-->(capstone)
 (qemu)-->(dtc)
@@ -742,7 +730,6 @@ skinparam usecase {
 (qemu)-->(libusb)
 (qemu)-->(lzo)
 (qemu)-->(ncurses)
-(qemu)-->(nettle)
 (qemu)-->(pixman)
 (qemu)-->(snappy)
 (qemu)-->(vde)
