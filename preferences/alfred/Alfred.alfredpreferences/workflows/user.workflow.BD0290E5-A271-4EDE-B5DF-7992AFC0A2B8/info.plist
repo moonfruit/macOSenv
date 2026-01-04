@@ -402,10 +402,6 @@ Heavily inspired by [deanishe/alfred-convert](https://github.com/deanishe/alfred
 						<string>AUD</string>
 					</array>
 					<array>
-						<string>Bulgarian lev (BGN)</string>
-						<string>BGN</string>
-					</array>
-					<array>
 						<string>Brazilian real (BRL)</string>
 						<string>BRL</string>
 					</array>
@@ -538,7 +534,7 @@ Heavily inspired by [deanishe/alfred-convert](https://github.com/deanishe/alfred
 		</dict>
 	</array>
 	<key>version</key>
-	<string>1.2.4</string>
+	<string>1.2.6</string>
 	<key>webaddress</key>
 	<string>https://github.com/techouse/alfred-convert</string>
 </dict>
