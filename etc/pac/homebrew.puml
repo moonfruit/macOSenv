@@ -115,7 +115,7 @@ skinparam usecase {
 (doge)
 (dotnet) << dep >>
 (dotnet)-->(brotli)
-(dotnet)-->(icu4c@77)
+(dotnet)-->(icu4c@78)
 (dotnet)-->(openssl@3)
 (dotnet@8) << dep >>
 (dotnet@8)-->(icu4c@78)
@@ -176,8 +176,6 @@ skinparam usecase {
 (file-formula)
 (file-formula)-->(libmagic)
 (fio)
-(fish)
-(fish)-->(pcre2)
 (flac) << dep >>
 (flac)-->(libogg)
 (fontconfig) << dep >>
@@ -331,7 +329,6 @@ skinparam usecase {
 (httpie)-->(certifi)
 (httpie)-->(python@3.14)
 (hyperfine)
-(icu4c@77) << dep >>
 (icu4c@78) << dep >>
 (imath) << dep >>
 (iperf3)
@@ -555,6 +552,7 @@ skinparam usecase {
 (mpfr) << dep >>
 (mpfr)-->(gmp)
 (mpg123) << dep >>
+(msedit)
 (mysql-client)
 (mysql-client)-->(libfido2)
 (mysql-client)-->(openssl@3)
@@ -695,14 +693,14 @@ skinparam usecase {
 (poppler)-->(nss)
 (poppler)-->(openjpeg)
 (popt) << dep >>
-(postgresql@17)
-(postgresql@17)-->(gettext)
-(postgresql@17)-->(icu4c@78)
-(postgresql@17)-->(krb5)
-(postgresql@17)-->(lz4)
-(postgresql@17)-->(openssl@3)
-(postgresql@17)-->(readline)
-(postgresql@17)-->(zstd)
+(postgresql@18)
+(postgresql@18)-->(gettext)
+(postgresql@18)-->(icu4c@78)
+(postgresql@18)-->(krb5)
+(postgresql@18)-->(lz4)
+(postgresql@18)-->(openssl@3)
+(postgresql@18)-->(readline)
+(postgresql@18)-->(zstd)
 (prettier)
 (prettier)-->(node)
 (protobuf) << dep >>
