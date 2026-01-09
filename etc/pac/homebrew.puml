@@ -22,11 +22,10 @@ skinparam usecase {
 (aria2)-->(libssh2)
 (aria2)-->(openssl@3)
 (aria2)-->(sqlite)
-(aribb24) << dep >>
-(aribb24)-->(libpng)
 (autojump)
 (autojump)-->(python@3.14)
 (azhuchkov/tools/tunblkctl)
+(bandwhich)
 (basedpyright)
 (basedpyright)-->(node)
 (bash)
@@ -80,7 +79,6 @@ skinparam usecase {
 (choose-rust)
 (chrome-devtools-mcp)
 (chrome-devtools-mcp)-->(node)
-(cjson) << dep >>
 (clang-format)
 (cmake)
 (colima)
@@ -108,18 +106,16 @@ skinparam usecase {
 (deno)-->(sqlite)
 (direnv)
 (direnv)-->(bash)
+(diskonaut)
 (dive)
 (dmalloc)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
-(dotnet) << dep >>
-(dotnet)-->(brotli)
-(dotnet)-->(icu4c@78)
-(dotnet)-->(openssl@3)
-(dotnet@8) << dep >>
-(dotnet@8)-->(icu4c@78)
-(dotnet@8)-->(openssl@3)
+(dotnet@9) << dep >>
+(dotnet@9)-->(brotli)
+(dotnet@9)-->(icu4c@78)
+(dotnet@9)-->(openssl@3)
 (dtc) << dep >>
 (dufs)
 (dust)
@@ -128,56 +124,10 @@ skinparam usecase {
 (fd)
 (fdupes)
 (fdupes)-->(pcre2)
-(ffmpeg)
-(ffmpeg)-->(aom)
-(ffmpeg)-->(aribb24)
-(ffmpeg)-->(dav1d)
-(ffmpeg)-->(fontconfig)
-(ffmpeg)-->(freetype)
-(ffmpeg)-->(frei0r)
-(ffmpeg)-->(gnutls)
-(ffmpeg)-->(harfbuzz)
-(ffmpeg)-->(jpeg-xl)
-(ffmpeg)-->(lame)
-(ffmpeg)-->(libarchive)
-(ffmpeg)-->(libass)
-(ffmpeg)-->(libbluray)
-(ffmpeg)-->(libogg)
-(ffmpeg)-->(librist)
-(ffmpeg)-->(libsamplerate)
-(ffmpeg)-->(libsoxr)
-(ffmpeg)-->(libssh)
-(ffmpeg)-->(libvidstab)
-(ffmpeg)-->(libvmaf)
-(ffmpeg)-->(libvorbis)
-(ffmpeg)-->(libvpx)
-(ffmpeg)-->(libx11)
-(ffmpeg)-->(libxcb)
-(ffmpeg)-->(opencore-amr)
-(ffmpeg)-->(openjpeg)
-(ffmpeg)-->(opus)
-(ffmpeg)-->(rav1e)
-(ffmpeg)-->(rubberband)
-(ffmpeg)-->(sdl2)
-(ffmpeg)-->(snappy)
-(ffmpeg)-->(speex)
-(ffmpeg)-->(srt)
-(ffmpeg)-->(svt-av1)
-(ffmpeg)-->(tesseract)
-(ffmpeg)-->(theora)
-(ffmpeg)-->(webp)
-(ffmpeg)-->(x264)
-(ffmpeg)-->(x265)
-(ffmpeg)-->(xvid)
-(ffmpeg)-->(xz)
-(ffmpeg)-->(zeromq)
-(ffmpeg)-->(zimg)
 (figlet)
 (file-formula)
 (file-formula)-->(libmagic)
 (fio)
-(flac) << dep >>
-(flac)-->(libogg)
 (fontconfig) << dep >>
 (fontconfig)-->(freetype)
 (fontconfig)-->(gettext)
@@ -185,7 +135,6 @@ skinparam usecase {
 (fonttools)-->(python@3.14)
 (freetype) << dep >>
 (freetype)-->(libpng)
-(frei0r) << dep >>
 (fribidi) << dep >>
 (fzf)
 (gawk)
@@ -275,8 +224,6 @@ skinparam usecase {
 (gpgme)-->(gnupg)
 (gpgme)-->(libassuan)
 (gpgme)-->(libgpg-error)
-(gpgmepp) << dep >>
-(gpgmepp)-->(gpgme)
 (gradle)
 (gradle)-->(gradle-completion)
 (gradle)-->(openjdk)
@@ -297,8 +244,8 @@ skinparam usecase {
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
 (graphviz)-->(webp)
-(grep) << dep >>
-(grep)-->(pcre2)
+(groovy)
+(groovy)-->(openjdk)
 (grpcurl)
 (gts) << dep >>
 (gts)-->(gettext)
@@ -352,31 +299,14 @@ skinparam usecase {
 (jq)-->(oniguruma)
 (json5)
 (json5)-->(node)
+(k9s)
 (kotlin-language-server)
 (kotlin-language-server)-->(openjdk@21)
 (krb5) << dep >>
 (krb5)-->(openssl@3)
 (ktlint)
 (ktlint)-->(openjdk)
-(lame) << dep >>
 (lazygit)
-(leptonica) << dep >>
-(leptonica)-->(giflib)
-(leptonica)-->(jpeg-turbo)
-(leptonica)-->(libpng)
-(leptonica)-->(libtiff)
-(leptonica)-->(openjpeg)
-(leptonica)-->(webp)
-(libarchive) << dep >>
-(libarchive)-->(libb2)
-(libarchive)-->(lz4)
-(libarchive)-->(xz)
-(libarchive)-->(zstd)
-(libass) << dep >>
-(libass)-->(freetype)
-(libass)-->(fribidi)
-(libass)-->(harfbuzz)
-(libass)-->(libunibreak)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
 (libavif) << dep >>
@@ -384,11 +314,6 @@ skinparam usecase {
 (libavif)-->(dav1d)
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
-(libb2) << dep >>
-(libbluray) << dep >>
-(libbluray)-->(fontconfig)
-(libbluray)-->(freetype)
-(libbluray)-->(libudfread)
 (libcbor) << dep >>
 (libdeflate) << dep >>
 (libevent) << dep >>
@@ -409,19 +334,12 @@ skinparam usecase {
 (libksba) << dep >>
 (libksba)-->(libgpg-error)
 (libmagic) << dep >>
-(libmicrohttpd) << dep >>
-(libmicrohttpd)-->(gnutls)
 (libnghttp2) << dep >>
 (libnghttp3) << dep >>
 (libngtcp2) << dep >>
 (libngtcp2)-->(openssl@3)
-(libogg) << dep >>
 (libpng) << dep >>
 (libptytty) << dep >>
-(librist) << dep >>
-(librist)-->(cjson)
-(librist)-->(libmicrohttpd)
-(librist)-->(mbedtls@3)
 (librsvg) << dep >>
 (librsvg)-->(cairo)
 (librsvg)-->(fontconfig)
@@ -432,18 +350,8 @@ skinparam usecase {
 (librsvg)-->(harfbuzz)
 (librsvg)-->(libpng)
 (librsvg)-->(pango)
-(libsamplerate) << dep >>
 (libslirp) << dep >>
 (libslirp)-->(glib)
-(libsndfile) << dep >>
-(libsndfile)-->(flac)
-(libsndfile)-->(lame)
-(libsndfile)-->(libogg)
-(libsndfile)-->(libvorbis)
-(libsndfile)-->(mpg123)
-(libsndfile)-->(opus)
-(libsodium) << dep >>
-(libsoxr) << dep >>
 (libssh) << dep >>
 (libssh)-->(openssl@3)
 (libssh2) << dep >>
@@ -455,16 +363,10 @@ skinparam usecase {
 (libtiff)-->(zstd)
 (libtool) << dep >>
 (libtool)-->(m4)
-(libudfread) << dep >>
-(libunibreak) << dep >>
 (libunistring) << dep >>
 (libusb) << dep >>
 (libuv) << dep >>
-(libvidstab) << dep >>
 (libvmaf) << dep >>
-(libvorbis) << dep >>
-(libvorbis)-->(libogg)
-(libvpx) << dep >>
 (libx11) << dep >>
 (libx11)-->(libxcb)
 (libx11)-->(xorgproto)
@@ -501,6 +403,7 @@ skinparam usecase {
 (lpeg) << dep >>
 (lrzsz)
 (lua)
+(lua-language-server)
 (luacheck)
 (luacheck)-->(lua)
 (luajit) << dep >>
@@ -517,11 +420,10 @@ skinparam usecase {
 (markdownlint-cli2)
 (markdownlint-cli2)-->(node)
 (marksman)
-(marksman)-->(dotnet)
+(marksman)-->(dotnet@9)
 (mas)
 (maven)
 (maven)-->(openjdk)
-(mbedtls@3) << dep >>
 (miniserve)
 (mkcert)
 (mongodb/brew/mongodb-community)
@@ -551,7 +453,6 @@ skinparam usecase {
 (mpdecimal) << dep >>
 (mpfr) << dep >>
 (mpfr)-->(gmp)
-(mpg123) << dep >>
 (msedit)
 (mysql-client)
 (mysql-client)-->(libfido2)
@@ -579,6 +480,7 @@ skinparam usecase {
 (netpbm)-->(libtiff)
 (nettle) << dep >>
 (nettle)-->(gmp)
+(ninja) << dep >>
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
@@ -593,14 +495,11 @@ skinparam usecase {
 (node)-->(uvwasi)
 (node)-->(zstd)
 (npth) << dep >>
-(nspr) << dep >>
-(nss) << dep >>
-(nss)-->(nspr)
+(nvtop)
 (ollama)
 (oniguruma) << dep >>
 (opencc)
 (opencc)-->(marisa)
-(opencore-amr) << dep >>
 (openexr) << dep >>
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
@@ -633,16 +532,13 @@ skinparam usecase {
 (openjdk@21)-->(jpeg-turbo)
 (openjdk@21)-->(libpng)
 (openjdk@21)-->(little-cms2)
-(openjpeg) << dep >>
-(openjpeg)-->(libpng)
-(openjpeg)-->(libtiff)
-(openjpeg)-->(little-cms2)
 (openjph) << dep >>
 (openjph)-->(libtiff)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
-(opus) << dep >>
 (oven-sh/bun/bun)
+(oxfmt)
+(oxfmt)-->(node)
 (oxlint)
 (oxlint)-->(node)
 (p11-kit) << dep >>
@@ -676,22 +572,6 @@ skinparam usecase {
 (plantuml)-->(graphviz)
 (plantuml)-->(openjdk)
 (pnpm)
-(poppler)
-(poppler)-->(cairo)
-(poppler)-->(fontconfig)
-(poppler)-->(freetype)
-(poppler)-->(gettext)
-(poppler)-->(glib)
-(poppler)-->(gpgme)
-(poppler)-->(gpgmepp)
-(poppler)-->(jpeg-turbo)
-(poppler)-->(libassuan)
-(poppler)-->(libpng)
-(poppler)-->(libtiff)
-(poppler)-->(little-cms2)
-(poppler)-->(nspr)
-(poppler)-->(nss)
-(poppler)-->(openjpeg)
 (popt) << dep >>
 (postgresql@18)
 (postgresql@18)-->(gettext)
@@ -703,6 +583,7 @@ skinparam usecase {
 (postgresql@18)-->(zstd)
 (prettier)
 (prettier)-->(node)
+(procs)
 (protobuf) << dep >>
 (protobuf)-->(abseil)
 (proxychains-ng)
@@ -736,7 +617,6 @@ skinparam usecase {
 (qwen-code)
 (qwen-code)-->(node)
 (qwen-code)-->(ripgrep)
-(rav1e) << dep >>
 (rcs)
 (readline) << dep >>
 (redis)
@@ -756,9 +636,6 @@ skinparam usecase {
 (rsync)-->(zstd)
 (rtmpdump) << dep >>
 (rtmpdump)-->(openssl@3)
-(rubberband) << dep >>
-(rubberband)-->(libsamplerate)
-(rubberband)-->(libsndfile)
 (ruby)
 (ruby)-->(libyaml)
 (ruby)-->(openssl@3)
@@ -773,7 +650,6 @@ skinparam usecase {
 (rust)-->(pkgconf)
 (rust)-->(zstd)
 (sd)
-(sdl2) << dep >>
 (selene)
 (shellcheck)
 (shellcheck)-->(gmp)
@@ -786,16 +662,12 @@ skinparam usecase {
 (snappy) << dep >>
 (sniffnet)
 (sniffnet)-->(openssl@3)
-(speex) << dep >>
-(speex)-->(libogg)
 (sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
 (sqlfluff)-->(python@3.14)
 (sqlite) << dep >>
 (sqlite)-->(readline)
-(srt) << dep >>
-(srt)-->(openssl@3)
 (sshpass)
 (staticcheck)
 (staticcheck)-->(go)
@@ -808,29 +680,14 @@ skinparam usecase {
 (subversion)-->(openssl@3)
 (subversion)-->(utf8proc)
 (superfile)
-(svt-av1) << dep >>
 (swift-format)
 (swiftlint)
 (tailwindcss-language-server)
 (tailwindcss-language-server)-->(node)
 (taplo)
 (tcping)
-(tesseract) << dep >>
-(tesseract)-->(cairo)
-(tesseract)-->(fontconfig)
-(tesseract)-->(freetype)
-(tesseract)-->(gettext)
-(tesseract)-->(glib)
-(tesseract)-->(harfbuzz)
-(tesseract)-->(icu4c@78)
-(tesseract)-->(leptonica)
-(tesseract)-->(libarchive)
-(tesseract)-->(pango)
 (testssl)
 (testssl)-->(openssl@3)
-(theora) << dep >>
-(theora)-->(libogg)
-(theora)-->(libvorbis)
 (tmux)
 (tmux)-->(libevent)
 (tmux)-->(ncurses)
@@ -884,11 +741,8 @@ skinparam usecase {
 (wget)-->(openssl@3)
 (wildfly-as)
 (wildfly-as)-->(openjdk)
-(x264) << dep >>
-(x265) << dep >>
 (xh)
 (xorgproto) << dep >>
-(xvid) << dep >>
 (xxhash) << dep >>
 (xz) << dep >>
 (yaml-language-server)
@@ -900,9 +754,6 @@ skinparam usecase {
 (yt-dlp)-->(deno)
 (yt-dlp)-->(python@3.14)
 (z3) << dep >>
-(zeromq) << dep >>
-(zeromq)-->(libsodium)
-(zimg) << dep >>
 (zlib) << dep >>
 (zsh)
 (zsh)-->(ncurses)

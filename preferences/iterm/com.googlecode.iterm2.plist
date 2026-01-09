@@ -20440,7 +20440,7 @@ Be concise and helpful in all responses.
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>JetBrainsMono-Regular_SemiBold 14</string>
+			<string>MapleMono-NF-CN-Medium 14</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -20960,7 +20960,7 @@ Be concise and helpful in all responses.
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
-			<true/>
+			<false/>
 			<key>Use Selected Text Color (Dark)</key>
 			<true/>
 			<key>Use Selected Text Color (Light)</key>
