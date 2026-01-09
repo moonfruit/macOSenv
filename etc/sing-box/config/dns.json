@@ -14,6 +14,8 @@
       // { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
 
+      { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
+
       {
         "tag": "dns-hosts",
         "type": "hosts",
@@ -33,6 +35,8 @@
     ],
     "rules": [
       { "ip_accept_any": true, "server": "dns-hosts", "rewrite_ttl": 2592000 },
+      { "domain_suffix": "heiyu.space", "ip_accept_any": true, "server": "dns-lazycat" },
+      { "domain_suffix": "heiyu.space", "action": "predefined", "rcode": "NOERROR" },
       { "domain_suffix": ["arpa", "local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
       {
         "domain": ["dns.alidns.com", "doh.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],

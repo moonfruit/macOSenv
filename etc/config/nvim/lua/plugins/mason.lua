@@ -36,6 +36,8 @@ return {
         "jsonls",
         -- Kotlin
         "kotlin_language_server",
+        -- Lua
+        "lua_ls",
         -- Markdown
         "marksman",
         -- Python
