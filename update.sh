@@ -23,3 +23,9 @@ fd -tf update.sh | while read -r MODULE; do
     echo "-------- $DIR --------"
     (cd "$DIR" && ./update.sh)
 done
+
+if [[ $1 = "--brew" ]]; then
+    echo "-------- homebrew --------"
+    brew-up.sh
+    brew-livecheck.sh --parallel
+fi

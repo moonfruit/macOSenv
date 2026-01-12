@@ -45,6 +45,7 @@ skinparam usecase {
 (black)-->(python@3.14)
 (bottom)
 (brotli) << dep >>
+(btop)
 (c-ares) << dep >>
 (ca-certificates) << dep >>
 (caddy)
@@ -430,6 +431,7 @@ skinparam usecase {
 (moonfruit/tap/codebuddy-code)
 (moonfruit/tap/codebuddy-code)-->(node)
 (moonfruit/tap/codebuddy-code)-->(pcre2)
+(moonfruit/tap/dog)
 (moonfruit/tap/geo)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
@@ -480,7 +482,6 @@ skinparam usecase {
 (netpbm)-->(libtiff)
 (nettle) << dep >>
 (nettle)-->(gmp)
-(ninja) << dep >>
 (node)
 (node)-->(brotli)
 (node)-->(c-ares)
@@ -596,7 +597,6 @@ skinparam usecase {
 (python@3.14)-->(sqlite)
 (python@3.14)-->(xz)
 (python@3.14)-->(zstd)
-(q)
 (qemu)
 (qemu)-->(capstone)
 (qemu)-->(dtc)

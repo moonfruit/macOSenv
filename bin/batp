@@ -20,6 +20,8 @@ done
 
 if [[ $bat ]]; then
     exec bat -p "$@"
-else
+elif hash it2check 2>/dev/null && it2check; then
     exec imgcat "$@"
+else
+    exec chafa "$@"
 fi
