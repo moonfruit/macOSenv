@@ -76,6 +76,7 @@ words:
   - tput
   - tunnelblick
   - typst
+  - upgrader
   - venv
   - virtualenv
   - xctoolchain
