@@ -25,7 +25,6 @@ skinparam usecase {
 (autojump)
 (autojump)-->(python@3.14)
 (azhuchkov/tools/tunblkctl)
-(bandwhich)
 (basedpyright)
 (basedpyright)-->(node)
 (bash)
@@ -43,7 +42,6 @@ skinparam usecase {
 (bfg)-->(openjdk)
 (black)
 (black)-->(python@3.14)
-(bottom)
 (brotli) << dep >>
 (btop)
 (c-ares) << dep >>
@@ -132,8 +130,6 @@ skinparam usecase {
 (fontconfig) << dep >>
 (fontconfig)-->(freetype)
 (fontconfig)-->(gettext)
-(fonttools)
-(fonttools)-->(python@3.14)
 (freetype) << dep >>
 (freetype)-->(libpng)
 (fribidi) << dep >>
@@ -307,6 +303,7 @@ skinparam usecase {
 (krb5)-->(openssl@3)
 (ktlint)
 (ktlint)-->(openjdk)
+(lazydocker)
 (lazygit)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
@@ -413,9 +410,7 @@ skinparam usecase {
 (lz4) << dep >>
 (lzo) << dep >>
 (m4) << dep >>
-(macmon)
 (make)
-(marisa) << dep >>
 (markdown-toc)
 (markdown-toc)-->(node)
 (markdownlint-cli2)
@@ -441,6 +436,7 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
+(moonfruit/tap/p7zip-all)
 (moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
@@ -499,8 +495,6 @@ skinparam usecase {
 (nvtop)
 (ollama)
 (oniguruma) << dep >>
-(opencc)
-(opencc)-->(marisa)
 (openexr) << dep >>
 (openexr)-->(imath)
 (openexr)-->(libdeflate)

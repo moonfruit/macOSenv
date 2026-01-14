@@ -38,6 +38,7 @@ local prepend-path() {
 if [[ $TERM_PROGRAM != ghostty ]]; then
     prepend-path "/Applications/Ghostty.app/Contents/MacOS"
 fi
+prepend-path "$BREW_PREFIX/opt/uutils-selected/bin"
 prepend-path "$BREW_PREFIX/opt/tscurl/bin"
 prepend-path "$BREW_PREFIX/opt/sing-box@2/bin"
 prepend-path "$BREW_PREFIX/opt/sing-box-ref1nd/bin"
