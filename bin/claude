@@ -3,11 +3,17 @@ if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
     unset TERM_PROGRAM
 fi
 
-if [[ $1 == "--bianxie" ]]; then
-    export ANTHROPIC_BASE_URL="https://api.bianxie.ai"
-    export ANTHROPIC_AUTH_TOKEN="sk-ZAnj8EH0ZYCJF9YwoZRyNjVHadZZ2vPPikigCcAKCnQvkjTf"
-    shift
+source "$ENV/lib/bash/native.sh"
+NAME="$(simple-basename "$0")"
+
+if [[ -f "$ENV/etc/secret/${NAME}.env" ]]; then
+    RC="$ENV/etc/secret/${NAME}.env"
+else
+    RC="$ENV/etc/secret/claude.env"
 fi
+
+# shellcheck disable=SC1090
+[[ -f "$RC" ]] && source "$RC"
 
 export PATH=$PATH:$HOME/.local/bin
 exec /opt/homebrew/bin/claude "$@"
