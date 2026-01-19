@@ -140,5 +140,5 @@ if [[ $OUTPUT ]]; then
     readarray -t OUTDATED < <(echo "$OUTPUT" | awk 'NR>2{print $2}')
 
     upgrade-cask "${OUTDATED[@]}"
-    cleanup "${OUTDATED[@]}"
+    cleanup --cask "${OUTDATED[@]}"
 fi
