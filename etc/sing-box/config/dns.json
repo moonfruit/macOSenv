@@ -60,10 +60,7 @@
       {
         "type": "logical",
         "mode": "and",
-        "rules": [
-          { "query_type": [ "A", "AAAA" ] },
-          { "process_name": "dog", "invert": true }
-        ],
+        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": "dog", "invert": true }],
         "server": "dns-fakeip",
         "rewrite_ttl": 1
       },
@@ -98,7 +95,7 @@
   "route": {
     "rules": [
       { "action": "sniff" },
-      { "protocol": "dns" , "action": "hijack-dns" },
+      { "protocol": "dns", "action": "hijack-dns" },
       // { "protocol": "stun", "action": "reject" },
       // {
       //   "type": "logical",
@@ -106,7 +103,9 @@
       //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],
       //   "action": "reject"
       // },
-      { "process_name": "lzc-core.darwin", "outbound": "DIRECT" }
+      { "ip_is_private": true, "outbound": "DIRECT" },
+      { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
+      { "action": "sniff-override-destination" }
     ],
     "rule_set": [
       {

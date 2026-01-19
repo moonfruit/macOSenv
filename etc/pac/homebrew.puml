@@ -123,6 +123,12 @@ skinparam usecase {
 (fd)
 (fdupes)
 (fdupes)-->(pcre2)
+(ffmpeg)
+(ffmpeg)-->(lame)
+(ffmpeg)-->(opus)
+(ffmpeg)-->(sdl2)
+(ffmpeg)-->(svt-av1)
+(ffmpeg)-->(x264)
 (figlet)
 (file-formula)
 (file-formula)-->(libmagic)
@@ -303,6 +309,7 @@ skinparam usecase {
 (krb5)-->(openssl@3)
 (ktlint)
 (ktlint)-->(openjdk)
+(lame) << dep >>
 (lazydocker)
 (lazygit)
 (libassuan) << dep >>
@@ -531,6 +538,7 @@ skinparam usecase {
 (openjph)-->(libtiff)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
+(opus) << dep >>
 (oven-sh/bun/bun)
 (oxfmt)
 (oxfmt)-->(node)
@@ -644,6 +652,7 @@ skinparam usecase {
 (rust)-->(pkgconf)
 (rust)-->(zstd)
 (sd)
+(sdl2) << dep >>
 (selene)
 (shellcheck)
 (shellcheck)-->(gmp)
@@ -674,6 +683,7 @@ skinparam usecase {
 (subversion)-->(openssl@3)
 (subversion)-->(utf8proc)
 (superfile)
+(svt-av1) << dep >>
 (swift-format)
 (swiftlint)
 (tailwindcss-language-server)
@@ -735,6 +745,7 @@ skinparam usecase {
 (wget)-->(openssl@3)
 (wildfly-as)
 (wildfly-as)-->(openjdk)
+(x264) << dep >>
 (xh)
 (xorgproto) << dep >>
 (xxhash) << dep >>
