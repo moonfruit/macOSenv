@@ -4,6 +4,7 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
     exec proxy "$0" "$@"
 fi
 
+source "$ENV/lib/bash/color.sh"
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/github.sh"
 source "$ENV/lib/bash/native.sh"
@@ -13,11 +14,7 @@ DIR=$(main-script-directory)
 create-temp-directory TEMP_DIR
 cd "$TEMP_DIR" || exit 1
 
-# echo " --- === Updating ui === ---"
-# download-latest-release "$DIR/ui" Zephyruso zashboard 'endswith("dist.zip")'
-# echo
-
-echo " --- === Updating config.json === ---"
+h1 Updating config.json
 
 mkdir -p dat
 while read -r NAME URL UA; do
@@ -39,7 +36,7 @@ clash-to-sing() {
 
 restart-sing() {
     echo
-    echo " --- === Restarting sing-box === ---"
+    h2 Restarting sing-box
     if RESULT=$(sing-box -C "$DIR/config" check 2>&1); then
         sudo launchctl kill TERM system/moonfruit.sing
         sleep 1
