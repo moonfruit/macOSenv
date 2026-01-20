@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
-	exec proxy "$0" "$@"
+    exec proxy "$0" "$@"
 fi
 
+source "$ENV/lib/bash/color.sh"
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/github.sh"
 
 DIR=$(main-script-directory)
 
-echo " --- === Updating ariang === ---"
+h1 Updating ariang
 download-latest-release ariang mayswind AriaNg 'endswith("-AllInOne.zip")'
 echo
 
-echo " --- === Updating gost-ui === ---"
+h1 Updating gost-ui
 download-branch gost go-gost gost-ui gh-pages
 echo
 
-echo " --- === Updating homebrew.png === ---"
+h1 Updating homebrew.png
 create-temp-file TEMP
 # shellcheck disable=SC2153
 brew-analyze.py >"$TEMP"
