@@ -35,7 +35,6 @@ clash-to-sing() {
 }
 
 restart-sing() {
-    echo
     h2 Restarting sing-box
     if RESULT=$(sing-box -C "$DIR/config" check 2>&1); then
         sudo launchctl kill TERM system/moonfruit.sing
@@ -43,9 +42,9 @@ restart-sing() {
     else
         echo "$RESULT" >&2
     fi
+    echo
 }
 
 if clash-to-sing | sing-box format -c /dev/stdin >zoo.json; then
     copy-if-diff zoo.json "$DIR/config" restart-sing
 fi
-echo

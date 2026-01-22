@@ -1,7 +1,7 @@
 {
   "log": {
-    "level": "trace",
-    // "level": "info",
+    // "level": "trace",
+    "level": "info",
     "timestamp": true
   }
 }
