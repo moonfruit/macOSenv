@@ -1,13 +1,15 @@
 {
   "dns": {
     "servers": [
-      { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
+      // { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
+      { "tag": "dns-resolver", "type": "udp", "server": "119.29.29.29" },
 
-      { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-direct", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-direct", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
 
-      { "tag": "dns-proxy", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-proxy", "type": "udp", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-proxy", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
+      // { "tag": "dns-proxy", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-proxy", "type": "udp", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
       // { "tag": "dns-proxy", "type": "h3", "server": "cloudflare-dns.com", "domain_resolver": "dns-resolver" },
       // { "tag": "dns-proxy", "type": "h3", "server": "dns.google", "domain_resolver": "dns-resolver" },
 
@@ -39,7 +41,7 @@
       { "domain_suffix": "heiyu.space", "action": "predefined", "rcode": "NOERROR" },
       { "domain_suffix": ["arpa", "local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
       {
-        "domain": ["dns.alidns.com", "doh.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
+        "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
         "server": "dns-resolver"
       },
       {
@@ -94,16 +96,18 @@
   ],
   "route": {
     "rules": [
+      { "network": "icmp", "outbound": "DIRECT" },
       { "action": "sniff" },
       { "protocol": "dns", "action": "hijack-dns" },
       // { "protocol": "stun", "action": "reject" },
+      { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
+      { "ip_is_private": true, "outbound": "DIRECT" },
       // {
       //   "type": "logical",
       //   "mode": "or",
       //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],
       //   "action": "reject"
       // },
-      { "ip_is_private": true, "outbound": "DIRECT" },
       { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
       { "action": "sniff-override-destination" }
     ],
