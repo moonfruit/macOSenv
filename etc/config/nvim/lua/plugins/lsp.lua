@@ -18,6 +18,22 @@ end
 return {
   { "mfussenegger/nvim-lint", enabled = false },
   {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "css",
+        "html",
+        "javascript",
+        "latex",
+        "scss",
+        "svelte",
+        "tsx",
+        "typst",
+        "vue",
+      }
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
