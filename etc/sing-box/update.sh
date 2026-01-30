@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 
-if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
-    exec proxy "$0" "$@"
-fi
-
 source "$ENV/lib/bash/color.sh"
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/github.sh"
 source "$ENV/lib/bash/native.sh"
 
 DIR=$(main-script-directory)
+SING_RULES="$WORKSPACE/proxy/sing-rules"
 
 create-temp-directory TEMP_DIR
 cd "$TEMP_DIR" || exit 1
@@ -19,14 +16,18 @@ h1 Updating config.json
 mkdir -p dat
 while read -r NAME URL UA; do
     if [[ -n $UA ]]; then
-        proxy none wget "$URL" -U "$UA/*" -O "dat/$NAME"
+        wget "$URL" -U "$UA/*" -O "dat/$NAME" || exit 1
     else
-        proxy none wget "$URL" -O "dat/$NAME"
+        wget "$URL" -O "dat/$NAME" || exit 1
     fi
-done < <(rg -v '^#' "$(current-script-directory)/clash.txt")
+    if "$SING_RULES/get-subscription-userinfo.sh" "$URL" | tee "dat/$NAME.info"; then
+        echo
+    else
+        rm "dat/$NAME.info"
+    fi
+done < <(rg -v '^#' "$DIR/clash.txt")
 
 clash-to-sing() {
-    local SING_RULES="$WORKSPACE/proxy/sing-rules"
     DIRENV_LOG_FORMAT="" direnv exec \
         "$SING_RULES/clash-to-sing.py" -lr \
         -c "$SING_RULES/config/config.json" \

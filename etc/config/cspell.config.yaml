@@ -14,6 +14,7 @@ words:
   - codelldb
   - CPPFLAGS
   - cssls
+  - direnv
   - dkmooncat
   - dkmoonfruit
   - dmalloc
