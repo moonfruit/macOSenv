@@ -8,6 +8,8 @@ skinparam usecase {
 (abseil) << dep >>
 (actionlint)
 (actionlint)-->(shellcheck)
+(ada-url) << dep >>
+(ada-url)-->(fmt)
 (ant)
 (ant)-->(openjdk)
 (aom) << dep >>
@@ -133,6 +135,7 @@ skinparam usecase {
 (file-formula)
 (file-formula)-->(libmagic)
 (fio)
+(fmt) << dep >>
 (fontconfig) << dep >>
 (fontconfig)-->(freetype)
 (fontconfig)-->(gettext)
@@ -268,6 +271,7 @@ skinparam usecase {
 (hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
 (hazelcast/hz/hazelcast-management-center)-->(openjdk@21)
+(hdrhistogram_c) << dep >>
 (helm)
 (helm-ls)
 (hexyl)
@@ -280,6 +284,18 @@ skinparam usecase {
 (httpie)-->(python@3.14)
 (hyperfine)
 (icu4c@78) << dep >>
+(imagemagick)
+(imagemagick)-->(gettext)
+(imagemagick)-->(glib)
+(imagemagick)-->(imath)
+(imagemagick)-->(jpeg-turbo)
+(imagemagick)-->(libheif)
+(imagemagick)-->(libpng)
+(imagemagick)-->(libtiff)
+(imagemagick)-->(libtool)
+(imagemagick)-->(little-cms2)
+(imagemagick)-->(webp)
+(imagemagick)-->(xz)
 (imath) << dep >>
 (iperf3)
 (iperf3)-->(openssl@3)
@@ -320,6 +336,7 @@ skinparam usecase {
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
 (libcbor) << dep >>
+(libde265) << dep >>
 (libdeflate) << dep >>
 (libevent) << dep >>
 (libevent)-->(openssl@3)
@@ -332,6 +349,15 @@ skinparam usecase {
 (libgit2)-->(libssh2)
 (libgpg-error) << dep >>
 (libgpg-error)-->(gettext)
+(libheif) << dep >>
+(libheif)-->(aom)
+(libheif)-->(jpeg-turbo)
+(libheif)-->(libde265)
+(libheif)-->(libpng)
+(libheif)-->(libtiff)
+(libheif)-->(shared-mime-info)
+(libheif)-->(webp)
+(libheif)-->(x265)
 (libiconv) << dep >>
 (libidn2) << dep >>
 (libidn2)-->(gettext)
@@ -398,6 +424,7 @@ skinparam usecase {
 (little-cms2) << dep >>
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
+(llhttp) << dep >>
 (llvm) << dep >>
 (llvm)-->(python@3.14)
 (llvm)-->(xz)
@@ -429,6 +456,10 @@ skinparam usecase {
 (maven)-->(openjdk)
 (miniserve)
 (mkcert)
+(mlx) << dep >>
+(mlx)-->(python@3.14)
+(mlx-c) << dep >>
+(mlx-c)-->(mlx)
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/codebuddy-code)
 (moonfruit/tap/codebuddy-code)-->(node)
@@ -486,13 +517,16 @@ skinparam usecase {
 (nettle) << dep >>
 (nettle)-->(gmp)
 (node)
+(node)-->(ada-url)
 (node)-->(brotli)
 (node)-->(c-ares)
+(node)-->(hdrhistogram_c)
 (node)-->(icu4c@78)
 (node)-->(libnghttp2)
 (node)-->(libnghttp3)
 (node)-->(libngtcp2)
 (node)-->(libuv)
+(node)-->(llhttp)
 (node)-->(openssl@3)
 (node)-->(simdjson)
 (node)-->(sqlite)
@@ -501,6 +535,7 @@ skinparam usecase {
 (npth) << dep >>
 (nvtop)
 (ollama)
+(ollama)-->(mlx-c)
 (oniguruma) << dep >>
 (openexr) << dep >>
 (openexr)-->(imath)
@@ -653,6 +688,9 @@ skinparam usecase {
 (sd)
 (sdl2) << dep >>
 (selene)
+(shared-mime-info) << dep >>
+(shared-mime-info)-->(gettext)
+(shared-mime-info)-->(glib)
 (shellcheck)
 (shellcheck)-->(gmp)
 (shfmt)
@@ -745,6 +783,7 @@ skinparam usecase {
 (wildfly-as)
 (wildfly-as)-->(openjdk)
 (x264) << dep >>
+(x265) << dep >>
 (xh)
 (xorgproto) << dep >>
 (xxhash) << dep >>
