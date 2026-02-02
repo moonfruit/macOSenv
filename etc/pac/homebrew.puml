@@ -336,6 +336,7 @@ skinparam usecase {
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
 (libcbor) << dep >>
+(libdatrie) << dep >>
 (libde265) << dep >>
 (libdeflate) << dep >>
 (libevent) << dep >>
@@ -388,6 +389,8 @@ skinparam usecase {
 (libssh2) << dep >>
 (libssh2)-->(openssl@3)
 (libtasn1) << dep >>
+(libthai) << dep >>
+(libthai)-->(libdatrie)
 (libtiff) << dep >>
 (libtiff)-->(jpeg-turbo)
 (libtiff)-->(xz)
@@ -591,6 +594,7 @@ skinparam usecase {
 (pango)-->(fribidi)
 (pango)-->(glib)
 (pango)-->(harfbuzz)
+(pango)-->(libthai)
 (parallel)
 (pcre2) << dep >>
 (pigz)
