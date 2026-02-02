@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
+    if proxy curl -fsSLI -m5 http://connectivitycheck.gstatic.com/generate_204 &>/dev/null; then
+        exec proxy "$0" "$@"
+    fi
+fi
+
 source "$ENV/lib/bash/color.sh"
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/github.sh"
@@ -15,16 +21,8 @@ h1 Updating config.json
 
 mkdir -p dat
 while read -r NAME URL UA; do
-    if [[ -n $UA ]]; then
-        wget "$URL" -U "$UA/*" -O "dat/$NAME" || exit 1
-    else
-        wget "$URL" -O "dat/$NAME" || exit 1
-    fi
-    if "$SING_RULES/get-subscription-userinfo.sh" "$URL" | tee "dat/$NAME.info"; then
-        echo
-    else
-        rm "dat/$NAME.info"
-    fi
+    h2 Downloading "$NAME"
+    "$SING_RULES/subscribe.sh" "$URL" "dat/$NAME" "$UA" || exit 1
 done < <(rg -v '^#' "$DIR/clash.txt")
 
 clash-to-sing() {
@@ -46,6 +44,7 @@ restart-sing() {
     echo
 }
 
+h2 Generating config.json
 if clash-to-sing | sing-box format -c /dev/stdin >zoo.json; then
     copy-if-diff zoo.json "$DIR/config" restart-sing
 fi
