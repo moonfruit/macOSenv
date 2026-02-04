@@ -126,11 +126,14 @@ skinparam usecase {
 (fdupes)
 (fdupes)-->(pcre2)
 (ffmpeg)
+(ffmpeg)-->(dav1d)
 (ffmpeg)-->(lame)
+(ffmpeg)-->(libvpx)
 (ffmpeg)-->(opus)
 (ffmpeg)-->(sdl2)
 (ffmpeg)-->(svt-av1)
 (ffmpeg)-->(x264)
+(ffmpeg)-->(x265)
 (figlet)
 (file-formula)
 (file-formula)-->(libmagic)
@@ -401,6 +404,7 @@ skinparam usecase {
 (libusb) << dep >>
 (libuv) << dep >>
 (libvmaf) << dep >>
+(libvpx) << dep >>
 (libx11) << dep >>
 (libx11)-->(libxcb)
 (libx11)-->(xorgproto)
@@ -706,6 +710,9 @@ skinparam usecase {
 (snappy) << dep >>
 (sniffnet)
 (sniffnet)-->(openssl@3)
+(sphinx-doc) << dep >>
+(sphinx-doc)-->(certifi)
+(sphinx-doc)-->(python@3.14)
 (sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
