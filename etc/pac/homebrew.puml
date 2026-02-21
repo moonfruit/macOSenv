@@ -97,7 +97,6 @@ skinparam usecase {
 (curl)-->(libngtcp2)
 (curl)-->(libssh2)
 (curl)-->(openssl@3)
-(curl)-->(rtmpdump)
 (curl)-->(zstd)
 (curlie)
 (dav1d) << dep >>
@@ -129,6 +128,7 @@ skinparam usecase {
 (ffmpeg)-->(dav1d)
 (ffmpeg)-->(lame)
 (ffmpeg)-->(libvpx)
+(ffmpeg)-->(openssl@3)
 (ffmpeg)-->(opus)
 (ffmpeg)-->(sdl2)
 (ffmpeg)-->(svt-av1)
@@ -316,7 +316,6 @@ skinparam usecase {
 (jpeg-xl)-->(libpng)
 (jpeg-xl)-->(little-cms2)
 (jpeg-xl)-->(openexr)
-(jpeg-xl)-->(webp)
 (jq)
 (jq)-->(oniguruma)
 (json5)
@@ -678,8 +677,6 @@ skinparam usecase {
 (rsync)-->(popt)
 (rsync)-->(xxhash)
 (rsync)-->(zstd)
-(rtmpdump) << dep >>
-(rtmpdump)-->(openssl@3)
 (ruby)
 (ruby)-->(libyaml)
 (ruby)-->(openssl@3)
@@ -710,9 +707,6 @@ skinparam usecase {
 (snappy) << dep >>
 (sniffnet)
 (sniffnet)-->(openssl@3)
-(sphinx-doc) << dep >>
-(sphinx-doc)-->(certifi)
-(sphinx-doc)-->(python@3.14)
 (sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
