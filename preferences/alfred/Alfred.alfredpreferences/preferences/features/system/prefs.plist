@@ -37,5 +37,7 @@
 	<true/>
 	<key>sleepConfirm</key>
 	<true/>
+	<key>sleepdisplaysConfirm</key>
+	<true/>
 </dict>
 </plist>
