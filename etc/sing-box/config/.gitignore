@@ -1,2 +1,5 @@
+*.bak
+
 /protected.json
+/provider.json
 /zoo.json

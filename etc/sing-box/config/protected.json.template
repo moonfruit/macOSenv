@@ -4,7 +4,7 @@
       "type": "mixed",
       "tag": "protected-in",
       "listen": "::",
-      "listen_port": 7900,
+      "listen_port": 7899,
       "users": [
         {
           "Username": "username",

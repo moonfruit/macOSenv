@@ -51,6 +51,7 @@
           "ip.sb",
           "ipip.net",
           "lazycat.cloud",
+          "671234.xyz",
           "alicdn.win",
           "demo-chat-airport.com",
           "edg3.org",
@@ -132,7 +133,10 @@
         "download_detour": "DIRECT"
       }
     ],
-    "default_domain_resolver": "dns-direct"
+    "default_domain_resolver": {
+      "server": "dns-direct",
+      "strategy": "prefer_ipv4"
+    }
   }
 }
 // vim: ft=jsonc
