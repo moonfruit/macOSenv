@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+alias dir='ls -l'
 alias ll='ls -l'
 alias la='ls -a'
 alias l='ll'
