@@ -288,6 +288,7 @@ skinparam usecase {
 (hyperfine)
 (icu4c@78) << dep >>
 (imagemagick)
+(imagemagick)-->(freetype)
 (imagemagick)-->(gettext)
 (imagemagick)-->(glib)
 (imagemagick)-->(imath)
@@ -431,11 +432,8 @@ skinparam usecase {
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
 (llhttp) << dep >>
-(llvm) << dep >>
-(llvm)-->(python@3.14)
-(llvm)-->(xz)
-(llvm)-->(z3)
-(llvm)-->(zstd)
+(llvm@21) << dep >>
+(llvm@21)-->(zstd)
 (logrotate)
 (logrotate)-->(popt)
 (lpeg) << dep >>
@@ -686,7 +684,7 @@ skinparam usecase {
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm)
+(rust)-->(llvm@21)
 (rust)-->(openssl@3)
 (rust)-->(pkgconf)
 (rust)-->(zstd)
@@ -801,7 +799,6 @@ skinparam usecase {
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(deno)
 (yt-dlp)-->(python@3.14)
-(z3) << dep >>
 (zlib) << dep >>
 (zsh)
 (zsh)-->(ncurses)

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
-    if proxy curl -fsSLI -m5 http://connectivitycheck.gstatic.com/generate_204 &>/dev/null; then
-        exec proxy "$0" "$@"
-    fi
-fi
+#if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
+#    if proxy curl -fsSLI -m5 http://connectivitycheck.gstatic.com/generate_204 &>/dev/null; then
+#        exec proxy "$0" "$@"
+#    fi
+#fi
 
 source "$ENV/lib/bash/color.sh"
 source "$ENV/lib/bash/fs.sh"
