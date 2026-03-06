@@ -440,8 +440,9 @@ skinparam usecase {
 (lrzsz)
 (lua)
 (lua-language-server)
+(lua@5.4) << dep >>
 (luacheck)
-(luacheck)-->(lua)
+(luacheck)-->(lua@5.4)
 (luajit) << dep >>
 (luv) << dep >>
 (luv)-->(libuv)
@@ -479,6 +480,7 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
+(moonfruit/tap/sing-box-beta)
 (moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
