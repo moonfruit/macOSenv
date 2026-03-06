@@ -1,33 +1,77 @@
 {
   "dns": {
     "servers": [
-      // { "tag": "dns-resolver", "type": "udp", "server": "223.5.5.5" },
-      { "tag": "dns-resolver", "type": "udp", "server": "119.29.29.29" },
+      // Resolver
+      { "tag": "dns-pod-raw", "type": "udp", "server": "119.29.29.29" },
+      { "tag": "dns-ali-raw", "type": "udp", "server": "223.5.5.5" },
+      { "tag": "dns-ali-raw2", "type": "udp", "server": "223.6.6.6" },
+      {
+        "tag": "dns-resolver",
+        "type": "group",
+        "servers": [
+          "dns-pod-raw",
+          "dns-ali-raw",
+          "dns-ali-raw2"
+        ]
+      },
 
-      // { "tag": "dns-direct", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
-      { "tag": "dns-direct", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
+      // Direct
+      { "tag": "dns-ali", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-pod", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
+      {
+        "tag": "dns-direct",
+        "type": "group",
+        "servers": [
+          "dns-pod",
+          "dns-ali"
+        ]
+      },
 
-      // { "tag": "dns-proxy", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-proxy", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
-      { "tag": "dns-proxy", "type": "udp", "server": "one.one.one.one", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-proxy", "type": "h3", "server": "cloudflare-dns.com", "domain_resolver": "dns-resolver" },
-      // { "tag": "dns-proxy", "type": "h3", "server": "dns.google", "domain_resolver": "dns-resolver" },
+      // Proxy
+      { "tag": "dns-one", "type": "h3", "server": "one.one.one.one", "detour": "🔰 默认出口" },
+      { "tag": "dns-cloudflare", "type": "h3", "server": "cloudflare-dns.com", "detour": "🔰 默认出口" },
+      { "tag": "dns-google", "type": "h3", "server": "dns.google", "detour": "🔰 默认出口" },
+      {
+        "tag": "dns-proxy",
+        "type": "group",
+        "servers": [
+          "dns-one",
+          "dns-cloudflare",
+          "dns-google"
+        ]
+      },
 
-      // { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
-      { "tag": "dns-gingkoo", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
+      // Gingkoo
+      { "tag": "dns-gingkoo-udp", "type": "udp", "server": "10.1.2.59" },
+      { "tag": "dns-gingkoo-https", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
+      {
+        "tag": "dns-gingkoo",
+        "type": "group",
+        "servers": [
+          "dns-gingkoo-udp",
+          "dns-gingkoo-https"
+        ]
+      },
 
+      // LazyCat
       { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
 
+      // Hosts
       {
         "tag": "dns-hosts",
         "type": "hosts",
-        "path": ["/etc/hosts", "/Users/moon/Workspace.localized/env/etc/hosts"],
+        "path": [
+          "/etc/hosts",
+          "/Users/moon/Workspace.localized/env/etc/hosts"
+        ],
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
           "www.asusrouter.com": "192.168.50.1"
         }
       },
+
+      // FakeIP
       {
         "tag": "dns-fakeip",
         "type": "fakeip",

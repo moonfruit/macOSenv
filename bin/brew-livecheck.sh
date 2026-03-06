@@ -11,7 +11,7 @@ readonly BOLD=$(tput bold) RESET=$(tput sgr0)
 
 readonly EXTRA=(
     kettle
-    sing-box@2
+    sing-box-beta
     sing-box-ref1nd
     wlp-webprofile8
     wlp-webprofile10
