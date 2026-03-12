@@ -204,4 +204,6 @@ if [[ ${#OUTDATED[@]} -gt 0 ]]; then
     iterate bump "${OUTDATED[@]}"
 fi
 
-it2attention start
+if hash it2check 2>/dev/null && it2check; then
+    it2attention start
+fi

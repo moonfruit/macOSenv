@@ -16,7 +16,7 @@
       "type": "mixed",
       "tag": "global-in",
       "listen": "127.0.0.1",
-      "listen_port": 7892
+      "listen_port": 7898
     }
   ]
 }
