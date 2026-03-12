@@ -1,6 +1,8 @@
 {
   "dns": {
     "servers": [
+      // Local
+      // { "tag": "dns-local", "type": "local" },
       // Resolver
       { "tag": "dns-pod-raw", "type": "udp", "server": "119.29.29.29" },
       { "tag": "dns-ali-raw", "type": "udp", "server": "223.5.5.5" },
@@ -14,7 +16,6 @@
           "dns-ali-raw2"
         ]
       },
-
       // Direct
       { "tag": "dns-ali", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       { "tag": "dns-pod", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
@@ -26,21 +27,19 @@
           "dns-ali"
         ]
       },
-
       // Proxy
-      { "tag": "dns-one", "type": "h3", "server": "one.one.one.one", "detour": "🔰 默认出口" },
-      { "tag": "dns-cloudflare", "type": "h3", "server": "cloudflare-dns.com", "detour": "🔰 默认出口" },
-      { "tag": "dns-google", "type": "h3", "server": "dns.google", "detour": "🔰 默认出口" },
+      // { "tag": "dns-google", "type": "h3", "server": "dns.google", "detour": "♻️ 自动选择" },
+      { "tag": "dns-one", "type": "h3", "server": "one.one.one.one", "detour": "♻️ 自动选择" },
+      { "tag": "dns-cloudflare", "type": "h3", "server": "cloudflare-dns.com", "detour": "♻️ 自动选择" },
       {
         "tag": "dns-proxy",
         "type": "group",
         "servers": [
+          // "dns-google",
           "dns-one",
-          "dns-cloudflare",
-          "dns-google"
+          "dns-cloudflare"
         ]
       },
-
       // Gingkoo
       { "tag": "dns-gingkoo-udp", "type": "udp", "server": "10.1.2.59" },
       { "tag": "dns-gingkoo-https", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
@@ -52,10 +51,8 @@
           "dns-gingkoo-https"
         ]
       },
-
       // LazyCat
       { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
-
       // Hosts
       {
         "tag": "dns-hosts",
@@ -75,36 +72,22 @@
       {
         "tag": "dns-fakeip",
         "type": "fakeip",
-        "inet4_range": "198.18.0.0/15",
+        "inet4_range": "22.0.0.0/8",
         "inet6_range": "fc00::/64"
       }
     ],
     "rules": [
+      // 直接解析
       { "ip_accept_any": true, "server": "dns-hosts", "rewrite_ttl": 2592000 },
       { "domain_suffix": "heiyu.space", "ip_accept_any": true, "server": "dns-lazycat" },
-      { "domain_suffix": "heiyu.space", "action": "predefined", "rcode": "NOERROR" },
-      { "domain_suffix": ["arpa", "local", "heiyu.space"], "action": "predefined", "rcode": "NXDOMAIN" },
+      { "domain_suffix": "heiyu.space", "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
       {
         "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
         "server": "dns-resolver"
       },
-      {
-        "domain_suffix": [
-          "apple.com",
-          "gingkoo.com",
-          "ip.sb",
-          "ipip.net",
-          "lazycat.cloud",
-          "671234.xyz",
-          "alicdn.win",
-          "demo-chat-airport.com",
-          "edg3.org",
-          "v2ray.in",
-          "xipcloud.org"
-        ],
-        "server": "dns-direct"
-      },
+      { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
+      // Fake IP
       {
         "type": "logical",
         "mode": "and",
@@ -112,8 +95,10 @@
         "server": "dns-fakeip",
         "rewrite_ttl": 1
       },
+      // Clash 模式
       { "clash_mode": "Direct", "server": "dns-direct" },
       { "clash_mode": "Global", "server": "dns-proxy" },
+      // 地理位置
       { "rule_set": "GeoSites@CN", "server": "dns-direct" },
       {
         "type": "logical",
@@ -132,26 +117,18 @@
     "reverse_mapping": true,
     "strategy": "prefer_ipv6"
   },
-  "inbounds": [
-    {
-      "type": "direct",
-      "tag": "dns-in",
-      "listen": "127.0.0.1",
-      "listen_port": 53
-    }
-  ],
   "route": {
     "rules": [
       { "network": "icmp", "outbound": "DIRECT" },
       { "action": "sniff" },
       { "protocol": "dns", "action": "hijack-dns" },
-      // { "protocol": "stun", "action": "reject" },
+      // { "protocol": "stun", "action": "reject" }, // 禁用 STUN
       { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
       { "ip_is_private": true, "outbound": "DIRECT" },
       // {
       //   "type": "logical",
       //   "mode": "or",
-      //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],
+      //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],  // 禁用 DoT/DoH
       //   "action": "reject"
       // },
       { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
@@ -174,6 +151,18 @@
         "type": "remote",
         "tag": "GeoSites@!CN",
         "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/geosites-not-cn.srs?access_token=c1f6ba66dd5b8620b26ac68f2fad7a52&ref=main",
+        "download_detour": "DIRECT"
+      },
+      {
+        "type": "remote",
+        "tag": "Lan",
+        "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/lan.srs?access_token=c1f6ba66dd5b8620b26ac68f2fad7a52&ref=main",
+        "download_detour": "DIRECT"
+      },
+      {
+        "type": "remote",
+        "tag": "FakeIpBypass",
+        "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/fakeip-bypass.srs?access_token=c1f6ba66dd5b8620b26ac68f2fad7a52&ref=main",
         "download_detour": "DIRECT"
       }
     ],

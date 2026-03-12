@@ -1,6 +1,7 @@
 {
   "env": {
-    "DISABLE_AUTOUPDATER": "1"
+    "MCP_TIMEOUT": "60000",
+    "MCP_TOOL_TIMEOUT": "120000"
   },
   "permissions": {
     "allow": [
@@ -28,10 +29,17 @@
       }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/statusline.sh"
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
   },
-  "enabledPlugins": {},
-  "verbose": false
+  "extraKnownMarketplaces": {
+    "claude-code-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-code"
+      }
+    }
+  },
+  "verbose": false,
+  "model": "opus"
 }
