@@ -68159,6 +68159,8 @@ Be concise and helpful in all responses.
 	<false/>
 	<key>UseLionStyleFullscreen</key>
 	<true/>
+	<key>UseRecommendedAIModel</key>
+	<true/>
 	<key>ViewManPageCommand</key>
 	<string>open dash://man:%@ &amp;</string>
 	<key>VisualIndicatorForEsc</key>

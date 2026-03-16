@@ -94,6 +94,7 @@ readonly CASKS=(
     iterm2@beta
     visual-studio-code
     wechat
+    wechatwork
 )
 
 upgrade-cask() {

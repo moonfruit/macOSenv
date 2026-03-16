@@ -73,7 +73,7 @@
         "tag": "dns-fakeip",
         "type": "fakeip",
         "inet4_range": "22.0.0.0/8",
-        "inet6_range": "fc00::/64"
+        "inet6_range": "fc00::/16"
       }
     ],
     "rules": [
@@ -104,7 +104,7 @@
         "type": "logical",
         "mode": "and",
         "rules": [
-          { "process_name": ["ChatGPT", "ChatGPTHelper", "Claude", "claude", "codex", "gemini"], "invert": true },
+          { "process_name": ["ChatGPT", "ChatGPTHelper", "Claude", "codex", "gemini"], "invert": true },
           { "process_path_regex": ["/Applications/(ChatGPT|Claude).app/.*"], "invert": true },
           { "rule_set": "GeoSites@!CN", "invert": true },
           { "rule_set": "GeoIP@CN" }
