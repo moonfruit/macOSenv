@@ -15,6 +15,10 @@ skinparam usecase {
 (aom) << dep >>
 (aom)-->(jpeg-xl)
 (aom)-->(libvmaf)
+(apache-serf) << dep >>
+(apache-serf)-->(apr)
+(apache-serf)-->(apr-util)
+(apache-serf)-->(openssl@3)
 (apr) << dep >>
 (apr-util) << dep >>
 (apr-util)-->(apr)
@@ -81,8 +85,6 @@ skinparam usecase {
 (chrome-devtools-mcp)
 (chrome-devtools-mcp)-->(node)
 (clang-format)
-(claude-code-router)
-(claude-code-router)-->(node)
 (cmake)
 (colima)
 (colima)-->(lima)
@@ -168,6 +170,8 @@ skinparam usecase {
 (gdk-pixbuf)-->(libpng)
 (gdk-pixbuf)-->(libtiff)
 (gdu)
+(gemini-cli)
+(gemini-cli)-->(node)
 (gettext) << dep >>
 (gettext)-->(libunistring)
 (gh)
@@ -713,11 +717,11 @@ skinparam usecase {
 (staticcheck)-->(go)
 (stylua)
 (subversion)
+(subversion)-->(apache-serf)
 (subversion)-->(apr)
 (subversion)-->(apr-util)
 (subversion)-->(gettext)
 (subversion)-->(lz4)
-(subversion)-->(openssl@3)
 (subversion)-->(utf8proc)
 (superfile)
 (svt-av1) << dep >>
