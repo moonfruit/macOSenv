@@ -41,35 +41,24 @@ end
 set_keymaps({
   normal = {
     ["<Leader>z"] = "<Cmd>set wrap!<CR>",
+    ["<Leader>W"] = { "<Cmd>noa w<CR>", opts = { desc = "Save without formatting" } },
+    ["<D-a>"] = "ggVG",
+    ["<D-s>"] = "<Cmd>up<CR>",
+    ["<D-v>"] = '"+p',
+    ["<D-z>"] = "u",
+    ["<S-D-z>"] = "<C-R>",
     ["<M-A>a"] = "ggVG",
     ["<M-A>s"] = "<Cmd>up<CR>",
     ["<M-A>z"] = "u",
     ["<M-A>Z"] = "<C-R>",
-    ["<Leader>W"] = { "<Cmd>noa w<CR>", opts = { desc = "Save without formatting" } },
   },
   visual = {
+    ["<D-c>"] = '"+y',
     ["<M-A>c"] = '"+y',
   },
   insert = {
+    ["<D-s>"] = "<C-o><Cmd>up<CR>",
+    ["<D-v>"] = '<C-o>"+p',
     ["<M-A>s"] = "<C-o><Cmd>up<CR>",
   },
 })
-
-if vim.g.neovide then
-  set_keymaps({
-    normal = {
-      ["<D-a>"] = "ggVG",
-      ["<D-s>"] = "<Cmd>up<CR>",
-      ["<D-v>"] = '"+p',
-      ["<D-z>"] = "u",
-      ["<S-D-z>"] = "<C-R>",
-    },
-    visual = {
-      ["<D-c>"] = '"+y',
-    },
-    insert = {
-      ["<D-s>"] = "<C-o><Cmd>up<CR>",
-      ["<D-v>"] = '<C-o>"+p',
-    },
-  })
-end
