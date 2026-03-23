@@ -15,5 +15,4 @@ fi
 # shellcheck disable=SC1090
 [[ -f "$RC" ]] && source "$RC"
 
-export PATH=$PATH:$HOME/.local/bin
 exec /opt/homebrew/bin/claude "$@"
