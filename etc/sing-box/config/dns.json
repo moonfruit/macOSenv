@@ -2,7 +2,7 @@
   "dns": {
     "servers": [
       // Local
-      // { "tag": "dns-local", "type": "local" },
+      { "tag": "dns-local", "type": "local" },
       // Resolver
       { "tag": "dns-pod-raw", "type": "udp", "server": "119.29.29.29" },
       { "tag": "dns-ali-raw", "type": "udp", "server": "223.5.5.5" },
@@ -42,12 +42,14 @@
       },
       // Gingkoo
       { "tag": "dns-gingkoo-udp", "type": "udp", "server": "10.1.2.59" },
+      { "tag": "dns-gingkoo-tcp", "type": "tcp", "server": "10.1.2.59" },
       { "tag": "dns-gingkoo-https", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
       {
         "tag": "dns-gingkoo",
         "type": "group",
         "servers": [
           "dns-gingkoo-udp",
+          "dns-gingkoo-tcp",
           "dns-gingkoo-https"
         ]
       },
@@ -85,13 +87,14 @@
         "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
         "server": "dns-resolver"
       },
-      { "rule_set": "FakeIpBypass", "server": "dns-direct" },
+      { "domain_suffix": "autotest.server.gingkoo", "server": "dns-gingkoo" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
+      { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       // Fake IP
       {
         "type": "logical",
         "mode": "and",
-        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": "dog", "invert": true }],
+        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": ["dog", "sing-box"], "invert": true }],
         "server": "dns-fakeip",
         "rewrite_ttl": 1
       },
@@ -140,7 +143,7 @@
       //   "action": "reject"
       // },
       { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
-      { "action": "sniff-override-destination" }
+      { "domain_suffix": "server.gingkoo", "invert": true, "action": "sniff-override-destination" }
     ],
     "rule_set": [
       {
@@ -174,10 +177,7 @@
         "download_detour": "DIRECT"
       }
     ],
-    "default_domain_resolver": {
-      "server": "dns-direct",
-      "strategy": "prefer_ipv4"
-    }
+    "default_domain_resolver": "dns-direct"
   }
 }
 // vim: ft=jsonc

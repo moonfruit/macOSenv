@@ -69,6 +69,8 @@ skinparam usecase {
 (capstone)-->(gettext)
 (certifi) << dep >>
 (certifi)-->(ca-certificates)
+(cffi) << dep >>
+(cffi)-->(pycparser)
 (chafa)
 (chafa)-->(cairo)
 (chafa)-->(freetype)
@@ -92,6 +94,9 @@ skinparam usecase {
 (context7-mcp)-->(node)
 (cpanminus)
 (croc)
+(cryptography) << dep >>
+(cryptography)-->(cffi)
+(cryptography)-->(openssl@3)
 (cspell)
 (cspell)-->(node)
 (curl)
@@ -257,8 +262,6 @@ skinparam usecase {
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
 (graphviz)-->(webp)
-(groovy)
-(groovy)-->(openjdk)
 (grpcurl)
 (gts) << dep >>
 (gts)-->(gettext)
@@ -327,8 +330,6 @@ skinparam usecase {
 (json5)
 (json5)-->(node)
 (k9s)
-(kotlin-language-server)
-(kotlin-language-server)-->(openjdk@21)
 (krb5) << dep >>
 (krb5)-->(openssl@3)
 (ktlint)
@@ -471,6 +472,12 @@ skinparam usecase {
 (mlx-c) << dep >>
 (mlx-c)-->(mlx)
 (mongodb/brew/mongodb-community)
+(moonfruit/tap/dash-mcp-server)
+(moonfruit/tap/dash-mcp-server)-->(certifi)
+(moonfruit/tap/dash-mcp-server)-->(cryptography)
+(moonfruit/tap/dash-mcp-server)-->(pydantic)
+(moonfruit/tap/dash-mcp-server)-->(python@3.14)
+(moonfruit/tap/dash-mcp-server)-->(rpds-py)
 (moonfruit/tap/dog)
 (moonfruit/tap/geo)
 (moonfruit/tap/impl)
@@ -482,6 +489,13 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
+(moonfruit/tap/serena)
+(moonfruit/tap/serena)-->(certifi)
+(moonfruit/tap/serena)-->(cryptography)
+(moonfruit/tap/serena)-->(pydantic)
+(moonfruit/tap/serena)-->(python-packaging)
+(moonfruit/tap/serena)-->(python@3.14)
+(moonfruit/tap/serena)-->(rpds-py)
 (moonfruit/tap/sing-box-beta)
 (moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/tongsuo) << dep >>
@@ -636,6 +650,11 @@ skinparam usecase {
 (pstree)
 (pv)
 (pv)-->(gettext)
+(pycparser) << dep >>
+(pydantic) << dep >>
+(pyright)
+(pyright)-->(node)
+(python-packaging) << dep >>
 (python@3.14) << dep >>
 (python@3.14)-->(mpdecimal)
 (python@3.14)-->(openssl@3)
@@ -670,6 +689,7 @@ skinparam usecase {
 (rlwrap)
 (rlwrap)-->(libptytty)
 (rlwrap)-->(readline)
+(rpds-py) << dep >>
 (rsync)
 (rsync)-->(lz4)
 (rsync)-->(openssl@3)
@@ -752,6 +772,9 @@ skinparam usecase {
 (tree-sitter@0.25) << dep >>
 (typescript)
 (typescript)-->(node)
+(typescript-language-server)
+(typescript-language-server)-->(node)
+(typescript-language-server)-->(typescript)
 (ugrep)
 (ugrep)-->(brotli)
 (ugrep)-->(lz4)

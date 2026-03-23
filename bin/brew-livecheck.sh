@@ -56,12 +56,10 @@ readonly EXTRA=(
     goland
     ijhttp
     intellij-idea
-    intellij-idea-ce
     jetbrains-gateway
     mps
     phpstorm
     pycharm
-    pycharm-ce
     rider
     rubymine
     rustrover
