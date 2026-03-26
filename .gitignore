@@ -6,6 +6,7 @@
 .gitsecret/keys/random_seed
 !*.secret
 
+/bin/uv
 /bin/zoo
 /etc/private.txt
 /etc/shadowsocks-libev.json
