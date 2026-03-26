@@ -183,7 +183,6 @@ skinparam usecase {
 (giflib) << dep >>
 (git)
 (git)-->(gettext)
-(git)-->(libiconv)
 (git)-->(pcre2)
 (git-delta)
 (git-delta)-->(libgit2)
@@ -332,8 +331,6 @@ skinparam usecase {
 (k9s)
 (krb5) << dep >>
 (krb5)-->(openssl@3)
-(ktlint)
-(ktlint)-->(openjdk)
 (lame) << dep >>
 (lazydocker)
 (lazygit)
