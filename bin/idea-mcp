@@ -1,0 +1,27 @@
+#!/bin/bash
+export IJ_MCP_SERVER_PORT=64342
+APP="IntelliJ IDEA.app"
+
+CONTENTS="/Applications/$APP/Contents"
+JAVA="$CONTENTS/jbr/Contents/Home/bin/java"
+LIB="$CONTENTS/lib"
+PLUGIN="$CONTENTS/plugins/mcpserver/lib"
+JARS=(
+    "$PLUGIN/mcpserver-frontend.jar"
+    "$LIB/util-8.jar"
+    "$LIB/intellij.libraries.kotlinx.coroutines.core.jar"
+    "$LIB/intellij.libraries.ktor.client.cio.jar"
+    "$LIB/intellij.libraries.ktor.client.jar"
+    "$LIB/intellij.libraries.ktor.network.tls.jar"
+    "$LIB/intellij.libraries.ktor.io.jar"
+    "$LIB/intellij.libraries.ktor.utils.jar"
+    "$LIB/intellij.libraries.kotlinx.io.jar"
+    "$LIB/intellij.libraries.kotlinx.serialization.core.jar"
+    "$LIB/intellij.libraries.kotlinx.serialization.json.jar"
+)
+CLASSPATH=$(
+    IFS=:
+    echo "${JARS[*]}"
+)
+
+exec "$JAVA" -classpath "$CLASSPATH" com.intellij.mcpserver.stdio.McpStdioRunnerKt
