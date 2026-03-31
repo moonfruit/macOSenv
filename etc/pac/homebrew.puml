@@ -69,8 +69,6 @@ skinparam usecase {
 (capstone)-->(gettext)
 (certifi) << dep >>
 (certifi)-->(ca-certificates)
-(cffi) << dep >>
-(cffi)-->(pycparser)
 (chafa)
 (chafa)-->(cairo)
 (chafa)-->(freetype)
@@ -87,6 +85,8 @@ skinparam usecase {
 (chrome-devtools-mcp)
 (chrome-devtools-mcp)-->(node)
 (clang-format)
+(cline)
+(cline)-->(node)
 (cmake)
 (colima)
 (colima)-->(lima)
@@ -94,9 +94,6 @@ skinparam usecase {
 (context7-mcp)-->(node)
 (cpanminus)
 (croc)
-(cryptography) << dep >>
-(cryptography)-->(cffi)
-(cryptography)-->(openssl@3)
 (cspell)
 (cspell)-->(node)
 (curl)
@@ -371,6 +368,7 @@ skinparam usecase {
 (libidn2)-->(libunistring)
 (libksba) << dep >>
 (libksba)-->(libgpg-error)
+(liblinear) << dep >>
 (libmagic) << dep >>
 (libnghttp2) << dep >>
 (libnghttp3) << dep >>
@@ -469,12 +467,6 @@ skinparam usecase {
 (mlx-c) << dep >>
 (mlx-c)-->(mlx)
 (mongodb/brew/mongodb-community)
-(moonfruit/tap/dash-mcp-server)
-(moonfruit/tap/dash-mcp-server)-->(certifi)
-(moonfruit/tap/dash-mcp-server)-->(cryptography)
-(moonfruit/tap/dash-mcp-server)-->(pydantic)
-(moonfruit/tap/dash-mcp-server)-->(python@3.14)
-(moonfruit/tap/dash-mcp-server)-->(rpds-py)
 (moonfruit/tap/dog)
 (moonfruit/tap/geo)
 (moonfruit/tap/impl)
@@ -486,13 +478,6 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
-(moonfruit/tap/serena)
-(moonfruit/tap/serena)-->(certifi)
-(moonfruit/tap/serena)-->(cryptography)
-(moonfruit/tap/serena)-->(pydantic)
-(moonfruit/tap/serena)-->(python-packaging)
-(moonfruit/tap/serena)-->(python@3.14)
-(moonfruit/tap/serena)-->(rpds-py)
 (moonfruit/tap/sing-box-beta)
 (moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/tongsuo) << dep >>
@@ -525,7 +510,7 @@ skinparam usecase {
 (neovim)-->(lpeg)
 (neovim)-->(luajit)
 (neovim)-->(luv)
-(neovim)-->(tree-sitter@0.25)
+(neovim)-->(tree-sitter)
 (neovim)-->(unibilium)
 (neovim)-->(utf8proc)
 (netpbm) << dep >>
@@ -535,6 +520,13 @@ skinparam usecase {
 (netpbm)-->(libtiff)
 (nettle) << dep >>
 (nettle)-->(gmp)
+(nmap)
+(nmap)-->(liblinear)
+(nmap)-->(libssh2)
+(nmap)-->(lua)
+(nmap)-->(openssl@3)
+(nmap)-->(pcre2)
+(nmap)-->(python@3.14)
 (node)
 (node)-->(ada-url)
 (node)-->(brotli)
@@ -556,6 +548,9 @@ skinparam usecase {
 (ollama)
 (ollama)-->(mlx-c)
 (oniguruma) << dep >>
+(opencode)
+(opencode)-->(node)
+(opencode)-->(ripgrep)
 (openexr) << dep >>
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
@@ -647,11 +642,8 @@ skinparam usecase {
 (pstree)
 (pv)
 (pv)-->(gettext)
-(pycparser) << dep >>
-(pydantic) << dep >>
 (pyright)
 (pyright)-->(node)
-(python-packaging) << dep >>
 (python@3.14) << dep >>
 (python@3.14)-->(mpdecimal)
 (python@3.14)-->(openssl@3)
@@ -686,7 +678,6 @@ skinparam usecase {
 (rlwrap)
 (rlwrap)-->(libptytty)
 (rlwrap)-->(readline)
-(rpds-py) << dep >>
 (rsync)
 (rsync)-->(lz4)
 (rsync)-->(openssl@3)
@@ -765,8 +756,8 @@ skinparam usecase {
 (tomcat@10)-->(openjdk)
 (tomcat@9)
 (tomcat@9)-->(openjdk)
+(tree-sitter) << dep >>
 (tree-sitter-cli)
-(tree-sitter@0.25) << dep >>
 (typescript)
 (typescript)-->(node)
 (typescript-language-server)

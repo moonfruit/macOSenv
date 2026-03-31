@@ -1,2 +1,0 @@
-#!/bin/sh
-exec uvx --from git+https://github.com/Kapeli/dash-mcp-server.git dash-mcp-server "$@"
