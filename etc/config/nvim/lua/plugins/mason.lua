@@ -19,6 +19,8 @@ return {
         "bashls",
         -- C
         "clangd",
+        -- Copilot
+        "copilot",
         -- CSS
         "cssls",
         "tailwindcss",
