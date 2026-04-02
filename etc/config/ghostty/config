@@ -60,3 +60,7 @@ macos-option-as-alt = true
 quit-after-last-window-closed = true
 
 shell-integration-features = true
+
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 1m

@@ -34,6 +34,8 @@ return {
         "html",
         -- Javascript
         "eslint",
+        "oxfmt",
+        "oxlint",
         -- Json
         "jsonls",
         -- Kotlin
