@@ -28,7 +28,7 @@ SOFTWARE.
 ##############################################################################
 
 PACKAGE NAME: _fe_analyzer_shared
-PACKAGE VERSION: 92.0.0
+PACKAGE VERSION: 96.0.0
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2019, the Dart project authors.
@@ -62,7 +62,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: alfred_workflow
-PACKAGE VERSION: 1.2.2
+PACKAGE VERSION: 1.2.4
 PACKAGE HOMEPAGE: https://techouse.github.io/alfred_workflow/
 LICENSE:
 MIT License
@@ -90,7 +90,7 @@ SOFTWARE.
 ----------
 
 PACKAGE NAME: analyzer
-PACKAGE VERSION: 9.0.0
+PACKAGE VERSION: 10.2.0
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2013, the Dart project authors.
@@ -158,7 +158,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: async
-PACKAGE VERSION: 2.13.0
+PACKAGE VERSION: 2.13.1
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2015, the Dart project authors. 
@@ -226,7 +226,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: build
-PACKAGE VERSION: 4.0.3
+PACKAGE VERSION: 4.0.5
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2016, the Dart project authors. 
@@ -260,7 +260,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: build_config
-PACKAGE VERSION: 1.2.0
+PACKAGE VERSION: 1.3.0
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2017, the Dart project authors. 
@@ -328,7 +328,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: build_runner
-PACKAGE VERSION: 2.10.4
+PACKAGE VERSION: 2.13.1
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2016, the Dart project authors. 
@@ -397,7 +397,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: built_value
-PACKAGE VERSION: 8.12.1
+PACKAGE VERSION: 8.12.5
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2015, Google Inc. All rights reserved.
@@ -942,7 +942,7 @@ Apache License
 ----------
 
 PACKAGE NAME: code_builder
-PACKAGE VERSION: 4.11.0
+PACKAGE VERSION: 4.11.1
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2016, the Dart project authors. 
@@ -1044,7 +1044,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: copy_with_extension
-PACKAGE VERSION: 11.0.0
+PACKAGE VERSION: 14.0.0
 PACKAGE HOMEPAGE: https://github.com/numen31337/copy_with_extension/tree/master/copy_with_extension
 LICENSE:
 MIT License
@@ -1106,7 +1106,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: dart_style
-PACKAGE VERSION: 3.1.3
+PACKAGE VERSION: 3.1.7
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2014, the Dart project authors. 
@@ -1382,7 +1382,7 @@ LICENSE:
 ----------
 
 PACKAGE NAME: envied
-PACKAGE VERSION: 1.3.2
+PACKAGE VERSION: 1.3.4
 PACKAGE HOMEPAGE: https://github.com/petercinibulk/envied
 LICENSE:
 The MIT License (MIT)
@@ -1398,7 +1398,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 ----------
 
 PACKAGE NAME: envied_generator
-PACKAGE VERSION: 1.3.2
+PACKAGE VERSION: 1.3.4
 PACKAGE HOMEPAGE: https://github.com/petercinibulk/envied
 LICENSE:
 The MIT License (MIT)
@@ -1414,12 +1414,12 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 ----------
 
 PACKAGE NAME: equatable
-PACKAGE VERSION: 2.0.7
+PACKAGE VERSION: 2.0.8
 PACKAGE HOMEPAGE: https://github.com/felangel/equatable
 LICENSE:
 MIT License
 
-Copyright (c) 2024 Felix Angelov
+Copyright (c) 2026 Felix Angelov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -1470,7 +1470,7 @@ SOFTWARE.
 ----------
 
 PACKAGE NAME: equatable_gen
-PACKAGE VERSION: 1.3.0
+PACKAGE VERSION: 1.3.2
 PACKAGE HOMEPAGE: https://github.com/mrgnhnt96/equatable_gen
 LICENSE:
 MIT License
@@ -1803,7 +1803,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: json_annotation
-PACKAGE VERSION: 4.9.0
+PACKAGE VERSION: 4.11.0
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2017, the Dart project authors. All rights reserved.
@@ -1836,7 +1836,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: json_serializable
-PACKAGE VERSION: 6.11.3
+PACKAGE VERSION: 6.13.1
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2017, the Dart project authors. All rights reserved.
@@ -1869,7 +1869,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: lints
-PACKAGE VERSION: 6.0.0
+PACKAGE VERSION: 6.1.0
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2021, the Dart project authors.
@@ -1937,7 +1937,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: matcher
-PACKAGE VERSION: 0.12.18
+PACKAGE VERSION: 0.12.19
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2014, the Dart project authors. 
@@ -1971,7 +1971,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: meta
-PACKAGE VERSION: 1.17.0
+PACKAGE VERSION: 1.18.2
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2016, the Dart project authors.
@@ -2107,7 +2107,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: petitparser
-PACKAGE VERSION: 7.0.1
+PACKAGE VERSION: 7.0.2
 PACKAGE HOMEPAGE: https://petitparser.github.io
 LICENSE:
 The MIT License
@@ -2136,7 +2136,7 @@ THE SOFTWARE.
 ----------
 
 PACKAGE NAME: plist_parser
-PACKAGE VERSION: 0.2.6
+PACKAGE VERSION: 0.2.7
 PACKAGE HOMEPAGE: null
 LICENSE:
 MIT License
@@ -2546,7 +2546,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: source_gen
-PACKAGE VERSION: 4.1.1
+PACKAGE VERSION: 4.2.2
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2015, the Dart project authors.
@@ -2580,7 +2580,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: source_helper
-PACKAGE VERSION: 1.3.9
+PACKAGE VERSION: 1.3.11
 PACKAGE HOMEPAGE: null
 LICENSE:
 Apache License
@@ -2788,7 +2788,7 @@ Apache License
 ----------
 
 PACKAGE NAME: source_span
-PACKAGE VERSION: 1.10.1
+PACKAGE VERSION: 1.10.2
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2014, the Dart project authors. 
@@ -3048,7 +3048,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: test_api
-PACKAGE VERSION: 0.7.8
+PACKAGE VERSION: 0.7.11
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2018, the Dart project authors. 
@@ -3082,7 +3082,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: timezone
-PACKAGE VERSION: 0.10.1
+PACKAGE VERSION: 0.11.0
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright (c) 2014, timezone project authors.
@@ -3174,7 +3174,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------
 
 PACKAGE NAME: units_converter
-PACKAGE VERSION: 3.0.4
+PACKAGE VERSION: 3.1.0
 PACKAGE HOMEPAGE: https://github.com/ferraridamiano/units_converter
 LICENSE:
 MIT License
@@ -3202,7 +3202,7 @@ SOFTWARE.
 ----------
 
 PACKAGE NAME: uuid
-PACKAGE VERSION: 4.5.2
+PACKAGE VERSION: 4.5.3
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright (c) 2021 Yulian Kuncheff
@@ -3216,7 +3216,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ----------
 
 PACKAGE NAME: watcher
-PACKAGE VERSION: 1.2.0
+PACKAGE VERSION: 1.2.1
 PACKAGE HOMEPAGE: null
 LICENSE:
 Copyright 2014, the Dart project authors. 

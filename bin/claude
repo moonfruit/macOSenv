@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
-    unset TERM_PROGRAM
-fi
+#if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
+#    unset TERM_PROGRAM
+#fi
 
 source "$ENV/lib/bash/native.sh"
 NAME="$(simple-basename "$0")"

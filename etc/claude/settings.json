@@ -7,6 +7,18 @@
     "allow": ["WebFetch(domain:docs.anthropic.com)"],
     "deny": []
   },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/notification.sh"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true
   },
