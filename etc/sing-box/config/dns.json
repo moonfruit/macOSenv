@@ -83,12 +83,12 @@
     "rules": [
       // 直接解析
       { "ip_accept_any": true, "server": "dns-hosts", "rewrite_ttl": 2592000 },
-      { "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
+      // { "domain_suffix": "heiyu.space", "ip_accept_any": true, "server": "dns-lazycat" },
+      { "domain_suffix": "heiyu.space", "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
       {
         "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
         "server": "dns-resolver"
       },
-      { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
       { "domain_suffix": "autotest.server.gingkoo", "server": "dns-gingkoo" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
       { "domain_suffix": "ts.net", "server": "dns-tailscale" },
