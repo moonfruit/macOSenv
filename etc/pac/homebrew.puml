@@ -12,6 +12,9 @@ skinparam usecase {
 (ada-url)-->(fmt)
 (ant)
 (ant)-->(openjdk)
+(antoniorodr/memo/memo)
+(antoniorodr/memo/memo)-->(fzf)
+(antoniorodr/memo/memo)-->(python@3.13)
 (aom) << dep >>
 (aom)-->(jpeg-xl)
 (aom)-->(libvmaf)
@@ -264,6 +267,8 @@ skinparam usecase {
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
 (graphviz)-->(webp)
+(groovy)
+(groovy)-->(openjdk)
 (grpcurl)
 (gts) << dep >>
 (gts)-->(gettext)
@@ -650,6 +655,11 @@ skinparam usecase {
 (pv)-->(gettext)
 (pyright)
 (pyright)-->(node)
+(python@3.13) << dep >>
+(python@3.13)-->(mpdecimal)
+(python@3.13)-->(openssl@3)
+(python@3.13)-->(sqlite)
+(python@3.13)-->(xz)
 (python@3.14) << dep >>
 (python@3.14)-->(mpdecimal)
 (python@3.14)-->(openssl@3)
@@ -729,6 +739,8 @@ skinparam usecase {
 (sshpass)
 (staticcheck)
 (staticcheck)-->(go)
+(steipete/tap/imsg)
+(steipete/tap/remindctl)
 (stylua)
 (subversion)
 (subversion)-->(apache-serf)
@@ -745,6 +757,7 @@ skinparam usecase {
 (tailwindcss-language-server)-->(node)
 (taplo)
 (tcping)
+(terminal-notifier)
 (testssl)
 (testssl)-->(openssl@3)
 (tmux)

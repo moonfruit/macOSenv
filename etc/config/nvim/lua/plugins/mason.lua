@@ -34,7 +34,6 @@ return {
         "html",
         -- Javascript
         "eslint",
-        "oxfmt",
         "oxlint",
         -- Json
         "jsonls",
@@ -74,6 +73,7 @@ return {
         -- Javascript
         "biome",
         "prettier",
+        "oxfmt",
         -- Kotlin
         "ktlint",
         -- LLDB

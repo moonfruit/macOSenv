@@ -4,6 +4,11 @@
 # for secrets
 source "$ENV/etc/secret/secret.env"
 
+# for minimax
+export MINIMAX_API_HOST="https://api.minimaxi.com"
+export MINIMAX_MCP_BASE_PATH="$HOME/Downloads/MiniMax"
+export MINIMAX_API_RESOURCE_MODE="local"
+
 # for dmalloc
 if (($+commands[dmalloc])); then
 	function dmalloc {
