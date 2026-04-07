@@ -15,6 +15,7 @@ vim.g.ruby_host_prog = local_dir .. "/bin/neovim-ruby-host"
 
 vim.g.ai_cmp = false
 vim.g.lazyvim_python_lsp = "basedpyright"
+vim.g.lazyvim_ts_lsp = "tsgo"
 
 vim.opt.clipboard = ""
 vim.opt.colorcolumn = { 80, 120 }

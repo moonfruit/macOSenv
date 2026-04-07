@@ -14,7 +14,7 @@
         // ipv6
         "fe80::/10",
         // "fc00::/7",
-        // -- @set begin: fc00::/7-fc00::16 (exclude fakeip from ULA)
+        // -- @set begin: fc00::/7-fc00::/16 (exclude fakeip from ULA)
         "fc01::/16",
         "fc02::/15",
         "fc04::/14",

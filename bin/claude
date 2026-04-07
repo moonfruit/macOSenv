@@ -6,13 +6,16 @@
 source "$ENV/lib/bash/native.sh"
 NAME="$(simple-basename "$0")"
 
-if [[ -f "$ENV/etc/secret/${NAME}.env" ]]; then
-    RC="$ENV/etc/secret/${NAME}.env"
+RC="$ENV/etc/secret/${NAME}.env"
+# shellcheck disable=SC1090
+[[ -r "$RC" ]] && source "$RC"
+
+if [[ $NAME != claude && -n "$CMUX_SURFACE_ID" && -z "${_CLAUDE_WRAPPER}" ]]; then
+    CLAUDE=/Applications/cmux.app/Contents/Resources/bin/claude
+    export _CLAUDE_WRAPPER=1
 else
-    RC="$ENV/etc/secret/claude.env"
+    CLAUDE=/opt/homebrew/bin/claude
+    unset _CLAUDE_WRAPPER
 fi
 
-# shellcheck disable=SC1090
-[[ -f "$RC" ]] && source "$RC"
-
-exec /opt/homebrew/bin/claude "$@"
+exec "$CLAUDE" "$@"
