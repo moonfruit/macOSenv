@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
+set -euo pipefail
 source "$ENV/lib/bash/console.sh"
 
-MVN=("$(brew --prefix)/bin/mvn")
+MVN="$(brew --prefix)/bin/mvn"
 
-exec-if-dark "${MVN[@]}" "$@"
-MVN+=(-Dstyle.color=always)
-
-"${MVN[@]}" "$@" | solarized.sh
+if is-solarized; then
+    exec "$MVN" -Dstyle.color=always "$@" | solarized.sh
+else
+    exec "$MVN" "$@"
+fi

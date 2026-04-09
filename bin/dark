@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+set -euo pipefail
 source "$ENV/lib/bash/console.sh"
 dark "$@"

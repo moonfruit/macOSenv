@@ -1,6 +1,6 @@
 #!/bin/bash
+set -euo pipefail
 source "$ENV/lib/bash/console.sh"
 
 HEXYL="$(brew --prefix)/bin/hexyl"
-exec-if-dark "$HEXYL" "$@"
-"$HEXYL" "$@" | solarized.sh
+exec-solarized "$HEXYL" "$@"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[[ -z ${__ENV_LIB_JSON:-} ]] && __ENV_LIB_JSON=1 || return
+[[ -z ${__ENV_LIB_JSON:-} ]] && __ENV_LIB_JSON=1 || return 0
 
 source "$ENV/lib/bash/native.sh"
 
