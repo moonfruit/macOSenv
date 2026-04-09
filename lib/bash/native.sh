@@ -1,6 +1,18 @@
 #!/bin/bash
 
-[[ -z ${__ENV_LIB_NATIVE:-} ]] && __ENV_LIB_NATIVE=1 || return
+[[ -z ${__ENV_LIB_NATIVE:-} ]] && __ENV_LIB_NATIVE=1 || return 0
+
+run-if-exists() {
+    has-command "$1" && "$@"
+}
+
+has-command() {
+    command -v -- "$1" &>/dev/null
+}
+
+hash-exec() {
+    hash -- "$1" 2>/dev/null
+}
 
 simple-basename() {
     case $1 in

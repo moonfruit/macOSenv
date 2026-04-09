@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC2155
 
-[[ -z ${__ENV_LIB_COLOR:-} ]] && __ENV_LIB_COLOR=1 || return
+[[ -z ${__ENV_LIB_COLOR:-} ]] && __ENV_LIB_COLOR=1 || return 0
 
 readonly _BOLD=$(tput bold)
 # readonly _RED=$(tput setaf 1)

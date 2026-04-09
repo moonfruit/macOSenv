@@ -12,6 +12,7 @@ words:
   - clangd
   - cnaps
   - codelldb
+  - cquit
   - CPPFLAGS
   - cssls
   - direnv
@@ -61,6 +62,7 @@ words:
   - nvimtools
   - oradb
   - osascript
+  - pcall
   - pcre
   - plaintex
   - pyright

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-source "$ENV/lib/bash/console.sh"
-if [[ -n $NVIM ]]; then
-    exec "$(brew --prefix)/bin/btm" "$@"
-else
-    dark "$(brew --prefix)/bin/btm" "$@"
-fi

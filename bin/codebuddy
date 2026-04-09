@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-source "$ENV/lib/bash/console.sh"
-dark "$(brew --prefix)/bin/codebuddy" "$@"

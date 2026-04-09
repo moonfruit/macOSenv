@@ -777,11 +777,6 @@ skinparam usecase {
 (tomcat@9)-->(openjdk)
 (tree-sitter) << dep >>
 (tree-sitter-cli)
-(typescript)
-(typescript)-->(node)
-(typescript-language-server)
-(typescript-language-server)-->(node)
-(typescript-language-server)-->(typescript)
 (ugrep)
 (ugrep)-->(brotli)
 (ugrep)-->(lz4)
