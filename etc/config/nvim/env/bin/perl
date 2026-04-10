@@ -1,0 +1,12 @@
+#!/bin/bash
+BIN=${BASH_SOURCE[0]%/*}
+ROOT=${BIN%/*}
+LOCAL_LIB=$ROOT/vendor/perl
+
+export PATH="$LOCAL_LIB/bin${PATH:+:${PATH}}"
+export PERL5LIB="$LOCAL_LIB/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+export PERL_LOCAL_LIB_ROOT="$LOCAL_LIB${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+export PERL_MB_OPT="--install_base \"$LOCAL_LIB\""
+export PERL_MM_OPT="INSTALL_BASE=$LOCAL_LIB"
+
+exec /usr/bin/perl "$@"

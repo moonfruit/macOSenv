@@ -57,6 +57,3 @@ export GINGKOO_ENV=dev
 local dir=$BREW_PREFIX/opt/liquibase/libexec
 [[ -d "$dir" ]] && export LIQUIBASE_HOME=$dir
 unset dir
-
-# for uv
-export UV_TOOL_BIN_DIR=$ENV/bin/uv

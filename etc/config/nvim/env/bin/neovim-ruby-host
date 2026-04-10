@@ -1,0 +1,2 @@
+#!/bin/bash
+cd "${BASH_SOURCE[0]%/*}/.." && exec /opt/homebrew/opt/ruby/bin/bundle exec neovim-ruby-host "$@"

@@ -7,7 +7,7 @@ if not vim.env.PROXY_ENABLED then
   vim.env.https_proxy = "http://127.0.0.1:7890"
 end
 
-local local_dir = vim.env.HOME .. "/.local"
+local local_dir = vim.fn.stdpath("config") .. "/env"
 vim.g.node_host_prog = local_dir .. "/node_modules/.bin/neovim-node-host"
 vim.g.perl_host_prog = local_dir .. "/bin/perl"
 vim.g.python3_host_prog = local_dir .. "/venv/bin/python3"
