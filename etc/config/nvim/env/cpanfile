@@ -1,0 +1,3 @@
+requires "local::lib";
+requires "App::cpanminus";
+requires "Neovim::Ext";

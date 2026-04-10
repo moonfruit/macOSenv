@@ -53,7 +53,7 @@ prepend-path "$BREW_PREFIX/opt/gawk/libexec/gnubin"
 prepend-path "$BREW_PREFIX/opt/findutils/libexec/gnubin"
 prepend-path "$BREW_PREFIX/opt/file-formula/bin"
 prepend-path "$BREW_PREFIX/opt/curl/bin"
-prepend-path "$ENV/bin/uv"
+prepend-path "$HOME/.local/bin"
 prepend-path "$ENV/bin/extern"
 prepend-path "$ENV/bin"
 export PATH

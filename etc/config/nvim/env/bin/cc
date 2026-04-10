@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use File::Basename;
+
+my $name = basename($0);
+
+#my $os = qx/sw_vers --productVersion/;
+#$os =~ s/\..*//s;
+
+my $version = $^V;
+$version =~ s/v(\d+\.\d+)(?:\.\d+)?/$1/;
+
+my $include="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Perl/$version/darwin-thread-multi-2level/CORE/";
+exec "/usr/bin/$name", "-I", $include, @ARGV;
