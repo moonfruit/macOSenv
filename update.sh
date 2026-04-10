@@ -3,7 +3,6 @@
 set -euo pipefail
 
 BREW=1
-UV=1
 GC=
 
 OPTS=$(getopt -n "$0" -o bg -l gc,no-gc,brew,no-brew -- "$@")
@@ -24,14 +23,6 @@ while true; do
         ;;
     --no-brew)
         BREW=
-        shift
-        ;;
-    -u | --uv)
-        UV=1
-        shift
-        ;;
-    --no-uv)
-        UV=
         shift
         ;;
     --)
@@ -71,7 +62,3 @@ if [[ -n $BREW ]]; then
     brew-livecheck.sh --parallel
 fi
 
-if [[ -n $UV ]]; then
-    echo "-------- uv --------"
-    uv tool upgrade --all
-fi

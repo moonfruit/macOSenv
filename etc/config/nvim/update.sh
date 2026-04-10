@@ -8,13 +8,10 @@ if [[ -z "${PROXY_ENABLED:-}" ]] && has-command proxy; then
     exec proxy "$0" "$@"
 fi
 
-# 过滤 lazy.nvim 的任务调度记账行，只保留有意义的更新/错误输出
-filter-lazy-noise() {
-    rg --line-buffered -v 'Running task|Finished task \w+ in \d+ms|^\s*$' || true
-}
+SCRIPT_DIR="$(current-script-directory)"
 
 h1 Updating lazy.nvim plugins
-nvim --headless "+Lazy! update" +qa 2>&1 | filter-lazy-noise >&2
+nvim --headless "+Lazy! update" +qa 2>&1 | "$SCRIPT_DIR/lazy-progress.py"
 echo
 
 h1 Updating mason.nvim packages
@@ -30,20 +27,17 @@ local C = {
     err    = "\27[31m",
 }
 
--- Neovim headless 下 print 会把控制字符转义成可视形式（ESC -> ^[），
--- 导致 ANSI 颜色失效；这里直接走 stderr stdio，绕过 nvim 的 print 过滤层
-local function echo(msg)
-    io.stderr:write(msg)
-    io.stderr:write("\n")
-    io.stderr:flush()
-end
-
+-- 输出格式与 lazy.nvim 一致：[name] action | message
+-- 对齐逻辑同 lazy.nvim：plugin_name + action 合计填充到 20 字符，action 右对齐
 local function log(pkg_name, action, msg)
-    echo(string.format("%s[%s]%s %s%s%s %s|%s %s",
+    local pad = math.max(0, 20 - #pkg_name - #action)
+    local padded_action = string.rep(" ", pad) .. action
+    io.stderr:write(string.format("%s[%s]%s %s%s%s %s|%s %s\n",
         C.pkg, pkg_name, C.reset,
-        C.action, action, C.reset,
+        C.action, padded_action, C.reset,
         C.sep, C.reset,
         msg))
+    io.stderr:flush()
 end
 
 -- mason 被 LazyVim 懒加载，这里先强制加载，确保 mason-registry 可用
@@ -51,7 +45,8 @@ pcall(vim.cmd, "Lazy load mason.nvim")
 
 local ok, registry = pcall(require, "mason-registry")
 if not ok then
-    echo(C.err .. "mason-registry not available" .. C.reset)
+    io.stderr:write(C.err .. "mason-registry not available" .. C.reset .. "\n")
+    io.stderr:flush()
     vim.cmd("cquit 1")
     return
 end
@@ -61,44 +56,44 @@ local done = false
 registry.refresh(function()
     local packages = registry.get_installed_packages()
     if #packages == 0 then
-        echo("No mason packages installed")
+        io.stderr:write("No mason packages installed\n")
+        io.stderr:flush()
         done = true
         return
     end
 
-    -- 筛出真正有新版本的包（对齐 mason UI 的 check_new_package_versions 逻辑）
-    local outdated = {}
+    -- 按名称排序
+    table.sort(packages, function(a, b) return a.name < b.name end)
+
+    -- 所有包先显示 check 状态
+    for _, pkg in ipairs(packages) do
+        log(pkg.name, "check", "checking...")
+    end
+
+    -- 检查版本并更新
+    local pending = #packages
     for _, pkg in ipairs(packages) do
         local current = pkg:get_installed_version()
         local latest = pkg:get_latest_version()
-        if current ~= latest then
-            table.insert(outdated, { pkg = pkg, current = current, latest = latest })
-        end
-    end
-
-    if #outdated == 0 then
-        echo(string.format("%sAll %d mason packages are up to date%s", C.ok, #packages, C.reset))
-        done = true
-        return
-    end
-
-    echo(string.format("%d of %d mason packages need update", #outdated, #packages))
-
-    local pending = #outdated
-    for _, entry in ipairs(outdated) do
-        local pkg = entry.pkg
-        log(pkg.name, "update", string.format("%s -> %s", entry.current or "<none>", entry.latest))
-        local handle = pkg:install()
-        handle:once("closed", function()
+        if current == latest then
+            log(pkg.name, "check", C.ok .. "up to date" .. C.reset
+                .. " (" .. (current or "?") .. ")")
             pending = pending - 1
-            local status = pkg:is_installed()
-                and (C.ok .. "ok" .. C.reset)
-                or (C.err .. "FAILED" .. C.reset)
-            log(pkg.name, "finished", string.format("%s (%d remaining)", status, pending))
-            if pending == 0 then
-                done = true
-            end
-        end)
+            if pending == 0 then done = true end
+        else
+            log(pkg.name, "update", (current or "<none>") .. " -> " .. latest)
+            local handle = pkg:install()
+            handle:once("closed", function()
+                pending = pending - 1
+                if pkg:is_installed() then
+                    log(pkg.name, "update", C.ok .. "ok" .. C.reset
+                        .. " (" .. (current or "<none>") .. " -> " .. latest .. ")")
+                else
+                    log(pkg.name, "update", C.err .. "FAILED" .. C.reset)
+                end
+                if pending == 0 then done = true end
+            end)
+        end
     end
 end)
 
@@ -108,5 +103,5 @@ while not done do
 end
 EOF
 
-nvim --headless -c "luafile $LUA" +qa
+nvim --headless -c "luafile $LUA" +qa 2>&1 | "$SCRIPT_DIR/lazy-progress.py"
 echo
