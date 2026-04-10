@@ -9,7 +9,6 @@ if [[ -z "${PROXY_ENABLED:-}" ]] && command -v proxy &>/dev/null; then
 	PREFIX+=(proxy)
 fi
 
-echo "Running with prefix: ${PREFIX[*]:-none}"
 if ((${#PREFIX[@]})); then
 	exec "${PREFIX[@]}" "$0" "$@"
 fi

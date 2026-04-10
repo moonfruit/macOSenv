@@ -1,6 +1,14 @@
 #!/bin/bash
+PREFIX=()
 if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
-    exec proxy "$0" "$@"
+    PREFIX+=(proxy)
+fi
+if [[ -z "$DIRENV_DIR" ]] && hash direnv 2>/dev/null; then
+    PREFIX+=(direnv exec .)
+fi
+
+if ((${#PREFIX[@]})); then
+    exec "${PREFIX[@]}" "$0" "$@"
 fi
 
 DIR=${BASH_SOURCE[0]%/*}
