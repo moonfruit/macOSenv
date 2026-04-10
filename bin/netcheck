@@ -1,0 +1,227 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# 颜色定义
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+CURL_OPTS=(-s -m 10 -L --compressed)
+
+# ========== 第一部分：出口 IP 信息 ==========
+
+print_header() {
+    echo -e "\n${BOLD}${CYAN}═══ $1 ═══${RESET}\n"
+}
+
+fetch_ipip() {
+    local url='https://myip.ipip.net/json'
+    local resp
+    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || { echo -e "  ${RED}请求失败${RESET}"; return; }
+    local ip loc
+    ip=$(echo "$resp" | jq -r '.data.ip // empty')
+    loc=$(echo "$resp" | jq -r '.data.location | join(" ")' 2>/dev/null)
+    if [[ -n "$ip" ]]; then
+        echo -e "  IP:   ${GREEN}${ip}${RESET}"
+        echo -e "  位置: ${YELLOW}${loc}${RESET}"
+    else
+        echo -e "  ${RED}解析失败${RESET}: $resp"
+    fi
+}
+
+fetch_ipsb() {
+    local url='https://api.ip.sb/geoip'
+    local resp
+    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || { echo -e "  ${RED}请求失败${RESET}"; return; }
+    local ip country region city isp org
+    ip=$(echo "$resp" | jq -r '.ip // empty')
+    country=$(echo "$resp" | jq -r '.country // ""')
+    region=$(echo "$resp" | jq -r '.region // ""')
+    city=$(echo "$resp" | jq -r '.city // ""')
+    isp=$(echo "$resp" | jq -r '.isp // ""')
+    org=$(echo "$resp" | jq -r '.organization // ""')
+    if [[ -n "$ip" ]]; then
+        echo -e "  IP:   ${GREEN}${ip}${RESET}"
+        echo -e "  位置: ${YELLOW}${country} ${region} ${city}${RESET}"
+        echo -e "  ISP:  ${YELLOW}${isp}${RESET}"
+        [[ -n "$org" && "$org" != "$isp" ]] && echo -e "  组织: ${YELLOW}${org}${RESET}"
+    else
+        echo -e "  ${RED}解析失败${RESET}: $resp"
+    fi
+}
+
+colo_city() {
+    local code=$1
+    declare -A cities=(
+        # 中国大陆
+        [PEK]="北京" [PKX]="北京大兴" [TSN]="天津" [SHA]="上海虹桥" [PVG]="上海浦东"
+        [CAN]="广州" [SZX]="深圳" [HGH]="杭州" [NKG]="南京" [CTU]="成都"
+        [CKG]="重庆" [WUH]="武汉" [CSX]="长沙" [XIY]="西安" [SHE]="沈阳"
+        [DLC]="大连" [CGO]="郑州" [KMG]="昆明" [XMN]="厦门" [FOC]="福州"
+        [TNA]="济南" [TAO]="青岛" [HRB]="哈尔滨" [CGQ]="长春" [NNG]="南宁"
+        [HET]="呼和浩特" [URC]="乌鲁木齐" [LHW]="兰州" [TYN]="太原" [HFE]="合肥"
+        [NZH]="满洲里" [WNZ]="温州"
+        # 港澳台
+        [HKG]="香港" [MFM]="澳门" [TPE]="台北" [KHH]="高雄"
+        # 日韩
+        [NRT]="东京成田" [HND]="东京羽田" [KIX]="大阪" [FUK]="福冈"
+        [ICN]="首尔仁川" [GMP]="首尔金浦"
+        # 东南亚
+        [SIN]="新加坡" [BKK]="曼谷" [KUL]="吉隆坡" [CGK]="雅加达"
+        [MNL]="马尼拉" [SGN]="胡志明" [HAN]="河内"
+        # 南亚/中亚
+        [BOM]="孟买" [DEL]="新德里" [MAA]="金奈"
+        # 大洋洲
+        [SYD]="悉尼" [MEL]="墨尔本" [AKL]="奥克兰"
+        # 美洲
+        [LAX]="洛杉矶" [SFO]="旧金山" [SJC]="圣何塞" [SEA]="西雅图"
+        [PDX]="波特兰" [PHX]="凤凰城" [DEN]="丹佛" [DFW]="达拉斯"
+        [IAH]="休斯顿" [ORD]="芝加哥" [ATL]="亚特兰大" [MIA]="迈阿密"
+        [IAD]="华盛顿" [EWR]="纽瓦克" [JFK]="纽约" [BOS]="波士顿"
+        [YVR]="温哥华" [YYZ]="多伦多" [GRU]="圣保罗" [GIG]="里约"
+        [MEX]="墨西哥城"
+        # 欧洲
+        [LHR]="伦敦" [CDG]="巴黎" [FRA]="法兰克福" [AMS]="阿姆斯特丹"
+        [ZRH]="苏黎世" [MXP]="米兰" [FCO]="罗马" [MAD]="马德里"
+        [ARN]="斯德哥尔摩" [HEL]="赫尔辛基" [WAW]="华沙" [PRG]="布拉格"
+        [VIE]="维也纳" [IST]="伊斯坦布尔" [DME]="莫斯科" [DUB]="都柏林"
+        # 中东/非洲
+        [DXB]="迪拜" [DOH]="多哈" [JNB]="约翰内斯堡" [CPT]="开普敦"
+        [CAI]="开罗" [NBO]="内罗毕"
+    )
+    echo "${cities[$code]:-}"
+}
+
+fetch_ipchecking1() {
+    local url='https://ptest-1.ipcheck.ing/cdn-cgi/trace'
+    local resp
+    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || { echo -e "  ${RED}请求失败${RESET}"; return; }
+    local ip loc colo
+    ip=$(echo "$resp" | sed -n 's/^ip=//p')
+    loc=$(echo "$resp" | sed -n 's/^loc=//p')
+    colo=$(echo "$resp" | sed -n 's/^colo=//p')
+    if [[ -n "$ip" ]]; then
+        echo -e "  IP:   ${GREEN}${ip}${RESET}"
+        echo -e "  地区: ${YELLOW}${loc}${RESET}"
+        local city
+        city=$(colo_city "$colo")
+        if [[ -n "$city" ]]; then
+            echo -e "  节点: ${YELLOW}${colo} (${city})${RESET}"
+        else
+            echo -e "  节点: ${YELLOW}${colo}${RESET}"
+        fi
+    else
+        echo -e "  ${RED}解析失败${RESET}"
+    fi
+}
+
+# ========== 第二部分：网站延迟检测 ==========
+
+pad_name() {
+    local name=$1 width=$2
+    local char_len=${#name}
+    local byte_len
+    byte_len=$(printf '%s' "$name" | wc -c | tr -d ' ')
+    # 每个 3 字节 UTF-8 宽字符显示占 2 列，多出 1 列
+    local extra=$(( (byte_len - char_len) / 2 ))
+    local display_width=$(( char_len + extra ))
+    local pad=$(( width - display_width ))
+    printf '%s' "$name"
+    (( pad > 0 )) && printf '%*s' "$pad" ''
+}
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+measure_latency() {
+    local name=$1 url=$2
+    local probe_result
+    probe_result=$("$SCRIPT_DIR/netcheck-probe" "$url")
+
+    local ok fail avg min_ms max_ms codes
+    read -r ok fail avg min_ms max_ms codes <<< "$probe_result"
+
+    local padded
+    padded=$(pad_name "$name" 14)
+
+    if (( ok == 0 )); then
+        printf "  %s ${RED}%s${RESET}\n" "$padded" "超时/不可达"
+        return
+    fi
+
+    local color=$GREEN
+    if (( avg > 1000 )); then
+        color=$RED
+    elif (( avg > 300 )); then
+        color=$YELLOW
+    fi
+
+    local warn=""
+    if (( fail > 0 )); then
+        warn="  ${RED}[${fail}/3 失败]${RESET}"
+    fi
+
+    printf "  %s ${color}%4d ms${RESET}  ${DIM}(%4d~%-4d ms, HTTP %s)${RESET}%s\n" "$padded" "$avg" "$min_ms" "$max_ms" "$codes" "$warn"
+}
+
+# ========== 主流程 ==========
+
+print_header "出口 IP 信息"
+
+# 用临时文件保持输出顺序
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+
+(
+    echo -e "${BOLD}[ipip.net]${RESET}"
+    fetch_ipip
+) > "$tmpdir/ip_0" &
+
+(
+    echo -e "${BOLD}[ip.sb]${RESET}"
+    fetch_ipsb
+) > "$tmpdir/ip_1" &
+
+(
+    echo -e "${BOLD}[ptest-1.ipcheck.ing]${RESET}"
+    fetch_ipchecking1
+) > "$tmpdir/ip_2" &
+
+wait
+cat "$tmpdir/ip_0" "$tmpdir/ip_1" "$tmpdir/ip_2"
+
+print_header "网站延迟检测"
+
+# 定义目标网站
+declare -a sites=(
+    "百度|https://www.baidu.com/favicon.ico"
+    "微信|https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico"
+    "淘宝|https://www.taobao.com/favicon.ico"
+    "京东|https://www.jd.com/favicon.ico"
+    "Google|https://www.google.com/favicon.ico"
+    "YouTube|https://www.youtube.com/favicon.ico"
+    "Cloudflare|https://www.cloudflare.com/favicon.ico"
+    "GitHub|https://github.com/favicon.ico"
+    "ChatGPT|https://chatgpt.com/favicon.ico"
+    "Claude|https://claude.ai/favicon.ico"
+    "ASK机场服|https://ask.ash.yt/favicon.ico"
+    "JMS机场服|https://tv.ash.yt/favicon.ico"
+)
+
+for i in "${!sites[@]}"; do
+    IFS='|' read -r name url <<< "${sites[$i]}"
+    (
+        measure_latency "$name" "$url" > "$tmpdir/$i"
+    ) &
+done
+wait
+
+for i in "${!sites[@]}"; do
+    cat "$tmpdir/$i"
+done
+
+echo

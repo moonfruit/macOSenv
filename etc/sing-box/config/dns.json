@@ -82,18 +82,25 @@
     ],
     "rules": [
       // 直接解析
-      { "ip_accept_any": true, "server": "dns-hosts", "rewrite_ttl": 2592000 },
+      { "ip_accept_any": true, "server": "dns-hosts" },
+      // { "action": "evaluate", "server": "dns-hosts" },
+      // { "match_response": true, "response_rcode": "NOERROR", "action": "respond" },
+
+      // 内网地址
       // { "domain_suffix": "heiyu.space", "ip_accept_any": true, "server": "dns-lazycat" },
       { "domain_suffix": "heiyu.space", "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
+      // 公共 DNS
       {
         "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
         "server": "dns-resolver"
       },
+      // Gingkoo
       { "domain_suffix": "autotest.server.gingkoo", "server": "dns-gingkoo" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
+      // Tailscale
       { "domain_suffix": "ts.net", "server": "dns-tailscale" },
-      { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       // Fake IP
+      { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       {
         "type": "logical",
         "mode": "and",
@@ -106,17 +113,13 @@
       { "clash_mode": "Global", "server": "dns-proxy" },
       // 地理位置
       { "rule_set": "GeoSites@CN", "server": "dns-direct" },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          { "process_name": ["ChatGPT", "ChatGPTHelper", "Claude", "codex", "gemini"], "invert": true },
-          { "process_path_regex": ["/Applications/(ChatGPT|Claude).app/.*"], "invert": true },
-          { "rule_set": "GeoSites@!CN", "invert": true },
-          { "rule_set": "GeoIP@CN" }
-        ],
-        "server": "dns-direct"
-      }
+      { "process_name": ["ChatGPT", "ChatGPTHelper", "Claude", "codex", "gemini"], "server": "dns-proxy" },
+      { "process_path_regex": "/Applications/(ChatGPT|Claude).app/.*", "server": "dns-proxy" },
+      { "rule_set": "GeoSites@!CN", "server": "dns-proxy" },
+
+      { "rule_set": "GeoIP@CN", "server": "dns-direct" }
+      // { "action": "evaluate", "server": "dns-direct" },
+      // { "match_response": true, "rule_set": "GeoIP@CN", "action": "respond" }
     ],
     "final": "dns-proxy",
     "independent_cache": true,
