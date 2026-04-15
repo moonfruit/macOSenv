@@ -165,7 +165,7 @@ measure_latency() {
         warn="  ${RED}[${fail}/3 失败]${RESET}"
     fi
 
-    printf "  %s ${color}%4d ms${RESET}  ${DIM}(%4d~%-4d ms, HTTP %s)${RESET}%s\n" "$padded" "$avg" "$min_ms" "$max_ms" "$codes" "$warn"
+    printf "  %s ${color}%4d ms${RESET}  ${DIM}(%4d~%-4d ms, HTTP %s)${RESET}%b\n" "$padded" "$avg" "$min_ms" "$max_ms" "$codes" "$warn"
 }
 
 # ========== 主流程 ==========

@@ -5,6 +5,7 @@ cd "$DIR" || exit 1
 
 SINGBOX=sing-box
 #SINGBOX=/opt/homebrew/bin/sing-box
+#SINGBOX=/opt/homebrew/opt/sing-box-ref1nd/bin/sing-box
 #SINGBOX="$GOPATH/mod/sing-box/sing-box"
 
 sudo "$SINGBOX" run -C config
