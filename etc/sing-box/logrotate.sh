@@ -8,7 +8,7 @@ size 10M
 rotate 2
 
 compress
-delaycompress
+copytruncate
 
 missingok
 notifempty

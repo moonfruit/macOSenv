@@ -36,7 +36,7 @@ clash-to-sing() {
 restart-sing() {
     h2 Restarting sing-box
     if RESULT=$(sing-box -C "$DIR/config" check 2>&1); then
-        sudo launchctl kill TERM system/moonfruit.sing
+        sudo launchctl kill TERM system/moonfruit.sing-box
         sleep 1
     else
         echo "$RESULT" >&2

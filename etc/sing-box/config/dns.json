@@ -2,7 +2,7 @@
   "dns": {
     "servers": [
       // Local
-      { "tag": "dns-local", "type": "local" },
+      // { "tag": "dns-local", "type": "local" },
       // Resolver
       { "tag": "dns-pod-raw", "type": "udp", "server": "119.29.29.29" },
       { "tag": "dns-ali-raw", "type": "udp", "server": "223.5.5.5" },
@@ -28,9 +28,9 @@
         ]
       },
       // Proxy
-      // { "tag": "dns-google", "type": "h3", "server": "dns.google", "detour": "♻️ 自动选择" },
-      { "tag": "dns-one", "type": "h3", "server": "one.one.one.one", "detour": "♻️ 自动选择" },
-      { "tag": "dns-cloudflare", "type": "h3", "server": "cloudflare-dns.com", "detour": "♻️ 自动选择" },
+      // { "tag": "dns-google", "type": "h3", "server": "dns.google", "detour": "🔰 默认出口" },
+      { "tag": "dns-one", "type": "h3", "server": "one.one.one.one", "detour": "🔰 默认出口" },
+      { "tag": "dns-cloudflare", "type": "h3", "server": "cloudflare-dns.com", "detour": "🔰 默认出口" },
       {
         "tag": "dns-proxy",
         "type": "group",
@@ -54,17 +54,15 @@
         ]
       },
       // LazyCat
-      { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
+      // { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
       // Tailscale
-      { "tag": "dns-tailscale", "type": "udp", "server": "fd7a:115c:a1e0::53" },
+      // { "tag": "dns-tailscale", "type": "udp", "server": "fd7a:115c:a1e0::53" },
+      // { "tag": "dns-tailscale", "type": "tailscale", "endpoint": "tailsacle-endpoint" },
       // Hosts
       {
         "tag": "dns-hosts",
         "type": "hosts",
-        "path": [
-          "/etc/hosts",
-          "/Users/moon/Workspace.localized/env/etc/hosts"
-        ],
+        "path": "/Users/moon/Workspace.localized/env/etc/hosts",
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
@@ -82,29 +80,39 @@
     ],
     "rules": [
       // 直接解析
-      { "ip_accept_any": true, "server": "dns-hosts" },
-      // { "action": "evaluate", "server": "dns-hosts" },
-      // { "match_response": true, "response_rcode": "NOERROR", "action": "respond" },
+      { "action": "evaluate", "server": "dns-hosts" },
+      { "match_response": true, "ip_accept_any": true, "action": "respond" },
 
+      // LazyCat
+      // { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
+      // Tailscale
+      // { "domain_suffix": "ts.net", "server": "dns-tailscale" },
       // 内网地址
-      // { "domain_suffix": "heiyu.space", "ip_accept_any": true, "server": "dns-lazycat" },
-      { "domain_suffix": "heiyu.space", "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
+      { "domain_suffix": ["heiyu.space", "ts.net"], "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
       // 公共 DNS
       {
-        "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
+        "domain": [
+          "dns.alidns.com",
+          "doh.pub",
+          "dot.pub",
+          "dns.google",
+          "one.one.one.one",
+          "cloudflare-dns.com"
+        ],
         "server": "dns-resolver"
       },
       // Gingkoo
       { "domain_suffix": "autotest.server.gingkoo", "server": "dns-gingkoo" },
       { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
-      // Tailscale
-      { "domain_suffix": "ts.net", "server": "dns-tailscale" },
       // Fake IP
       { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       {
         "type": "logical",
         "mode": "and",
-        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": ["dog", "sing-box"], "invert": true }],
+        "rules": [
+          { "query_type": ["A", "AAAA"] },
+          { "process_name": ["dog", "sing-box"], "invert": true }
+        ],
         "server": "dns-fakeip",
         "rewrite_ttl": 1
       },
@@ -117,12 +125,10 @@
       { "process_path_regex": "/Applications/(ChatGPT|Claude).app/.*", "server": "dns-proxy" },
       { "rule_set": "GeoSites@!CN", "server": "dns-proxy" },
 
-      { "rule_set": "GeoIP@CN", "server": "dns-direct" }
-      // { "action": "evaluate", "server": "dns-direct" },
-      // { "match_response": true, "rule_set": "GeoIP@CN", "action": "respond" }
+      { "action": "evaluate", "server": "dns-direct" },
+      { "match_response": true, "rule_set": "GeoIP@CN", "action": "respond" }
     ],
     "final": "dns-proxy",
-    "independent_cache": true,
     "reverse_mapping": true,
     "strategy": "prefer_ipv6"
   },
@@ -149,7 +155,15 @@
       //   "action": "reject"
       // },
       { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
-      { "domain_suffix": "server.gingkoo", "invert": true, "action": "sniff-override-destination" }
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          { "domain_suffix": "server.gingkoo", "invert": true },
+          { "ip_cidr": ["0.0.0.0/32", "::/128"] }
+        ],
+        "action": "sniff-override-destination"
+      }
     ],
     "rule_set": [
       {

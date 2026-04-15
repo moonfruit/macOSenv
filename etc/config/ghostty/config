@@ -48,6 +48,8 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+#theme = light:Rose Pine Dawn,dark:Rose Pine
+
 #font-family = JetBrainsMono Nerd Font
 font-family = Maple Mono NF CN
 font-size = 14

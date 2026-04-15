@@ -97,9 +97,6 @@ skinparam usecase {
 (colima)-->(lima)
 (context7-mcp)
 (context7-mcp)-->(node)
-(copilot-language-server)
-(copilot-language-server)-->(node)
-(copilot-language-server)-->(ripgrep)
 (cpanminus)
 (croc)
 (cspell)
@@ -126,6 +123,10 @@ skinparam usecase {
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
+(dotnet) << dep >>
+(dotnet)-->(brotli)
+(dotnet)-->(icu4c@78)
+(dotnet)-->(openssl@3)
 (dotnet@9) << dep >>
 (dotnet@9)-->(brotli)
 (dotnet@9)-->(icu4c@78)
@@ -304,9 +305,6 @@ skinparam usecase {
 (icu4c@78) << dep >>
 (imagemagick)
 (imagemagick)-->(freetype)
-(imagemagick)-->(gettext)
-(imagemagick)-->(glib)
-(imagemagick)-->(imath)
 (imagemagick)-->(jpeg-turbo)
 (imagemagick)-->(libheif)
 (imagemagick)-->(libpng)
@@ -370,7 +368,6 @@ skinparam usecase {
 (libheif)-->(libde265)
 (libheif)-->(libpng)
 (libheif)-->(libtiff)
-(libheif)-->(shared-mime-info)
 (libheif)-->(webp)
 (libheif)-->(x265)
 (libiconv) << dep >>
@@ -471,6 +468,8 @@ skinparam usecase {
 (mas)
 (maven)
 (maven)-->(openjdk)
+(merve) << dep >>
+(merve)-->(simdutf)
 (miniserve)
 (mkcert)
 (mlx) << dep >>
@@ -481,6 +480,7 @@ skinparam usecase {
 (moonfruit/tap/ccstatusline)
 (moonfruit/tap/ccstatusline)-->(node)
 (moonfruit/tap/dog)
+(moonfruit/tap/ethr)
 (moonfruit/tap/geo)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
@@ -493,8 +493,11 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
+(moonfruit/tap/seqcli)
+(moonfruit/tap/seqcli)-->(dotnet)
 (moonfruit/tap/sing-box-beta)
 (moonfruit/tap/sing-box-ref1nd)
+(moonfruit/tap/sing2seq)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)
@@ -514,6 +517,7 @@ skinparam usecase {
 (mysql-client)-->(openssl@3)
 (mysql-client)-->(zlib)
 (mysql-client)-->(zstd)
+(nbytes) << dep >>
 (ncdu)
 (ncdu)-->(ncurses)
 (ncdu)-->(zstd)
@@ -553,6 +557,8 @@ skinparam usecase {
 (node)-->(libngtcp2)
 (node)-->(libuv)
 (node)-->(llhttp)
+(node)-->(merve)
+(node)-->(nbytes)
 (node)-->(openssl@3)
 (node)-->(simdjson)
 (node)-->(sqlite)
@@ -720,13 +726,12 @@ skinparam usecase {
 (sd)
 (sdl2) << dep >>
 (selene)
-(shared-mime-info) << dep >>
-(shared-mime-info)-->(gettext)
-(shared-mime-info)-->(glib)
 (shellcheck)
 (shellcheck)-->(gmp)
 (shfmt)
 (simdjson) << dep >>
+(simdutf) << dep >>
+(simdutf)-->(icu4c@78)
 (sing-box)
 (sk)
 (skopeo)
