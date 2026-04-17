@@ -1,0 +1,73 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "fe0c4158-f4da-405d-83ef-a31d75defd99",
+        "type": "context-percentage-usable",
+        "backgroundColor": "bgYellow"
+      },
+      {
+        "id": "9c40b69f-c546-4847-84af-c634cc7fe4e5",
+        "type": "current-working-dir",
+        "backgroundColor": "bgBlue",
+        "metadata": {
+          "fishStyle": "true"
+        }
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta",
+        "metadata": {
+          "hideNoGit": "true"
+        }
+      },
+      {
+        "id": "2c99f19a-a3f8-4158-bb58-e0bbcaf5e9b8",
+        "type": "git-changes",
+        "backgroundColor": "bgBrightBlue",
+        "metadata": {
+          "hideNoGit": "true"
+        }
+      },
+      {
+        "id": "6455d130-6a8c-4e42-8c97-76a3657a5742",
+        "type": "custom-command",
+        "backgroundColor": "bgBrightYellow",
+        "commandPath": "/Users/moon/Workspace.localized/env/bin/claude-hooks/minimax-usage.py - usage"
+      },
+      {
+        "id": "e5d16f31-e127-4e55-bcef-90cc4bb27dda",
+        "type": "custom-command",
+        "backgroundColor": "bgBrightCyan",
+        "commandPath": "/Users/moon/Workspace.localized/env/bin/claude-hooks/minimax-usage.py - weekly_usage"
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 3,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "minimalistMode": true,
+  "powerline": {
+    "enabled": true,
+    "separators": [""],
+    "separatorInvertBackground": [false],
+    "startCaps": [],
+    "endCaps": [""],
+    "theme": "nord",
+    "autoAlign": true,
+    "continueThemeAcrossLines": true
+  }
+}
+

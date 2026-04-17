@@ -76,3 +76,6 @@ if (($+commands[sqlplus])) && (($+commands[rlwrap])); then
         fi
     }
 fi
+
+# for manpath
+unset MANPATH
