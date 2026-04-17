@@ -82,8 +82,8 @@ def main() -> None:
         plugin, task, msg = m.group(1), m.group(2), m.group(3)
         key = plugin
 
-        # checkout 任务：若已有中间输出（如 HEAD 位置），丢弃 Finished 行
-        if (task == "checkout" and msg.startswith("Finished task") and
+        # checkout / log 任务：若已有中间输出，丢弃 Finished 行
+        if (task in ("checkout", "log") and msg.startswith("Finished task") and
             key in tasks and "Running task" not in strip_ansi(tasks[key])):
             continue
 

@@ -155,15 +155,7 @@
       //   "action": "reject"
       // },
       { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          { "domain_suffix": "server.gingkoo", "invert": true },
-          { "ip_cidr": ["0.0.0.0/32", "::/128"] }
-        ],
-        "action": "sniff-override-destination"
-      }
+      { "domain_suffix": "server.gingkoo", "invert": true, "action": "sniff-override-destination" }
     ],
     "rule_set": [
       {

@@ -13,6 +13,10 @@ declare -A images=(
     [webp]=1
 )
 
+if (($# == 1)) && [[ -d "$1" ]]; then
+    exec ezaf -l "$1"
+fi
+
 for arg in "$@"; do
     ext="${arg##*.}"
     ext="${ext,,}"

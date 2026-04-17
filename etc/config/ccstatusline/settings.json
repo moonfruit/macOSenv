@@ -1,0 +1,98 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "fe0c4158-f4da-405d-83ef-a31d75defd99",
+        "type": "context-percentage-usable",
+        "backgroundColor": "bgYellow"
+      },
+      {
+        "id": "9c40b69f-c546-4847-84af-c634cc7fe4e5",
+        "type": "current-working-dir",
+        "backgroundColor": "bgBlue",
+        "metadata": {
+          "fishStyle": "true"
+        }
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta",
+        "metadata": {
+          "hideNoGit": "true"
+        }
+      },
+      {
+        "id": "2c99f19a-a3f8-4158-bb58-e0bbcaf5e9b8",
+        "type": "git-changes",
+        "backgroundColor": "bgBrightBlue",
+        "metadata": {
+          "hideNoGit": "true"
+        }
+      },
+      {
+        "id": "793456d1-2c7c-4743-8a48-afa1a05c467a",
+        "type": "session-usage",
+        "backgroundColor": "bgRed",
+        "metadata": {
+          "display": "time"
+        }
+      },
+      {
+        "id": "5cbca0e6-75f6-4894-99f2-78ad5c5cf630",
+        "type": "reset-timer",
+        "backgroundColor": "bgMagenta",
+        "metadata": {
+          "compact": "true"
+        }
+      },
+      {
+        "id": "5c9d2982-5e30-4e91-ba98-fe385a7a9e08",
+        "type": "weekly-usage",
+        "backgroundColor": "bgBlue",
+        "metadata": {
+          "display": "time"
+        }
+      },
+      {
+        "id": "dd71cd92-73c7-4c1e-bbdf-3c57505cde9d",
+        "type": "weekly-reset-timer",
+        "backgroundColor": "bgMagenta",
+        "metadata": {
+          "compact": "true"
+        }
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 3,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "minimalistMode": true,
+  "powerline": {
+    "enabled": true,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [
+      ""
+    ],
+    "theme": "nord-aurora",
+    "autoAlign": true,
+    "continueThemeAcrossLines": true
+  }
+}

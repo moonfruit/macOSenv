@@ -8,11 +8,11 @@ words:
   - autocmds
   - basedpyright
   - bashls
+  - ccstatusline
   - cips
   - clangd
   - cnaps
   - codelldb
-  - cquit
   - CPPFLAGS
   - cssls
   - direnv

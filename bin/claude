@@ -16,7 +16,7 @@ if [[ $NAME != claude && -n "$CMUX_SURFACE_ID" && -z "${_CLAUDE_WRAPPER}" ]]; th
 else
     CLAUDE=/opt/homebrew/bin/claude
     unset _CLAUDE_WRAPPER
-    #export CLAUDE_CODE_NO_FLICKER=1
+    export CLAUDE_CODE_NO_FLICKER=1
 fi
 
 exec "$CLAUDE" "$@"

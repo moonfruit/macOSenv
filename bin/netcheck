@@ -22,7 +22,10 @@ print_header() {
 fetch_ipip() {
     local url='https://myip.ipip.net/json'
     local resp
-    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || { echo -e "  ${RED}请求失败${RESET}"; return; }
+    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || {
+        echo -e "  ${RED}请求失败${RESET}"
+        return
+    }
     local ip loc
     ip=$(echo "$resp" | jq -r '.data.ip // empty')
     loc=$(echo "$resp" | jq -r '.data.location | join(" ")' 2>/dev/null)
@@ -37,7 +40,10 @@ fetch_ipip() {
 fetch_ipsb() {
     local url='https://api.ip.sb/geoip'
     local resp
-    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || { echo -e "  ${RED}请求失败${RESET}"; return; }
+    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || {
+        echo -e "  ${RED}请求失败${RESET}"
+        return
+    }
     local ip country region city isp org
     ip=$(echo "$resp" | jq -r '.ip // empty')
     country=$(echo "$resp" | jq -r '.country // ""')
@@ -100,7 +106,10 @@ colo_city() {
 fetch_ipchecking1() {
     local url='https://ptest-1.ipcheck.ing/cdn-cgi/trace'
     local resp
-    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || { echo -e "  ${RED}请求失败${RESET}"; return; }
+    resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || {
+        echo -e "  ${RED}请求失败${RESET}"
+        return
+    }
     local ip loc colo
     ip=$(echo "$resp" | sed -n 's/^ip=//p')
     loc=$(echo "$resp" | sed -n 's/^loc=//p')
@@ -128,11 +137,11 @@ pad_name() {
     local byte_len
     byte_len=$(printf '%s' "$name" | wc -c | tr -d ' ')
     # 每个 3 字节 UTF-8 宽字符显示占 2 列，多出 1 列
-    local extra=$(( (byte_len - char_len) / 2 ))
-    local display_width=$(( char_len + extra ))
-    local pad=$(( width - display_width ))
+    local extra=$(((byte_len - char_len) / 2))
+    local display_width=$((char_len + extra))
+    local pad=$((width - display_width))
     printf '%s' "$name"
-    (( pad > 0 )) && printf '%*s' "$pad" ''
+    ((pad > 0)) && printf '%*s' "$pad" ''
 }
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -143,25 +152,25 @@ measure_latency() {
     probe_result=$("$SCRIPT_DIR/netcheck-probe" "$url")
 
     local ok fail avg min_ms max_ms codes
-    read -r ok fail avg min_ms max_ms codes <<< "$probe_result"
+    read -r ok fail avg min_ms max_ms codes <<<"$probe_result"
 
     local padded
     padded=$(pad_name "$name" 14)
 
-    if (( ok == 0 )); then
+    if ((ok == 0)); then
         printf "  %s ${RED}%s${RESET}\n" "$padded" "超时/不可达"
         return
     fi
 
     local color=$GREEN
-    if (( avg > 1000 )); then
+    if ((avg > 1000)); then
         color=$RED
-    elif (( avg > 300 )); then
+    elif ((avg > 300)); then
         color=$YELLOW
     fi
 
     local warn=""
-    if (( fail > 0 )); then
+    if ((fail > 0)); then
         warn="  ${RED}[${fail}/3 失败]${RESET}"
     fi
 
@@ -179,17 +188,17 @@ trap 'rm -rf "$tmpdir"' EXIT
 (
     echo -e "${BOLD}[ipip.net]${RESET}"
     fetch_ipip
-) > "$tmpdir/ip_0" &
+) >"$tmpdir/ip_0" &
 
 (
     echo -e "${BOLD}[ip.sb]${RESET}"
     fetch_ipsb
-) > "$tmpdir/ip_1" &
+) >"$tmpdir/ip_1" &
 
 (
     echo -e "${BOLD}[ptest-1.ipcheck.ing]${RESET}"
     fetch_ipchecking1
-) > "$tmpdir/ip_2" &
+) >"$tmpdir/ip_2" &
 
 wait
 cat "$tmpdir/ip_0" "$tmpdir/ip_1" "$tmpdir/ip_2"
@@ -202,9 +211,9 @@ declare -a sites=(
     "微信|https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico"
     "淘宝|https://www.taobao.com/favicon.ico"
     "京东|https://www.jd.com/favicon.ico"
+    "Cloudflare|https://www.cloudflare.com/favicon.ico"
     "Google|https://www.google.com/favicon.ico"
     "YouTube|https://www.youtube.com/favicon.ico"
-    "Cloudflare|https://www.cloudflare.com/favicon.ico"
     "GitHub|https://github.com/favicon.ico"
     "ChatGPT|https://chatgpt.com/favicon.ico"
     "Claude|https://claude.ai/favicon.ico"
@@ -213,9 +222,9 @@ declare -a sites=(
 )
 
 for i in "${!sites[@]}"; do
-    IFS='|' read -r name url <<< "${sites[$i]}"
+    IFS='|' read -r name url <<<"${sites[$i]}"
     (
-        measure_latency "$name" "$url" > "$tmpdir/$i"
+        measure_latency "$name" "$url" >"$tmpdir/$i"
     ) &
 done
 wait

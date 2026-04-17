@@ -6,7 +6,7 @@
 readonly _BOLD=$(tput bold)
 # readonly _RED=$(tput setaf 1)
 readonly _GREEN=$(tput setaf 2)
-# readonly _YELLOW=$(tput setaf 3)
+readonly _YELLOW=$(tput setaf 3)
 readonly _BLUE=$(tput setaf 4)
 # readonly _MAGENTA=$(tput setaf 5)
 # readonly _CYAN=$(tput setaf 6)
@@ -19,4 +19,8 @@ h1() {
 
 h2() {
     echo "$_BLUE==>$_RESET $_BOLD$*$_RESET"
+}
+
+warn() {
+    echo "$_YELLOW⚠$_RESET $*"
 }
