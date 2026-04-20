@@ -67,7 +67,7 @@ def main() -> None:
     cols = os.get_terminal_size(out.fileno()).columns
 
     for raw_line in sys.stdin:
-        raw_line = raw_line.rstrip("\n")
+        raw_line = raw_line.rstrip("\r\n")
         if not raw_line.strip():
             continue
 

@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-
-#if [[ -z "$PROXY_ENABLED" ]] && hash proxy 2>/dev/null; then
-#    if proxy curl -fsSLI -m5 http://connectivitycheck.gstatic.com/generate_204 &>/dev/null; then
-#        exec proxy "$0" "$@"
-#    fi
-#fi
-
 source "$ENV/lib/bash/color.sh"
 source "$ENV/lib/bash/fs.sh"
 source "$ENV/lib/bash/github.sh"
@@ -25,12 +18,15 @@ while read -r NAME URL UA; do
     "$SING_RULES/subscribe.sh" "$URL" "dat/$NAME" "$UA" || exit 1
 done < <(rg -v '^#' "$DIR/clash.txt")
 
+sing-exec() {
+    DIRENV_LOG_FORMAT="" direnv exec "$@"
+}
+
 clash-to-sing() {
-    DIRENV_LOG_FORMAT="" direnv exec \
-        "$SING_RULES/clash-to-sing.py" -lr \
+    sing-exec "$SING_RULES/clash-to-sing.py" -lr \
         -c "$SING_RULES/config/config.json" \
         -s "$SING_RULES/preflight/saved-countries.json" \
-        -t "c1f6ba66dd5b8620b26ac68f2fad7a52"
+        -t "$(cat "$DIR/gitee.txt")"
 }
 
 restart-sing() {
@@ -45,6 +41,6 @@ restart-sing() {
 }
 
 h2 Generating config.json
-if clash-to-sing | sing-box format -c /dev/stdin >zoo.json; then
+if clash-to-sing | sing-box format -c /dev/stdin | sing-exec "$SING_RULES/fix-format.py" >zoo.json; then
     copy-if-diff zoo.json "$DIR/config" restart-sing
 fi
