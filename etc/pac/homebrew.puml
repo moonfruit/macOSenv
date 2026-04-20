@@ -12,9 +12,6 @@ skinparam usecase {
 (ada-url)-->(fmt)
 (ant)
 (ant)-->(openjdk)
-(antoniorodr/memo/memo)
-(antoniorodr/memo/memo)-->(fzf)
-(antoniorodr/memo/memo)-->(python@3.13)
 (aom) << dep >>
 (aom)-->(jpeg-xl)
 (aom)-->(libvmaf)
@@ -665,11 +662,6 @@ skinparam usecase {
 (pv)-->(gettext)
 (pyright)
 (pyright)-->(node)
-(python@3.13) << dep >>
-(python@3.13)-->(mpdecimal)
-(python@3.13)-->(openssl@3)
-(python@3.13)-->(sqlite)
-(python@3.13)-->(xz)
 (python@3.14) << dep >>
 (python@3.14)-->(mpdecimal)
 (python@3.14)-->(openssl@3)

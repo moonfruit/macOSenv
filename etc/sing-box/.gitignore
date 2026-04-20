@@ -1,5 +1,7 @@
-/ui
-/*.db
-/*.url
-/*.commit
+*.db
+
 /clash.txt
+/gitee.txt
+/test
+/ui
+/zoo
