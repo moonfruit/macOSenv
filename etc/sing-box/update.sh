@@ -7,13 +7,22 @@ source "$ENV/lib/bash/native.sh"
 DIR=$(main-script-directory)
 SING_RULES="$WORKSPACE/proxy/sing-rules"
 
-create-temp-directory TEMP_DIR
-cd "$TEMP_DIR" || exit 1
+if [[ -n "$1" ]]; then
+    cd "$1" || exit 1
+else
+    create-temp-directory TEMP_DIR
+    cd "$TEMP_DIR" || exit 1
+fi
 
 h1 Updating config.json
 
 mkdir -p dat
 while read -r NAME URL UA; do
+    # 如果 dat/$NAME 已存在则跳过
+    if [[ -f "dat/$NAME" ]]; then
+        h2 Skipping "$NAME" - already exists
+        continue
+    fi
     h2 Downloading "$NAME"
     "$SING_RULES/subscribe.sh" "$URL" "dat/$NAME" "$UA" || exit 1
 done < <(rg -v '^#' "$DIR/clash.txt")

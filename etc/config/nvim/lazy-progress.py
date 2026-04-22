@@ -14,11 +14,51 @@ import unicodedata
 # 匹配 lazy.nvim 输出行（含 ANSI 色码）：[plugin] task | message
 # 去掉 ANSI 后格式：[plugin_name] task_name | message
 ANSI_RE = re.compile(r"\033\[[0-9;]*m")
-LINE_RE = re.compile(r"^\[([^\]]+)\]\s+(\S+)\s*\|\s*(.*)$")
+LINE_RE = re.compile(r"^\[([^\]]+)\]\s+(?:(\S+)\s+)?\|\s*(.*)$")
+# 行内 [plugin] task | 标记：用于把被拼接在同一行的多段 lazy 输出切开
+TAG_RE = re.compile(r"\[[^\]\s|]+\]\s+\S+\s+\|")
 
 
 def strip_ansi(s: str) -> str:
     return ANSI_RE.sub("", s)
+
+
+def split_segments(line: str) -> list[str]:
+    """按行内出现的 [plugin] task | 标记切分为独立段落，保留 ANSI 色码。
+
+    紧邻段首字符的 ANSI 序列跟随新段，以保留 [plugin] 的颜色前缀。
+    """
+    plain = strip_ansi(line)
+    starts = [m.start() for m in TAG_RE.finditer(plain)]
+    if not starts:
+        return [line]
+    boundaries = ([0] if starts[0] > 0 else []) + starts
+    if len(boundaries) <= 1:
+        return [line]
+    boundary_set = set(boundaries)
+    segments: list[str] = []
+    current: list[str] = []
+    pending_ansi: list[str] = []  # 自上一个普通字符以来遇到的 ANSI 序列
+    plain_idx = 0
+    i = 0
+    while i < len(line):
+        m = ANSI_RE.match(line, i)
+        if m:
+            pending_ansi.append(m.group())
+            i = m.end()
+            continue
+        if plain_idx != 0 and plain_idx in boundary_set:
+            segments.append("".join(current))
+            current = list(pending_ansi)  # 让紧邻的 ANSI 前缀归属新段
+        else:
+            current.extend(pending_ansi)
+        pending_ansi = []
+        current.append(line[i])
+        plain_idx += 1
+        i += 1
+    current.extend(pending_ansi)
+    segments.append("".join(current))
+    return segments
 
 
 def display_width(s: str) -> int:
@@ -66,44 +106,43 @@ def main() -> None:
     out = sys.stderr
     cols = os.get_terminal_size(out.fileno()).columns
 
-    for raw_line in sys.stdin:
-        raw_line = raw_line.rstrip("\r\n")
-        if not raw_line.strip():
-            continue
+    for raw in sys.stdin:
+        raw = raw.rstrip("\r\n")
+        for line in split_segments(raw):
+            if not line.strip():
+                continue
 
-        plain = strip_ansi(raw_line)
-        m = LINE_RE.match(plain)
-        if not m:
-            # 无法解析的行：光标移到进度区域末尾后输出
-            out.write(raw_line + "\n")
+            match = LINE_RE.match(strip_ansi(line))
+            if not match:
+                out.write(line + "\n")
+                out.flush()
+                continue
+
+            plugin, _, msg = match.group(1), match.group(2), match.group(3)
+            if not msg.strip():
+                continue
+
+            # 若已有中间输出，丢弃 Finished 行
+            if msg.startswith("Finished task") and plugin in tasks and "Running task" not in strip_ansi(tasks[plugin]):
+                continue
+
+            is_new = plugin not in tasks
+            display = truncate_to_width(line, cols)
+            tasks[plugin] = display
+
+            if is_new:
+                order.append(plugin)
+                # 新行：直接追加在末尾（光标已在末尾）
+                out.write(f"\033[K{display}\n")
+                total_lines += 1
+            else:
+                # 已有行：计算它在进度区域中的位置，定位过去覆盖
+                line_idx = order.index(plugin)
+                lines_up = total_lines - line_idx
+                # 上移到目标行，覆盖，再回到末尾
+                out.write(f"\033[{lines_up}F\033[K{display}\033[{lines_up}E")
+
             out.flush()
-            continue
-
-        plugin, task, msg = m.group(1), m.group(2), m.group(3)
-        key = plugin
-
-        # checkout / log 任务：若已有中间输出，丢弃 Finished 行
-        if (task in ("checkout", "log") and msg.startswith("Finished task") and
-            key in tasks and "Running task" not in strip_ansi(tasks[key])):
-            continue
-
-        is_new = key not in tasks
-        display = truncate_to_width(raw_line, cols)
-        tasks[key] = display
-
-        if is_new:
-            order.append(key)
-            # 新行：直接追加在末尾（光标已在末尾）
-            out.write(f"\033[K{display}\n")
-            total_lines += 1
-        else:
-            # 已有行：计算它在进度区域中的位置，定位过去覆盖
-            line_idx = order.index(key)
-            lines_up = total_lines - line_idx
-            # 上移到目标行，覆盖，再回到末尾
-            out.write(f"\033[{lines_up}F\033[K{display}\033[{lines_up}E")
-
-        out.flush()
 
     out.flush()
 
