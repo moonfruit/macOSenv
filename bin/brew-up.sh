@@ -89,9 +89,11 @@ cleanup-fonts() {
 }
 
 readonly CASKS=(
+    claude
     firefox
     intellij-idea
     iterm2@beta
+    orbstack
     visual-studio-code
     wechat
     wechatwork

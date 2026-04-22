@@ -103,8 +103,8 @@ colo_city() {
     echo "${cities[$code]:-}"
 }
 
-fetch_ipchecking1() {
-    local url='https://ptest-1.ipcheck.ing/cdn-cgi/trace'
+fetch_ipchecking() {
+    local url="https://ptest-$1.ipcheck.ing/cdn-cgi/trace"
     local resp
     resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || {
         echo -e "  ${RED}请求失败${RESET}"
@@ -186,22 +186,26 @@ tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT
 
 (
-    echo -e "${BOLD}[ipip.net]${RESET}"
+    echo -e "${BOLD}DIRECT: [ipip.net]${RESET}"
     fetch_ipip
-) >"$tmpdir/ip_0" &
+) >"$tmpdir/ip_01" &
 
 (
-    echo -e "${BOLD}[ip.sb]${RESET}"
+    echo -e "${BOLD}PROXY: [ip.sb]${RESET}"
     fetch_ipsb
-) >"$tmpdir/ip_1" &
+) >"$tmpdir/ip_02" &
 
-(
-    echo -e "${BOLD}[ptest-1.ipcheck.ing]${RESET}"
-    fetch_ipchecking1
-) >"$tmpdir/ip_2" &
+i=0
+for name in "AI" "EMBY"; do
+    ((i++)) || true
+    (
+        echo -e "${BOLD}$name: [ptest-$i.ipcheck.ing]${RESET}"
+        fetch_ipchecking "$i"
+    ) >"$tmpdir/ip_1$i" &
+done
 
 wait
-cat "$tmpdir/ip_0" "$tmpdir/ip_1" "$tmpdir/ip_2"
+cat "$tmpdir/ip_01" "$tmpdir/ip_02" "$tmpdir/ip_11" "$tmpdir/ip_12"
 
 print_header "网站延迟检测"
 
