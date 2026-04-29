@@ -1,0 +1,232 @@
+#!/usr/bin/env bash
+# 测试各代理出口的地理位置（ipinfo.io + api.ip.sb）以及到 OpenAI / Anthropic 的连接耗时。
+# 通过 sing-box 的 clash API 切换 GLOBAL 分组，走本地 http 代理端口 7898。
+
+readonly API=http://127.0.0.1:9999/proxies/GLOBAL
+readonly PROXY_PORT=7898
+
+readonly CURL=(curl --connect-timeout 5 --max-time 15)
+readonly IPINFO_URL=https://ipinfo.io
+readonly IPSB_URL=https://api.ip.sb/geoip
+readonly LATENCY_URLS=(
+    https://api.openai.com/
+    https://api.anthropic.com/
+)
+
+readonly RED=$(tput setaf 1) GREEN=$(tput setaf 2) YELLOW=$(tput setaf 3)
+readonly BLUE=$(tput setaf 4) MAGENTA=$(tput setaf 5) CYAN=$(tput setaf 6)
+readonly BOLD=$(tput bold) RESET=$(tput sgr0)
+
+readonly -A _FLAGS=(
+    [AR]=🇦🇷 [AT]=🇦🇹 [CN]=🇨🇳 [DE]=🇩🇪 [FI]=🇫🇮 [GB]=🇬🇧
+    [HK]=🇭🇰 [ID]=🇮🇩 [IN]=🇮🇳 [JP]=🇯🇵 [KR]=🇰🇷 [LU]=🇱🇺
+    [MO]=🇲🇴 [MY]=🇲🇾 [NL]=🇳🇱 [NO]=🇳🇴 [SE]=🇸🇪 [SG]=🇸🇬
+    [TW]=🇨🇳 [US]=🇺🇸 [VN]=🇻🇳 [CA]=🇨🇦 [FR]=🇫🇷 [AU]=🇦🇺
+    [RU]=🇷🇺 [TR]=🇹🇷 [BR]=🇧🇷 [IT]=🇮🇹 [ES]=🇪🇸 [CH]=🇨🇭
+    [IE]=🇮🇪 [PL]=🇵🇱 [UA]=🇺🇦 [TH]=🇹🇭 [PH]=🇵🇭 [AE]=🇦🇪
+)
+
+source "$ENV/lib/bash/json.sh"
+readonly FLAGS=$(as-json _FLAGS)
+
+OPTS=$(getopt -n "$0" -o ar -l all,raw -- "$@") || exit 1
+eval set -- "$OPTS"
+while true; do
+    case "$1" in
+    -a | --all) ALL=1; shift ;;
+    -r | --raw) RAW=1; shift ;;
+    --) shift; break ;;
+    esac
+done
+
+# 组合 country + region + city，带 emoji 国旗
+format-location() {
+    jq -r --argjson flags "$FLAGS" '
+        . as $x
+        | (.country_code // .country) as $cc
+        | (.region // .region_name // "") as $region
+        | (.city // "") as $city
+        | ($flags[$cc] // "'"$RED$BOLD"'\($cc)'"$RESET"'") as $flag
+        | $flag
+        + (if $region != "" then " \($region)" else "" end)
+        + (if $city != "" and $city != $region then
+             (if $region != "" then ", \($city)" else " \($city)" end)
+           else "" end)
+        + (((.org // .isp //
+             (if (.asn | type) == "object" then (.asn.organization // .asn.asn | tostring) else null end))
+            // "")
+           | sub("^AS[0-9]+ +"; "")
+           | if . != "" then "  \(.)" else "" end)
+    '
+}
+
+get-ipinfo() {
+    local body
+    if body=$(proxy "$PROXY_PORT" "${CURL[@]}" -s "$IPINFO_URL"); then
+        echo "$body" | format-location
+    else
+        return $?
+    fi
+}
+
+get-ipsb() {
+    local body
+    # api.ip.sb 对默认 curl UA 会返回 403，伪装一下
+    if body=$(proxy "$PROXY_PORT" "${CURL[@]}" -sA 'Mozilla/5.0' "$IPSB_URL"); then
+        echo "$body" | format-location
+    else
+        return $?
+    fi
+}
+
+delay-color() {
+    local ms=$1
+    if ((ms < 500)); then echo "$GREEN"
+    elif ((ms < 1500)); then echo "$YELLOW"
+    else echo "$MAGENTA"
+    fi
+}
+
+readonly LATENCY_REPEAT=3
+readonly GEO_REPEAT=2
+
+# HEAD 请求，丢弃响应，仅在成功时输出 tls / total 连接耗时（秒）
+# 注：走 HTTP 代理时 %{time_connect} 是到 127.0.0.1 的耗时 ≈ 0，无参考价值，不采集
+benchmark-latency() {
+    local url=$1 out
+    if out=$(proxy "$PROXY_PORT" "${CURL[@]}" -sI -o /dev/null \
+        -w '%{time_appconnect} %{time_total}' "$url" 2>/dev/null); then
+        printf '%s\n' "$out"
+    else
+        return 1
+    fi
+}
+
+# 以秒为单位的浮点换算成整数毫秒
+to-ms() { awk -v n="$1" 'BEGIN { printf "%d", n * 1000 }'; }
+
+test-one-proxy() {
+    local label=$1
+    echo "--- --- --- $CYAN$label$RESET --- --- ---"
+
+    local tmpdir
+    tmpdir=$(mktemp -d -t test-proxy-geo.XXXXXX)
+    # shellcheck disable=SC2064
+    trap "rm -rf '$tmpdir'" RETURN
+
+    # 所有请求并发发出：每个地理信源 × GEO_REPEAT + 每个 URL × LATENCY_REPEAT 次延迟
+    local url uid=0 i
+    for ((i = 1; i <= GEO_REPEAT; i++)); do
+        get-ipinfo >"$tmpdir/ipinfo-$i" 2>/dev/null &
+        get-ipsb >"$tmpdir/ipsb-$i" 2>/dev/null &
+    done
+    for url in "${LATENCY_URLS[@]}"; do
+        for ((i = 1; i <= LATENCY_REPEAT; i++)); do
+            benchmark-latency "$url" >"$tmpdir/lat-$uid-$i" 2>/dev/null &
+        done
+        ((uid++))
+    done
+    wait
+
+    local loc source
+    for source in ipinfo ip.sb; do
+        loc=""
+        for ((i = 1; i <= GEO_REPEAT; i++)); do
+            if [[ -s $tmpdir/${source/./}-$i ]]; then
+                loc=$(<"$tmpdir/${source/./}-$i")
+                break
+            fi
+        done
+        if [[ -n $loc ]]; then
+            printf "${BLUE}%-6s${RESET}: %s\n" "$source" "$loc"
+        else
+            printf "${BLUE}%-6s${RESET}: ${RED}failed${RESET}\n" "$source"
+        fi
+    done
+
+    uid=0
+    local ok fails avg tls_ms color tag tls total
+    for url in "${LATENCY_URLS[@]}"; do
+        ok=() fails=0
+        for ((i = 1; i <= LATENCY_REPEAT; i++)); do
+            if [[ -s $tmpdir/lat-$uid-$i ]]; then
+                ok+=("$(<"$tmpdir/lat-$uid-$i")")
+            else
+                ((fails++))
+            fi
+        done
+
+        if ((${#ok[@]} > 0)); then
+            avg=$(printf '%s\n' "${ok[@]}" | awk '
+                { tl+=$1; to+=$2 }
+                END { printf "%.3f %.3f", tl/NR, to/NR }')
+            read -r tls total <<<"$avg"
+            tls_ms=$(to-ms "$tls")
+            color=$(delay-color "$tls_ms")
+            if ((fails > 0)); then
+                tag=" ${RED}${BOLD}!! ${fails}/${LATENCY_REPEAT} failed${RESET}"
+            else
+                tag=""
+            fi
+            printf "${BLUE}%-26s${RESET} tls=%s%ss${RESET} total=%ss%s\n" \
+                "$url" "$color" "$tls" "$total" "$tag"
+        else
+            printf "${BLUE}%-26s${RESET} ${RED}${BOLD}!! all %d failed${RESET}\n" \
+                "$url" "$LATENCY_REPEAT"
+        fi
+        ((uid++))
+    done
+}
+
+run-proxies() {
+    if [[ -n $RAW ]]; then
+        local p
+        for p in "$@"; do echo "$p"; done
+        return
+    fi
+
+    local previous
+    if (($# > 0)); then
+        previous=$(curl -s "$API" | jq -r '.now')
+    fi
+
+    local i=0 label proxy total=$#
+    for proxy in "$@"; do
+        ((i++))
+        curlie -s PUT "$API" name="$proxy" >/dev/null
+        sleep 0.5
+        label=$(printf "%0${#total}d/%d: %s" "$i" "$total" "$proxy")
+        test-one-proxy "$label"
+    done
+
+    if [[ -n $previous ]]; then
+        curlie -s PUT "$API" name="$previous" >/dev/null
+    fi
+}
+
+mapfile -t PROXIES < <(curl -s "$API" | jq -r '.all-["DIRECT","REJECT"]|.[]')
+
+if (($# > 0)); then
+    FILTERED=()
+    for ARG in "$@"; do
+        for PROXY in "${PROXIES[@]}"; do
+            if [[ $PROXY == *$ARG* ]]; then
+                PROXIES=("${PROXIES[@]/$PROXY/}")
+                FILTERED+=("$PROXY")
+            fi
+        done
+    done
+    run-proxies "${FILTERED[@]}"
+
+elif [[ -n $ALL ]]; then
+    run-proxies "${PROXIES[@]}"
+
+else
+    FILTERED=()
+    for PROXY in "${PROXIES[@]}"; do
+        if [[ $PROXY != *" ("[23456789]"x)" ]]; then
+            FILTERED+=("$PROXY")
+        fi
+    done
+    run-proxies "${FILTERED[@]}"
+fi

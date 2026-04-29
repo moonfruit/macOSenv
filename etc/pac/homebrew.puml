@@ -99,6 +99,8 @@ skinparam usecase {
 (croc)
 (cspell)
 (cspell)-->(node)
+(ctx7)
+(ctx7)-->(node)
 (curl)
 (curl)-->(brotli)
 (curl)-->(libnghttp2)
@@ -314,7 +316,7 @@ skinparam usecase {
 (imagemagick)-->(xz)
 (imath) << dep >>
 (iperf3)
-(iperf3)-->(openssl@3)
+(iperf3)-->(openssl@4)
 (ipython)
 (ipython)-->(python@3.14)
 (jasper) << dep >>
@@ -439,6 +441,7 @@ skinparam usecase {
 (little-cms2)-->(jpeg-turbo)
 (little-cms2)-->(libtiff)
 (llhttp) << dep >>
+(llmfit)
 (llvm) << dep >>
 (llvm)-->(python@3.14)
 (llvm)-->(xz)
@@ -480,9 +483,14 @@ skinparam usecase {
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/ccstatusline)
 (moonfruit/tap/ccstatusline)-->(node)
+(moonfruit/tap/codebuddy-code)
+(moonfruit/tap/codebuddy-code)-->(node)
+(moonfruit/tap/codebuddy-code)-->(pcre2)
 (moonfruit/tap/dog)
 (moonfruit/tap/ethr)
 (moonfruit/tap/geo)
+(moonfruit/tap/gwt@2.7)
+(moonfruit/tap/gwt@2.7)-->(openjdk)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/inkos)
@@ -607,8 +615,12 @@ skinparam usecase {
 (openjdk@21)-->(little-cms2)
 (openjph) << dep >>
 (openjph)-->(libtiff)
+(openspec)
+(openspec)-->(node)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
+(openssl@4) << dep >>
+(openssl@4)-->(ca-certificates)
 (opus) << dep >>
 (oven-sh/bun/bun)
 (oxfmt)

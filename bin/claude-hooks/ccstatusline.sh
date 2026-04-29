@@ -2,7 +2,7 @@
 {
     IFS= read -r json
     IFS= read -r model
-} < <(jq -rn 'input | .model.display_name |= sub("-highspeed$"; "") | [., .model.id] | map(tostring) | join("\n")')
+} < <(jq -rn 'input | .model.display_name |= (sub("-highspeed$"; "") | gsub("-"; " ")) | [tostring, .model.id] | join("\n")')
 
 script="${BASH_SOURCE[0]}"
 while [[ -L "$script" ]]; do

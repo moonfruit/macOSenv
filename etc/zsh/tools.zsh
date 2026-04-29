@@ -45,8 +45,8 @@ local script=$BREW_PREFIX/Library/Homebrew/command-not-found/handler.sh
 unset script
 
 # for maven
-export MAVEN_OPTS="-Duser.language=en_us \
--Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
+export MAVEN_OPTS="-Duser.language=en_us"
+#export MAVEN_OPTS="$MAVEN_OPTS -Dstyle.debug=bold -Dstyle.info=blue -Dstyle.warning=yellow -Dstyle.error=red -Dstyle.success=green"
 alias mvncc='mvn clean compile'
 alias mvnccp='mvn clean compile -T1C'
 

@@ -196,7 +196,7 @@ trap 'rm -rf "$tmpdir"' EXIT
 ) >"$tmpdir/ip_02" &
 
 i=0
-for name in "AI" "EMBY"; do
+for name in "AI" "Claude" "ChatGPT" "EMBY"; do
     ((i++)) || true
     (
         echo -e "${BOLD}$name: [ptest-$i.ipcheck.ing]${RESET}"
@@ -205,7 +205,7 @@ for name in "AI" "EMBY"; do
 done
 
 wait
-cat "$tmpdir/ip_01" "$tmpdir/ip_02" "$tmpdir/ip_11" "$tmpdir/ip_12"
+cat "$tmpdir"/ip_*
 
 print_header "网站延迟检测"
 
@@ -220,7 +220,10 @@ declare -a sites=(
     "YouTube|https://www.youtube.com/favicon.ico"
     "GitHub|https://github.com/favicon.ico"
     "ChatGPT|https://chatgpt.com/favicon.ico"
+    "OpenAI|https://api.openai.com/"
+    "Anthropic|https://api.anthropic.com/"
     "Claude|https://claude.ai/favicon.ico"
+    "Gemini|https://gemini.google/favicon.ico"
     "ASK机场服|https://ask.ash.yt/favicon.ico"
     "JMS机场服|https://tv.ash.yt/favicon.ico"
 )

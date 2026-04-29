@@ -26,7 +26,7 @@ echo --- perl ---
 cpanm --installdeps --notest .
 
 echo --- python ---
-pip install -U -r requirements.txt pip
+pip install -U --upgrade-strategy eager -r requirements.txt pip setuptools wheel
 pip list -o
 
 echo --- ruby ---

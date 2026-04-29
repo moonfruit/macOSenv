@@ -4,7 +4,7 @@ run() {
     "$@"
 }
 
-docker images | awk 'NR>1{print $1":"$2}' | rg -v 'oracle/database|pack.local' | xargs docker inspect |
+docker images --format table | awk 'NR>1{print $1":"$2}' | rg -v 'oracle/database|pack.local' | xargs docker inspect |
     jq -r '.[] | "docker pull --platform \(.Os)/\(.Architecture) \(.RepoTags[0])"' |
     while read -r cmd; do
         run $cmd
