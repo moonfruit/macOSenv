@@ -94,6 +94,15 @@ return {
           },
         },
         sourcekit = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              format = {
+                printWidth = 120,
+              },
+            },
+          },
+        },
       },
     },
   },

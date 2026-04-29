@@ -1,0 +1,262 @@
+#!/usr/bin/env bash
+#
+# diskbench - 使用 fio 测试磁盘性能并以直观表格输出
+#
+# 用法: diskbench [-d DIR] [-s SIZE] [-t SECONDS] [-q] [-k]
+#   -d DIR      测试目录 (默认: 当前目录)
+#   -s SIZE     测试文件大小 (默认: 128M, 上限 256M; -q 时默认 32M)
+#   -t SECONDS  每项测试持续时间 (默认: 10; -q 时默认 5)
+#   -q          快速模式 (适合慢速 U 盘): 更小文件 / 更短时长 / 仅核心 4 项
+#   -k          保留测试文件 (默认: 测试结束后删除)
+#
+
+set -euo pipefail
+
+RED=$'\033[0;31m'
+GREEN=$'\033[0;32m'
+YELLOW=$'\033[0;33m'
+CYAN=$'\033[0;36m'
+BLUE=$'\033[0;34m'
+MAGENTA=$'\033[0;35m'
+BOLD=$'\033[1m'
+DIM=$'\033[2m'
+RESET=$'\033[0m'
+
+DIR="$PWD"
+SIZE=""
+RUNTIME=""
+KEEP=0
+QUICK=0
+
+usage() {
+    sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'
+    exit "${1:-0}"
+}
+
+while getopts "d:s:t:qkh" opt; do
+    case "$opt" in
+        d) DIR="$OPTARG" ;;
+        s) SIZE="$OPTARG" ;;
+        t) RUNTIME="$OPTARG" ;;
+        q) QUICK=1 ;;
+        k) KEEP=1 ;;
+        h) usage 0 ;;
+        *) usage 1 ;;
+    esac
+done
+
+if (( QUICK )); then
+    : "${SIZE:=32M}"
+    : "${RUNTIME:=5}"
+else
+    : "${SIZE:=128M}"
+    : "${RUNTIME:=10}"
+fi
+
+command -v fio >/dev/null 2>&1 || { echo "${RED}缺少 fio${RESET}" >&2; exit 1; }
+command -v jq  >/dev/null 2>&1 || { echo "${RED}缺少 jq${RESET}"  >&2; exit 1; }
+
+# 解析 SIZE 到字节，并强制 ≤ 256M
+parse_size() {
+    local s="${1^^}" num unit
+    if [[ "$s" =~ ^([0-9]+)([KMG]?)$ ]]; then
+        num="${BASH_REMATCH[1]}"; unit="${BASH_REMATCH[2]}"
+        case "$unit" in
+            "")  echo "$num" ;;
+            K)   echo $((num * 1024)) ;;
+            M)   echo $((num * 1024 * 1024)) ;;
+            G)   echo $((num * 1024 * 1024 * 1024)) ;;
+        esac
+    else
+        echo "${RED}无效的 SIZE: $1${RESET}" >&2; exit 1
+    fi
+}
+
+SIZE_BYTES=$(parse_size "$SIZE")
+MAX_BYTES=$((256 * 1024 * 1024))
+if (( SIZE_BYTES > MAX_BYTES )); then
+    echo "${YELLOW}SIZE $SIZE 超过 256M 上限，已调整为 256M${RESET}"
+    SIZE="256M"
+    SIZE_BYTES=$MAX_BYTES
+fi
+
+[[ -d "$DIR" ]] || { echo "${RED}目录不存在: $DIR${RESET}" >&2; exit 1; }
+DIR=$(cd "$DIR" && pwd)
+
+TMPFILE="$DIR/.diskbench.$$.tmp"
+JSONOUT=$(mktemp -t diskbench.XXXXXX.json)
+
+cleanup() {
+    [[ $KEEP -eq 0 ]] && rm -f "$TMPFILE"
+    rm -f "$JSONOUT"
+}
+trap cleanup EXIT INT TERM
+
+# 检测可用文件系统空间
+FS_AVAIL_KB=$(df -k "$DIR" | awk 'NR==2 {print $4}')
+FS_AVAIL_BYTES=$((FS_AVAIL_KB * 1024))
+if (( SIZE_BYTES > FS_AVAIL_BYTES / 2 )); then
+    echo "${YELLOW}警告: 测试目录可用空间偏小${RESET}"
+fi
+
+# 友好单位
+human_bw() { # KiB/s -> 自适应
+    awk -v k="$1" 'BEGIN{
+        if (k>=1048576) printf "%.2f GiB/s", k/1048576;
+        else if (k>=1024) printf "%.2f MiB/s", k/1024;
+        else printf "%.2f KiB/s", k;
+    }'
+}
+human_iops() {
+    awk -v n="$1" 'BEGIN{
+        if (n>=1000000) printf "%.2fM", n/1000000;
+        else if (n>=1000) printf "%.2fk", n/1000;
+        else printf "%.0f", n;
+    }'
+}
+human_lat_ns() { # ns -> us/ms
+    awk -v n="$1" 'BEGIN{
+        if (n>=1000000) printf "%.2f ms", n/1000000;
+        else if (n>=1000) printf "%.2f us", n/1000;
+        else printf "%.0f ns", n;
+    }'
+}
+
+# 终端显示宽度: ASCII=1, 非 ASCII (CJK 等)=2
+display_width() {
+    local s="$1" w=${#s} i ch
+    for ((i=0; i<${#s}; i++)); do
+        ch="${s:i:1}"
+        [[ "$ch" != [[:ascii:]] ]] && ((w++))
+    done
+    echo "$w"
+}
+
+# 按显示宽度右侧补空格
+pad() {
+    local s="$1" target="$2" w
+    w=$(display_width "$s")
+    local n=$((target - w))
+    (( n < 0 )) && n=0
+    printf "%s%*s" "$s" "$n" ""
+}
+
+run_fio() {
+    local name="$1" rw="$2" bs="$3" iodepth="$4" jobs="$5"
+    fio --name="$name" \
+        --filename="$TMPFILE" \
+        --size="$SIZE" \
+        --rw="$rw" \
+        --bs="$bs" \
+        --iodepth="$iodepth" \
+        --numjobs="$jobs" \
+        --runtime="$RUNTIME" \
+        --time_based \
+        --direct=0 \
+        --ioengine=posixaio \
+        --group_reporting \
+        --output-format=json \
+        --output="$JSONOUT" >/dev/null 2>&1
+}
+
+# 解析 read / write 段并输出表格行
+print_row() {
+    local label="$1"
+    local r_iops r_bw r_lat w_iops w_bw w_lat
+    r_iops=$(jq -r '.jobs[0].read.iops'                 "$JSONOUT")
+    r_bw=$(  jq -r '.jobs[0].read.bw'                   "$JSONOUT")  # KiB/s
+    r_lat=$( jq -r '.jobs[0].read.clat_ns.mean // 0'    "$JSONOUT")
+    w_iops=$(jq -r '.jobs[0].write.iops'                "$JSONOUT")
+    w_bw=$(  jq -r '.jobs[0].write.bw'                  "$JSONOUT")
+    w_lat=$( jq -r '.jobs[0].write.clat_ns.mean // 0'   "$JSONOUT")
+
+    local r_disp w_disp
+    if awk -v v="$r_iops" 'BEGIN{exit !(v>0)}'; then
+        r_disp=$(printf "%-12s %-10s %-12s" "$(human_bw "$r_bw")" "$(human_iops "$r_iops")" "$(human_lat_ns "$r_lat")")
+    else
+        r_disp=$(printf "%-36s" "-")
+    fi
+    if awk -v v="$w_iops" 'BEGIN{exit !(v>0)}'; then
+        w_disp=$(printf "%-12s %-10s %-12s" "$(human_bw "$w_bw")" "$(human_iops "$w_iops")" "$(human_lat_ns "$w_lat")")
+    else
+        w_disp=$(printf "%-36s" "-")
+    fi
+
+    printf "  %s │ %s │ %s\n" "$(pad "$label" 22)" "$r_disp" "$w_disp"
+}
+
+print_header() {
+    echo
+    echo "${BOLD}${CYAN}═══ $1 ═══${RESET}"
+}
+
+print_table_header() {
+    printf "  ${BOLD}%s │ %s │ %s${RESET}\n" \
+        "$(pad '测试项' 22)" \
+        "$(pad '读 (BW / IOPS / 延迟)' 36)" \
+        "$(pad '写 (BW / IOPS / 延迟)' 36)"
+    local sep
+    sep=$(printf '─%.0s' $(seq 1 100))
+    printf "  %s\n" "$sep"
+}
+
+# ========== 信息打印 ==========
+print_header "环境信息"
+echo "  ${DIM}测试目录:${RESET} $DIR"
+echo "  ${DIM}测试文件:${RESET} $TMPFILE"
+echo "  ${DIM}文件大小:${RESET} $SIZE"
+echo "  ${DIM}单项时长:${RESET} ${RUNTIME}s$( ((QUICK)) && echo "  ${DIM}(快速模式)${RESET}" )"
+echo "  ${DIM}文件系统:${RESET} $(df -h "$DIR" | awk 'NR==2 {printf "%s  (%s 可用 / %s 总量)", $1, $4, $2}')"
+echo "  ${DIM}fio 版本:${RESET} $(fio --version)"
+
+# ========== 执行测试 ==========
+if (( QUICK )); then
+    declare -a TESTS=(
+        "顺序写 1M|write|1M|1|1"
+        "顺序读 1M|read|1M|1|1"
+        "随机写 4K (QD1)|randwrite|4K|1|1"
+        "随机读 4K (QD1)|randread|4K|1|1"
+    )
+else
+    declare -a TESTS=(
+        "顺序写 1M|write|1M|1|1"
+        "顺序读 1M|read|1M|1|1"
+        "随机写 4K (QD32)|randwrite|4K|32|1"
+        "随机读 4K (QD32)|randread|4K|32|1"
+        "随机写 4K (QD1)|randwrite|4K|1|1"
+        "随机读 4K (QD1)|randread|4K|1|1"
+        "混合 70/30 4K (QD32)|randrw|4K|32|1"
+        "随机读写 64K (QD16)|randrw|64K|16|1"
+    )
+fi
+
+print_header "运行测试"
+results=()
+i=0
+total=${#TESTS[@]}
+for entry in "${TESTS[@]}"; do
+    i=$((i+1))
+    IFS='|' read -r label rw bs qd jobs <<<"$entry"
+    printf "  ${BLUE}[%d/%d]${RESET} %s ... " "$i" "$total" "$label"
+    run_fio "diskbench" "$rw" "$bs" "$qd" "$jobs"
+    cp "$JSONOUT" "${JSONOUT}.${i}"
+    results+=("$label|${JSONOUT}.${i}")
+    echo "${GREEN}✓${RESET}"
+done
+
+# ========== 输出表格 ==========
+print_header "结果汇总"
+print_table_header
+for r in "${results[@]}"; do
+    IFS='|' read -r label jf <<<"$r"
+    cp "$jf" "$JSONOUT"
+    print_row "$label"
+    rm -f "$jf"
+done
+
+print_header "评估提示"
+echo "  ${DIM}• 顺序读写衡量带宽上限；随机 4K 衡量 IOPS / 延迟${RESET}"
+echo "  ${DIM}• QD1 反映单线程同步 I/O 真实延迟${RESET}"
+echo "  ${DIM}• macOS 的 fio 不支持 O_DIRECT，已使用 posixaio + buffered I/O${RESET}"
+echo "  ${DIM}• 测试受系统缓存影响，请关闭其他高 I/O 进程获得稳定结果${RESET}"
+echo

@@ -97,10 +97,12 @@ def usage(usage_key: str, total_key: str, remains_key: str) -> Callable[[dict], 
         ms = int(remains)
         seconds = ms // 1000
         minutes = seconds // 60
-        hours = minutes // 60
-        minutes = minutes % 60
+        hours, minutes = minutes // 60, minutes % 60
+        days, hours = hours // 24, hours % 24
 
-        if hours > 0:
+        if days > 0:
+            time_str = f"{days}d{hours}h{minutes}m"
+        elif hours > 0:
             time_str = f"{hours}h{minutes}m"
         else:
             time_str = f"{minutes}m"
