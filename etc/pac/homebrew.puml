@@ -36,7 +36,7 @@ skinparam usecase {
 (azhuchkov/tools/tunblkctl)
 (basedpyright)
 (basedpyright)-->(node)
-(bash)
+(bash) << req >>
 (bash)-->(gettext)
 (bash)-->(ncurses)
 (bash)-->(readline)
@@ -112,7 +112,7 @@ skinparam usecase {
 (curlie)
 (dav1d) << dep >>
 (delve)
-(deno)
+(deno) << req >>
 (deno)-->(little-cms2)
 (deno)-->(sqlite)
 (direnv)
@@ -162,7 +162,7 @@ skinparam usecase {
 (freetype)-->(libpng)
 (fribidi) << dep >>
 (fzf)
-(gawk)
+(gawk) << req >>
 (gawk)-->(gettext)
 (gawk)-->(gmp)
 (gawk)-->(mpfr)
@@ -188,7 +188,7 @@ skinparam usecase {
 (gettext)-->(libunistring)
 (gh)
 (giflib) << dep >>
-(git)
+(git) << req >>
 (git)-->(gettext)
 (git)-->(pcre2)
 (git-delta)
@@ -212,7 +212,7 @@ skinparam usecase {
 (gnu-getopt)
 (gnu-sed)
 (gnu-tar)
-(gnupg)
+(gnupg) << req >>
 (gnupg)-->(gettext)
 (gnupg)-->(gnutls)
 (gnupg)-->(libassuan)
@@ -233,7 +233,7 @@ skinparam usecase {
 (gnutls)-->(nettle)
 (gnutls)-->(p11-kit)
 (gnutls)-->(unbound)
-(go)
+(go) << req >>
 (gofumpt)
 (gofumpt)-->(go)
 (goimports)
@@ -361,6 +361,7 @@ skinparam usecase {
 (libgcrypt)-->(libgpg-error)
 (libgit2) << dep >>
 (libgit2)-->(libssh2)
+(libgit2)-->(llhttp)
 (libgpg-error) << dep >>
 (libgpg-error)-->(gettext)
 (libheif) << dep >>
@@ -451,7 +452,7 @@ skinparam usecase {
 (logrotate)-->(popt)
 (lpeg) << dep >>
 (lrzsz)
-(lua)
+(lua) << req >>
 (lua-language-server)
 (lua@5.4) << dep >>
 (luacheck)
@@ -555,7 +556,7 @@ skinparam usecase {
 (nmap)-->(openssl@3)
 (nmap)-->(pcre2)
 (nmap)-->(python@3.14)
-(node)
+(node) << req >>
 (node)-->(ada-url)
 (node)-->(brotli)
 (node)-->(c-ares)
@@ -585,7 +586,7 @@ skinparam usecase {
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
 (openexr)-->(openjph)
-(openjdk)
+(openjdk) << req >>
 (openjdk)-->(freetype)
 (openjdk)-->(giflib)
 (openjdk)-->(harfbuzz)
@@ -606,7 +607,7 @@ skinparam usecase {
 (openjdk@17)-->(jpeg-turbo)
 (openjdk@17)-->(libpng)
 (openjdk@17)-->(little-cms2)
-(openjdk@21)
+(openjdk@21) << req >>
 (openjdk@21)-->(freetype)
 (openjdk@21)-->(giflib)
 (openjdk@21)-->(harfbuzz)
@@ -657,6 +658,8 @@ skinparam usecase {
 (plantuml)
 (plantuml)-->(graphviz)
 (plantuml)-->(openjdk)
+(playwright-mcp)
+(playwright-mcp)-->(node)
 (pnpm)
 (popt) << dep >>
 (postgresql@18)
@@ -684,7 +687,7 @@ skinparam usecase {
 (python@3.14)-->(sqlite)
 (python@3.14)-->(xz)
 (python@3.14)-->(zstd)
-(qemu)
+(qemu) << req >>
 (qemu)-->(capstone)
 (qemu)-->(dtc)
 (qemu)-->(glib)
@@ -705,7 +708,7 @@ skinparam usecase {
 (readline) << dep >>
 (redis)
 (redis)-->(openssl@3)
-(ripgrep)
+(ripgrep) << req >>
 (ripgrep)-->(pcre2)
 (ripgrep-all)
 (ripgrep-all)-->(ripgrep)
@@ -718,7 +721,7 @@ skinparam usecase {
 (rsync)-->(popt)
 (rsync)-->(xxhash)
 (rsync)-->(zstd)
-(ruby)
+(ruby) << req >>
 (ruby)-->(libyaml)
 (ruby)-->(openssl@3)
 (ruby-lsp)
@@ -734,7 +737,7 @@ skinparam usecase {
 (sd)
 (sdl2) << dep >>
 (selene)
-(shellcheck)
+(shellcheck) << req >>
 (shellcheck)-->(gmp)
 (shfmt)
 (simdjson) << dep >>
@@ -759,7 +762,7 @@ skinparam usecase {
 (steipete/tap/imsg)
 (steipete/tap/remindctl)
 (stylua)
-(subversion)
+(subversion) << req >>
 (subversion)-->(apache-serf)
 (subversion)-->(apr)
 (subversion)-->(apr-util)

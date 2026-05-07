@@ -20,11 +20,13 @@ Claude 可以使用以下工具：
 - 如果需要编写`ruby`脚本
   - **可执行**脚本开头应为 `#!/usr/bin/env ruby`
   - 运行脚本应使用`/opt/homebrew/opt/ruby/bin/ruby`
+  - 如果是在`homebrew`相关项目中，应使用`brew ruby`、`brew typecheck`和`brew rubocop`
 
-- 优先使用`fd`进行文件查找而不是`find`
-- 优先使用`ripgrep`即`rg`进行文本搜索而不是`grep`
-- 优先使用`jq`处理`JSON`数据而不是`sed`或`awk`
-- 优先考虑使用`yq`处理`YAML`,`XML`,`TOML`数据而不是`sed`或`awk`
+- 优先使用内置工具完成任务（比如 Glob、Grep），如果需要构建 Bash 命令的话，参考以下说明：
+  - 优先使用`fd`进行文件查找而不是`find`
+  - 优先使用`ripgrep`即`rg`进行文件内容搜索而不是`grep`
+  - 优先使用`jq`处理`JSON`数据而不是`sed`或`awk`
+  - 优先考虑使用`yq`处理`YAML`,`XML`,`TOML`数据而不是`sed`或`awk`
 
 - 必要时可以使用`homebrew`安装工具
 

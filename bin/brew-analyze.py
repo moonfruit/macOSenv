@@ -15,6 +15,12 @@ skinparam usecase {
     BackgroundColor<< dep >> DarkGoldenRod
 }"""
     )
+    referenced = set()
+    for obj in data:
+        installed = obj.get("installed")
+        if installed:
+            for dep in installed[0].get("runtime_dependencies") or []:
+                referenced.add(dep["full_name"])
     lines = []
     for obj in data:
         name = obj["full_name"]
@@ -22,11 +28,10 @@ skinparam usecase {
         installed = obj.get("installed")
         if installed:
             installed = installed[0]
-        if installed.get("installed_as_dependency"):
-            if installed.get("installed_on_request"):
-                lines.append("(%s) << req >>" % name)
-            else:
-                lines.append("(%s) << dep >>" % name)
+        if installed.get("installed_on_request") is False:
+            lines.append("(%s) << dep >>" % name)
+        elif name in referenced:
+            lines.append("(%s) << req >>" % name)
         else:
             lines.append("(%s)" % name)
         runtime_deps = installed.get("runtime_dependencies")

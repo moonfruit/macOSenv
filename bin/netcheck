@@ -19,19 +19,23 @@ print_header() {
     echo -e "\n${BOLD}${CYAN}═══ $1 ═══${RESET}\n"
 }
 
-fetch_ipip() {
-    local url='https://myip.ipip.net/json'
+fetch_ipinfo() {
+    local url='https://ipinfo.io/json'
     local resp
     resp=$(curl "${CURL_OPTS[@]}" "$url" 2>/dev/null) || {
         echo -e "  ${RED}请求失败${RESET}"
         return
     }
-    local ip loc
-    ip=$(echo "$resp" | jq -r '.data.ip // empty')
-    loc=$(echo "$resp" | jq -r '.data.location | join(" ")' 2>/dev/null)
+    local ip country region city org
+    ip=$(echo "$resp" | jq -r '.ip // empty')
+    country=$(echo "$resp" | jq -r '.country // ""')
+    region=$(echo "$resp" | jq -r '.region // ""')
+    city=$(echo "$resp" | jq -r '.city // ""')
+    org=$(echo "$resp" | jq -r '.org // ""' | sed -E 's/^AS[0-9]+[[:space:]]*//')
     if [[ -n "$ip" ]]; then
         echo -e "  IP:   ${GREEN}${ip}${RESET}"
-        echo -e "  位置: ${YELLOW}${loc}${RESET}"
+        echo -e "  位置: ${YELLOW}${country} ${region} ${city}${RESET}"
+        [[ -n "$org" ]] && echo -e "  组织: ${YELLOW}${org}${RESET}"
     else
         echo -e "  ${RED}解析失败${RESET}: $resp"
     fi
@@ -186,8 +190,8 @@ tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT
 
 (
-    echo -e "${BOLD}DIRECT: [ipip.net]${RESET}"
-    fetch_ipip
+    echo -e "${BOLD}DIRECT: [ipinfo.io]${RESET}"
+    fetch_ipinfo
 ) >"$tmpdir/ip_01" &
 
 (

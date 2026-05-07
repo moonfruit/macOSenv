@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+caskroom="$(brew --prefix)/Caskroom/sqlcl"
+version=$(fd -C "$caskroom" --exact-depth 1 -td | sort -V | tail -n 1)
+
+if [[ -z "${version:-}" ]]; then
+    echo "sqlcl: no version found under $caskroom" >&2
+    exit 1
+fi
+
+exec "$caskroom/$version/sqlcl/bin/sql" "$@"
+
+# cspell:words sqlcl
