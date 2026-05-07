@@ -2,7 +2,7 @@
 # shellcheck disable=SC1090
 
 # for secrets
-source "$ENV/etc/secret/secret.env"
+eval $(sops decrypt "$ENV/etc/secrets/secret.env" | sed -E 's/^(\s*\w+=)/export \1/')
 
 # for minimax
 export MINIMAX_API_HOST="https://api.minimaxi.com"

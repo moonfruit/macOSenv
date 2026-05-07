@@ -49,6 +49,8 @@
 # resize-overlay-duration = 4s 200ms
 
 #theme = light:Rose Pine Dawn,dark:Rose Pine
+#theme = dark:Catppuccin Macchiato,light:Catppuccin Latte
+theme = Ghostty Default Style Dark
 
 #font-family = JetBrainsMono Nerd Font
 font-family = Maple Mono NF CN

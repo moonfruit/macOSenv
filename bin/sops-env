@@ -1,0 +1,9 @@
+#!/bin/bash
+if [[ -f "$1" ]]; then
+    SECRET="$1"
+elif [[ -f "$ENV/etc/secrets/$1.env" ]]; then
+    SECRET="$ENV/etc/secrets/$1.env"
+fi
+if [[ -n "$SECRET" ]]; then
+    sops decrypt "$SECRET" | sed -E 's/^(\s*\w+=)/export \1/'
+fi

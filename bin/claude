@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
-#if [[ $TERM_PROGRAM == "iTerm.app" ]]; then
-#    unset TERM_PROGRAM
-#fi
-
 source "$ENV/lib/bash/native.sh"
 NAME="$(simple-basename "$0")"
 
-RC="$ENV/etc/secret/${NAME}.env"
-# shellcheck disable=SC1090
-[[ -r "$RC" ]] && source "$RC"
+RC="$ENV/etc/secrets/${NAME}.env"
+if [[ -r "$RC" ]]; then
+    eval "$(sops decrypt "$RC" | sed -E 's/^(\s*\w+=)/export \1/')"
+fi
 
 if [[ $NAME != claude && -n "$CMUX_SURFACE_ID" && -z "${_CLAUDE_WRAPPER}" ]]; then
     CLAUDE=/Applications/cmux.app/Contents/Resources/bin/claude

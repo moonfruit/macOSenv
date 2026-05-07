@@ -11,6 +11,7 @@ words:
   - ccstatusline
   - cips
   - clangd
+  - cmux
   - cnaps
   - codelldb
   - CPPFLAGS

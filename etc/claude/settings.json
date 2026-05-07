@@ -1,5 +1,6 @@
 {
   "env": {
+    "API_TIMEOUT_MS": "600000",
     "MCP_TIMEOUT": "120000",
     "MCP_TOOL_TIMEOUT": "120000"
   },
