@@ -10,6 +10,7 @@ skinparam usecase {
 (actionlint)-->(shellcheck)
 (ada-url) << dep >>
 (ada-url)-->(fmt)
+(age)
 (ant)
 (ant)-->(openjdk)
 (aom) << dep >>
@@ -162,7 +163,7 @@ skinparam usecase {
 (freetype)-->(libpng)
 (fribidi) << dep >>
 (fzf)
-(gawk) << req >>
+(gawk)
 (gawk)-->(gettext)
 (gawk)-->(gmp)
 (gawk)-->(mpfr)
@@ -195,9 +196,6 @@ skinparam usecase {
 (git-delta)-->(libgit2)
 (git-delta)-->(oniguruma)
 (git-lfs)
-(git-secret)
-(git-secret)-->(gawk)
-(git-secret)-->(gnupg)
 (git-svn)
 (git-svn)-->(git)
 (git-svn)-->(subversion)
@@ -212,7 +210,7 @@ skinparam usecase {
 (gnu-getopt)
 (gnu-sed)
 (gnu-tar)
-(gnupg) << req >>
+(gnupg) << dep >>
 (gnupg)-->(gettext)
 (gnupg)-->(gnutls)
 (gnupg)-->(libassuan)
@@ -687,7 +685,7 @@ skinparam usecase {
 (python@3.14)-->(sqlite)
 (python@3.14)-->(xz)
 (python@3.14)-->(zstd)
-(qemu) << req >>
+(qemu) << dep >>
 (qemu)-->(capstone)
 (qemu)-->(dtc)
 (qemu)-->(glib)
@@ -750,6 +748,7 @@ skinparam usecase {
 (snappy) << dep >>
 (sniffnet)
 (sniffnet)-->(openssl@3)
+(sops)
 (sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
