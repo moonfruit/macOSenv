@@ -72,7 +72,7 @@
     [],
     []
   ],
-  "flexMode": "full-minus-40",
+  "flexMode": "full",
   "compactThreshold": 60,
   "colorLevel": 3,
   "defaultPadding": " ",
@@ -81,10 +81,16 @@
   "minimalistMode": true,
   "powerline": {
     "enabled": true,
-    "separators": [""],
-    "separatorInvertBackground": [false],
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
     "startCaps": [],
-    "endCaps": [""],
+    "endCaps": [
+      ""
+    ],
     "theme": "nord-aurora",
     "autoAlign": true,
     "continueThemeAcrossLines": true

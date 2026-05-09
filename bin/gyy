@@ -1,3 +1,0 @@
-#!/bin/sh
-git config user.name 于洋
-git config user.email yang.yu@gingkoo.com
