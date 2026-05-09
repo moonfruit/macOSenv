@@ -5,6 +5,7 @@ source "$ENV/lib/bash/github.sh"
 source "$ENV/lib/bash/native.sh"
 
 DIR=$(main-script-directory)
+CACHE="$DIR/cache"
 SING_RULES="$WORKSPACE/proxy/sing-rules"
 
 if [[ -n "$1" ]]; then
@@ -16,7 +17,7 @@ fi
 
 h1 Updating config.json
 
-mkdir -p dat
+mkdir -p dat "$CACHE"
 while read -r NAME URL UA; do
     # 如果 dat/$NAME 已存在则跳过
     if [[ -f "dat/$NAME" ]]; then
@@ -24,7 +25,17 @@ while read -r NAME URL UA; do
         continue
     fi
     h2 Downloading "$NAME"
-    "$SING_RULES/subscribe.sh" "$URL" "dat/$NAME" "$UA" || exit 1
+    if "$SING_RULES/subscribe.sh" "$URL" "dat/$NAME" "$UA"; then
+        cp -p "dat/$NAME" "$CACHE/$NAME"
+        [[ -f "dat/$NAME.info" ]] && cp -p "dat/$NAME.info" "$CACHE/$NAME.info"
+    elif [[ -f "$CACHE/$NAME" ]]; then
+        warn "Failed to download $NAME, using cached copy"
+        cp -p "$CACHE/$NAME" "dat/$NAME"
+        [[ -f "$CACHE/$NAME.info" ]] && cp -p "$CACHE/$NAME.info" "dat/$NAME.info"
+    else
+        echo "Failed to download $NAME and no cached copy exists" >&2
+        exit 1
+    fi
 done < <(rg -v '^#' "$DIR/clash.txt")
 
 sing-exec() {

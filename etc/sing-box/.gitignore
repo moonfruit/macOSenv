@@ -1,5 +1,6 @@
 *.db
 
+/cache
 /clash.txt
 /gitee.txt
 /test
