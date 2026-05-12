@@ -2,17 +2,23 @@
 source "$ENV/lib/bash/native.sh"
 NAME="$(simple-basename "$0")"
 
+DEFAULT="$ENV/etc/secrets/claude-3rd.sh"
+if [[ "$NAME" != "claude" && -r "$DEFAULT" ]]; then
+    # shellcheck disable=SC1090
+    source "$DEFAULT"
+fi
+
 RC="$ENV/etc/secrets/${NAME}.env"
 if [[ -r "$RC" ]]; then
     eval "$(sops decrypt "$RC" | sed -E 's/^(\s*\w+=)/export \1/')"
 fi
 
-if [[ $NAME != claude && -n "$CMUX_SURFACE_ID" && -z "${_CLAUDE_WRAPPER}" ]]; then
+if [[ $NAME != claude && -n "$CMUX_SURFACE_ID" && -z "${CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV}" ]]; then
     CLAUDE=/Applications/cmux.app/Contents/Resources/bin/claude
-    export _CLAUDE_WRAPPER=1
+    export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
 else
     CLAUDE=/opt/homebrew/bin/claude
-    unset _CLAUDE_WRAPPER
+    unset CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV
     export CLAUDE_CODE_NO_FLICKER=1
 fi
 

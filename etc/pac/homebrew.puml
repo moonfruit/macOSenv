@@ -137,6 +137,7 @@ skinparam usecase {
 (dotnet@9)-->(brotli)
 (dotnet@9)-->(icu4c@78)
 (dotnet@9)-->(openssl@3)
+(dry)
 (dtc) << dep >>
 (dufs)
 (dust)

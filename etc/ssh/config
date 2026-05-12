@@ -33,7 +33,6 @@ Host git.server.gingkoo
 Host 192.168.50.1 asusrouter.com www.asusrouter.com router.asus.com router.dkmooncat.heiyu.space
     User moon
     Port 20022
-    SetEnv TERM=xterm
     WarnWeakCrypto false
 
 Host 192.168.50.12 aipod.dkmooncat.heiyu.space

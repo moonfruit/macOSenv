@@ -1,8 +1,12 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "API_TIMEOUT_MS": "600000",
     "MCP_TIMEOUT": "120000",
-    "MCP_TOOL_TIMEOUT": "120000"
+    "MCP_TOOL_TIMEOUT": "300000"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
   },
   "permissions": {
     "allow": [
@@ -14,6 +18,7 @@
       "Bash(find:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
+      "Bash(git ls-tree:*)",
       "Bash(git show:*)",
       "Bash(go build:*)",
       "Bash(go doc:*)",
@@ -44,11 +49,14 @@
       "mcp__dash__load_documentation_page",
       "mcp__dash__search_documentation",
       "mcp__minimax__web_search",
+      "mcp__plugin_github_github__search_issues",
+      "mcp__plugin_github_github__search_pull_requests",
       "Read(//private/tmp/**)",
       "Read(//tmp/**)",
       "WebFetch(domain:docs.anthropic.com)"
     ],
-    "deny": []
+    "deny": [],
+    "defaultMode": "auto"
   },
   "hooks": {
     "Notification": [
@@ -62,8 +70,29 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/moon/Workspace.localized/env/bin/claude-hooks/ccstatusline.sh",
+    "padding": 0
+  },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "codex@openai-codex": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "ruby-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "claude-code-plugins": {
@@ -71,8 +100,17 @@
         "source": "github",
         "repo": "anthropics/claude-code"
       }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
     }
   },
-  "verbose": false,
-  "model": "opus"
+  "autoUpdatesChannel": "latest",
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "skipDangerousModePermissionPrompt": true,
+  "verbose": false
 }
