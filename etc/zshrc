@@ -98,7 +98,8 @@ ZSH_DISABLE_COMPFIX="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(autojump colored-man-pages extract git gradle mvn zsh-interactive-cd
-    fast-syntax-highlighting zsh-autosuggestions zsh-history-substring-search iterm2 yy)
+    fast-syntax-highlighting zsh-autosuggestions zsh-history-substring-search
+    iterm2 ghostty yy)
 
 HISTFILE="$ZDOTDIR/history.txt"
 ZSH_CACHE_DIR="$ZDOTDIR/cache"
@@ -137,4 +138,3 @@ unset BREW_PREFIX
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # zprof
-which ssh

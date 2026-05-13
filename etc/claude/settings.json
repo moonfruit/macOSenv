@@ -16,6 +16,7 @@
       "Bash(echo:*)",
       "Bash(fd:*)",
       "Bash(find:*)",
+      "Bash(gh search:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
       "Bash(git ls-tree:*)",
@@ -40,6 +41,9 @@
       "Bash(xargs ls:*)",
       "Bash(xxd:*)",
       "Bash(yes)",
+      "Read(//private/tmp/**)",
+      "Read(//tmp/**)",
+      "WebFetch(domain:docs.anthropic.com)",
       "mcp__chrome-devtools__get_network_request",
       "mcp__chrome-devtools__list_network_requests",
       "mcp__chrome-devtools__list_pages",
@@ -48,12 +52,10 @@
       "mcp__dash__list_installed_docsets",
       "mcp__dash__load_documentation_page",
       "mcp__dash__search_documentation",
+      "mcp__homebrew__style",
       "mcp__minimax__web_search",
       "mcp__plugin_github_github__search_issues",
-      "mcp__plugin_github_github__search_pull_requests",
-      "Read(//private/tmp/**)",
-      "Read(//tmp/**)",
-      "WebFetch(domain:docs.anthropic.com)"
+      "mcp__plugin_github_github__search_pull_requests"
     ],
     "deny": [],
     "defaultMode": "auto"

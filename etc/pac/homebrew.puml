@@ -496,6 +496,7 @@ skinparam usecase {
 (moonfruit/tap/dog)
 (moonfruit/tap/ethr)
 (moonfruit/tap/geo)
+(moonfruit/tap/gotools)
 (moonfruit/tap/gwt@2.7)
 (moonfruit/tap/gwt@2.7)-->(openjdk)
 (moonfruit/tap/impl)

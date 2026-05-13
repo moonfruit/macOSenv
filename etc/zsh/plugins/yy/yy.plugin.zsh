@@ -16,7 +16,7 @@ _ignored_users+=Guest
 zstyle ':completion:*:*:*:users' ignored-patterns $_ignored_users
 
 # for ssh
-zstyle -e ':completion:*:my-accounts' users-hosts 'reply=($(cat ~/.ssh/save_hosts))'
+zstyle -e ':completion:*:my-accounts' users-hosts 'reply=($(cat ~/.ssh/saved_hosts))'
 
 # for npm
 function _npm_completion() {

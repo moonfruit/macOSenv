@@ -19,7 +19,9 @@ if [[ $NAME != claude && -n "$CMUX_SURFACE_ID" && -z "${CMUX_PRESERVE_CLAUDE_AUT
 else
     CLAUDE=/opt/homebrew/bin/claude
     unset CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV
-    export CLAUDE_CODE_NO_FLICKER=1
+    if [[ -z "$CLAUDE_CODE_NO_FLICKER" ]]; then
+        export CLAUDE_CODE_NO_FLICKER=1
+    fi
 fi
 
 exec "$CLAUDE" "$@"

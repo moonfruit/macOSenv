@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 /usr/bin/ssh "$@" || exit
 
-for VAR in "$@"; do
-    if [[ $VAR == *@* && $VAR != *=* ]]; then
-        FOUND=1
-        break
-    fi
-done
+read -r U H < <(/usr/bin/ssh -G "$@" 2>/dev/null | awk '
+    $1=="user"     {u=$2}
+    $1=="hostname" {h=$2}
+    END            {print u, h}
+')
 
-[[ -z $FOUND ]] && exit
+[[ -z $U || -z $H ]] && exit
 
-SAVE=$HOME/.ssh/save_hosts
-if ! rg -Fxq "$VAR" "$SAVE"; then
-    echo "$VAR" >>"$SAVE"
-    sort -uo "$SAVE" "$SAVE"
+VAR="$U@$H"
+SAVED=$HOME/.ssh/saved_hosts
+
+if ! rg -Fxq "$VAR" "$SAVED"; then
+    echo "$VAR" >>"$SAVED"
+    uhsort -ui "$SAVED"
 fi

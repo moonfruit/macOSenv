@@ -47,4 +47,8 @@ mvn clean release:clean
 mvn release:prepare -Dtag="$RELEASE" -DreleaseVersion="$RELEASE" -DdevelopmentVersion="$DEVELOP" "$@"
 mvn release:clean
 
-it2attention start
+if [[ ${__CFBundleIdentifier:-} == com.cmuxterm.app ]]; then
+    cmux notify --title "[$(basename "$PWD")][$RELEASE] release finished" >/dev/null
+elif hash it2check 2>/dev/null && it2check; then
+    it2attention start
+fi
