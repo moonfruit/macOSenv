@@ -129,10 +129,6 @@ skinparam usecase {
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
-(dotnet) << dep >>
-(dotnet)-->(brotli)
-(dotnet)-->(icu4c@78)
-(dotnet)-->(openssl@3)
 (dotnet@9) << dep >>
 (dotnet@9)-->(brotli)
 (dotnet@9)-->(icu4c@78)
@@ -293,7 +289,6 @@ skinparam usecase {
 (harfbuzz)-->(icu4c@78)
 (harfbuzz)-->(libpng)
 (hazelcast/hz/hazelcast)
-(hazelcast/hz/hazelcast)-->(openjdk@21)
 (hazelcast/hz/hazelcast-management-center)
 (hazelcast/hz/hazelcast-management-center)-->(openjdk@21)
 (hdrhistogram_c) << dep >>
@@ -506,12 +501,12 @@ skinparam usecase {
 (moonfruit/tap/lzc-cli)
 (moonfruit/tap/lzc-cli)-->(node)
 (moonfruit/tap/macism)
+(moonfruit/tap/officecli)
+(moonfruit/tap/officecli)-->(brotli)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
-(moonfruit/tap/seqcli)
-(moonfruit/tap/seqcli)-->(dotnet)
 (moonfruit/tap/sing-box-beta)
 (moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/sing2seq)
