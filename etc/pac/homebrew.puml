@@ -507,6 +507,8 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
+(moonfruit/tap/seqcli)
+(moonfruit/tap/seqcli)-->(brotli)
 (moonfruit/tap/sing-box-beta)
 (moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/sing2seq)

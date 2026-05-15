@@ -6,5 +6,6 @@ source "$ENV/lib/bash/console.sh"
 h1 "Updating uv tools"
 if run-if-exists uv --version; then
     uv tool upgrade --all
+    uv cache prune
 fi
 echo

@@ -55,6 +55,11 @@ set_keymaps({
   visual = {
     ["<D-c>"] = '"+y',
     ["<M-A>c"] = '"+y',
+    -- 任意鼠标操作产生的选区在松开时自动复制到系统剪贴板，并保持选区高亮。
+    -- <LeftRelease> 单击拖拽；<2-LeftRelease> 双击选词/按词拖拽；<3-LeftRelease> 三击选行/按行拖拽。
+    ["<LeftRelease>"] = '"+ygv',
+    ["<2-LeftRelease>"] = '"+ygv',
+    ["<3-LeftRelease>"] = '"+ygv',
   },
   insert = {
     ["<D-s>"] = "<C-o><Cmd>up<CR>",

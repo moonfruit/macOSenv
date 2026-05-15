@@ -35,6 +35,9 @@ export DI_ARGS="-f sMbuvpt"
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
+# for seqcli
+export SEQCLI_STORAGE_PATH="$ENV/etc/seqcli"
+
 # for homebrew
 export HOMEBREW_BAT=true
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=7

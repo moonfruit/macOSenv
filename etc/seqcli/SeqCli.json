@@ -1,0 +1,37 @@
+{
+  "connection": {
+    "serverUrl": "http://app.seq.orb.local",
+    "apiKey": "H1qeDqH0ZjNqbMtJDObD",
+    "pooledConnectionLifetimeMilliseconds": null,
+    "eventSizeLimitBytes": 262144,
+    "batchSizeLimitBytes": 10485760
+  },
+  "output": {
+    "disableColor": false,
+    "forceColor": false
+  },
+  "forwarder": {
+    "storage": {
+      "targetChunkSizeBytes": 52428800,
+      "maxChunks": null
+    },
+    "diagnostics": {
+      "internalLoggingLevel": "Information",
+      "internalLogServerUri": null,
+      "internalLogServerApiKey": null,
+      "exposeIngestionLog": false,
+      "ingestionLogShowDetail": false
+    },
+    "api": {
+      "listenUri": "http://127.0.0.1:15341"
+    },
+    "useApiKeyForwarding": false
+  },
+  "encryption": {
+    "encryptor": null,
+    "encryptorArgs": null,
+    "decryptor": null,
+    "decryptorArgs": null
+  },
+  "profiles": {}
+}
