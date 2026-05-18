@@ -14,7 +14,6 @@ skinparam usecase {
 (ant)
 (ant)-->(openjdk)
 (aom) << dep >>
-(aom)-->(jpeg-xl)
 (aom)-->(libvmaf)
 (apache-serf) << dep >>
 (apache-serf)-->(apr)
@@ -121,6 +120,7 @@ skinparam usecase {
 (deno) << req >>
 (deno)-->(little-cms2)
 (deno)-->(sqlite)
+(di)
 (direnv)
 (direnv)-->(bash)
 (diskonaut)
@@ -135,6 +135,7 @@ skinparam usecase {
 (dotnet@9)-->(openssl@3)
 (dry)
 (dtc) << dep >>
+(duf)
 (dufs)
 (dust)
 (dwarfutils) << dep >>
@@ -304,6 +305,7 @@ skinparam usecase {
 (httpie)-->(python@3.14)
 (hyperfine)
 (icu4c@78) << dep >>
+(iftop)
 (imagemagick)
 (imagemagick)-->(freetype)
 (imagemagick)-->(jpeg-turbo)
@@ -765,6 +767,8 @@ skinparam usecase {
 (simdutf)-->(icu4c@78)
 (sing-box)
 (sk)
+(skills)
+(skills)-->(node)
 (skopeo)
 (skopeo)-->(gpgme)
 (snappy) << dep >>
