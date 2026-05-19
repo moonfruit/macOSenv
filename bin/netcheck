@@ -33,8 +33,11 @@ fetch_ipinfo() {
     city=$(echo "$resp" | jq -r '.city // ""')
     org=$(echo "$resp" | jq -r '.org // ""' | sed -E 's/^AS[0-9]+[[:space:]]*//')
     if [[ -n "$ip" ]]; then
+        local flag prefix=""
+        flag=$(country_flag "$country")
+        [[ -n "$flag" ]] && prefix="${flag} "
         echo -e "  IP:   ${GREEN}${ip}${RESET}"
-        echo -e "  位置: ${YELLOW}${country} ${region} ${city}${RESET}"
+        echo -e "  位置: ${YELLOW}${prefix}${country} ${region} ${city}${RESET}"
         [[ -n "$org" ]] && echo -e "  组织: ${YELLOW}${org}${RESET}"
     else
         echo -e "  ${RED}解析失败${RESET}: $resp"
@@ -48,21 +51,94 @@ fetch_ipsb() {
         echo -e "  ${RED}请求失败${RESET}"
         return
     }
-    local ip country region city isp org
+    local ip country country_code region city isp org
     ip=$(echo "$resp" | jq -r '.ip // empty')
     country=$(echo "$resp" | jq -r '.country // ""')
+    country_code=$(echo "$resp" | jq -r '.country_code // ""')
     region=$(echo "$resp" | jq -r '.region // ""')
     city=$(echo "$resp" | jq -r '.city // ""')
     isp=$(echo "$resp" | jq -r '.isp // ""')
     org=$(echo "$resp" | jq -r '.organization // ""')
     if [[ -n "$ip" ]]; then
+        local flag prefix=""
+        flag=$(country_flag "$country_code")
+        [[ -n "$flag" ]] && prefix="${flag} "
         echo -e "  IP:   ${GREEN}${ip}${RESET}"
-        echo -e "  位置: ${YELLOW}${country} ${region} ${city}${RESET}"
+        echo -e "  位置: ${YELLOW}${prefix}${country} ${region} ${city}${RESET}"
         echo -e "  ISP:  ${YELLOW}${isp}${RESET}"
         [[ -n "$org" && "$org" != "$isp" ]] && echo -e "  组织: ${YELLOW}${org}${RESET}"
     else
         echo -e "  ${RED}解析失败${RESET}: $resp"
     fi
+}
+
+country_flag() {
+    local code=${1^^}
+    [[ ${#code} -ne 2 ]] && return
+    local c1 c2 hex1 hex2
+    printf -v c1 '%d' "'${code:0:1}"
+    printf -v c2 '%d' "'${code:1:1}"
+    ((c1 < 65 || c1 > 90 || c2 < 65 || c2 > 90)) && return
+    printf -v hex1 '%08x' $((0x1F1E6 + c1 - 65))
+    printf -v hex2 '%08x' $((0x1F1E6 + c2 - 65))
+    printf "\U${hex1}\U${hex2}"
+}
+
+country_name() {
+    local code=${1^^}
+    declare -A names=(
+        # 东亚
+        [CN]="中国" [HK]="香港" [MO]="澳门" [TW]="台湾"
+        [JP]="日本" [KR]="韩国" [KP]="朝鲜" [MN]="蒙古"
+        # 东南亚
+        [SG]="新加坡" [MY]="马来西亚" [TH]="泰国" [ID]="印尼"
+        [PH]="菲律宾" [VN]="越南" [KH]="柬埔寨" [LA]="老挝"
+        [MM]="缅甸" [BN]="文莱" [TL]="东帝汶"
+        # 南亚
+        [IN]="印度" [PK]="巴基斯坦" [BD]="孟加拉国" [LK]="斯里兰卡"
+        [NP]="尼泊尔" [BT]="不丹" [MV]="马尔代夫"
+        # 大洋洲
+        [AU]="澳大利亚" [NZ]="新西兰" [FJ]="斐济" [PG]="巴布亚新几内亚"
+        # 北美
+        [US]="美国" [CA]="加拿大" [MX]="墨西哥"
+        # 中南美
+        [BR]="巴西" [AR]="阿根廷" [CL]="智利" [CO]="哥伦比亚"
+        [PE]="秘鲁" [VE]="委内瑞拉" [UY]="乌拉圭" [PY]="巴拉圭"
+        [BO]="玻利维亚" [EC]="厄瓜多尔" [CU]="古巴" [DO]="多米尼加"
+        [PA]="巴拿马" [CR]="哥斯达黎加" [GT]="危地马拉" [HN]="洪都拉斯"
+        [SV]="萨尔瓦多" [NI]="尼加拉瓜" [JM]="牙买加" [TT]="特立尼达和多巴哥"
+        # 欧洲
+        [GB]="英国" [IE]="爱尔兰" [FR]="法国" [DE]="德国"
+        [NL]="荷兰" [BE]="比利时" [LU]="卢森堡" [CH]="瑞士"
+        [IT]="意大利" [ES]="西班牙" [PT]="葡萄牙" [AT]="奥地利"
+        [SE]="瑞典" [NO]="挪威" [FI]="芬兰" [DK]="丹麦"
+        [IS]="冰岛" [PL]="波兰" [CZ]="捷克" [SK]="斯洛伐克"
+        [HU]="匈牙利" [RO]="罗马尼亚" [BG]="保加利亚" [HR]="克罗地亚"
+        [SI]="斯洛文尼亚" [RS]="塞尔维亚" [BA]="波黑" [ME]="黑山"
+        [MK]="北马其顿" [XK]="科索沃" [GR]="希腊" [AL]="阿尔巴尼亚"
+        [EE]="爱沙尼亚" [LV]="拉脱维亚" [LT]="立陶宛"
+        [BY]="白俄罗斯" [UA]="乌克兰" [MD]="摩尔多瓦" [RU]="俄罗斯"
+        [MT]="马耳他" [CY]="塞浦路斯" [LI]="列支敦士登" [MC]="摩纳哥"
+        [AD]="安道尔" [SM]="圣马力诺" [VA]="梵蒂冈"
+        # 中东
+        [TR]="土耳其" [IL]="以色列" [PS]="巴勒斯坦" [JO]="约旦"
+        [LB]="黎巴嫩" [SY]="叙利亚" [IQ]="伊拉克" [IR]="伊朗"
+        [AE]="阿联酋" [SA]="沙特" [QA]="卡塔尔" [BH]="巴林"
+        [KW]="科威特" [OM]="阿曼" [YE]="也门" [AF]="阿富汗"
+        # 中亚/外高加索
+        [KZ]="哈萨克斯坦" [UZ]="乌兹别克斯坦" [TM]="土库曼斯坦"
+        [KG]="吉尔吉斯斯坦" [TJ]="塔吉克斯坦" [GE]="格鲁吉亚"
+        [AM]="亚美尼亚" [AZ]="阿塞拜疆"
+        # 非洲
+        [EG]="埃及" [LY]="利比亚" [TN]="突尼斯" [DZ]="阿尔及利亚"
+        [MA]="摩洛哥" [SD]="苏丹" [ET]="埃塞俄比亚" [KE]="肯尼亚"
+        [TZ]="坦桑尼亚" [UG]="乌干达" [RW]="卢旺达" [NG]="尼日利亚"
+        [GH]="加纳" [SN]="塞内加尔" [CI]="科特迪瓦" [CM]="喀麦隆"
+        [ZA]="南非" [NA]="纳米比亚" [BW]="博茨瓦纳" [ZW]="津巴布韦"
+        [MZ]="莫桑比克" [AO]="安哥拉" [MG]="马达加斯加" [MU]="毛里求斯"
+        [SC]="塞舌尔"
+    )
+    echo "${names[$code]:-}"
 }
 
 colo_city() {
@@ -119,8 +195,13 @@ fetch_ipchecking() {
     loc=$(echo "$resp" | sed -n 's/^loc=//p')
     colo=$(echo "$resp" | sed -n 's/^colo=//p')
     if [[ -n "$ip" ]]; then
+        local flag cname prefix="" suffix=""
+        flag=$(country_flag "$loc")
+        cname=$(country_name "$loc")
+        [[ -n "$flag" ]] && prefix="${flag} "
+        [[ -n "$cname" ]] && suffix=" (${cname})"
         echo -e "  IP:   ${GREEN}${ip}${RESET}"
-        echo -e "  地区: ${YELLOW}${loc}${RESET}"
+        echo -e "  地区: ${YELLOW}${prefix}${loc}${suffix}${RESET}"
         local city
         city=$(colo_city "$colo")
         if [[ -n "$city" ]]; then
@@ -200,7 +281,7 @@ trap 'rm -rf "$tmpdir"' EXIT
 ) >"$tmpdir/ip_02" &
 
 i=0
-for name in "AI" "Claude" "ChatGPT" "EMBY"; do
+for name in "AI" "Claude" "ChatGPT" "YouTube" "EMBY"; do
     ((i++)) || true
     (
         echo -e "${BOLD}$name: [ptest-$i.ipcheck.ing]${RESET}"
@@ -228,6 +309,7 @@ declare -a sites=(
     "Anthropic|https://api.anthropic.com/"
     "Claude|https://claude.ai/favicon.ico"
     "Gemini|https://gemini.google/favicon.ico"
+    "YouTube|https://www.youtube.com/favicon.ico"
     "ASK机场服|https://ask.ash.yt/favicon.ico"
     "JMS机场服|https://tv.ash.yt/favicon.ico"
 )

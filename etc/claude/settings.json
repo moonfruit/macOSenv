@@ -23,6 +23,7 @@
       "Bash(git show:*)",
       "Bash(go build:*)",
       "Bash(go doc:*)",
+      "Bash(go env:*)",
       "Bash(go fmt:*)",
       "Bash(go list:*)",
       "Bash(go test:*)",

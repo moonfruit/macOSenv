@@ -5,6 +5,7 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       SEQ_FIRSTRUN_ADMINPASSWORD: "password"
+      TZ: "Asia/Shanghai"
     volumes:
       - data:/data
 #  gelf:
