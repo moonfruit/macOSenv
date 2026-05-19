@@ -28,14 +28,20 @@ _yy_ghostty_features_without_ssh_terminfo() {
 
 _yy_ghostty_ssh_blacklisted() {
     local target="$1"
+    local host="${target#*@}"
     local blacklist="${HOME}/.ssh/ghostty-blacklist"
     [[ -r "$blacklist" ]] || return 1
-    local line
+    local line candidate
     while IFS= read -r line; do
         line="${line## }"
         line="${line%% }"
         [[ -z "$line" || "$line" == \#* ]] && continue
-        if [[ "$target" == ${~line} ]]; then
+        if [[ "$line" == *@* ]]; then
+            candidate="$target"
+        else
+            candidate="$host"
+        fi
+        if [[ "$candidate" == ${~line} ]]; then
             return 0
         fi
     done < "$blacklist"
