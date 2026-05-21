@@ -72,8 +72,6 @@ skinparam usecase {
 (capstone)-->(gettext)
 (certifi) << dep >>
 (certifi)-->(ca-certificates)
-(cffi) << dep >>
-(cffi)-->(pycparser)
 (chafa)
 (chafa)-->(cairo)
 (chafa)-->(freetype)
@@ -99,9 +97,6 @@ skinparam usecase {
 (context7-mcp)-->(node)
 (cpanminus)
 (croc)
-(cryptography) << dep >>
-(cryptography)-->(cffi)
-(cryptography)-->(openssl@3)
 (cspell)
 (cspell)-->(node)
 (ctx7)
@@ -138,7 +133,6 @@ skinparam usecase {
 (duf)
 (dufs)
 (dust)
-(dwarfutils) << dep >>
 (eza)
 (eza)-->(libgit2)
 (fd)
@@ -354,7 +348,6 @@ skinparam usecase {
 (libdatrie) << dep >>
 (libde265) << dep >>
 (libdeflate) << dep >>
-(libev) << dep >>
 (libevent) << dep >>
 (libevent)-->(openssl@3)
 (libfido2) << dep >>
@@ -491,8 +484,8 @@ skinparam usecase {
 (moonfruit/tap/ethr)
 (moonfruit/tap/geo)
 (moonfruit/tap/gotools)
-(moonfruit/tap/gwt@2.7)
-(moonfruit/tap/gwt@2.7)-->(openjdk)
+(moonfruit/tap/gwt@2.6)
+(moonfruit/tap/gwt@2.6)-->(openjdk)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/inkos)
@@ -682,8 +675,6 @@ skinparam usecase {
 (pstree)
 (pv)
 (pv)-->(gettext)
-(pycparser) << dep >>
-(pydantic) << dep >>
 (pyright)
 (pyright)-->(node)
 (python@3.14) << dep >>
@@ -720,7 +711,6 @@ skinparam usecase {
 (rlwrap)
 (rlwrap)-->(libptytty)
 (rlwrap)-->(readline)
-(rpds-py) << dep >>
 (rsync)
 (rsync)-->(lz4)
 (rsync)-->(openssl@3)
@@ -740,22 +730,10 @@ skinparam usecase {
 (rust)-->(openssl@3)
 (rust)-->(pkgconf)
 (rust)-->(zstd)
+(rustnet)
 (sd)
 (sdl2) << dep >>
 (selene)
-(semgrep)
-(semgrep)-->(certifi)
-(semgrep)-->(cryptography)
-(semgrep)-->(dwarfutils)
-(semgrep)-->(gmp)
-(semgrep)-->(libev)
-(semgrep)-->(pcre2)
-(semgrep)-->(pydantic)
-(semgrep)-->(python@3.14)
-(semgrep)-->(rpds-py)
-(semgrep)-->(sqlite)
-(semgrep)-->(tree-sitter)
-(semgrep)-->(zstd)
 (shellcheck) << req >>
 (shellcheck)-->(gmp)
 (shfmt)

@@ -1,4 +1,30 @@
 #!/usr/bin/env bash
+
+# 参数中含 -Q（query_option）或 -G（打印配置）时，ssh 不会真正建立连接，
+# 直接 exec 原始 ssh，跳过 saved_hosts 记录逻辑。
+# 按 ssh 选项语义解析：正确处理组合短选项、带参数选项的参数值及 -- 分隔符。
+ARG_OPTS=BbcDEeFIiJLlmOoPpRSWw # 带参数的短选项（其后内容为参数值，不再解析）
+expect_value=0
+for arg in "$@"; do
+    if ((expect_value)); then # 上一个选项的独立参数值，跳过
+        expect_value=0
+        continue
+    fi
+    [[ $arg == -- ]] && break  # -- 之后均为非选项参数
+    [[ $arg == -?* ]] || break # 到达目标主机/命令，停止解析
+
+    rest=${arg#-}
+    while [[ -n $rest ]]; do
+        ch=${rest:0:1}
+        rest=${rest:1}
+        [[ $ch == [QG] ]] && exec /usr/bin/ssh "$@"
+        if [[ $ARG_OPTS == *"$ch"* ]]; then
+            [[ -z $rest ]] && expect_value=1 # 参数值为下一个 arg
+            break                            # 该选项后的字符均为其参数值
+        fi
+    done
+done
+
 /usr/bin/ssh "$@" || exit
 
 read -r U H < <(/usr/bin/ssh -G "$@" 2>/dev/null | awk '

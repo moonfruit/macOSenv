@@ -75,6 +75,7 @@ fetch_ipsb() {
 country_flag() {
     local code=${1^^}
     [[ ${#code} -ne 2 ]] && return
+    [[ $code == TW ]] && code=CN
     local c1 c2 hex1 hex2
     printf -v c1 '%d' "'${code:0:1}"
     printf -v c2 '%d' "'${code:1:1}"

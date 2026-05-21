@@ -4,8 +4,8 @@
 
 find-image-latest-version() {
     skopeo list-tags "docker://$1" | jq -r '.Tags
-    | map(select(test("^\\d+(\\.\\d+)+$")))
-    | sort_by(split(".") | map(tonumber))
+    | map(select(test("^v?\\d+(\\.\\d+)+$")))
+    | sort_by(ltrimstr("v") | split(".") | map(tonumber))
     | last'
 }
 

@@ -90,7 +90,9 @@ cleanup-fonts() {
 
 readonly CASKS=(
     claude
+    cmux
     firefox
+    google-chrome
     intellij-idea
     iterm2@beta
     orbstack
