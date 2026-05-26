@@ -27,18 +27,17 @@ done
 
 /usr/bin/ssh "$@" || exit
 
-read -r U H < <(/usr/bin/ssh -G "$@" 2>/dev/null | awk '
-    $1=="user"     {u=$2}
-    $1=="hostname" {h=$2}
-    END            {print u, h}
+HOST=$(/usr/bin/ssh -G "$@" 2>/dev/null | awk '
+    $1=="user" {u=$2}
+    $1=="host" {h=$2}
+    u && h     {print u"@"h; exit}
 ')
 
-[[ -z $U || -z $H ]] && exit
+[[ -z $HOST ]] && exit
 
-VAR="$U@$H"
 SAVED=$HOME/.ssh/saved_hosts
 
-if ! rg -Fxq "$VAR" "$SAVED"; then
-    echo "$VAR" >>"$SAVED"
+if ! rg -Fxq "$HOST" "$SAVED"; then
+    echo "$HOST" >>"$SAVED"
     uhsort -ui "$SAVED"
 fi

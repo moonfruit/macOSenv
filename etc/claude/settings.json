@@ -88,7 +88,7 @@
     "lua-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": false,
+    "superpowers@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "github@claude-plugins-official": true,

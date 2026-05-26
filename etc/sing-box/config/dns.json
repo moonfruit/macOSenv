@@ -43,7 +43,7 @@
         "servers": ["dns-gingkoo-udp", "dns-gingkoo-tcp", "dns-gingkoo-https"]
       },
       // LazyCat
-      // { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
+      { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
       // Tailscale
       // { "tag": "dns-tailscale", "type": "udp", "server": "fd7a:115c:a1e0::53" },
       // { "tag": "dns-tailscale", "type": "tailscale", "endpoint": "tailsacle-endpoint" },
@@ -55,7 +55,8 @@
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
-          "www.asusrouter.com": "192.168.50.1"
+          "www.asusrouter.com": "192.168.50.1",
+          "homeassistant.lan": "192.168.50.15"
         }
       },
       // FakeIP
@@ -71,7 +72,7 @@
       { "match_response": true, "ip_accept_any": true, "action": "respond" },
 
       // LazyCat
-      // { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
+      { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
       // Tailscale
       // { "domain_suffix": "ts.net", "server": "dns-tailscale" },
       // 内网地址

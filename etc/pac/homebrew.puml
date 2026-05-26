@@ -228,7 +228,6 @@ skinparam usecase {
 (gnutls)-->(libunistring)
 (gnutls)-->(nettle)
 (gnutls)-->(p11-kit)
-(gnutls)-->(unbound)
 (go) << req >>
 (gofumpt)
 (gofumpt)-->(go)
@@ -245,6 +244,8 @@ skinparam usecase {
 (gpgme)-->(gnupg)
 (gpgme)-->(libassuan)
 (gpgme)-->(libgpg-error)
+(gpgmepp) << dep >>
+(gpgmepp)-->(gpgme)
 (gradle)
 (gradle)-->(gradle-completion)
 (gradle)-->(openjdk)
@@ -480,6 +481,8 @@ skinparam usecase {
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/ccstatusline)
 (moonfruit/tap/ccstatusline)-->(node)
+(moonfruit/tap/codegraph)
+(moonfruit/tap/codegraph)-->(node)
 (moonfruit/tap/dog)
 (moonfruit/tap/ethr)
 (moonfruit/tap/geo)
@@ -571,6 +574,9 @@ skinparam usecase {
 (node)-->(uvwasi)
 (node)-->(zstd)
 (npth) << dep >>
+(nspr) << dep >>
+(nss) << dep >>
+(nss)-->(nspr)
 (nvtop)
 (ollama)
 (ollama)-->(mlx-c)
@@ -610,6 +616,10 @@ skinparam usecase {
 (openjdk@21)-->(jpeg-turbo)
 (openjdk@21)-->(libpng)
 (openjdk@21)-->(little-cms2)
+(openjpeg) << dep >>
+(openjpeg)-->(libpng)
+(openjpeg)-->(libtiff)
+(openjpeg)-->(little-cms2)
 (openjph) << dep >>
 (openjph)-->(libtiff)
 (openspec)
@@ -657,6 +667,21 @@ skinparam usecase {
 (playwright-mcp)
 (playwright-mcp)-->(node)
 (pnpm)
+(poppler)
+(poppler)-->(cairo)
+(poppler)-->(fontconfig)
+(poppler)-->(freetype)
+(poppler)-->(gettext)
+(poppler)-->(glib)
+(poppler)-->(gpgme)
+(poppler)-->(gpgmepp)
+(poppler)-->(jpeg-turbo)
+(poppler)-->(libpng)
+(poppler)-->(libtiff)
+(poppler)-->(little-cms2)
+(poppler)-->(nspr)
+(poppler)-->(nss)
+(poppler)-->(openjpeg)
 (popt) << dep >>
 (postgresql@18)
 (postgresql@18)-->(gettext)
