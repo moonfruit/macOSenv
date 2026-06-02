@@ -82,17 +82,17 @@ def flock(path: Path):
             pass
 
 
-def usage(usage_key: str, total_key: str, remains_key: str) -> Callable[[dict], str]:
+def usage(percent_key: str, boost_key: str, remains_key: str) -> Callable[[dict], str]:
     def _print(result: dict) -> str:
-        usage = result.get(usage_key, 0)
-        total = result.get(total_key, 0)
+        # coding_plan/remains 接口已废弃 *_count 字段（恒为 0）。剩余额度百分比由
+        # current_*_remaining_percent 给出，总额度由 *_boost_permille 给出（千分比，
+        # /10 得百分比）。已用% = 总额度 × (100 - 剩余%) / 100，与网页一致。
+        remaining_pct = result.get(percent_key, 0)
+        boost_permille = result.get(boost_key, 0)
         remains = result.get(remains_key, 0)
 
-        if usage < total:
-            pct = (total - usage) / total * 100
-            pct_str = f"{pct:.1f}%"
-        else:
-            pct_str = "0.0%"
+        used_pct = boost_permille * (100 - remaining_pct) / 1000
+        pct_str = f"{used_pct:.1f}%"
 
         ms = int(remains)
         seconds = ms // 1000
@@ -113,8 +113,8 @@ def usage(usage_key: str, total_key: str, remains_key: str) -> Callable[[dict], 
 
 
 VIRTUAL_KEYS: dict = {
-    "usage": usage("current_interval_usage_count", "current_interval_total_count", "remains_time"),
-    "weekly_usage": usage("current_weekly_usage_count", "current_weekly_total_count", "weekly_remains_time"),
+    "usage": usage("current_interval_remaining_percent", "interval_boost_permille", "remains_time"),
+    "weekly_usage": usage("current_weekly_remaining_percent", "weekly_boost_permille", "weekly_remains_time"),
 }
 
 
@@ -150,8 +150,10 @@ def main():
             print("Error: stdin JSON missing model.id", file=sys.stderr)
             sys.exit(1)
 
+    # MiniMax 的 coding_plan/remains 接口已将 model_name 从具体模型名
+    # （MiniMax-M* 等）改为类别名：文本/coding 统一为 general，视频为 video。
     if model_name.startswith("MiniMax-M"):
-        model_name = "MiniMax-M*"
+        model_name = "general"
 
     result = data.get(model_name)
     if not result:

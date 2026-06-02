@@ -112,10 +112,10 @@
       }
     }
   },
+  "language": "简体中文",
   "autoUpdatesChannel": "latest",
   "skipDangerousModePermissionPrompt": true,
   "verbose": false,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
-  "language": "简体中文"
+  "skipAutoPermissionPrompt": true
 }

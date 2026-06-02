@@ -51,14 +51,22 @@
       {
         "tag": "dns-hosts",
         "type": "hosts",
-        "path": "/Users/moon/Workspace.localized/env/etc/hosts",
+        "path": ["/etc/hosts", "/Users/moon/Workspace.localized/env/etc/hosts"],
         "predefined": {
           "asusrouter.com": "192.168.50.1",
           "router.asus.com": "192.168.50.1",
           "www.asusrouter.com": "192.168.50.1",
-          "homeassistant.lan": "192.168.50.15"
+          "router.home.arpa": "192.168.50.1",
+          "xiaomi.home.arpa": "192.168.50.10",
+          "lazycat.home.arpa": "192.168.50.11",
+          "debian.home.arpa": "192.168.50.13",
+          "homeassistant.home.arpa": "192.168.50.15",
+          "switch1.home.arpa": "192.168.50.251",
+          "switch2.home.arpa": "192.168.50.252"
         }
       },
+      // mDNS
+      { "tag": "dns-mdns", "type": "mdns", "interface": ["en0", "en13"] },
       // FakeIP
       {
         "tag": "dns-fakeip",
@@ -68,8 +76,9 @@
     ],
     "rules": [
       // 直接解析
-      { "action": "evaluate", "server": "dns-hosts" },
-      { "match_response": true, "ip_accept_any": true, "action": "respond" },
+      { "preferred_by": "dns-hosts", "server": "dns-hosts" },
+      // mDNS
+      { "preferred_by": "dns-mdns", "server": "dns-mdns" },
 
       // LazyCat
       // { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
@@ -83,14 +92,14 @@
         "server": "dns-resolver"
       },
       // Gingkoo
-      { "domain_suffix": "autotest.server.gingkoo", "server": "dns-gingkoo" },
-      { "domain_suffix": "server.gingkoo", "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
+      { "domain_suffix": ["autotest.server.gingkoo", "autotest.gingkoo.internal"], "server": "dns-gingkoo" },
+      { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
       // Fake IP
       { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       {
         "type": "logical",
         "mode": "and",
-        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": ["dog", "sing-box"], "invert": true }],
+        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": ["dog", "q", "sing-box"], "invert": true }],
         "server": "dns-fakeip",
         "rewrite_ttl": 1
       },
@@ -119,6 +128,7 @@
   "route": {
     "rules": [
       { "network": "icmp", "outbound": "DIRECT" },
+      { "inbound": "dns-in", "action": "hijack-dns" },
       { "action": "sniff" },
       { "protocol": "dns", "action": "hijack-dns" },
       // { "protocol": "stun", "action": "reject" }, // 禁用 STUN
@@ -131,7 +141,11 @@
       //   "action": "reject"
       // },
       { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
-      { "domain_suffix": "server.gingkoo", "invert": true, "action": "sniff-override-destination" }
+      {
+        "domain_suffix": ["server.gingkoo", "gingkoo.internal"],
+        "invert": true,
+        "action": "sniff-override-destination"
+      }
     ],
     "default_domain_resolver": "dns-direct"
   }
