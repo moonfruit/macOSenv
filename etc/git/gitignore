@@ -18,3 +18,5 @@ CVS
 Icon
 
 /Library/Homebrew/.lazy.lua
+
+**/.claude/settings.local.json

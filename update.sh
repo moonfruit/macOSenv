@@ -95,5 +95,4 @@ if [[ -n $BREW ]]; then
     echo "-------- homebrew --------"
     brew-up.sh
     brew-livecheck.sh --parallel
-    (cd etc/pac && ./update-homebrew.sh)
 fi

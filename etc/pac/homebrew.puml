@@ -33,7 +33,6 @@ skinparam usecase {
 (asitop)-->(python@3.14)
 (autojump)
 (autojump)-->(python@3.14)
-(azhuchkov/tools/tunblkctl)
 (basedpyright)
 (basedpyright)-->(node)
 (bash) << req >>
@@ -95,6 +94,7 @@ skinparam usecase {
 (colima)-->(lima)
 (context7-mcp)
 (context7-mcp)-->(node)
+(corkscrew)
 (cpanminus)
 (croc)
 (cspell)
@@ -130,6 +130,7 @@ skinparam usecase {
 (dotnet@9)-->(openssl@3)
 (dry)
 (dtc) << dep >>
+(dtc)-->(libyaml)
 (duf)
 (dufs)
 (dust)
@@ -491,6 +492,7 @@ skinparam usecase {
 (moonfruit/tap/gwt@2.6)-->(openjdk)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
+(moonfruit/tap/imsg)
 (moonfruit/tap/inkos)
 (moonfruit/tap/inkos)-->(node)
 (moonfruit/tap/lzc-cli)
@@ -502,6 +504,7 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
+(moonfruit/tap/remindctl)
 (moonfruit/tap/seqcli)
 (moonfruit/tap/seqcli)-->(brotli)
 (moonfruit/tap/sing-box-beta)
@@ -514,7 +517,9 @@ skinparam usecase {
 (moonfruit/tap/tscurl)-->(libnghttp2)
 (moonfruit/tap/tscurl)-->(moonfruit/tap/tongsuo)
 (moonfruit/tap/tscurl)-->(zstd)
+(moonfruit/tap/tunblkctl)
 (moonfruit/tap/uutils-selected)
+(moonfruit/tap/zenity-go)
 (mosh)
 (mosh)-->(protobuf)
 (mpdecimal) << dep >>
@@ -530,7 +535,6 @@ skinparam usecase {
 (ncdu)
 (ncdu)-->(ncurses)
 (ncdu)-->(zstd)
-(ncruces/tap/zenity)
 (ncurses) << dep >>
 (neovim)
 (neovim)-->(gettext)
@@ -784,8 +788,6 @@ skinparam usecase {
 (sshpass)
 (staticcheck)
 (staticcheck)-->(go)
-(steipete/tap/imsg)
-(steipete/tap/remindctl)
 (stylua)
 (subversion) << req >>
 (subversion)-->(apache-serf)
@@ -865,6 +867,7 @@ skinparam usecase {
 (yaml-language-server)
 (yaml-language-server)-->(node)
 (yarn)
+(yazi)
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)
@@ -872,6 +875,7 @@ skinparam usecase {
 (yt-dlp)-->(python@3.14)
 (z3) << dep >>
 (zlib) << dep >>
+(zoxide)
 (zsh)
 (zsh)-->(ncurses)
 (zsh)-->(pcre2)

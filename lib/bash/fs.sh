@@ -6,7 +6,9 @@ source "$ENV/lib/bash/native.sh"
 
 smart-diff() {
     if command -v delta &>/dev/null; then
-        delta --paging=never "$@"
+        # tail -n +2 去掉 delta 输出的前导空行；PIPESTATUS[0] 保留 delta 的返回值
+        delta --width="${COLUMNS:-$(tput cols 2>/dev/null || echo 120)}" --paging=never "$@" | tail -n +2
+        return "${PIPESTATUS[0]}"
     else
         diff "$@"
     fi

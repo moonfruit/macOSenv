@@ -31,9 +31,6 @@ else
     ZSH_THEME="robbyrussell"
 fi
 
-# <<< Initialize direnv
-(( ${+commands[direnv]} )) && eval "$(direnv hook zsh)"
-
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -89,24 +86,32 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$ENV/etc/zsh"
 
-# Disable compaudit
-ZSH_DISABLE_COMPFIX="true"
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(autojump colored-man-pages extract git gradle mvn zsh-interactive-cd
+plugins=(colored-man-pages direnv extract git gradle mvn zoxide zsh-interactive-cd
     fast-syntax-highlighting zsh-autosuggestions zsh-history-substring-search
     iterm2 ghostty yy)
 
+# ---- MY custom configuration BEGIN ----
+
+# History file
 HISTFILE="$ZDOTDIR/history.txt"
+
+# Zsh cache directory
 ZSH_CACHE_DIR="$ZDOTDIR/cache"
 
+# Disable compaudit
+ZSH_DISABLE_COMPFIX="true"
+
+# ---- MY custom configuration END ----
+
 BREW_PREFIX=$(brew --prefix)
+ZOXIDE_CMD_OVERRIDE="j"
 source "$ZSH/oh-my-zsh.sh"
-unset BREW_PREFIX
+unset BREW_PREFIX ZOXIDE_CMD_OVERRIDE
 
 # User configuration
 

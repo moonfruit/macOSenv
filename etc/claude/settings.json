@@ -116,5 +116,6 @@
   "skipDangerousModePermissionPrompt": true,
   "verbose": false,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "language": "简体中文"
 }

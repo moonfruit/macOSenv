@@ -3,14 +3,16 @@
 readonly GINGKOO=http://10.1.2.12:8118
 readonly DEFAULT=7890 # sing-box
 # readonly DEFAULT=7891 # sing-box: direct
-# readonly DEFAULT=7892 # sing-box: global
+# readonly DEFAULT=7898 # sing-box: global
 # readonly DEFAULT=10000 # gost: nodes
 # readonly DEFAULT=10001 # gost: prefer
 # readonly DEFAULT=10002 # gost: us-nodes
 
-if [[ -z $1 || $1 =~ ^(:?[0-9]+|https?:.*|gingkoo|tor|none)$ ]]; then
+if [[ -z $1 || $1 =~ ^(:?[0-9]+|https?:.*|gingkoo|direct|global|tor|none)$ ]]; then
     case $1 in
     gingkoo) port=$GINGKOO ;;
+    direct) port=7891 ;;
+    global) port=7898 ;;
     tor) port=9150 ;;
     none) port=0 ;;
     :*) port=${1:1} ;;
