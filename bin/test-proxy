@@ -106,16 +106,15 @@ benchmark-speed() {
     SPEED=$(echo "$sum" / "$i" | bc)
 }
 
-get-location() {
+fetch-info() {
     local proxy=$1
-    local location
-    if location=$(proxy "$proxy" "${CURL[@]}" -s "$INFO_URL"); then
-        echo "$location" | jq -r --argjson flags "$FLAGS" \
-            "(\$flags[.country] // \"$RED$BOLD\(.country)$RESET\") + \" \(.region)\" +
-            if .region != .city then \", \(.city)\" else \"\" end"
-    else
-        return $?
-    fi
+    proxy "$proxy" "${CURL[@]}" -s "$INFO_URL"
+}
+
+format-location() {
+    jq -r --argjson flags "$FLAGS" \
+        "(\$flags[.country] // \"$RED$BOLD\(.country)$RESET\") + \" \(.region)\" +
+        if .region != .city then \", \(.city)\" else \"\" end"
 }
 
 benchmark-proxy() {
@@ -142,9 +141,10 @@ benchmark-proxy() {
     fi
     echo "${BLUE}Speed$RESET: $color${speed}/s$RESET"
 
-    local location
-    if location=$(get-location "$proxy"); then
-        echo "${BLUE}Locat$RESET: $location"
+    local info
+    if info=$(fetch-info "$proxy"); then
+        echo "${BLUE}ExtIP$RESET: $(echo "$info" | jq -r '.ip')"
+        echo "${BLUE}Locat$RESET: $(echo "$info" | format-location)"
     fi
 }
 

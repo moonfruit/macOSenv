@@ -9,6 +9,13 @@ if [[ -z "${version:-}" ]]; then
     exit 1
 fi
 
+#JAVA_LIBRARY_PATH="/opt/homebrew/opt/oracle-instantclient/libexec:$HOME/Library/Java/Extensions:/Library/Java/Extensions"
+#export JAVA_TOOL_OPTIONS="-Djava.library.path=$JAVA_LIBRARY_PATH --enable-final-field-mutation=ALL-UNNAMED"
+
+# Java 26+
+export JAVA_TOOL_OPTIONS="--enable-final-field-mutation=ALL-UNNAMED"
+
+export TNS_ADMIN="/opt/homebrew/etc/oracle-instantclient/network/admin"
 exec "$caskroom/$version/sqlcl/bin/sql" "$@"
 
 # cspell:words sqlcl
