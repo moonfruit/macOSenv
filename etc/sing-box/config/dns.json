@@ -34,14 +34,7 @@
         ]
       },
       // Gingkoo
-      { "tag": "dns-gingkoo-udp", "type": "udp", "server": "10.1.2.59" },
-      { "tag": "dns-gingkoo-tcp", "type": "tcp", "server": "10.1.2.59" },
-      { "tag": "dns-gingkoo-https", "type": "https", "server": "10.1.2.32", "tls": { "insecure": true } },
-      {
-        "tag": "dns-gingkoo",
-        "type": "group",
-        "servers": ["dns-gingkoo-udp", "dns-gingkoo-tcp", "dns-gingkoo-https"]
-      },
+      { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       // LazyCat
       // { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
       // Tailscale

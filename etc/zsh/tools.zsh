@@ -61,3 +61,8 @@ export GINGKOO_ENV=dev
 local dir=$BREW_PREFIX/opt/liquibase/libexec
 [[ -d "$dir" ]] && export LIQUIBASE_HOME=$dir
 unset dir
+
+# for ibmcloud cli（动态补全，由 ibmcloud 二进制驱动；bashcompinit 已由 oh-my-zsh 加载）
+local script=/usr/local/ibmcloud/autocomplete/zsh_autocomplete
+[[ -f "$script" ]] && . "$script"
+unset script
