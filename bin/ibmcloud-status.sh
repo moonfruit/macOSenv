@@ -160,7 +160,21 @@ cmd_gateway() {
 # ---------- 主流程 ----------
 usage() { sed -n '3,14p' "$0" | sed 's/^# \{0,1\}//'; }
 
-ibmcloud target -r "$REGION" >/dev/null 2>&1 || true
+# 以 target -r <REGION> 探测登录状态（顺带切到目标区域）；未登录则用
+# IBMCLOUD_API_KEY 自动登录（-r <REGION> -g Default）；无该环境变量则报错退出
+ensure_login() {
+    local region=$1
+    ibmcloud target -r "$region" >/dev/null 2>&1 && return 0
+    if [[ -n "${IBMCLOUD_API_KEY:-}" ]]; then
+        echo "${DIM}未登录 IBM Cloud，正使用 IBMCLOUD_API_KEY 登录...${N}" >&2
+        ibmcloud login -r "$region" -g Default >/dev/null || { echo "${ERR}ibmcloud login 失败${N}" >&2; exit 1; }
+    else
+        echo "${ERR}未登录 IBM Cloud，且未设置环境变量 IBMCLOUD_API_KEY${N}" >&2
+        exit 1
+    fi
+}
+
+ensure_login "$REGION"
 
 case "${1:-}" in
     billing) cmd_billing 1 ;;

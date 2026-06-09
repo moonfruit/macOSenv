@@ -34,14 +34,23 @@ die() {
     exit 1
 }
 
+# 0. 确保已登录：以 target -r <REGION> 探测登录状态（顺带切到目标区域）；
+#    未登录则用 IBMCLOUD_API_KEY 自动登录（-r <REGION> -g Default），无该环境变量则报错退出
+ensure_login() {
+    local region=$1
+    ibmcloud target -r "$region" >/dev/null 2>&1 && return 0
+    [[ -n "${IBMCLOUD_API_KEY:-}" ]] || die "未登录 IBM Cloud，且未设置环境变量 IBMCLOUD_API_KEY"
+    info "未登录 IBM Cloud，正使用 IBMCLOUD_API_KEY 登录..."
+    ibmcloud login -r "$region" -g Default >/dev/null || die "ibmcloud login 失败"
+    ok "已登录"
+}
+ensure_login "$REGION"
+
 # 1. 探测出口 IP（提取自 test-proxy 的核心逻辑）
 info "通过代理 '${PROXY_LABEL}' 探测出口 IP..."
 ip=$(proxy "$PROXY_LABEL" curl --fail --connect-timeout 3 --max-time 10 -s "$INFO_URL" | jq -r '.ip // empty')
 [[ $ip =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]] || die "未能探测到合法的出口 IP（得到：'${ip:-<空>}'）"
 ok "出口 IP：${Y}${ip}${N}"
-
-# 确保操作落在安全组所在区域
-ibmcloud target -r "$REGION" >/dev/null
 
 # 2. 查现有同名规则（安全组内规则名唯一，理论上至多一条）
 existing=$(ibmcloud is security-group-rules "$SG" --output json |
