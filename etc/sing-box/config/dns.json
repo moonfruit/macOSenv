@@ -92,7 +92,7 @@
       {
         "type": "logical",
         "mode": "and",
-        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": ["dog", "q", "sing-box"], "invert": true }],
+        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": ["q", "sing-box"], "invert": true }],
         "server": "dns-fakeip",
         "rewrite_ttl": 1
       },

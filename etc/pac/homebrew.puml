@@ -29,8 +29,6 @@ skinparam usecase {
 (aria2)-->(libssh2)
 (aria2)-->(openssl@3)
 (aria2)-->(sqlite)
-(asitop)
-(asitop)-->(python@3.14)
 (autojump)
 (autojump)-->(python@3.14)
 (basedpyright)
@@ -123,7 +121,6 @@ skinparam usecase {
 (dmalloc)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
-(doge)
 (dotnet@9) << dep >>
 (dotnet@9)-->(brotli)
 (dotnet@9)-->(icu4c@78)
@@ -132,7 +129,6 @@ skinparam usecase {
 (dtc) << dep >>
 (dtc)-->(libyaml)
 (duf)
-(dufs)
 (dust)
 (eza)
 (eza)-->(libgit2)
@@ -352,6 +348,7 @@ skinparam usecase {
 (libdeflate) << dep >>
 (libevent) << dep >>
 (libevent)-->(openssl@3)
+(libffi) << dep >>
 (libfido2) << dep >>
 (libfido2)-->(libcbor)
 (libfido2)-->(openssl@3)
@@ -375,7 +372,6 @@ skinparam usecase {
 (libidn2)-->(libunistring)
 (libksba) << dep >>
 (libksba)-->(libgpg-error)
-(liblinear) << dep >>
 (libmagic) << dep >>
 (libnghttp2) << dep >>
 (libnghttp3) << dep >>
@@ -450,7 +446,7 @@ skinparam usecase {
 (logrotate)-->(popt)
 (lpeg) << dep >>
 (lrzsz)
-(lua) << req >>
+(lua)
 (lua-language-server)
 (lua@5.4) << dep >>
 (luacheck)
@@ -554,19 +550,13 @@ skinparam usecase {
 (netpbm)-->(libtiff)
 (nettle) << dep >>
 (nettle)-->(gmp)
-(nmap)
-(nmap)-->(liblinear)
-(nmap)-->(libssh2)
-(nmap)-->(lua)
-(nmap)-->(openssl@3)
-(nmap)-->(pcre2)
-(nmap)-->(python@3.14)
 (node) << req >>
 (node)-->(ada-url)
 (node)-->(brotli)
 (node)-->(c-ares)
 (node)-->(hdrhistogram_c)
 (node)-->(icu4c@78)
+(node)-->(libffi)
 (node)-->(libnghttp2)
 (node)-->(libnghttp3)
 (node)-->(libngtcp2)
@@ -587,9 +577,6 @@ skinparam usecase {
 (ollama)
 (ollama)-->(mlx-c)
 (oniguruma) << dep >>
-(opencode)
-(opencode)-->(node)
-(opencode)-->(ripgrep)
 (openexr) << dep >>
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
@@ -628,8 +615,6 @@ skinparam usecase {
 (openjpeg)-->(little-cms2)
 (openjph) << dep >>
 (openjph)-->(libtiff)
-(openspec)
-(openspec)-->(node)
 (openssl@3) << dep >>
 (openssl@3)-->(ca-certificates)
 (openssl@4) << dep >>
@@ -714,6 +699,7 @@ skinparam usecase {
 (python@3.14)-->(sqlite)
 (python@3.14)-->(xz)
 (python@3.14)-->(zstd)
+(q)
 (qemu) << dep >>
 (qemu)-->(capstone)
 (qemu)-->(dtc)
@@ -735,10 +721,8 @@ skinparam usecase {
 (readline) << dep >>
 (redis)
 (redis)-->(openssl@3)
-(ripgrep) << req >>
+(ripgrep)
 (ripgrep)-->(pcre2)
-(ripgrep-all)
-(ripgrep-all)-->(ripgrep)
 (rlwrap)
 (rlwrap)-->(libptytty)
 (rlwrap)-->(readline)
@@ -781,7 +765,6 @@ skinparam usecase {
 (sniffnet)
 (sniffnet)-->(openssl@3)
 (sops)
-(sponge)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
 (sqlfluff)-->(python@3.14)
@@ -869,7 +852,6 @@ skinparam usecase {
 (yaml-language-server)
 (yaml-language-server)-->(node)
 (yarn)
-(yazi)
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)

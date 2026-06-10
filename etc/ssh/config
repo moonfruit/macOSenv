@@ -63,19 +63,19 @@ Host homeassistant.dkmooncat.heiyu.space
     Hostname 192.168.50.15
     ProxyJump 63-93f0-eb65-171c-3cf3-0.d.heiyu.space
 
-Host 162.133.134.50 ibm-linux.lan
+Host ibm-linux.lan
     User vpcuser
     Hostname 162.133.134.50
-    IdentityFile ~/.ssh/ibm/id_rsa
     SetEnv TERM=xterm-256color
     WarnWeakCrypto false
     ProxyCommand nc -X 5 -x 127.0.0.1:7898 %h %p
     #ProxyCommand corkscrew 10.1.2.12 8118 %h %p
 
-Host 192.168.10.70 ibm-aix.lan
-    User root
+Host ibm-aix.lan
+    User gpp
     Hostname 192.168.10.70
-    IdentityFile ~/.ssh/ibm/id_ed25519
     SetEnv TERM=xterm-256color
-    ProxyJump 162.133.134.50
+    ProxyJump ibm-linux.lan
+    RemoteForward 1521 10.0.2.20:1521
+    RemoteForward 8888 10.1.2.11:80
 

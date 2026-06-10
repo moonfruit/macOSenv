@@ -8,6 +8,7 @@
 #   ibmcloud-status.sh linux      仅 test-linux / VPC 虚拟服务器（详细）
 #   ibmcloud-status.sh aix        仅 test-aix / PowerVS 主机（详细）
 #   ibmcloud-status.sh gateway    仅 power-gw / Transit Gateway（详细）
+#   ibmcloud-status.sh sg         仅 VPC 安全组白名单（update-ibmcloud-sg.sh 维护，详细）
 #
 # 依赖插件：vpc-infrastructure(is)、power-iaas(pi)、tg-cli(tg)、billing。
 set -euo pipefail
@@ -25,6 +26,10 @@ readonly PI_WS_CRN="crn:v1:bluemix:public:power-iaas:tok04:a/d79764355846493d872
 readonly PI_INSTANCE="test"
 readonly PI_DISPLAY="test-aix"
 readonly TG_ID="375e2c5a-1da8-4072-b469-57481b1af105"
+# 与 update-ibmcloud-sg.sh 保持一致：安全组 / 规则名前缀 / 槽位数
+readonly SG="assure-playmaker-unlivable-drapery"
+readonly SG_RULE_PREFIX="proxy-moon"
+readonly SG_SLOTS=10
 readonly MONTH="$(date +%Y-%m)"
 
 # ---------- 颜色 / 输出辅助 ----------
@@ -157,8 +162,36 @@ cmd_gateway() {
     fi
 }
 
+# ---------- 5. 安全组白名单 (update-ibmcloud-sg.sh) ----------
+cmd_sg() {
+    local detail=$1 j
+    section "安全组白名单  (VPC，update-ibmcloud-sg.sh 维护)"
+    j=$(try3 ibmcloud is security-group-rules "$SG" --output json) || true
+    if [[ -z $j || $j == null ]]; then echo "  ${ERR}无法获取安全组规则${N}"; return; fi
+    local n=$(jq -r --arg p "$SG_RULE_PREFIX" \
+        '[.[] | select(.name | test("^" + $p + "-[0-9][0-9]$"))] | length' <<<"$j")
+    kv "安全组" "$SG"
+    kv "占用槽位" "${n} / ${SG_SLOTS}  ${DIM}(序号越大越新)${N}"
+    if ((n == 0)); then
+        echo "  ${DIM}(暂无 ${SG_RULE_PREFIX}-NN 规则)${N}"
+        return
+    fi
+    echo "  ${DIM}规则：${N}"
+    if ((detail)); then
+        jq -r --arg p "$SG_RULE_PREFIX" '
+            [.[] | select(.name | test("^" + $p + "-[0-9][0-9]$"))] | sort_by(.name)[]
+            | "    - \(.name)  \(.remote.address // .remote.cidr_block // "?")  [\(.direction)/\(.protocol)]  \(.id)"' \
+            <<<"$j"
+    else
+        jq -r --arg p "$SG_RULE_PREFIX" '
+            [.[] | select(.name | test("^" + $p + "-[0-9][0-9]$"))] | sort_by(.name)[]
+            | "    - \(.name)  \(.remote.address // .remote.cidr_block // "?")"' \
+            <<<"$j"
+    fi
+}
+
 # ---------- 主流程 ----------
-usage() { sed -n '3,14p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '3,15p' "$0" | sed 's/^# \{0,1\}//'; }
 
 # 以 target -r <REGION> 探测登录状态（顺带切到目标区域）；未登录则用
 # IBMCLOUD_API_KEY 自动登录（-r <REGION> -g Default）；无该环境变量则报错退出
@@ -181,13 +214,15 @@ case "${1:-}" in
     linux)   cmd_linux 1 ;;
     aix)     cmd_aix 1 ;;
     gateway) cmd_gateway 1 ;;
+    sg)      cmd_sg 1 ;;
     "" | overview | all)
         cmd_billing 0
         cmd_linux 0
         cmd_aix 0
         cmd_gateway 0
+        cmd_sg 0
         echo
-        echo "${DIM}提示：附加 billing|linux|aix|gateway 查看某一类详情。${N}"
+        echo "${DIM}提示：附加 billing|linux|aix|gateway|sg 查看某一类详情。${N}"
         ;;
     -h | --help | help) usage ;;
     *) echo "${ERR}未知子命令：$1${N}" >&2; usage; exit 1 ;;

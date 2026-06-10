@@ -125,10 +125,10 @@ if ((${#OUTDATED[@]})); then
 
     if BOTTLED=$(find-bottled "${OUTDATED[@]}"); then
         # shellcheck disable=SC2086
-        brew upgrade --display-times $BOTTLED
+        brew upgrade --display-times --yes $BOTTLED
     fi
 
-    if brew upgrade --force-bottle --display-times; then
+    if brew upgrade --force-bottle --display-times --yes; then
         brew autoremove
         echo "$GREEN==>$RESET ${BOLD}Cleaning Homebrew$RESET"
         brew cleanup
