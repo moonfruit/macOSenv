@@ -25,7 +25,7 @@ readonly LINUX_VSI="test-linux"
 readonly PI_WS_CRN="crn:v1:bluemix:public:power-iaas:tok04:a/d79764355846493d8723847045326ce3:478517f4-0d5e-4e69-a25e-4e95f63981a1::"
 readonly PI_INSTANCE="test"
 readonly PI_DISPLAY="test-aix"
-readonly TG_ID="375e2c5a-1da8-4072-b469-57481b1af105"
+readonly TG_NAME="power-gw" # 按名称解析：冻结/重建（ibmcloud-freeze/thaw.sh）后 ID 会变
 # 与 update-ibmcloud-sg.sh 保持一致：安全组 / 规则名前缀 / 槽位数
 readonly SG="assure-playmaker-unlivable-drapery"
 readonly SG_RULE_PREFIX="proxy-moon"
@@ -107,7 +107,10 @@ cmd_linux() {
     local detail=$1 j
     section "test-linux  (VPC 虚拟服务器)"
     j=$(try3 ibmcloud is instance "$LINUX_VSI" --output json) || true
-    if [[ -z $j || $j == null ]]; then echo "  ${ERR}无法获取实例信息${N}"; return; fi
+    if [[ -z $j || $j == null ]]; then
+        echo "  ${DIM}实例不存在（已冻结/已删除，ibmcloud-thaw.sh 可重建）${N}"
+        return
+    fi
     local st=$(jq -r '.status' <<<"$j")
     kv "状态" "$([[ $st == running ]] && echo "${OK}${st}${N}" || echo "$st")"
     kv "规格" "$(jq -r '.profile.name' <<<"$j")  ($(jq -r '.vcpu.count' <<<"$j") vCPU / $(jq -r '.memory' <<<"$j") GiB)"
@@ -129,7 +132,10 @@ cmd_aix() {
     section "$PI_DISPLAY  (PowerVS 主机，实例名 $PI_INSTANCE)"
     try3 ibmcloud pi workspace target "$PI_WS_CRN" >/dev/null || true
     j=$(try3 ibmcloud pi instance get "$PI_INSTANCE" --json) || true
-    if [[ -z $j || $j == null ]]; then echo "  ${ERR}无法获取实例信息${N}"; return; fi
+    if [[ -z $j || $j == null ]]; then
+        echo "  ${DIM}实例不存在（已冻结/已删除，ibmcloud-thaw.sh 可重建）${N}"
+        return
+    fi
     local st=$(jq -r '.status' <<<"$j")
     kv "状态" "$([[ $st == ACTIVE ]] && echo "${OK}${st}${N}" || echo "$st") / 健康 $(jq -r '.health.status' <<<"$j")"
     kv "系统" "$(jq -r '.operatingSystem' <<<"$j")"
@@ -146,9 +152,14 @@ cmd_aix() {
 cmd_gateway() {
     local detail=$1 j
     section "power-gw  (Transit Gateway)"
-    j=$(try3 ibmcloud tg gateway "$TG_ID" --output json) || true
-    if [[ -z $j || $j == null ]]; then echo "  ${ERR}无法获取网关信息${N}"; return; fi
-    local st=$(jq -r '.status' <<<"$j")
+    j=$(try3 ibmcloud tg gateways --output json \
+        | jq -e --arg n "$TG_NAME" '.[]|select(.name==$n)') || true
+    if [[ -z $j || $j == null ]]; then
+        echo "  ${DIM}网关不存在（已冻结，ibmcloud-thaw.sh 可重建）${N}"
+        kv "本月费用" "$(cost_by resource_name "Transit Gateway")"
+        return
+    fi
+    local st=$(jq -r '.status' <<<"$j") id=$(jq -r '.id' <<<"$j")
     kv "名称" "$(jq -r '.name' <<<"$j")"
     kv "区域" "$(jq -r '.location' <<<"$j")"
     kv "状态" "$([[ $st == available ]] && echo "${OK}${st}${N}" || echo "$st")"
@@ -156,7 +167,7 @@ cmd_gateway() {
     kv "本月费用" "$(cost_by resource_name "Transit Gateway")"
     if ((detail)); then
         echo "  ${DIM}连接：${N}"
-        ibmcloud tg connections "$TG_ID" --output json 2>/dev/null \
+        ibmcloud tg connections "$id" --output json 2>/dev/null \
             | jq -r '.[]? | "    - \(.name) [\(.network_type)]  \(.status)"' 2>/dev/null \
             || echo "    (无法获取连接)"
     fi
