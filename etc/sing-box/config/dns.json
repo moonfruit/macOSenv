@@ -85,8 +85,7 @@
         "server": "dns-resolver"
       },
       // Gingkoo
-      { "domain_suffix": ["autotest.server.gingkoo", "autotest.gingkoo.internal"], "server": "dns-gingkoo" },
-      { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo", "rewrite_ttl": 2592000 },
+      { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo" },
       // Fake IP
       { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       {

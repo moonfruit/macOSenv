@@ -121,10 +121,6 @@ skinparam usecase {
 (dmalloc)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
-(dotnet@9) << dep >>
-(dotnet@9)-->(brotli)
-(dotnet@9)-->(icu4c@78)
-(dotnet@9)-->(openssl@3)
 (dry)
 (dtc) << dep >>
 (dtc)-->(libyaml)
@@ -378,6 +374,9 @@ skinparam usecase {
 (libngtcp2) << dep >>
 (libngtcp2)-->(openssl@3)
 (libpng) << dep >>
+(libpsl) << dep >>
+(libpsl)-->(libidn2)
+(libpsl)-->(libunistring)
 (libptytty) << dep >>
 (librsvg) << dep >>
 (librsvg)-->(cairo)
@@ -455,6 +454,7 @@ skinparam usecase {
 (luv) << dep >>
 (luv)-->(libuv)
 (lz4) << dep >>
+(lzlib) << dep >>
 (lzo) << dep >>
 (m4) << dep >>
 (make)
@@ -462,8 +462,6 @@ skinparam usecase {
 (markdown-toc)-->(node)
 (markdownlint-cli2)
 (markdownlint-cli2)-->(node)
-(marksman)
-(marksman)-->(dotnet@9)
 (mas)
 (maven)
 (maven)-->(openjdk)
@@ -495,8 +493,10 @@ skinparam usecase {
 (moonfruit/tap/lzc-cli)
 (moonfruit/tap/lzc-cli)-->(node)
 (moonfruit/tap/macism)
-(moonfruit/tap/officecli)
-(moonfruit/tap/officecli)-->(brotli)
+(moonfruit/tap/marksman-bundled)
+(moonfruit/tap/marksman-bundled)-->(brotli)
+(moonfruit/tap/officecli-bundled)
+(moonfruit/tap/officecli-bundled)-->(brotli)
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
@@ -836,11 +836,18 @@ skinparam usecase {
 (webp)-->(jpeg-turbo)
 (webp)-->(libpng)
 (webp)-->(libtiff)
-(wget)
-(wget)-->(gettext)
-(wget)-->(libidn2)
-(wget)-->(libunistring)
-(wget)-->(openssl@3)
+(wget2)
+(wget2)-->(brotli)
+(wget2)-->(gettext)
+(wget2)-->(gnutls)
+(wget2)-->(gpgme)
+(wget2)-->(libidn2)
+(wget2)-->(libnghttp2)
+(wget2)-->(libpsl)
+(wget2)-->(lzlib)
+(wget2)-->(pcre2)
+(wget2)-->(xz)
+(wget2)-->(zstd)
 (wildfly-as)
 (wildfly-as)-->(openjdk)
 (x264) << dep >>
