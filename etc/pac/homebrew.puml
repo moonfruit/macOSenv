@@ -755,7 +755,6 @@ skinparam usecase {
 (simdjson) << dep >>
 (simdutf) << dep >>
 (simdutf)-->(icu4c@78)
-(sing-box)
 (sk)
 (skills)
 (skills)-->(node)

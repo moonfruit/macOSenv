@@ -61,6 +61,7 @@
     "deny": [],
     "defaultMode": "auto"
   },
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "Notification": [
       {
@@ -118,5 +119,5 @@
   "verbose": false,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "model": "claude-fable-5[1m]"
+  "inputNeededNotifEnabled": true
 }
