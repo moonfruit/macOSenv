@@ -61,7 +61,6 @@
     "deny": [],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
   "hooks": {
     "Notification": [
       {
@@ -117,7 +116,7 @@
   "autoUpdatesChannel": "latest",
   "skipDangerousModePermissionPrompt": true,
   "verbose": false,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
-  "inputNeededNotifEnabled": true
+  "skipAutoPermissionPrompt": true
 }

@@ -13,8 +13,9 @@ if [[ -r "$RC" ]]; then
     eval "$(sops decrypt "$RC" | sed -E 's/^(\s*\w+=)/export \1/')"
 fi
 
-if [[ $NAME != claude && -n "$CMUX_SURFACE_ID" && -z "${CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV}" ]]; then
-    CLAUDE=/Applications/cmux.app/Contents/Resources/bin/claude
+if [[ $NAME != claude && -z $CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV &&
+    -n $CMUX_SURFACE_ID && -x $_CMUX_CLAUDE_WRAPPER ]]; then
+    CLAUDE=$_CMUX_CLAUDE_WRAPPER
     export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
 else
     CLAUDE=/opt/homebrew/bin/claude
