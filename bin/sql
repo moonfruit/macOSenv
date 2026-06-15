@@ -15,6 +15,10 @@ export JAVA_TOOL_OPTIONS="-Djava.library.path=$ORACLE_HOME"
 # Java 26+
 JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS --enable-final-field-mutation=ALL-UNNAMED"
 
-exec "$caskroom/$version/sqlcl/bin/sql" "$@"
+if (($#)); then
+    exec "$caskroom/$version/sqlcl/bin/sql" "$@"
+else
+    exec "$caskroom/$version/sqlcl/bin/sql" /nolog
+fi
 
 # cspell:words sqlcl

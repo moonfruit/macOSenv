@@ -1,0 +1,480 @@
+#compdef cmux
+# zsh completion for cmux — control cmux via Unix socket
+# Generated from `cmux --help`.
+
+# ---------------------------------------------------------------------------
+# Reusable option fragments
+#
+# NOTE: the option arrays are built inside _cmux() (see below), NOT here.
+# This file IS the body of the autoloaded _cmux function: on the first call it
+# runs top-to-bottom and redefines _cmux to the inner definition at the bottom.
+# Anything declared `local` out here only exists during that first call, so on
+# every subsequent completion the arrays would be unset and _arguments would
+# choke on empty specs ("invalid argument:"). Keep them function-local instead.
+# ---------------------------------------------------------------------------
+
+# Stub matcher for id/ref/index arguments — refs are dynamic, so just hint.
+_cmux_ref() {
+  _message -e ref 'id | ref | index'
+}
+
+_cmux_path() { _files }
+
+# ---------------------------------------------------------------------------
+# Top-level command list
+# ---------------------------------------------------------------------------
+_cmux_commands() {
+  local -a cmds=(
+    'welcome:Show welcome screen'
+    'docs:Show docs (settings|shortcuts|api|browser|agents|dock|sidebars)'
+    'settings:Open or inspect settings'
+    'config:Config doctor/check/validate/path/reload'
+    'shortcuts:List keyboard shortcuts'
+    'disable-browser:Disable browser feature'
+    'enable-browser:Enable browser feature'
+    'browser-status:Show browser feature status'
+    'agent-hibernation:Toggle agent hibernation (on|off)'
+    'restore-session:Restore previous session'
+    'open:Open path or URL in a workspace/surface'
+    'diff:Open patch input or git source in a browser split'
+    'feedback:Send feedback'
+    'feed:TUI/clear the feed'
+    'themes:List/set/clear themes'
+    'claude-teams:Run claude-teams'
+    'codex-teams:Run codex-teams'
+    'omo:Run opencode (omo)'
+    'omx:Run omx'
+    'omc:Run omc'
+    'hooks:Setup/manage agent hooks'
+    'ping:Ping the cmux daemon'
+    'version:Show version'
+    'capabilities:Show capabilities'
+    'events:Stream events'
+    'auth:Auth status/login/logout'
+    'login:Alias for auth login'
+    'logout:Alias for auth logout'
+    'vm:Manage cloud VMs (alias: cloud)'
+    'cloud:Manage cloud VMs (alias: vm)'
+    'rpc:Call an RPC method'
+    'identify:Identify a workspace/surface/window'
+    'list-windows:List windows'
+    'current-window:Show current window'
+    'new-window:Create a new window'
+    'focus-window:Focus a window'
+    'close-window:Close a window'
+    'move-workspace-to-window:Move a workspace to a window'
+    'reorder-workspace:Reorder a workspace within a window'
+    'reorder-workspaces:Reorder workspaces by explicit order'
+    'workspace:Workspace operations (canonical noun)'
+    'workspace-group:Workspace group operations'
+    'workspace-action:Run a named workspace action'
+    'move-tab-to-new-workspace:Move a tab to a new workspace'
+    'list-workspaces:List workspaces'
+    'new-workspace:Create a new workspace'
+    'ssh:Open an SSH workspace'
+    'ssh-session-list:List SSH sessions'
+    'ssh-session-attach:Attach to an SSH session'
+    'ssh-session-cleanup:Clean up SSH sessions'
+    'remote-daemon-status:Show remote daemon status'
+    'new-split:Create a split (left|right|up|down)'
+    'list-panes:List panes'
+    'list-pane-surfaces:List surfaces in a pane'
+    'tree:Show window/workspace tree'
+    'top:Show process activity'
+    'memory:Show memory usage'
+    'focus-pane:Focus a pane'
+    'new-pane:Create a new pane'
+    'new-surface:Create a new surface'
+    'close-surface:Close a surface'
+    'move-surface:Move a surface'
+    'split-off:Split a surface off (left|right|up|down)'
+    'reorder-surface:Reorder a surface'
+    'tab-action:Run a named tab action'
+    'surface:Surface resume management'
+    'rename-tab:Rename a tab'
+    'drag-surface-to-split:Drag a surface to a split'
+    'refresh-surfaces:Refresh all surfaces'
+    'reload-config:Reload Ghostty + cmux config in place'
+    'surface-health:Show surface health'
+    'debug-terminals:Debug terminals'
+    'trigger-flash:Trigger a flash'
+    'list-panels:List panels'
+    'focus-panel:Focus a panel'
+    'close-workspace:Close a workspace'
+    'select-workspace:Select a workspace'
+    'rename-workspace:Rename a workspace'
+    'rename-window:Rename a window'
+    'current-workspace:Show current workspace'
+    'read-screen:Read a surface screen'
+    'send:Send text to a surface'
+    'send-key:Send a key to a surface'
+    'send-panel:Send text to a panel'
+    'send-key-panel:Send a key to a panel'
+    'notify:Post a notification'
+    'list-notifications:List notifications'
+    'dismiss-notification:Dismiss a notification'
+    'mark-notification-read:Mark notification(s) read'
+    'open-notification:Open a notification'
+    'jump-to-unread:Jump to unread'
+    'clear-notifications:Clear notifications'
+    'right-sidebar:Control the right sidebar'
+    'sidebar:Validate/reload/select sidebar'
+    'set-status:Set a status key'
+    'clear-status:Clear a status key'
+    'list-status:List status keys'
+    'set-progress:Set progress (0.0-1.0)'
+    'clear-progress:Clear progress'
+    'log:Append a log entry'
+    'clear-log:Clear the log'
+    'list-log:List log entries'
+    'sidebar-state:Show sidebar state'
+    'set-app-focus:Set app focus (active|inactive|clear)'
+    'simulate-app-active:Simulate app active'
+    'simulate-sidebar-drag:Simulate a sidebar drag'
+    'capture-pane:Capture a pane (tmux compat)'
+    'resize-pane:Resize a pane (tmux compat)'
+    'pipe-pane:Pipe a pane to a command (tmux compat)'
+    'wait-for:Wait for a signal (tmux compat)'
+    'swap-pane:Swap two panes (tmux compat)'
+    'break-pane:Break a pane out (tmux compat)'
+    'join-pane:Join a pane (tmux compat)'
+    'next-window:Select next window (tmux compat)'
+    'previous-window:Select previous window (tmux compat)'
+    'last-window:Select last window (tmux compat)'
+    'last-pane:Select last pane (tmux compat)'
+    'find-window:Find a window (tmux compat)'
+    'clear-history:Clear scrollback history (tmux compat)'
+    'set-hook:Set/list/unset a hook (tmux compat)'
+    'popup:Show a popup (tmux compat)'
+    'bind-key:Bind a key (tmux compat)'
+    'unbind-key:Unbind a key (tmux compat)'
+    'copy-mode:Enter copy mode (tmux compat)'
+    'set-buffer:Set a buffer (tmux compat)'
+    'list-buffers:List buffers (tmux compat)'
+    'paste-buffer:Paste a buffer (tmux compat)'
+    'respawn-pane:Respawn a pane (tmux compat)'
+    'display-message:Display a message (tmux compat)'
+    'markdown:Open a markdown file in the viewer'
+    'browser:Browser automation subcommands'
+    'help:Show help'
+  )
+  _describe -t commands 'cmux command' cmds
+}
+
+# ---------------------------------------------------------------------------
+# Sub-dispatch helpers
+# ---------------------------------------------------------------------------
+_cmux_browser() {
+  local -a subs=(
+    'disable:Disable browser' 'enable:Enable browser' 'status:Browser status'
+    'open:Create a browser split / navigate' 'open-split:Open a browser split'
+    'goto:Navigate to URL' 'navigate:Navigate to URL'
+    'back:Go back' 'forward:Go forward' 'reload:Reload'
+    'react-grab:Toggle react-grab' 'devtools:Toggle devtools'
+    'focus-mode:Enter/exit/toggle focus mode' 'zoom:Zoom in/out/reset'
+    'history:Clear history' 'url:Get URL' 'get-url:Get URL'
+    'snapshot:Snapshot the page' 'eval:Evaluate a script' 'wait:Wait for a condition'
+    'click:Click selector' 'dblclick:Double-click selector' 'hover:Hover selector'
+    'focus:Focus selector' 'check:Check selector' 'uncheck:Uncheck selector'
+    'scroll-into-view:Scroll selector into view'
+    'type:Type into selector' 'fill:Fill selector' 'press:Press key'
+    'keydown:Key down' 'keyup:Key up' 'select:Select option'
+    'scroll:Scroll' 'screenshot:Screenshot' 'get:Get url|title|text|html|...'
+    'is:Check visible|enabled|checked' 'find:Find by role|text|label|...'
+    'frame:Select frame' 'dialog:Accept/dismiss dialog' 'download:Download'
+    'profiles:Manage profiles' 'import:Import' 'cookies:Get/set/clear cookies'
+    'storage:Local/session storage' 'tab:Manage tabs' 'console:List/clear console'
+    'errors:List/clear errors' 'highlight:Highlight selector'
+    'state:Save/load state' 'addinitscript:Add init script'
+    'addscript:Add script' 'addstyle:Add style' 'identify:Identify surface'
+  )
+  _describe -t browser-subcommands 'browser subcommand' subs
+}
+
+# Group subcommand dispatch — shared by `workspace group` and `workspace-group`.
+# Expects $words to have been shifted so $words[1] is the group subcommand.
+_cmux_workspace_group_subs() {
+  local -a subs=(
+    'list:List groups' 'create:Create a group'
+    'ungroup:Dissolve a group, keep members' 'delete:Delete a group AND its workspaces'
+    'rename:Rename a group' 'collapse:Collapse a group' 'expand:Expand a group'
+    'pin:Pin a group' 'unpin:Unpin a group'
+    'add:Add a workspace to a group' 'remove:Remove a workspace from its group'
+    'set-anchor:Set the group anchor workspace'
+    'new-workspace:Create a workspace in a group'
+    'set-color:Set group color' 'set-icon:Set group icon'
+    'move:Move a group' 'focus:Focus the group anchor'
+  )
+  _describe -t group-subcommands 'group subcommand' subs
+}
+
+_cmux_workspace_group_args() {
+  case ${words[1]} in
+    list)
+      _arguments '--json[Output JSON]' ;;
+    create)
+      _arguments \
+        '--name[Group name]:name:' \
+        '--cwd[Working directory]:dir:_path_files -/' \
+        '--from[Source workspace ids (comma-separated)]:ids:' ;;
+    ungroup|delete|collapse|expand|pin|unpin|focus)
+      _arguments '1:group:_cmux_ref' ;;
+    rename)
+      _arguments '1:group:_cmux_ref' '--name[New name]:name:' ;;
+    add)
+      _arguments '--group[Group]:group:_cmux_ref' '--workspace[Workspace]:workspace:_cmux_ref' ;;
+    remove)
+      _arguments '--workspace[Workspace]:workspace:_cmux_ref' ;;
+    set-anchor)
+      _arguments '--group[Group]:group:_cmux_ref' '--workspace[Workspace]:workspace:_cmux_ref' ;;
+    new-workspace)
+      _arguments '1:group:_cmux_ref' '--placement[Placement]:placement:(afterCurrent top end)' ;;
+    set-color)
+      _arguments '1:group:_cmux_ref' '--hex[Color #RRGGBB]:hex:' ;;
+    set-icon)
+      _arguments '1:group:_cmux_ref' '--symbol[SF Symbol]:symbol:' ;;
+    move)
+      _arguments '1:group:_cmux_ref' \
+        '--to-index[Target index]:n:' \
+        '--before[Before group]:group:_cmux_ref' \
+        '--after[After group]:group:_cmux_ref' ;;
+  esac
+}
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+_cmux() {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+
+  # Inputs accept UUIDs, short refs (window:1/workspace:2/pane:3/surface:4) or indexes.
+  local -a _cmux_target_opts=(
+    '--workspace[Target workspace]:workspace:_cmux_ref'
+    '--surface[Target surface]:surface:_cmux_ref'
+    '--pane[Target pane]:pane:_cmux_ref'
+    '--window[Target window]:window:_cmux_ref'
+  )
+  local -a _cmux_focus_opts=(
+    '--focus[Focus after action]:focus:(true false)'
+    '--no-focus[Do not focus after action]'
+  )
+
+  _arguments -C \
+    '(- *)'{-h,--help}'[Show help]' \
+    '--password[Socket auth password]:password:' \
+    '--id-format[ID output format]:format:(refs uuids both)' \
+    '1: :->command' \
+    '*:: :->args' \
+    && return 0
+
+  case $state in
+    command)
+      # First positional may be a directory (open in new workspace) or a command.
+      _alternative \
+        'commands:command:_cmux_commands' \
+        'directories:directory:_path_files -/'
+      ;;
+    args)
+      local cmd=${line[1]}
+      case $cmd in
+        docs)
+          _values 'topic' settings shortcuts api browser agents dock sidebars ;;
+        settings)
+          _values 'settings action' open path docs ;;
+        config)
+          _values 'config action' doctor check validate path paths docs documentation reload ;;
+        themes)
+          _values 'themes action' list set clear ;;
+        feed)
+          _values 'feed action' tui clear ;;
+        agent-hibernation)
+          _values 'state' on off ;;
+        auth)
+          _values 'auth action' status login logout ;;
+        set-app-focus)
+          _values 'app focus' active inactive clear ;;
+        vm|cloud)
+          _values 'vm action' new ls rm exec shell ssh ;;
+        surface)
+          if (( CURRENT == 2 )); then
+            _values 'surface action' resume
+          else
+            _values 'resume action' set show get clear
+          fi ;;
+        right-sidebar)
+          _values 'right-sidebar action' \
+            toggle show hide focus set mode files find vault sessions feed dock ;;
+        sidebar)
+          _values 'sidebar action' validate reload select ;;
+        hooks)
+          if (( CURRENT == 2 )); then
+            _values 'hooks action' setup uninstall feed
+          else
+            _arguments \
+              '--agent[Agent name]:agent:' \
+              '--project[Limit to project (opencode)]' \
+              '--source[Hook source agent]:agent:' \
+              '--event[Hook event]:event:'
+          fi ;;
+        workspace)
+          if (( CURRENT == 2 )); then
+            _values 'workspace subcommand' \
+              'list[List workspaces in a window]' \
+              'create[Create a workspace]' \
+              'close[Close a workspace]' \
+              'rename[Rename a workspace]' \
+              'select[Make a workspace active]' \
+              'reconnect[Reconnect a remote (SSH) workspace]' \
+              'disconnect[Stop a remote workspace connection]' \
+              'group[Workspace group operations]'
+            return
+          fi
+          # Drop 'workspace' so $words[1] becomes the subcommand.
+          (( CURRENT-- )); shift words
+          case ${words[1]} in
+            list)
+              _arguments '--json[Output JSON]' '--window[Window]:window:_cmux_ref' ;;
+            create)
+              _arguments \
+                '--name[Title]:title:' '--description[Description]:text:' \
+                '--cwd[Working directory]:dir:_path_files -/' \
+                '--command[Command]:command:' '--layout[Layout JSON]:json:' \
+                '--window[Window]:window:_cmux_ref' "$_cmux_focus_opts[@]" ;;
+            close|select)
+              _arguments '1:workspace:_cmux_ref' '--window[Window]:window:_cmux_ref' ;;
+            rename)
+              _arguments '1:workspace:_cmux_ref' \
+                '--title[New title]:title:' '--window[Window]:window:_cmux_ref' ;;
+            reconnect|disconnect)
+              _arguments '1:workspace:_cmux_ref' \
+                '--workspace[Workspace]:workspace:_cmux_ref' \
+                '--window[Window]:window:_cmux_ref' ;;
+            group)
+              if (( CURRENT == 2 )); then
+                _cmux_workspace_group_subs
+                return
+              fi
+              (( CURRENT-- )); shift words
+              _cmux_workspace_group_args ;;
+          esac ;;
+        workspace-group)
+          if (( CURRENT == 2 )); then
+            _cmux_workspace_group_subs
+            return
+          fi
+          (( CURRENT-- )); shift words
+          _cmux_workspace_group_args ;;
+        new-split|split-off|drag-surface-to-split)
+          _arguments \
+            '1:direction:(left right up down)' \
+            "$_cmux_target_opts[@]" "$_cmux_focus_opts[@]" ;;
+        resize-pane)
+          _arguments \
+            '-L[Resize left]' '-R[Resize right]' \
+            '-U[Resize up]' '-D[Resize down]' \
+            '--amount[Cells]:n:' "$_cmux_target_opts[@]" ;;
+        open)
+          _arguments '*:path or url:_files' \
+            "$_cmux_target_opts[@]" "$_cmux_focus_opts[@]" ;;
+        diff)
+          _arguments \
+            '1:patch file:_files' \
+            '--source[Diff source]:source:(unstaged staged branch last-turn)' \
+            '--unstaged' '--staged' '--branch' '--last-turn' \
+            '--cwd[Working directory]:dir:_path_files -/' \
+            '--base[Base ref]:ref:' \
+            '--title[Title]:title:' \
+            '--layout[Layout]:layout:(split unified)' \
+            '--font-size[Font size]:points:' \
+            "$_cmux_target_opts[@]" "$_cmux_focus_opts[@]" ;;
+        markdown)
+          _arguments '1:action or path:(open)' '*:path:_files' \
+            '--focus[Focus]:focus:(true false)' ;;
+        new-pane)
+          _arguments \
+            '--type[Pane type]:type:(terminal browser)' \
+            '--direction[Direction]:direction:(left right up down)' \
+            '--url[URL]:url:' "$_cmux_target_opts[@]" "$_cmux_focus_opts[@]" ;;
+        new-surface)
+          _arguments \
+            '--type[Surface type]:type:(terminal browser agent-session)' \
+            '--url[URL]:url:' \
+            '--provider[Provider]:provider:(codex claude opencode)' \
+            '--renderer[Renderer]:renderer:(react solid)' \
+            "$_cmux_target_opts[@]" "$_cmux_focus_opts[@]" ;;
+        new-workspace)
+          _arguments \
+            '--name[Title]:title:' '--description[Description]:text:' \
+            '--cwd[Working directory]:dir:_path_files -/' \
+            '--command[Command]:command:' '--layout[Layout JSON]:json:' \
+            '--window[Window]:window:_cmux_ref' "$_cmux_focus_opts[@]" ;;
+        ssh)
+          _arguments \
+            '1:destination:_ssh_hosts' \
+            '--name[Title]:title:' '--port[Port]:port:' \
+            '--identity[Identity file]:path:_files' \
+            '(-A --forward-agent)'{-A,--forward-agent}'[Forward agent]' \
+            '(-a --no-forward-agent)'{-a,--no-forward-agent}'[Do not forward agent]' \
+            '--ssh-option[SSH option]:opt:' \
+            '--window[Window]:window:_cmux_ref' '--no-focus[Do not focus]' \
+            '*::remote command:_command_names' ;;
+        top)
+          _arguments \
+            '--all' '--processes' '--flat' \
+            '--sort[Sort by]:sort:(cpu mem proc)' \
+            '--format[Output format]:format:(tree tsv)' \
+            "$_cmux_target_opts[@]" ;;
+        tree|memory)
+          _arguments '--all' '--groups[Group count]:count:' "$_cmux_target_opts[@]" ;;
+        read-screen|capture-pane)
+          _arguments '--scrollback' '--lines[Lines]:n:' "$_cmux_target_opts[@]" ;;
+        send|send-panel)
+          _arguments "$_cmux_target_opts[@]" '*:text:' ;;
+        send-key|send-key-panel)
+          _arguments "$_cmux_target_opts[@]" '*:key:' ;;
+        notify)
+          _arguments \
+            '--title[Title]:text:' '--subtitle[Subtitle]:text:' \
+            '--body[Body]:text:' "$_cmux_target_opts[@]" ;;
+        set-status)
+          _arguments \
+            '1:key:' '2:value:' \
+            '--icon[Icon]:name:' '--color[Color]:color:' \
+            '--priority[Priority]:n:' "$_cmux_target_opts[@]" ;;
+        set-progress)
+          _arguments '1:value:' '--label[Label]:text:' "$_cmux_target_opts[@]" ;;
+        log)
+          _arguments \
+            '--level[Level]:level:' '--source[Source]:name:' \
+            "$_cmux_target_opts[@]" '*:message:' ;;
+        events)
+          _arguments \
+            '--after[After seq]:seq:' '--cursor-file[Cursor file]:file:_files' \
+            '--name[Event name]:event:' '--category[Category]:category:' \
+            '--reconnect' '--limit[Limit]:n:' '--no-ack' '--no-heartbeat' ;;
+        remote-daemon-status)
+          _arguments '--os[OS]:os:(darwin linux)' '--arch[Arch]:arch:(arm64 amd64)' ;;
+        find-window)
+          _arguments '--content' '--select' '--window[Window]:window:_cmux_ref' '*:query:' ;;
+        browser)
+          if (( CURRENT == 2 )); then
+            _cmux_browser
+          else
+            _arguments \
+              '--surface[Target surface]:surface:_cmux_ref' \
+              '--focus[Focus]:focus:(true false)' \
+              '--snapshot-after[Snapshot after action]' \
+              '*: :_default'
+          fi ;;
+        *)
+          # Generic fallback: most commands accept the common target options.
+          _arguments \
+            "$_cmux_target_opts[@]" "$_cmux_focus_opts[@]" \
+            '--id[UUID]:uuid:' '*: :_default' ;;
+      esac
+      ;;
+  esac
+}
+
+_cmux "$@"
