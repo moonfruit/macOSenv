@@ -23,6 +23,20 @@ else
     if [[ -z "$CLAUDE_CODE_NO_FLICKER" ]]; then
         export CLAUDE_CODE_NO_FLICKER=1
     fi
+    if [[ -z $ANTHROPIC_BASE_URL && -n $CCFIXER_UPSTREAM ]] && command -v ccfixer >/dev/null; then
+        coproc CCFIXER {
+            exec ccfixer -u "$CCFIXER_UPSTREAM" -l 127.0.0.1:0 -q
+        }
+        trap 'kill $CCFIXER_PID 2>/dev/null' EXIT
+        read -r CCFIXER_URL <&"${CCFIXER[0]}"
+        export ANTHROPIC_BASE_URL=${CCFIXER_URL}/anthropic
+    fi
 fi
 
-exec "$CLAUDE" "$@"
+if [[ -n $CCFIXER_URL ]]; then
+    "$CLAUDE" "$@"
+else
+    exec "$CLAUDE" "$@"
+fi
+
+# cspell:words CCFIXER

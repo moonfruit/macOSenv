@@ -121,6 +121,7 @@ skinparam usecase {
 (dmalloc)
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
+(doge)
 (dry)
 (dtc) << dep >>
 (dtc)-->(libyaml)
@@ -478,7 +479,6 @@ skinparam usecase {
 (moonfruit/tap/ccstatusline)-->(node)
 (moonfruit/tap/codegraph)
 (moonfruit/tap/codegraph)-->(node)
-(moonfruit/tap/dog)
 (moonfruit/tap/ethr)
 (moonfruit/tap/geo)
 (moonfruit/tap/gotools)
