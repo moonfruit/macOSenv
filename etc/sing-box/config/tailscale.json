@@ -1,0 +1,10 @@
+{
+  "endpoints": [
+    {
+      "type": "tailscale",
+      "tag": "tailscale-ep",
+      "accept_routes": true
+    }
+  ]
+}
+// vim: ft=jsonc

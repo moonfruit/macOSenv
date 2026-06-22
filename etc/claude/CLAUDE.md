@@ -28,7 +28,7 @@ Claude 可以使用以下工具：
   - 优先使用`jq`处理`JSON`数据而不是`sed`或`awk`
   - 优先考虑使用`yq`处理`YAML`,`XML`,`TOML`数据而不是`sed`或`awk`
 
-- 默认环境中的 `awk`, `sed`, `getopt` 是 GNU 版本，使用时请注意兼容性问题
+- 默认环境中的 `awk`, `sed`, `getopt`, `grep` 是 GNU 版本，使用时请注意兼容性问题
 
 - 必要时可以使用`homebrew`安装工具
 

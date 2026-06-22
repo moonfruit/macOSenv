@@ -36,10 +36,9 @@
       // Gingkoo
       { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       // LazyCat
-      // { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
+      { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
       // Tailscale
-      // { "tag": "dns-tailscale", "type": "udp", "server": "fd7a:115c:a1e0::53" },
-      // { "tag": "dns-tailscale", "type": "tailscale", "endpoint": "tailsacle-endpoint" },
+      { "tag": "dns-tailscale", "type": "tailscale", "endpoint": "tailscale-ep" },
       // Hosts
       {
         "tag": "dns-hosts",
@@ -52,14 +51,14 @@
           "router.home.arpa": "192.168.50.1",
           "xiaomi.home.arpa": "192.168.50.10",
           "lazycat.home.arpa": "192.168.50.11",
-          "debian.home.arpa": "192.168.50.13",
           "homeassistant.home.arpa": "192.168.50.15",
+          "debian.home.arpa": "192.168.50.250",
           "switch1.home.arpa": "192.168.50.251",
           "switch2.home.arpa": "192.168.50.252"
         }
       },
       // mDNS
-      { "tag": "dns-mdns", "type": "mdns", "interface": ["en0", "en13"] },
+      // { "tag": "dns-mdns", "type": "mdns" },
       // FakeIP
       {
         "tag": "dns-fakeip",
@@ -71,12 +70,12 @@
       // 直接解析
       { "preferred_by": "dns-hosts", "server": "dns-hosts" },
       // mDNS
-      { "preferred_by": "dns-mdns", "server": "dns-mdns" },
+      // { "preferred_by": "dns-mdns", "server": "dns-mdns" },
+      // Tailscale
+      { "preferred_by": "dns-tailscale", "server": "dns-tailscale" },
 
       // LazyCat
-      // { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
-      // Tailscale
-      // { "domain_suffix": "ts.net", "server": "dns-tailscale" },
+      { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
       // 内网地址
       { "domain_suffix": ["heiyu.space", "ts.net"], "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
       // 公共 DNS
@@ -91,7 +90,20 @@
       {
         "type": "logical",
         "mode": "and",
-        "rules": [{ "query_type": ["A", "AAAA"] }, { "process_name": ["q", "sing-box"], "invert": true }],
+        "rules": [
+          { "query_type": ["A", "AAAA"] },
+          {
+            "process_name": [
+              "sing-box",
+              "cdeplugin",
+              "lzc-core.darwin",
+              "openvpn",
+              "Tailscale",
+              "q"
+            ],
+            "invert": true
+          }
+        ],
         "server": "dns-fakeip",
         "rewrite_ttl": 1
       },
@@ -119,6 +131,11 @@
   ],
   "route": {
     "rules": [
+      // Direct Process
+      { "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "Tailscale"], "outbound": "DIRECT" },
+      // Tailscale
+      { "preferred_by": "tailscale-ep", "outbound": "tailscale-ep" },
+      // Network
       { "network": "icmp", "outbound": "DIRECT" },
       { "inbound": "dns-in", "action": "hijack-dns" },
       { "action": "sniff" },
@@ -132,7 +149,6 @@
       //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],  // 禁用 DoT/DoH
       //   "action": "reject"
       // },
-      { "process_name": "lzc-core.darwin", "outbound": "DIRECT" },
       {
         "domain_suffix": ["server.gingkoo", "gingkoo.internal"],
         "invert": true,

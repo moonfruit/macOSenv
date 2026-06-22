@@ -139,7 +139,7 @@ skinparam usecase {
 (ffmpeg)-->(libvpx)
 (ffmpeg)-->(openssl@3)
 (ffmpeg)-->(opus)
-(ffmpeg)-->(sdl2)
+(ffmpeg)-->(sdl2-compat)
 (ffmpeg)-->(svt-av1)
 (ffmpeg)-->(x264)
 (ffmpeg)-->(x265)
@@ -154,6 +154,7 @@ skinparam usecase {
 (freetype) << dep >>
 (freetype)-->(libpng)
 (fribidi) << dep >>
+(frpc)
 (fzf)
 (gawk)
 (gawk)-->(gettext)
@@ -260,6 +261,8 @@ skinparam usecase {
 (graphviz)-->(libtool)
 (graphviz)-->(pango)
 (graphviz)-->(webp)
+(grep)
+(grep)-->(pcre2)
 (groovy)
 (groovy)-->(openjdk)
 (grpcurl)
@@ -502,7 +505,6 @@ skinparam usecase {
 (moonfruit/tap/oracle-instantclient)
 (moonfruit/tap/p7zip-all)
 (moonfruit/tap/remindctl)
-(moonfruit/tap/rmux)
 (moonfruit/tap/seqcli)
 (moonfruit/tap/seqcli)-->(brotli)
 (moonfruit/tap/sing-box-beta)
@@ -726,6 +728,7 @@ skinparam usecase {
 (rlwrap)
 (rlwrap)-->(libptytty)
 (rlwrap)-->(readline)
+(rmux)
 (rsync)
 (rsync)-->(lz4)
 (rsync)-->(openssl@3)
@@ -747,7 +750,9 @@ skinparam usecase {
 (rust)-->(sqlite)
 (rustnet)
 (sd)
-(sdl2) << dep >>
+(sdl2-compat) << dep >>
+(sdl2-compat)-->(sdl3)
+(sdl3) << dep >>
 (selene)
 (shellcheck) << req >>
 (shellcheck)-->(gmp)
@@ -835,6 +840,11 @@ skinparam usecase {
 (webp)-->(jpeg-turbo)
 (webp)-->(libpng)
 (webp)-->(libtiff)
+(wget)
+(wget)-->(gettext)
+(wget)-->(libidn2)
+(wget)-->(libunistring)
+(wget)-->(openssl@3)
 (wget2)
 (wget2)-->(brotli)
 (wget2)-->(gettext)
