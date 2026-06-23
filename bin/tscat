@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# tscat — 临时通过 socat 把本地 unix socket 转发到远程 tailscaled，
+# 再用该 socket 运行 tailscale，结束后清理。
+#
+# 用法： tscat [tailscale 的任意参数]
+#   例： tscat status
+#        tscat ping some-host
+
+set -euo pipefail
+
+REMOTE_HOST="tailscale.dkmooncat.heiyu.space"
+REMOTE_PORT="5253"
+TAILSCALE="${TAILSCALE:-/usr/local/bin/tailscale}"
+WAIT_TIMEOUT="${TSCAT_WAIT_TIMEOUT:-5}" # 等待 socket 就绪的秒数
+
+die() {
+    echo "tscat: $*" >&2
+    exit 1
+}
+
+command -v socat >/dev/null 2>&1 || die "未找到 socat"
+[[ -x "$TAILSCALE" ]] || die "未找到可执行的 tailscale: $TAILSCALE"
+
+# 私有临时目录（默认权限 700），socket 放在里面
+dir="$(mktemp -d -t tscat.XXXXXX)"
+sock="$dir/tailscaled.sock"
+
+socat_pid=""
+cleanup() {
+    [[ -n "$socat_pid" ]] && kill "$socat_pid" 2>/dev/null || true
+    rm -rf "$dir"
+}
+trap cleanup EXIT INT TERM
+
+# 后台启动转发：unix socket -> 远程 TCP（诊断输出留到日志，失败时再回显）
+socat_log="$dir/socat.log"
+socat "UNIX-LISTEN:$sock,fork,mode=600" "TCP:$REMOTE_HOST:$REMOTE_PORT" 2>"$socat_log" &
+socat_pid=$!
+
+# 轮询等待 socket 就绪（带超时）；同时确认 socat 仍存活
+deadline=$((SECONDS + WAIT_TIMEOUT))
+while [[ ! -S "$sock" ]]; do
+    kill -0 "$socat_pid" 2>/dev/null || die "socat 启动失败：$(cat "$socat_log" 2>/dev/null)"
+    ((SECONDS >= deadline)) && die "等待 socket 就绪超时（${WAIT_TIMEOUT}s）"
+    sleep 0.1
+done
+
+# 使用该 socket 运行 tailscale；故意不用 exec，以便结束后 trap 清理
+"$TAILSCALE" --socket="$sock" "$@"

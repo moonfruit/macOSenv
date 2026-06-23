@@ -74,4 +74,8 @@ Host ibm-aix.lan
     RemoteForward 1521 10.0.2.20:1521
     RemoteForward 8888 10.1.2.11:80
 
+Host ibm-aix.goldeye-bushmaster.ts.net
+    User gpp
+    SetEnv TERM=xterm-256color
+
 # vim: filetype=sshconfig

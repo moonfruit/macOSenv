@@ -40,23 +40,7 @@
       // Tailscale
       { "tag": "dns-tailscale", "type": "tailscale", "endpoint": "tailscale-ep" },
       // Hosts
-      {
-        "tag": "dns-hosts",
-        "type": "hosts",
-        "path": ["/etc/hosts", "/Users/moon/Workspace.localized/env/etc/hosts"],
-        "predefined": {
-          "asusrouter.com": "192.168.50.1",
-          "router.asus.com": "192.168.50.1",
-          "www.asusrouter.com": "192.168.50.1",
-          "router.home.arpa": "192.168.50.1",
-          "xiaomi.home.arpa": "192.168.50.10",
-          "lazycat.home.arpa": "192.168.50.11",
-          "homeassistant.home.arpa": "192.168.50.15",
-          "debian.home.arpa": "192.168.50.250",
-          "switch1.home.arpa": "192.168.50.251",
-          "switch2.home.arpa": "192.168.50.252"
-        }
-      },
+      { "tag": "dns-hosts", "type": "hosts", "path": ["hosts", "/etc/hosts"] },
       // mDNS
       // { "tag": "dns-mdns", "type": "mdns" },
       // FakeIP
@@ -93,14 +77,7 @@
         "rules": [
           { "query_type": ["A", "AAAA"] },
           {
-            "process_name": [
-              "sing-box",
-              "cdeplugin",
-              "lzc-core.darwin",
-              "openvpn",
-              "Tailscale",
-              "q"
-            ],
+            "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "tailscaled", "Tailscale", "q"],
             "invert": true
           }
         ],
@@ -132,7 +109,10 @@
   "route": {
     "rules": [
       // Direct Process
-      { "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "Tailscale"], "outbound": "DIRECT" },
+      {
+        "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "tailscaled", "Tailscale"],
+        "outbound": "DIRECT"
+      },
       // Tailscale
       { "preferred_by": "tailscale-ep", "outbound": "tailscale-ep" },
       // Network

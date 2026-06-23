@@ -41,10 +41,12 @@
             "localhost",
             "arpa",
             "local",
+            "test",
             "heiyu.space",
             "apple.com",
             "gingkoo.com",
-            "server.gingkoo"
+            "server.gingkoo",
+            "gingkoo.internal"
           ]
         }
       }

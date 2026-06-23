@@ -1,13 +1,25 @@
-127.0.0.1	default.gpms.local
-127.0.0.1	1st.gpms.local
-127.0.0.1	2nd.gpms.local
+192.168.50.1	www.asusrouter.com
+192.168.50.1	asusrouter.com
+192.168.50.1	router.asus.com
 
-::1	default.gpms.local
-::1	1st.gpms.local
-::1	2nd.gpms.local
+192.168.50.1	router.home.arpa
+192.168.50.10	mi.home.arpa
+192.168.50.11	dkmooncat.home.arpa
+192.168.50.15	ha.home.arpa
+192.168.50.250	debian.home.arpa
+192.168.50.251	switch1.home.arpa
+192.168.50.252	switch2.home.arpa
 
-127.0.0.1	uobc.cips.com
-127.0.0.1	uobs.cips.com
+127.0.0.1	default.gpms.test
+127.0.0.1	1st.gpms.test
+127.0.0.1	2nd.gpms.test
 
-::1	uobc.cips.com
-::1	uobs.cips.com
+::1	default.gpms.test
+::1	1st.gpms.test
+::1	2nd.gpms.test
+
+127.0.0.1	uobc.cips.test
+127.0.0.1	uobs.cips.test
+
+::1	uobc.cips.test
+::1	uobs.cips.test

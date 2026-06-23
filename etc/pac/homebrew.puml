@@ -768,6 +768,8 @@ skinparam usecase {
 (snappy) << dep >>
 (sniffnet)
 (sniffnet)-->(openssl@3)
+(socat)
+(socat)-->(openssl@3)
 (sops)
 (sqlfluff)
 (sqlfluff)-->(libyaml)

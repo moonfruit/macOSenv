@@ -3,6 +3,7 @@
     {
       "type": "tailscale",
       "tag": "tailscale-ep",
+      "hostname": "moons-macbook-sing-box",
       "accept_routes": true
     }
   ]
