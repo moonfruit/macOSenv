@@ -108,14 +108,14 @@ upgrade-cask() {
         local cask
         for cask in "${CASKS[@]}"; do
             if [[ $item == "$cask" ]]; then
-                echo "brew ${BOLD}upgrade$RESET --cask $BLUE${item}$RESET"
+                echo "brew ${BOLD}upgrade$RESET --yes --cask $BLUE${item}$RESET"
                 continue 2
             fi
         done
         left+=("$item")
     done
     if ((${#left[@]})); then
-        echo "brew ${BOLD}upgrade$RESET --cask $BLUE${left[*]}$RESET"
+        echo "brew ${BOLD}upgrade$RESET --yes --cask $BLUE${left[*]}$RESET"
     fi
 }
 

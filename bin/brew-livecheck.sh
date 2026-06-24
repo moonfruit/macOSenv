@@ -14,7 +14,7 @@ readonly EXTRA=(
     sing-box-beta
     sing-box-ref1nd
     wlp-webprofile8
-    wlp-webprofile10
+    wlp-webprofile11
     zig
 
     alacritty

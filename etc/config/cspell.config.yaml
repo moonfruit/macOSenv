@@ -16,6 +16,7 @@ words:
   - codelldb
   - CPPFLAGS
   - cssls
+  - deque
   - direnv
   - dkmooncat
   - dkmoonfruit
@@ -24,6 +25,7 @@ words:
   - dockerls
   - eip
   - elif
+  - enduml
   - env
   - envrc
   - esac
@@ -76,7 +78,9 @@ words:
   - setaf
   - shfmt
   - shopt
+  - skinparam
   - sonoma
+  - startuml
   - swiftc
   - taplo
   - tavily
