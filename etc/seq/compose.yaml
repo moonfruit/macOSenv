@@ -1,3 +1,5 @@
+name: seq
+
 services:
   app:
     image: datalust/seq

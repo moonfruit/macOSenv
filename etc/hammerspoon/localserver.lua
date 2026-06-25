@@ -6,7 +6,7 @@ function M.new(interface)
     local web = hs.httpserver.hsminweb.new(paths.etc .. "/pac")
     web:allowDirectory(true)
     web:bonjour(false)
-    web:directoryIndex({ "index.html", "log.html" })
+    web:directoryIndex({ "index.html" })
     web:interface(interface)
     web:port(7900)
     return web
