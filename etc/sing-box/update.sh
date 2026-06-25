@@ -15,6 +15,10 @@ else
     cd "$TEMP_DIR" || exit 1
 fi
 
+h1 Updating zashboard.json
+zashboard-iplabels.py >zashboard.json
+copy-if-diff zashboard.json "$DIR/ui" || true
+
 h1 Updating config.json
 
 mkdir -p dat "$CACHE"
