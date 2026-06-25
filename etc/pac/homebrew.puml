@@ -97,8 +97,6 @@ skinparam usecase {
 (croc)
 (cspell)
 (cspell)-->(node)
-(ctx7)
-(ctx7)-->(node)
 (curl)
 (curl)-->(brotli)
 (curl)-->(libnghttp2)
@@ -379,8 +377,6 @@ skinparam usecase {
 (libngtcp2)-->(openssl@3)
 (libpng) << dep >>
 (libpsl) << dep >>
-(libpsl)-->(libidn2)
-(libpsl)-->(libunistring)
 (libptytty) << dep >>
 (librsvg) << dep >>
 (librsvg)-->(cairo)
