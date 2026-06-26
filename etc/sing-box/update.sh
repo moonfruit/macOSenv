@@ -16,8 +16,13 @@ else
 fi
 
 h1 Updating zashboard.json
-zashboard-iplabels.py >zashboard.json
-copy-if-diff zashboard.json "$DIR/ui" || true
+ZASHBOARD="$DIR/ui/zashboard.json"
+if [[ -w "$ZASHBOARD" ]] && (("$(stat -f %m "$ZASHBOARD")" < "$(date -v-1d +%s)")); then
+    zashboard-iplabels.py >zashboard.json
+    copy-if-diff zashboard.json "$DIR/ui" || true
+else
+    h2 Skipping zashboard.json - not writable or updated within 1 day
+fi
 
 h1 Updating config.json
 

@@ -525,7 +525,7 @@ skinparam usecase {
 (mysql-client)
 (mysql-client)-->(libfido2)
 (mysql-client)-->(openssl@3)
-(mysql-client)-->(zlib)
+(mysql-client)-->(zlib-ng-compat)
 (mysql-client)-->(zstd)
 (nbytes) << dep >>
 (ncdu)
@@ -873,6 +873,7 @@ skinparam usecase {
 (yt-dlp)-->(python@3.14)
 (z3) << dep >>
 (zlib) << dep >>
+(zlib-ng-compat) << dep >>
 (zoxide)
 (zsh)
 (zsh)-->(ncurses)
