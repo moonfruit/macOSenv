@@ -72,9 +72,12 @@ _cmux_commands() {
     'list-workspaces:List workspaces'
     'new-workspace:Create a new workspace'
     'ssh:Open an SSH workspace'
+    'ssh-tmux:Mirror a remote host'\''s tmux sessions (tmux -CC)'
     'ssh-session-list:List SSH sessions'
     'ssh-session-attach:Attach to an SSH session'
     'ssh-session-cleanup:Clean up SSH sessions'
+    'remotes:Manage team remote Macs (alias: remote)'
+    'remote:Manage team remote Macs (alias: remotes)'
     'remote-daemon-status:Show remote daemon status'
     'new-split:Create a split (left|right|up|down)'
     'list-panes:List panes'
@@ -209,6 +212,7 @@ _cmux_workspace_group_subs() {
 }
 
 _cmux_workspace_group_args() {
+  # All group subcommands honor --json.
   case ${words[1]} in
     list)
       _arguments '--json[Output JSON]' ;;
@@ -216,28 +220,30 @@ _cmux_workspace_group_args() {
       _arguments \
         '--name[Group name]:name:' \
         '--cwd[Working directory]:dir:_path_files -/' \
-        '--from[Source workspace ids (comma-separated)]:ids:' ;;
+        '--from[Source workspace ids (comma-separated)]:ids:' \
+        '--json[Output JSON]' ;;
     ungroup|delete|collapse|expand|pin|unpin|focus)
-      _arguments '1:group:_cmux_ref' ;;
+      _arguments '1:group:_cmux_ref' '--json[Output JSON]' ;;
     rename)
-      _arguments '1:group:_cmux_ref' '--name[New name]:name:' ;;
+      _arguments '1:group:_cmux_ref' '--name[New name]:name:' '--json[Output JSON]' ;;
     add)
-      _arguments '--group[Group]:group:_cmux_ref' '--workspace[Workspace]:workspace:_cmux_ref' ;;
+      _arguments '--group[Group]:group:_cmux_ref' '--workspace[Workspace]:workspace:_cmux_ref' '--json[Output JSON]' ;;
     remove)
-      _arguments '--workspace[Workspace]:workspace:_cmux_ref' ;;
+      _arguments '--workspace[Workspace]:workspace:_cmux_ref' '--json[Output JSON]' ;;
     set-anchor)
-      _arguments '--group[Group]:group:_cmux_ref' '--workspace[Workspace]:workspace:_cmux_ref' ;;
+      _arguments '--group[Group]:group:_cmux_ref' '--workspace[Workspace]:workspace:_cmux_ref' '--json[Output JSON]' ;;
     new-workspace)
-      _arguments '1:group:_cmux_ref' '--placement[Placement]:placement:(afterCurrent top end)' ;;
+      _arguments '1:group:_cmux_ref' '--placement[Placement]:placement:(afterCurrent top end)' '--json[Output JSON]' ;;
     set-color)
-      _arguments '1:group:_cmux_ref' '--hex[Color #RRGGBB]:hex:' ;;
+      _arguments '1:group:_cmux_ref' '--hex[Color #RRGGBB]:hex:' '--json[Output JSON]' ;;
     set-icon)
-      _arguments '1:group:_cmux_ref' '--symbol[SF Symbol]:symbol:' ;;
+      _arguments '1:group:_cmux_ref' '--symbol[SF Symbol]:symbol:' '--json[Output JSON]' ;;
     move)
       _arguments '1:group:_cmux_ref' \
         '--to-index[Target index]:n:' \
         '--before[Before group]:group:_cmux_ref' \
-        '--after[After group]:group:_cmux_ref' ;;
+        '--after[After group]:group:_cmux_ref' \
+        '--json[Output JSON]' ;;
   esac
 }
 
@@ -306,7 +312,7 @@ _cmux() {
           _values 'right-sidebar action' \
             toggle show hide focus set mode files find vault sessions feed dock ;;
         sidebar)
-          _values 'sidebar action' validate reload select ;;
+          _values 'sidebar action' validate reload select open ;;
         hooks)
           if (( CURRENT == 2 )); then
             _values 'hooks action' setup uninstall feed
@@ -322,6 +328,7 @@ _cmux() {
             _values 'workspace subcommand' \
               'list[List workspaces in a window]' \
               'create[Create a workspace]' \
+              'env[Print a workspace'\''s configured env vars]' \
               'close[Close a workspace]' \
               'rename[Rename a workspace]' \
               'select[Make a workspace active]' \
@@ -341,6 +348,9 @@ _cmux() {
                 '--cwd[Working directory]:dir:_path_files -/' \
                 '--command[Command]:command:' '--layout[Layout JSON]:json:' \
                 '--window[Window]:window:_cmux_ref' "$_cmux_focus_opts[@]" ;;
+            env)
+              _arguments '1:workspace:_cmux_ref' \
+                '--mask[Redact the values]' '--window[Window]:window:_cmux_ref' ;;
             close|select)
               _arguments '1:workspace:_cmux_ref' '--window[Window]:window:_cmux_ref' ;;
             rename)
@@ -408,6 +418,9 @@ _cmux() {
             '--name[Title]:title:' '--description[Description]:text:' \
             '--cwd[Working directory]:dir:_path_files -/' \
             '--command[Command]:command:' '--layout[Layout JSON]:json:' \
+            '--group[Target group]:group:_cmux_ref' \
+            '--group-placement[Placement in group]:placement:(afterCurrent top end)' \
+            '--group-reference[Reference workspace in group]:workspace:_cmux_ref' \
             '--window[Window]:window:_cmux_ref' "$_cmux_focus_opts[@]" ;;
         ssh)
           _arguments \
@@ -419,6 +432,29 @@ _cmux() {
             '--ssh-option[SSH option]:opt:' \
             '--window[Window]:window:_cmux_ref' '--no-focus[Do not focus]' \
             '*::remote command:_command_names' ;;
+        ssh-tmux)
+          _arguments \
+            '1:destination:_ssh_hosts' \
+            '--port[Port]:port:' \
+            '--identity[Identity file]:path:_files' \
+            '--no-focus[Do not focus]' ;;
+        remotes|remote)
+          if (( CURRENT == 2 )); then
+            _values 'remotes action' list add remove
+          else
+            (( CURRENT-- )); shift words
+            case ${words[1]} in
+              list)
+                _arguments '--json[Output JSON]' ;;
+              add)
+                _arguments \
+                  '1:name:' \
+                  '*--route[Attach route host:port]:route:' \
+                  '--tag[Tag]:tag:' '--json[Output JSON]' ;;
+              remove)
+                _arguments '1:name or deviceId:' '--json[Output JSON]' ;;
+            esac
+          fi ;;
         top)
           _arguments \
             '--all' '--processes' '--flat' \
