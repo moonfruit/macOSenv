@@ -57,7 +57,6 @@
       // { "preferred_by": "dns-mdns", "server": "dns-mdns" },
       // Tailscale
       { "preferred_by": "dns-tailscale", "server": "dns-tailscale" },
-
       // LazyCat
       { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
       // 内网地址
@@ -108,6 +107,8 @@
   ],
   "route": {
     "rules": [
+      // DNS inbound
+      { "inbound": "dns-in", "action": "hijack-dns" },
       // Direct Process
       {
         "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "tailscaled", "Tailscale"],
@@ -115,20 +116,37 @@
       },
       // Tailscale
       { "preferred_by": "tailscale-ep", "outbound": "tailscale-ep" },
-      // Network
+      // Direct Destination
       { "network": "icmp", "outbound": "DIRECT" },
-      { "inbound": "dns-in", "action": "hijack-dns" },
+      { "ip_is_private": true, "outbound": "DIRECT" },
+      // DNS
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          { "process_name": "q", "invert": true },
+          { "port": 853 } // 禁用 DoT/DoQ
+        ],
+        "action": "reject",
+        "method": "drop"
+      },
       { "action": "sniff" },
       { "protocol": "dns", "action": "hijack-dns" },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          { "process_name": "q", "invert": true },
+          { "rule_set": "GeoSites@CN", "invert": true },
+          { "protocol": ["http", "tls", "quic"], "rule_set": "DoH" } // 禁用 DoH
+        ],
+        "action": "reject",
+        "method": "drop"
+      },
+      // Direct Protocol
       // { "protocol": "stun", "action": "reject" }, // 禁用 STUN
       { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
-      { "ip_is_private": true, "outbound": "DIRECT" },
-      // {
-      //   "type": "logical",
-      //   "mode": "or",
-      //   "rules": [{ "port": 853 }, { "network": "udp", "port": 443 }],  // 禁用 DoT/DoH
-      //   "action": "reject"
-      // },
+      // Direct Domain
       {
         "domain_suffix": ["server.gingkoo", "gingkoo.internal"],
         "invert": true,

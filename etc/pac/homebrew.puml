@@ -11,6 +11,7 @@ skinparam usecase {
 (ada-url) << dep >>
 (ada-url)-->(fmt)
 (age)
+(aliyun-cli)
 (ant)
 (ant)-->(openjdk)
 (aom) << dep >>
@@ -872,7 +873,6 @@ skinparam usecase {
 (yt-dlp)-->(deno)
 (yt-dlp)-->(python@3.14)
 (z3) << dep >>
-(zlib) << dep >>
 (zlib-ng-compat) << dep >>
 (zoxide)
 (zsh)

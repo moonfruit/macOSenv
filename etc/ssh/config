@@ -74,4 +74,9 @@ Host ibm-aix.goldeye-bushmaster.ts.net
     ServerAliveInterval 30
     ServerAliveCountMax 3
 
+Host gateway-jp.lan
+    User app
+    Hostname 8.209.210.222
+    Port 34322
+
 # vim: filetype=sshconfig
