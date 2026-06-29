@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source "$ENV/lib/bash/native.sh"
 NAME="$(simple-basename "$0")"
+CLAUDE=
 
 DEFAULT="$ENV/etc/secrets/claude-3rd.sh"
 if [[ "$NAME" != "claude" && -r "$DEFAULT" ]]; then
@@ -10,14 +11,23 @@ fi
 
 RC="$ENV/etc/secrets/${NAME}.env"
 if [[ -r "$RC" ]]; then
-    eval "$(sops decrypt "$RC" | sed -E 's/^(\s*\w+=)/export \1/')"
+    set -a
+    # shellcheck disable=SC1090
+    source <(sops decrypt "$RC")
+    set +a
 fi
 
-if [[ $NAME != claude && -z $CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV &&
-    -n $CMUX_SURFACE_ID && -x $_CMUX_CLAUDE_WRAPPER ]]; then
-    CLAUDE=$_CMUX_CLAUDE_WRAPPER
-    export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
-else
+if [[ $NAME != claude && -z $CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV && -n $CMUX_SURFACE_ID ]]; then
+    if [[ -x $CMUX_CLAUDE_WRAPPER_SHIM ]]; then
+        CLAUDE=$CMUX_CLAUDE_WRAPPER_SHIM
+        export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
+    elif [[ -x $_CMUX_CLAUDE_WRAPPER ]]; then
+        CLAUDE=$_CMUX_CLAUDE_WRAPPER
+        export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
+    fi
+fi
+
+if [[ -z $CLAUDE ]]; then
     CLAUDE=/opt/homebrew/bin/claude
     unset CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV
     if [[ -z "$CLAUDE_CODE_NO_FLICKER" ]]; then
@@ -28,8 +38,13 @@ else
             exec ccfixer -u "$CCFIXER_UPSTREAM" -l 127.0.0.1:0 -q
         }
         trap 'kill $CCFIXER_PID 2>/dev/null' EXIT
-        read -r CCFIXER_URL <&"${CCFIXER[0]}"
-        export ANTHROPIC_BASE_URL=${CCFIXER_URL}/anthropic
+        if read -t 5 -r CCFIXER_URL <&"${CCFIXER[0]}" && [[ -n $CCFIXER_URL ]]; then
+            export ANTHROPIC_BASE_URL=${CCFIXER_URL}/anthropic
+        else
+            echo "claude: ccfixer 启动失败或超时，无法修复上游 API，已中止" >&2
+            kill "$CCFIXER_PID" 2>/dev/null
+            exit 1
+        fi
     fi
 fi
 
