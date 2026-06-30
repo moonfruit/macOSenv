@@ -10,6 +10,8 @@
 		<string>features.websearch.bing.fallback</string>
 		<string>features.websearch.wiki.fallback</string>
 	</array>
+	<key>showAppleScripts</key>
+	<true/>
 	<key>showArchives</key>
 	<true/>
 	<key>showDocuments</key>

@@ -30,3 +30,7 @@
 	path = package/custom-alfred-iterm-scripts
 	url = https://github.com/moonfruit/custom-alfred-iterm-scripts.git
 	shallow = true
+[submodule "preferences/alfred/Alfred.alfredpreferences/workflows/user.workflow.CMUX-HELPER"]
+	path = preferences/alfred/Alfred.alfredpreferences/workflows/user.workflow.CMUX-HELPER
+	url = https://github.com/moonfruit/cmux-helper.git
+	shallow = true

@@ -1,0 +1,31 @@
+{
+  "dev@10.1.2.32": {
+    "tags": [
+      "gingkoo"
+    ]
+  },
+  "root@10.1.2.57": {
+    "alias": "gitlab",
+    "tags": [
+      "gingkoo"
+    ]
+  },
+  "root@git.server.gingkoo": {
+    "alias": "gitlab",
+    "tags": [
+      "gingkoo"
+    ]
+  },
+  "moon@192.168.50.1": {
+    "alias": "router",
+    "tags": [
+      "home"
+    ]
+  },
+  "root@192.168.50.11": {
+    "alias": "dkmooncat",
+    "tags": [
+      "home"
+    ]
+  }
+}
