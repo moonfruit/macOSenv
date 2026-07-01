@@ -65,12 +65,49 @@ matches_skip() {
     return 1
 }
 
+# Resolve the default branch of a module's origin (main / master / ...)
+default_branch() {
+    local module="$1"
+    local branch
+
+    # Prefer the symbolic ref recorded for origin/HEAD
+    branch=$(git -C "$module" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null) || true
+    branch=${branch#origin/}
+    if [[ -n $branch ]]; then
+        echo "$branch"
+        return 0
+    fi
+
+    # Fallback: ask the remote for its HEAD branch
+    branch=$(git -C "$module" remote show origin 2>/dev/null |
+        sed -n 's/.*HEAD branch: //p')
+    if [[ -n $branch && $branch != "(unknown)" ]]; then
+        echo "$branch"
+        return 0
+    fi
+
+    # Last resort: pick whichever common branch exists on the remote
+    local candidate
+    for candidate in main master; do
+        if git -C "$module" show-ref --verify --quiet "refs/remotes/origin/$candidate"; then
+            echo "$candidate"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
 rg submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | sort |
     while read -r MODULE; do
         echo "-------- $MODULE --------"
-        git -C "$MODULE" checkout master
-        git -C "$MODULE" fetch --tags --prune --no-tags origin master
-        git -C "$MODULE" rebase origin/master
+        BRANCH=$(default_branch "$MODULE") || {
+            warn "Cannot determine default branch for $MODULE, skipping"
+            continue
+        }
+        git -C "$MODULE" checkout "$BRANCH"
+        git -C "$MODULE" fetch --tags --prune --no-tags origin "$BRANCH"
+        git -C "$MODULE" rebase "origin/$BRANCH"
         if [[ -n $GC ]]; then
             git -C "$MODULE" gc
         fi
