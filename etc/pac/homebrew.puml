@@ -131,6 +131,8 @@ skinparam usecase {
 (fd)
 (fdupes)
 (fdupes)-->(pcre2)
+(fernflower)
+(fernflower)-->(openjdk)
 (ffmpeg)
 (ffmpeg)-->(dav1d)
 (ffmpeg)-->(lame)
@@ -818,10 +820,6 @@ skinparam usecase {
 (ugrep)-->(pcre2)
 (ugrep)-->(xz)
 (ugrep)-->(zstd)
-(unbound) << dep >>
-(unbound)-->(libevent)
-(unbound)-->(libnghttp2)
-(unbound)-->(openssl@3)
 (unibilium) << dep >>
 (unp)
 (unp)-->(p7zip)
@@ -830,6 +828,8 @@ skinparam usecase {
 (uvwasi) << dep >>
 (uvwasi)-->(libuv)
 (vde) << dep >>
+(vineflower)
+(vineflower)-->(openjdk)
 (vscode-langservers-extracted)
 (vscode-langservers-extracted)-->(node)
 (wails)

@@ -4,6 +4,13 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
     exec proxy "$0" "$@"
 fi
 
+# 禁止 livecheck 期间自动更新 Homebrew 数据库：
+# - HOMEBREW_NO_AUTO_UPDATE：禁止 tap 的自动 git 更新
+# - HOMEBREW_API_AUTO_UPDATE_SECS：将 API JSON 缓存刷新窗口调到足够大，
+#   使并发的 livecheck 子进程一律走本地缓存，不再各自重下而互相踩踏
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_API_AUTO_UPDATE_SECS=86400
+
 # shellcheck disable=SC2155
 readonly GREEN=$(tput setaf 2) BLUE=$(tput setaf 4)
 # shellcheck disable=SC2155
