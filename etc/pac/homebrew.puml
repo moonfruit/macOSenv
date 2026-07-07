@@ -328,6 +328,7 @@ skinparam usecase {
 (jpeg-xl)-->(openexr)
 (jq)
 (jq)-->(oniguruma)
+(json-c) << dep >>
 (json5)
 (json5)-->(node)
 (k9s)

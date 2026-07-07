@@ -120,16 +120,6 @@
       { "network": "icmp", "outbound": "DIRECT" },
       { "ip_is_private": true, "outbound": "DIRECT" },
       // DNS
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          { "process_name": "q", "invert": true },
-          { "port": 853 } // 禁用 DoT/DoQ
-        ],
-        "action": "reject",
-        "method": "drop"
-      },
       { "action": "sniff" },
       { "protocol": "dns", "action": "hijack-dns" },
       {
@@ -137,11 +127,33 @@
         "mode": "and",
         "rules": [
           { "process_name": "q", "invert": true },
-          { "rule_set": "GeoSites@CN", "invert": true },
-          { "protocol": ["http", "tls", "quic"], "rule_set": "DoH" } // 禁用 DoH
+          {
+            "type": "logical",
+            "mode": "or",
+            "rules": [
+              { "network": "tcp", "port": 853 }, // DoT
+              { "protocol": ["http", "tls"], "rule_set": "DoH" } // DoH
+            ]
+          }
+        ],
+        "action": "reject"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          { "process_name": "q", "invert": true },
+          {
+            "type": "logical",
+            "mode": "or",
+            "rules": [
+              { "network": "udp", "port": 853 }, // DoQ
+              { "protocol": "quic", "rule_set": "DoH" } // DoH/3
+            ]
+          }
         ],
         "action": "reject",
-        "method": "drop"
+        "method": "drop"  // 静默防风暴
       },
       // Direct Protocol
       // { "protocol": "stun", "action": "reject" }, // 禁用 STUN
