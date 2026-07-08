@@ -46,6 +46,10 @@ if [[ -z $CLAUDE ]]; then
             exit 1
         fi
     fi
+    source "$ENV/lib/bash/project.sh"
+    if PROJECT_ROOT=$(project-root 2>/dev/null) && [[ -n $PROJECT_ROOT ]]; then
+        cd "$PROJECT_ROOT" || true
+    fi
 fi
 
 if [[ -n $CCFIXER_URL ]]; then
