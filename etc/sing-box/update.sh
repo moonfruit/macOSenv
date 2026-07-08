@@ -31,7 +31,6 @@ if [[ ! -s "$ZASHBOARD" ]] || (($(stat -f %m "$ZASHBOARD") < $(date -v-1d +%s)))
 else
     h2 Skipping zashboard.json - updated within 1 day
 fi
-exit
 
 h1 Updating config.json
 
