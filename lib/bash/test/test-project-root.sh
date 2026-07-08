@@ -204,7 +204,7 @@ test_empty_returns_fail() {
     local actual
     actual=$(cd "$d" && project-root)
     assert_eq "$actual" "" "空目录返回空字符串"
-    assert_fail "空目录返回 exit 1" project-root
+    (cd "$d" && assert_fail "空目录返回 exit 1" project-root)
     rm -rf "$d"
 }
 
