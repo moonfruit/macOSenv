@@ -100,11 +100,52 @@ test_vscode_walk_up() {
     rm -rf "$d"
 }
 
+# --- 场景 6: Gradle 单模块（仅 build.gradle）---
+test_gradle_single() {
+    local d
+    d=$(setup_tmp)
+    touch "$d/build.gradle"
+    local actual
+    actual=$(cd "$d" && project-root)
+    assert_eq "$actual" "$d" "Gradle 单模块"
+    rm -rf "$d"
+}
+
+# --- 场景 7: Gradle 多模块根（含 settings.gradle）---
+test_gradle_multi_root() {
+    local d
+    d=$(setup_tmp)
+    touch "$d/settings.gradle"
+    touch "$d/build.gradle"
+    mkdir -p "$d/sub"
+    touch "$d/sub/build.gradle"
+    local actual
+    actual=$(cd "$d" && project-root)
+    assert_eq "$actual" "$d" "Gradle 多模块根"
+    rm -rf "$d"
+}
+
+# --- 场景 8: Gradle 多模块子模块 ---
+test_gradle_multi_submodule() {
+    local d
+    d=$(setup_tmp)
+    touch "$d/settings.gradle"
+    mkdir -p "$d/sub"
+    touch "$d/sub/build.gradle"
+    local actual
+    actual=$(cd "$d/sub" && project-root)
+    assert_eq "$actual" "$d" "Gradle 多模块子模块"
+    rm -rf "$d"
+}
+
 test_git_root
 test_git_subdir
 test_git_priority_over_claude
 test_claude_marker
 test_vscode_walk_up
+test_gradle_single
+test_gradle_multi_root
+test_gradle_multi_submodule
 
 echo "---"
 echo "PASS: $PASS  FAIL: $FAIL"

@@ -69,6 +69,14 @@ climb_pom() {
 }
 
 climb_for_settings() {
-    # TODO(task-2): implement climb_for_settings
+    local d
+    d=$(simple-dirname "$1")
+    while [[ $d != "/" ]]; do
+        if [[ -f $d/settings.gradle || -f $d/settings.gradle.kts ]]; then
+            echo "$d"
+            return 0
+        fi
+        d=$(simple-dirname "$d")
+    done
     return 1
 }
