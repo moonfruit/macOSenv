@@ -147,6 +147,33 @@ test_gradle_single
 test_gradle_multi_root
 test_gradle_multi_submodule
 
+# --- 场景 9: Maven 单模块（含 pom.xml，父目录无）---
+test_maven_single() {
+    local d
+    d=$(setup_tmp)
+    touch "$d/pom.xml"
+    local actual
+    actual=$(cd "$d" && project-root)
+    assert_eq "$actual" "$d" "Maven 单模块"
+    rm -rf "$d"
+}
+
+# --- 场景 10: Maven 多模块（嵌套 pom.xml）---
+test_maven_multi() {
+    local d
+    d=$(setup_tmp)
+    touch "$d/pom.xml"
+    mkdir -p "$d/sub"
+    touch "$d/sub/pom.xml"
+    local actual
+    actual=$(cd "$d/sub" && project-root)
+    assert_eq "$actual" "$d" "Maven 多模块子模块"
+    rm -rf "$d"
+}
+
+test_maven_single
+test_maven_multi
+
 echo "---"
 echo "PASS: $PASS  FAIL: $FAIL"
 exit $((FAIL > 0 ? 1 : 0))

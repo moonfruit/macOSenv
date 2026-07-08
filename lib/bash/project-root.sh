@@ -64,8 +64,11 @@ project-root() {
 }
 
 climb_pom() {
-    # TODO(task-3): implement climb_pom
-    echo "$1"
+    local d=$1
+    while [[ $(simple-dirname "$d") != "/" && -f "$(simple-dirname "$d")/pom.xml" ]]; do
+        d=$(simple-dirname "$d")
+    done
+    echo "$d"
 }
 
 climb_for_settings() {
