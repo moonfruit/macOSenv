@@ -87,12 +87,14 @@ def usage(percent_key: str, boost_key: str, remains_key: str) -> Callable[[dict]
         # coding_plan/remains 接口已废弃 *_count 字段（恒为 0）。剩余额度百分比由
         # current_*_remaining_percent 给出，总额度由 *_boost_permille 给出（千分比，
         # /10 得百分比）。已用% = 总额度 × (100 - 剩余%) / 100，与网页一致。
+        # 当前接口对 5h 不再返回 interval_boost_permille 字段，缺失时按默认 1000
+        # （即 100% 总额度）处理，对应页面"5h 限额"未加成场景。
         remaining_pct = result.get(percent_key, 0)
-        boost_permille = result.get(boost_key, 0)
+        boost_permille = result.get(boost_key) or 1000
         remains = result.get(remains_key, 0)
 
         used_pct = boost_permille * (100 - remaining_pct) / 1000
-        pct_str = f"{used_pct:.1f}%"
+        pct_str = f"{round(used_pct)}%"
 
         ms = int(remains)
         seconds = ms // 1000
