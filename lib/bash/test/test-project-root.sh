@@ -204,7 +204,15 @@ test_empty_returns_fail() {
     local actual
     actual=$(cd "$d" && project-root)
     assert_eq "$actual" "" "空目录返回空字符串"
-    (cd "$d" && assert_fail "空目录返回 exit 1" project-root)
+    (cd "$d" && project-root) >/dev/null 2>&1
+    local rc=$?
+    if ((rc != 0)); then
+        echo "PASS: 空目录返回 exit 1"
+        PASS=$((PASS + 1))
+    else
+        echo "FAIL: 空目录返回 exit 1 (expected non-zero exit)"
+        FAIL=$((FAIL + 1))
+    fi
     rm -rf "$d"
 }
 
