@@ -32,6 +32,7 @@ words:
   - esqlc
   - fakeip
   - gelf
+  - getcwd
   - ghostty
   - gingkoo
   - gitee
