@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC2155
 
-[[ -z ${__ENV_LIB_PROJECT_ROOT:-} ]] && __ENV_LIB_PROJECT_ROOT=1 || return 0
+[[ -z ${__ENV_LIB_PROJECT:-} ]] && __ENV_LIB_PROJECT=1 || return 0
 
 source "$ENV/lib/bash/native.sh"
 
