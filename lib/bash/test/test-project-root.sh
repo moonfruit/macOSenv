@@ -174,6 +174,68 @@ test_maven_multi() {
 test_maven_single
 test_maven_multi
 
+# --- 场景 11: 含 package.json 但无工具标志 ---
+test_package_json_only() {
+    local d
+    d=$(setup_tmp)
+    touch "$d/package.json"
+    local actual
+    actual=$(cd "$d" && project-root)
+    assert_eq "$actual" "$d" "package.json"
+    rm -rf "$d"
+}
+
+# --- 场景 12: 同时含 .claude/ 和 pom.xml（工具标志优先）---
+test_tool_marker_priority_over_language() {
+    local d
+    d=$(setup_tmp)
+    mkdir -p "$d/.claude"
+    touch "$d/pom.xml"
+    local actual
+    actual=$(cd "$d" && project-root)
+    assert_eq "$actual" "$d" ".claude 优先于 pom.xml"
+    rm -rf "$d"
+}
+
+# --- 场景 13: 啥都没有，遍历到 / ---
+test_empty_returns_fail() {
+    local d
+    d=$(setup_tmp)
+    local actual
+    actual=$(cd "$d" && project-root)
+    assert_eq "$actual" "" "空目录返回空字符串"
+    assert_fail "空目录返回 exit 1" project-root
+    rm -rf "$d"
+}
+
+# --- 场景 14: 起点参数为相对路径 ---
+test_relative_start() {
+    local d
+    d=$(setup_tmp)
+    mkdir -p "$d/.claude"
+    local actual
+    actual=$(cd "$d" && project-root ./)
+    assert_eq "$actual" "$d" "相对路径起点"
+    rm -rf "$d"
+}
+
+# --- 场景 15: bin/find-project-root.sh 端到端 ---
+test_bin_wrapper() {
+    local d
+    d=$(setup_tmp)
+    mkdir -p "$d/.claude"
+    local actual
+    actual=$(cd "$d" && "$ENV/bin/find-project-root.sh")
+    assert_eq "$actual" "$d" "bin 包装"
+    rm -rf "$d"
+}
+
+test_package_json_only
+test_tool_marker_priority_over_language
+test_empty_returns_fail
+test_relative_start
+test_bin_wrapper
+
 echo "---"
 echo "PASS: $PASS  FAIL: $FAIL"
 exit $((FAIL > 0 ? 1 : 0))
