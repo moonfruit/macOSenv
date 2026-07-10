@@ -32,6 +32,9 @@
 [gpg]
 	format = ssh
 
+[gpg "ssh"]
+	allowedSignersFile = ~/.git-allowed-signers
+
 [delta]
 	dark = true
 	navigate = true
