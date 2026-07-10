@@ -5,6 +5,11 @@
 
 source "$ENV/lib/bash/native.sh"
 
+# 向上查找的边界：/ 与 $HOME 只用于终止查找，自身永远不作为项目根
+is_boundary_dir() {
+    [[ $1 == "/" || $1 == "${HOME%/}" ]]
+}
+
 project-root() {
     local start=${1:-$PWD}
     start=$(to-absolute-path "$start") || return 1
@@ -13,7 +18,8 @@ project-root() {
     # 阶段 1: git
     if has-command git; then
         local git_root
-        if git_root=$(git -C "$start" rev-parse --show-toplevel 2>/dev/null) && [[ -n $git_root ]]; then
+        if git_root=$(git -C "$start" rev-parse --show-toplevel 2>/dev/null) \
+            && [[ -n $git_root ]] && ! is_boundary_dir "$git_root"; then
             echo "$git_root"
             return 0
         fi
@@ -22,7 +28,7 @@ project-root() {
     # 阶段 2: 工具标志
     local d
     d=$start
-    while [[ $d != "/" ]]; do
+    while ! is_boundary_dir "$d"; do
         if [[ -d $d/.claude || -d $d/.vscode || -d $d/.idea \
             || -f $d/.envrc || -f $d/.lazy.lua ]]; then
             echo "$d"
@@ -33,7 +39,7 @@ project-root() {
 
     # 阶段 3: 语言标志（Gradle/Maven/其他）
     d=$start
-    while [[ $d != "/" ]]; do
+    while ! is_boundary_dir "$d"; do
         if [[ -f $d/settings.gradle || -f $d/settings.gradle.kts ]]; then
             echo "$d"
             return 0
@@ -64,9 +70,11 @@ project-root() {
 }
 
 climb_pom() {
-    local d=$1
-    while [[ $(simple-dirname "$d") != "/" && -f "$(simple-dirname "$d")/pom.xml" ]]; do
-        d=$(simple-dirname "$d")
+    local d=$1 up
+    up=$(simple-dirname "$d")
+    while ! is_boundary_dir "$up" && [[ -f $up/pom.xml ]]; do
+        d=$up
+        up=$(simple-dirname "$d")
     done
     echo "$d"
 }
@@ -74,7 +82,7 @@ climb_pom() {
 climb_for_settings() {
     local d
     d=$(simple-dirname "$1")
-    while [[ $d != "/" ]]; do
+    while ! is_boundary_dir "$d"; do
         if [[ -f $d/settings.gradle || -f $d/settings.gradle.kts ]]; then
             echo "$d"
             return 0
