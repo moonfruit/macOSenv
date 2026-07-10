@@ -16,7 +16,25 @@ run-artifact() {
     artifact="$(find-artifact "${@:1:3}")"
 
     shift 3
-    java -jar "$artifact" "$@"
+
+    local -a opts=() arguments=()
+    local found=
+    local arg
+    for arg in "$@"; do
+        if [[ -z $found && $arg = -- ]]; then
+            found=1
+        elif [[ -n $found ]]; then
+            arguments+=("$arg")
+        else
+            opts+=("$arg")
+        fi
+    done
+    if [[ -z $found ]]; then
+        arguments=(${opts[@]+"${opts[@]}"})
+        opts=()
+    fi
+
+    java ${opts[@]+"${opts[@]}"} -jar "$artifact" ${arguments[@]+"${arguments[@]}"}
 }
 
 find-artifact() {
