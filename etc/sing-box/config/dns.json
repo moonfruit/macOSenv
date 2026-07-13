@@ -2,7 +2,7 @@
   "dns": {
     "servers": [
       // Local
-      // { "tag": "dns-local", "type": "local" },
+      { "tag": "dns-local", "type": "local" },
       // Resolver
       { "tag": "dns-pod-raw", "type": "udp", "server": "119.29.29.29" },
       { "tag": "dns-ali-raw", "type": "udp", "server": "223.5.5.5" },
@@ -51,10 +51,10 @@
       }
     ],
     "rules": [
-      // 直接解析
+      // Local
+      { "preferred_by": "dns-local", "server": "dns-local" },
+      // Hosts
       { "preferred_by": "dns-hosts", "server": "dns-hosts" },
-      // mDNS
-      // { "preferred_by": "dns-mdns", "server": "dns-mdns" },
       // Tailscale
       { "preferred_by": "dns-tailscale", "server": "dns-tailscale" },
       // LazyCat

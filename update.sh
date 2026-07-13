@@ -130,6 +130,7 @@ done
 
 if [[ -n $BREW ]]; then
     echo "-------- homebrew --------"
+    sleep 1
     brew-up.sh
     brew-livecheck.sh --parallel
 fi

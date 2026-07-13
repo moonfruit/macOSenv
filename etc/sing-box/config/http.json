@@ -2,6 +2,15 @@
   "http_clients": [
     {
       "tag": "http-direct"
+    },
+    {
+      "tag": "http-proxy",
+      "detour": "🔰 默认出口",
+      "domain_resolver": "dns-proxy"
     }
-  ]
+  ],
+  "route": {
+    "default_http_client": "http-direct"
+  }
 }
+// vim: ft=jsonc

@@ -1,0 +1,15 @@
+{
+  "services": [
+    {
+      "type": "api",
+      "tag": "api-in",
+      "listen": "127.0.0.1",
+      "listen_port": 9998,
+      "dashboard": {
+        "enabled": true,
+        "http_client": "http-proxy"
+      }
+    }
+  ]
+}
+// vim: ft=jsonc

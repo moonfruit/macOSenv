@@ -1,9 +1,4 @@
 # git ssh 签名的可信签名者（gpg.ssh.allowedSignersFile）
 # 格式：<principal> namespaces="git" <keytype> <key>
-#
-# principal 用 * 通配：本文件只登记自己的一把 key，验证的是「签名是否出自这把私钥」，
-# 而非「哪个 email 可信」，故不必把各身份的 email 明文列进公开仓库。
-# namespaces="git" 把信任范围限定在 git 签名，避免外溢到该 key 的其他 ssh 用途。
-#
-# 注意：若将来登记他人公钥，必须为其写明确的 principal，否则 * 会让对方可冒充任意身份。
-* namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjSU8sPr3D/6tUXRl0VqIg4Nc1DGxb/yRnS8zoa8Rax
+dkmoonfruit@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjSU8sPr3D/6tUXRl0VqIg4Nc1DGxb/yRnS8zoa8Rax
+yang.yu@gingkoo.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILjSU8sPr3D/6tUXRl0VqIg4Nc1DGxb/yRnS8zoa8Rax
