@@ -7,6 +7,10 @@
     {
       "tag": "REJECT",
       "type": "block"
+    },
+    {
+      "tag": "BRIDGE",
+      "type": "bridge"
     }
   ],
   "route": {
