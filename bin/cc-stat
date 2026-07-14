@@ -1,0 +1,373 @@
+#!/usr/bin/env bash
+#
+# cc-stat — 统计 Claude Code session 的时长与 token 用量
+#
+# 数据源：~/.claude/projects/<项目>/<session-id>.jsonl
+# 注意：该格式是 Claude Code 内部格式，官方不保证跨版本稳定。
+#
+# 时长口径（三个数字，从粗到细）：
+#   total   会话首尾事件的墙钟时间差
+#   active  total 扣掉等人的时间（Claude 停下 → 人敲回车，以及超过 IDLE_GAP 的空档，
+#           用来兜住权限确认和挂机），即 Claude 真正在干活的时间（含本地工具执行）
+#           扣掉的部分即 idle，不单独成列（= total - active），但保留在 -j 输出里
+#   api     只算 API 往返（相邻事件 → assistant 回复的间隔之和），不含工具执行与权限等待。
+#           对齐 /cost 的 "Total duration (API)"；因含少量本地开销，比其略高（实测约 +8%）。
+#
+# 用法：
+#   cc-stat                  统计当前项目
+#   cc-stat -a               统计所有项目
+#   cc-stat -p <项目路径>     统计指定项目
+#   cc-stat -j               输出 JSON（每个 session 一行）
+#   cc-stat -n 10            只看最近 10 个 session（先排序再截取）
+#   cc-stat -d 7             只看最近 7 天内「有过活动」的 session（按最后一条事件的时间，
+#                            不是开始时间——三周前开的会话若昨天还在 resume 也会列出）
+#                            可与 -n 同用，如 -d 7 -n 5 = 近 7 天里排前 5 的
+#   cc-stat -s active        按列排序，可选：
+#                              recent(默认，按最近活动) start turns calls
+#                              total active api idle in out cache-w cache-r cost
+#                              title session
+#                            数值列与 start 默认降序，title/session 默认升序
+#   cc-stat -r               反转排序方向
+#   IDLE_GAP=300 cc-stat     调整「空档视为 idle」的阈值（秒，默认 600）
+#
+# COST 说明：按官方 API 价目逐条 assistant 记录计价（cache 写入区分 5m=1.25x / 1h=2x，
+# 读=0.1x）。这是**等价 API 成本**——订阅制（Pro/Max）用户并不按此实际扣费，仅作用量参考。
+# 金额后带 ~ 表示该行含走第三方端点的调用（如 MiniMax），无公开价目，未计入。
+
+set -euo pipefail
+
+readonly ROOT="$HOME/.claude/projects"
+export IDLE_GAP="${IDLE_GAP:-600}"
+
+usage() { sed -n '3,38p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
+
+# 排序列名 -> JSON 字段。recent 是伪列（保持文件按最近活动排列的顺序）。
+sort_key() {
+  case $1 in
+    start)   echo start ;;      turns)   echo turns ;;
+    calls)   echo api_calls ;;  total)   echo total_sec ;;
+    active)  echo active_sec ;; api)     echo api_sec ;;
+    idle)    echo idle_sec ;;   in)      echo tok_in ;;
+    out)     echo tok_out ;;    cache-w) echo cache_w ;;
+    cache-r) echo cache_r ;;    cost)    echo cost_usd ;;
+    title)   echo title ;;      session) echo session ;;
+    *)       return 1 ;;
+  esac
+}
+
+# 这些列大的更值得看，默认降序；title/session 按字典序升序更自然。
+sort_desc_by_default() {
+  case $1 in
+    title|session) return 1 ;;
+    *)             return 0 ;;
+  esac
+}
+
+# 把工作目录路径编码成 Claude Code 的项目目录名
+encode_project() { echo "${1//[^a-zA-Z0-9]/-}"; }
+
+fmt_dur() { # 秒 -> 1h02m / 12m34s / 45s
+  local s=${1%.*}
+  if   (( s >= 3600 )); then printf '%dh%02dm' $((s/3600)) $((s%3600/60))
+  elif (( s >= 60 ));   then printf '%dm%02ds' $((s/60)) $((s%60))
+  else                       printf '%ds' "$s"
+  fi
+}
+
+fmt_tok() { # 1234567 -> 1.2M
+  local n=$1
+  if   (( n >= 1000000000 )); then awk -v n="$n" 'BEGIN{printf "%.1fG", n/1000000000}'
+  elif (( n >= 1000000 ));    then awk -v n="$n" 'BEGIN{printf "%.1fM", n/1000000}'
+  elif (( n >= 1000 ));       then awk -v n="$n" 'BEGIN{printf "%.1fk", n/1000}'
+  else                             printf '%d' "$n"
+  fi
+}
+
+# 金额。末尾的 ~ 表示该行还有走第三方端点的调用没计入（无公开价目）。
+fmt_cost() {
+  awk -v c="$1" -v u="${2:-0}" 'BEGIN{
+    s = (c >= 100) ? sprintf("%.0f", c) : sprintf("%.2f", c)
+    printf "$%s%s", s, (u > 0 ? "~" : "")
+  }'
+}
+
+# shellcheck disable=SC2016  # 内含的 $ev/$spans 是 jq 变量，不能让 shell 展开
+readonly JQ_PROG='
+# 每百万 token 单价（USD）。cache 写入按 base input 计价：5m = 1.25x，1h = 2x；cache 读 = 0.1x。
+# 第三方端点的模型（MiniMax-M3 等，走 claude-mini 之类的 wrapper）不在此表，不计费——
+# 它们的调用数单独统计为 unpriced，成本列会标 ~ 提示金额不完整。
+def price($m):
+  { "claude-opus-4-8":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5 },
+    "claude-opus-4-7":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5 },
+    "claude-opus-4-6":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5 },
+    "claude-fable-5":    { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0 },
+    "claude-mythos-5":   { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0 },
+    "claude-sonnet-5":   { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3 },
+    "claude-sonnet-4-6": { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3 },
+    "claude-haiku-4-5":  { i:  1, o:  5, w5:  1.25, w1h:  2, r: 0.1 }
+  }[$m];
+
+# 逐条 assistant 记录计价：一个会话可能混用多个模型，且 5m/1h 写入单价不同，
+# 所以不能拿汇总 token 数乘单一价格。
+def record_cost:
+  . as $rec
+  | (price($rec.model // "")) as $p
+  | if $p == null then 0
+    else ($rec.usage) as $u
+      | ( ($u.cache_creation.ephemeral_5m_input_tokens
+           // $u.cache_creation_input_tokens // 0) ) as $c5
+      | ( ($u.cache_creation.ephemeral_1h_input_tokens // 0) ) as $c1h
+      | ( $p.i   * ($u.input_tokens // 0)
+        + $p.o   * ($u.output_tokens // 0)
+        + $p.w5  * $c5
+        + $p.w1h * $c1h
+        + $p.r   * ($u.cache_read_input_tokens // 0)
+        ) / 1000000
+    end;
+
+# fromdateiso8601 不认毫秒，拆开算以保留亚秒精度
+def ms: (.timestamp | capture("^(?<b>[^.]+)(\\.(?<f>[0-9]+))?Z$")
+         | (.b + "Z" | fromdateiso8601) + ((.f // "0") | ("0." + .) | tonumber));
+
+# 会话标题：Claude Code 自动生成，每次更新追加一条 ai-title 记录（无 timestamp），取最后一条。
+# 老会话可能没有 ai-title，退回到首条用户输入——那是整段 prompt，可能极长，先掐到 60 字。
+def title:
+  ([ .[] | select(.type == "ai-title") | .aiTitle ] | last)
+  // ([ .[]
+        | select(.type == "user" and (.promptSource != null))
+        | .message.content
+        | if type == "array" then (map(select(.type == "text") | .text) | first) else . end ]
+      | first
+      | if type == "string" and (length > 60) then (.[0:60] + "…") else . end)
+  // ""
+  | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" ");
+
+. as $all
+| [ .[] | select(.timestamp != null) ] | sort_by(.timestamp) as $ev
+| ($ev | length) as $n
+| if $n < 2 then empty else
+
+# 每个相邻事件间隔标注归属：
+#   isPrompt — 终点是人敲进来的输入（promptSource 非空），即等人打字的时间
+#   isApi    — 终点是 assistant 回复，即一次 API 往返（对齐 /cost 的 "duration (API)"）
+[ range(1; $n)
+  | { d:        (($ev[.] | ms) - ($ev[.-1] | ms)),
+      isPrompt: ($ev[.] | .type == "user" and (.promptSource != null)),
+      isApi:    ($ev[.] | .type == "assistant") } ] as $spans
+| (($ENV.IDLE_GAP) | tonumber) as $gap
+| (($ev[$n-1] | ms) - ($ev[0] | ms))                                    as $total
+| ([ $spans[] | select(.isPrompt)       | .d ]              | add // 0) as $idle_user
+| ([ $spans[] | select(.isPrompt | not) | select(.d > $gap) | .d ] | add // 0) as $idle_stall
+# API 时间不含本地工具执行，也不含权限等待（那些落在 tool_result 之前的间隔里）
+| ([ $spans[] | select(.isApi) | select(.d <= $gap) | .d ] | add // 0)  as $api
+| [ $ev[] | select(.type == "assistant") | .message ]                   as $m
+| [ $m[].usage ]                                                        as $u
+| ([ $m[] | record_cost ] | add // 0)                                   as $cost
+# 只把「真的烧了 token 却查不到价」的调用算作未计价。<synthetic> 之类的本地合成记录
+# token 为零、成本为零，不该让整行的金额被打上不完整标记。
+| ([ $m[]
+     | select(price(.model // "") == null)
+     | select((( .usage.input_tokens // 0) + (.usage.output_tokens // 0)
+             + (.usage.cache_creation_input_tokens // 0)
+             + (.usage.cache_read_input_tokens // 0)) > 0) ] | length)   as $unpriced
+
+| { session:    $ev[0].sessionId,
+    title:      ($all | title),
+    cwd:        $ev[0].cwd,
+    model:      ([ $ev[] | select(.type=="assistant") | .message.model ] | last // "-"),
+    start:      $ev[0].timestamp,
+    end:        $ev[$n-1].timestamp,
+    end_ts:     (($ev[$n-1] | ms) | round),   # 最后活动时间，-d 按它过滤
+    turns:      ([ $spans[] | select(.isPrompt) ] | length),
+    api_calls:  ($u | length),
+    total_sec:  ($total      | round),
+    idle_sec:   (($idle_user + $idle_stall) | round),
+    idle_user:  ($idle_user  | round),
+    idle_stall: ($idle_stall | round),
+    active_sec: (($total - $idle_user - $idle_stall) | round),
+    api_sec:    ($api        | round),
+    api_ms:     (($api * 1000) | round),
+    tok_in:     ([ $u[].input_tokens ]                 | add // 0),
+    tok_out:    ([ $u[].output_tokens ]                | add // 0),
+    cache_w:    ([ $u[].cache_creation_input_tokens ]  | add // 0),
+    cache_r:    ([ $u[].cache_read_input_tokens ]      | add // 0),
+    cost_usd:   (($cost * 10000 | round) / 10000),
+    unpriced:   $unpriced }              # 未计价的调用数（第三方端点模型）
+end'
+
+# 渲染一行：顺便把标题按「显示宽度」截断（CJK/Emoji 占 2 列，ASCII 占 1 列），
+# 避免中英混排把表格撑破。TITLE_WIDTH<=0 表示不截断（管道输出时保留全文，便于 grep）。
+# shellcheck disable=SC2016
+readonly JQ_ROW='
+def trunc($max):
+  if $max <= 0 then .
+  else ( explode
+         | reduce .[] as $c ({ w: 0, out: [], cut: false };
+             if .cut then .
+             else (if $c >= 4352 then 2 else 1 end) as $cw   # U+1100 起按双宽处理
+                  | if .w + $cw > $max then .cut = true
+                    else .w += $cw | .out += [$c] end
+             end)
+         | if .cut then (.out | implode) + "…" else (.out | implode) end )
+  end;
+[ .start, .turns, .api_calls, .total_sec, .active_sec, .api_sec,
+  .tok_in, .tok_out, .cache_w, .cache_r, .cost_usd, .unpriced, .session, .cwd,
+  (.title | if . == "" then "-" else trunc(($ENV.TITLE_WIDTH | tonumber)) end) ] | @tsv'
+
+main() {
+  local dirs=() json=0 limit=0 proj="" sort="recent" reverse=0 all=0 days=0
+
+  while (( $# )); do
+    case $1 in
+      -a|--all)     all=1; shift ;;
+      -p|--project) proj="$2"; shift 2 ;;
+      -j|--json)    json=1; shift ;;
+      -n|--limit)   limit="$2"; shift 2 ;;
+      -d|--days)    days="$2"; shift 2 ;;
+      -s|--sort)    sort="$2"; shift 2 ;;
+      -r|--reverse) reverse=1; shift ;;
+      -h|--help)    usage ;;
+      *)            echo "未知参数: $1" >&2; usage 1 ;;
+    esac
+  done
+
+  [[ $days =~ ^[0-9]+$ ]]  || { echo "-d 需要非负整数，得到: $days" >&2; exit 1; }
+  [[ $limit =~ ^[0-9]+$ ]] || { echo "-n 需要非负整数，得到: $limit" >&2; exit 1; }
+
+  local key=""
+  if [[ $sort != recent ]]; then
+    key=$(sort_key "$sort") || { echo "未知排序列: $sort" >&2; usage 1; }
+  fi
+
+  if (( all )); then
+    dirs=("$ROOT"/*/)
+  else
+    local d; d="$ROOT/$(encode_project "$(cd "${proj:-$PWD}" && pwd)")"
+    [[ -d $d ]] || { echo "没有该项目的 session 记录: $d" >&2; exit 1; }
+    dirs=("$d")
+  fi
+
+  local files=()
+  local IFS=$'\n'
+  # -d 时先用文件 mtime 粗筛（省掉大量 jq），放宽一天避开边界；精确判定留给下面的 end_ts。
+  local -a mtime_filter=()
+  (( days > 0 )) && mtime_filter=(-mtime "-$(( days + 1 ))")
+
+  # shellcheck disable=SC2207
+  files=($(find "${dirs[@]}" -maxdepth 1 -name '*.jsonl' "${mtime_filter[@]}" -print0 2>/dev/null \
+           | xargs -0 /bin/ls -t 2>/dev/null || true))
+  unset IFS
+  (( ${#files[@]} )) || { echo "没找到 session 文件" >&2; exit 1; }
+
+  # 按 recent 排序时 -n 可以在解析前截断（省掉不必要的 jq）。
+  # 但配了 -d 就不行：得先按天数筛掉一批，否则截出来的 N 个里会有被 -d 淘汰的，凑不满。
+  if [[ -z $key ]]; then
+    if (( reverse )); then
+      local rev=() i
+      for (( i = ${#files[@]} - 1; i >= 0; i-- )); do rev+=("${files[i]}"); done
+      files=("${rev[@]}")
+    fi
+    (( limit > 0 && days == 0 )) && files=("${files[@]:0:$limit}")
+  fi
+
+  local rows=()
+  local f row
+  for f in "${files[@]}"; do
+    row=$(jq -s -c "$JQ_PROG" "$f" 2>/dev/null) || continue
+    [[ -n $row ]] && rows+=("$row")
+  done
+  (( ${#rows[@]} )) || { echo "没有可统计的 session" >&2; exit 1; }
+
+  if (( days > 0 )); then
+    mapfile -t rows < <(printf '%s\n' "${rows[@]}" \
+      | jq -c --argjson cut "$(( $(date +%s) - days * 86400 ))" 'select(.end_ts >= $cut)')
+    (( ${#rows[@]} )) || { echo "最近 ${days} 天内没有 session" >&2; exit 1; }
+    # recent 排序的 -n 之前被跳过了，这里补上
+    [[ -z $key ]] && (( limit > 0 )) && rows=("${rows[@]:0:$limit}")
+  fi
+
+  if [[ -n $key ]]; then
+    local dir='.'
+    if sort_desc_by_default "$sort"; then
+      (( reverse )) || dir='reverse'
+    else
+      (( reverse )) && dir='reverse'
+    fi
+    mapfile -t rows < <(printf '%s\n' "${rows[@]}" \
+      | jq -s -c --arg k "$key" "sort_by(.[\$k]) | $dir | .[]")
+    (( limit > 0 )) && rows=("${rows[@]:0:$limit}")
+  fi
+
+  if (( json )); then
+    printf '%s\n' "${rows[@]}"
+    return
+  fi
+
+  # 表格（全 ASCII 表头，规避中英文宽度混排的对齐问题）
+  # TITLE 特意放最后一列：末列无需 padding，中文标题的显示宽度就不会影响其他列对齐。
+  # 跨项目统计时多插一列 PROJECT，否则无从判断某行属于哪个项目。
+  local fmt='%-16s %5s %5s %8s %8s %8s  %7s %7s %7s %7s %9s  %-8s'
+  local prefix_w=110      # TITLE 之前所有列（含分隔空格）占用的宽度
+  if (( all )); then
+    fmt+='  %-16s'
+    prefix_w=$(( prefix_w + 18 ))
+  fi
+  fmt+='  %s\n'
+
+  # 只在输出到终端时按剩余宽度截断标题；管道/重定向时保留全文
+  local cols=0
+  [[ -t 1 ]] && cols=$(tput cols 2>/dev/null || echo 0)
+  if (( cols > prefix_w + 12 )); then
+    export TITLE_WIDTH=$(( cols - prefix_w ))
+  else
+    export TITLE_WIDTH=0
+  fi
+
+  local rule; rule=$(printf '%.0s-' $(seq 1 $(( prefix_w + (TITLE_WIDTH > 0 ? TITLE_WIDTH : 20) ))))
+
+  local -a head=(START TURNS CALLS TOTAL ACTIVE API IN OUT CACHE-W CACHE-R COST SESSION)
+  (( all )) && head+=(PROJECT)
+  head+=(TITLE)
+  # shellcheck disable=SC2059
+  printf "$fmt" "${head[@]}"
+  printf '%s\n' "$rule"
+
+  local t_total=0 t_active=0 t_api=0 t_in=0 t_out=0 t_cw=0 t_cr=0 t_turns=0 t_calls=0
+  local t_cost=0 t_unpriced=0
+  for row in "${rows[@]}"; do
+    local start turns calls total active api tin tout cw cr cost unpriced sid cwd title
+    IFS=$'\t' read -r start turns calls total active api tin tout cw cr cost unpriced \
+      sid cwd title <<<"$(jq -r "$JQ_ROW" <<<"$row")"
+
+    local -a cells=(
+      "${start:0:16}" "$turns" "$calls"
+      "$(fmt_dur "$total")" "$(fmt_dur "$active")" "$(fmt_dur "$api")"
+      "$(fmt_tok "$tin")" "$(fmt_tok "$tout")" "$(fmt_tok "$cw")" "$(fmt_tok "$cr")"
+      "$(fmt_cost "$cost" "$unpriced")" "${sid:0:8}"
+    )
+    (( all )) && cells+=("$(basename "${cwd:-?}")")
+    cells+=("$title")
+    # shellcheck disable=SC2059
+    printf "$fmt" "${cells[@]}"
+
+    t_total=$((t_total+total)); t_active=$((t_active+active)); t_api=$((t_api+api))
+    t_in=$((t_in+tin)); t_out=$((t_out+tout)); t_cw=$((t_cw+cw)); t_cr=$((t_cr+cr))
+    t_turns=$((t_turns+turns)); t_calls=$((t_calls+calls))
+    t_unpriced=$((t_unpriced+unpriced))
+    t_cost=$(awk -v a="$t_cost" -v b="$cost" 'BEGIN{printf "%.6f", a+b}')
+  done
+
+  printf '%s\n' "$rule"
+  local -a foot=(
+    "TOTAL" "$t_turns" "$t_calls"
+    "$(fmt_dur $t_total)" "$(fmt_dur $t_active)" "$(fmt_dur $t_api)"
+    "$(fmt_tok $t_in)" "$(fmt_tok $t_out)" "$(fmt_tok $t_cw)" "$(fmt_tok $t_cr)"
+    "$(fmt_cost "$t_cost" "$t_unpriced")" "${#rows[@]} sess"
+  )
+  (( all )) && foot+=("")
+  foot+=("")
+  # shellcheck disable=SC2059
+  printf "$fmt" "${foot[@]}"
+}
+
+main "$@"

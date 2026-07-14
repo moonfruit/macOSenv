@@ -7,7 +7,7 @@ return {
   "coder/claudecode.nvim",
   -- 目标 1：不懒加载。用 VimEnter 而非 lazy=false：不阻塞启动，且在 cwd
   -- 安定（启动 autocmd 全部跑完）后再算项目根、写 lock 文件。
-  event = "VimEnter",
+  event = "VeryLazy",
   -- 覆盖 extra 默认的 config（`require("claudecode").setup(opts)`），在 setup 前打补丁。
   config = function(_, opts)
     local lockfile = require("claudecode.lockfile")

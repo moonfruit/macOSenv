@@ -797,7 +797,7 @@ skinparam usecase {
 (tcping)
 (terminal-notifier)
 (testssl)
-(testssl)-->(openssl@3)
+(testssl)-->(openssl@4)
 (tmux)
 (tmux)-->(libevent)
 (tmux)-->(ncurses)

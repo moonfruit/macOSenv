@@ -41,8 +41,6 @@
       { "tag": "dns-tailscale", "type": "tailscale", "endpoint": "tailscale-ep" },
       // Hosts
       { "tag": "dns-hosts", "type": "hosts", "path": ["hosts", "/etc/hosts"] },
-      // mDNS
-      // { "tag": "dns-mdns", "type": "mdns" },
       // FakeIP
       {
         "tag": "dns-fakeip",
@@ -61,13 +59,13 @@
       { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
       // 内网地址
       { "domain_suffix": ["heiyu.space", "ts.net"], "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
+      // Gingkoo
+      { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo" },
       // 公共 DNS
       {
         "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
         "server": "dns-resolver"
       },
-      // Gingkoo
-      { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo" },
       // Fake IP
       { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       {
