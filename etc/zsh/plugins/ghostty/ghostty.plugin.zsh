@@ -106,18 +106,23 @@ _yy_ghostty_ssh_install() {
         emulate -L zsh
         setopt local_options no_glob_subst
 
-        local target=""
-        target=$(_yy_ghostty_resolve_ssh_target "$@" 2>/dev/null) || target=""
+        # Both fixups below compose: apply each independently, then call
+        # ghostty-ssh once. local -x scopes the overrides to this call and,
+        # via zsh's dynamic scoping, makes them visible to ghostty-ssh.
+        local -x GHOSTTY_BIN_DIR="$GHOSTTY_BIN_DIR"
+        local -x GHOSTTY_SHELL_FEATURES="$GHOSTTY_SHELL_FEATURES"
 
-        if [[ -n "$target" ]] && _yy_ghostty_ssh_blacklisted "$target"; then
-            GHOSTTY_SHELL_FEATURES="$(_yy_ghostty_features_without_ssh_terminfo)" \
-                ghostty-ssh "$@"
-            return
+        # Under cmux, GHOSTTY_BIN_DIR points at the GUI dir (…/MacOS) which has
+        # no CLI; rewrite it to ../Resources/bin so ghostty's +ssh-cache works.
+        if [[ "${__CFBundleIdentifier:-}" == "com.cmuxterm.app" ]]; then
+            GHOSTTY_BIN_DIR="$(_yy_ghostty_resolve_bin_dir)"
         fi
 
-        if [[ "${__CFBundleIdentifier:-}" == "com.cmuxterm.app" ]]; then
-            GHOSTTY_BIN_DIR="$(_yy_ghostty_resolve_bin_dir)" ghostty-ssh "$@"
-            return
+        # Skip the terminfo install on blacklisted hosts.
+        local target=""
+        target=$(_yy_ghostty_resolve_ssh_target "$@" 2>/dev/null) || target=""
+        if [[ -n "$target" ]] && _yy_ghostty_ssh_blacklisted "$target"; then
+            GHOSTTY_SHELL_FEATURES="$(_yy_ghostty_features_without_ssh_terminfo)"
         fi
 
         ghostty-ssh "$@"

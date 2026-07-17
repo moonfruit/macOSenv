@@ -27,11 +27,7 @@
       {
         "tag": "dns-proxy",
         "type": "group",
-        "servers": [
-          // "dns-google",
-          "dns-one",
-          "dns-cloudflare"
-        ]
+        "servers": ["dns-one", "dns-cloudflare"]
       },
       // Gingkoo
       { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
@@ -42,11 +38,7 @@
       // Hosts
       { "tag": "dns-hosts", "type": "hosts", "path": ["hosts", "/etc/hosts"] },
       // FakeIP
-      {
-        "tag": "dns-fakeip",
-        "type": "fakeip",
-        "inet4_range": "22.0.0.0/8"
-      }
+      { "tag": "dns-fakeip", "type": "fakeip", "inet4_range": "22.0.0.0/8" }
     ],
     "rules": [
       // Local
@@ -61,11 +53,10 @@
       { "domain_suffix": ["heiyu.space", "ts.net"], "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
       // Gingkoo
       { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo" },
+      // 无 IPv6 时不解析 IPv6 地址
+      { "rule_set": "NoIPv6", "action": "predefined" },
       // 公共 DNS
-      {
-        "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"],
-        "server": "dns-resolver"
-      },
+      { "rule_set": "PublicDNS", "server": "dns-resolver" },
       // Fake IP
       { "rule_set": "FakeIpBypass", "server": "dns-direct" },
       {
@@ -73,10 +64,7 @@
         "mode": "and",
         "rules": [
           { "query_type": ["A", "AAAA"] },
-          {
-            "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "tailscaled", "Tailscale", "q"],
-            "invert": true
-          }
+          { "rule_set": "NetworkProcess", "process_name": "q", "invert": true }
         ],
         "server": "dns-fakeip",
         "rewrite_ttl": 1
@@ -108,15 +96,8 @@
       // DNS inbound
       { "inbound": "dns-in", "action": "hijack-dns" },
       // Direct Process
-      {
-        "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "tailscaled", "Tailscale"],
-        "preferred_by": "BRIDGE",
-        "outbound": "BRIDGE"
-      },
-      {
-        "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "tailscaled", "Tailscale"],
-        "outbound": "DIRECT"
-      },
+      { "rule_set": "NetworkProcess", "preferred_by": "BRIDGE", "outbound": "BRIDGE" },
+      { "rule_set": "NetworkProcess", "outbound": "DIRECT" },
       // Tailscale
       { "preferred_by": "tailscale-ep", "outbound": "tailscale-ep" },
       // Direct Destination
@@ -127,6 +108,7 @@
       // DNS
       { "action": "sniff" },
       { "protocol": "dns", "action": "hijack-dns" },
+      // Block DoT/DoH
       {
         "type": "logical",
         "mode": "and",
@@ -167,7 +149,7 @@
       { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
       // Direct Domain
       {
-        "rule_set": ["FakeIpBypass", "Private", "Direct", "GeoIP@CN", "GeoSites@CN"],
+        "rule_set": ["FakeIpBypass", "Private", "Direct", "GeoIP@CN", "GeoSites@CN", "Apple"],
         "invert": true,
         "action": "sniff-override-destination"
       }

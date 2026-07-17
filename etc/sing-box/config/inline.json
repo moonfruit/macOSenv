@@ -1,0 +1,32 @@
+{
+  "route": {
+    "rule_set": [
+      {
+        "type": "inline",
+        "tag": "NoIPv6",
+        "rules": [
+          {
+            "type": "logical",
+            "mode": "and",
+            "rules": [{ "query_type": "AAAA" }, { "default_interface_address": ["2000::/3"], "invert": true }]
+          }
+        ]
+      },
+      {
+        "type": "inline",
+        "tag": "PublicDNS",
+        "rules": [
+          { "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"] }
+        ]
+      },
+      {
+        "type": "inline",
+        "tag": "NetworkProcess",
+        "rules": [
+          { "process_name": ["sing-box", "cdeplugin", "lzc-core.darwin", "openvpn", "tailscaled", "Tailscale"] }
+        ]
+      }
+    ]
+  }
+}
+// vim: ft=jsonc

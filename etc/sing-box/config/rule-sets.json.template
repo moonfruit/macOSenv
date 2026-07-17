@@ -8,6 +8,11 @@
       },
       {
         "type": "remote",
+        "tag": "DoH",
+        "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/doh.srs?ref=main&access_token="
+      },
+      {
+        "type": "remote",
         "tag": "Lan",
         "url": "https://gitee.com/api/v5/repos/moonfruit/private/raw/rules/lan.srs?ref=main&access_token="
       },
