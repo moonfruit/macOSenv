@@ -4,12 +4,11 @@ if [[ -z "$PROXY_ENABLED" ]] && hash proxy >/dev/null 2>&1; then
     exec proxy "$0" "$@"
 fi
 
-# 禁止 livecheck 期间自动更新 Homebrew 数据库：
-# - HOMEBREW_NO_AUTO_UPDATE：禁止 tap 的自动 git 更新
-# - HOMEBREW_API_AUTO_UPDATE_SECS：将 API JSON 缓存刷新窗口调到足够大，
-#   使并发的 livecheck 子进程一律走本地缓存，不再各自重下而互相踩踏
+# 禁止 livecheck 期间自动更新 Homebrew 的 tap（git 仓库）。
+# 它同时让 Homebrew::API.fetch_api_files! 把 stale_seconds 置为 nil，
+# 于是 skip_download? 对任何已存在且非空的 *.jws.json 都直接返回 true —— 即
+# 缓存只要在，就绝不会被并发子进程重新下载。参见 warm-api-cache。
 export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_API_AUTO_UPDATE_SECS=86400
 
 # shellcheck disable=SC2155
 readonly GREEN=$(tput setaf 2) BLUE=$(tput setaf 4)
@@ -193,10 +192,39 @@ exclude-skipped() {
 
 readonly LIVECHECK=(brew livecheck --json --extract-plist)
 
+# 在 fan-out 之前把 API JSON 缓存拉齐。
+#
+# Homebrew 下载这些文件时用 `curl --output <目标路径>` 直写，没有临时文件+rename，
+# 并且解析失败会 unlink 目标再重试（Library/Homebrew/api.rb）。因此只要文件缺失，
+# N 个并发子进程就会同时把 18M 的 cask.jws.json 写进同一路径、互相截断，各自解析
+# 失败后又各自删文件重下，陷入 "Cannot download non-corrupt ..." 的雪崩且无法自愈。
+#
+# 串行阶段的 brew info（brew-ls / brew-extra）走的是 internal packages API，
+# 根本不触碰 cask.jws.json —— 它第一次被需要就是在并发的 cask livecheck 里，
+# 所以 fan-out 跑到第一批 cask 时必然踩中。这里显式串行预热，把窗口彻底关掉。
+warm-api-cache() {
+    brew ruby -e '
+        Homebrew::API::Formula.fetch_api!
+        Homebrew::API::Formula.fetch_tap_migrations!
+        Homebrew::API::Cask.fetch_api!
+        Homebrew::API::Cask.fetch_tap_migrations!
+    '
+}
+
 echo "$GREEN==>$RESET ${BOLD}Live Check$RESET"
 if [[ $1 == --parallel ]]; then
+    # 预热必须成功：缓存不齐就进 fan-out 只会雪崩，不如直接失败。
+    if ! warm-api-cache; then
+        echo "$GREEN==>$RESET ${BOLD}预热 Homebrew API 缓存失败，中止$RESET" >&2
+        exit 1
+    fi
+
+    # 待检查列表也在 fan-out 之前串行取完。
+    mapfile -t TARGETS < <(brew-ls | not-autobump)
+
     add-to-outdated < <("${LIVECHECK[@]}" git)
-    add-to-outdated < <(brew-ls | not-autobump | parallel -n8 --bar "${LIVECHECK[@]}" | exclude-skipped)
+    add-to-outdated < <(printf '%s\n' "${TARGETS[@]}" |
+        parallel -n8 --bar "${LIVECHECK[@]}" | exclude-skipped)
 else
     add-to-outdated < <("${LIVECHECK[@]}" --installed | exclude-skipped)
     echo "$GREEN==>$RESET ${BOLD}Live Check (Extra)$RESET"

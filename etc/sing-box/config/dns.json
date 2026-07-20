@@ -64,7 +64,8 @@
         "mode": "and",
         "rules": [
           { "query_type": ["A", "AAAA"] },
-          { "rule_set": "NetworkProcess", "process_name": "q", "invert": true }
+          { "process_name": "q", "invert": true },
+          { "rule_set": "NetworkProcess", "invert": true }
         ],
         "server": "dns-fakeip",
         "rewrite_ttl": 1

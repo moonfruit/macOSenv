@@ -468,6 +468,8 @@ skinparam usecase {
 (mas)
 (maven)
 (maven)-->(openjdk)
+(mermaid-cli)
+(mermaid-cli)-->(node)
 (merve) << dep >>
 (merve)-->(simdutf)
 (miniserve)
