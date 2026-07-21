@@ -88,6 +88,8 @@ skinparam usecase {
 (clang-format)
 (cline)
 (cline)-->(node)
+(cloudflare-wrangler)
+(cloudflare-wrangler)-->(node)
 (cmake)
 (colima)
 (colima)-->(lima)
@@ -178,6 +180,7 @@ skinparam usecase {
 (gdk-pixbuf)-->(libtiff)
 (gdu)
 (gettext) << dep >>
+(gettext)-->(json-c)
 (gettext)-->(libunistring)
 (gh)
 (giflib) << dep >>
