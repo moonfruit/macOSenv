@@ -109,14 +109,20 @@
         "source": "github",
         "repo": "openai/codex-plugin-cc"
       }
+    },
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
+      }
     }
   },
   "language": "简体中文",
-  "agentPushNotifEnabled": true,
   "autoUpdatesChannel": "latest",
-  "inputNeededNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "verbose": false
+  "verbose": false,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
