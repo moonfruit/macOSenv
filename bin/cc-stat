@@ -29,15 +29,20 @@
 #                            数值列与 start 默认降序，title/session 默认升序
 #   cc-stat -r               反转排序方向
 #   IDLE_GAP=300 cc-stat     调整「空档视为 idle」的阈值（秒，默认 600）
+#   FX_CNY_PER_USD=6.8 cc-stat  仅用于 -s cost 排序时把 ¥ 折成 $ 比较（默认 6.8，不影响显示）
 #
-# COST 说明：按官方 API 价目逐条 assistant 记录计价（cache 写入区分 5m=1.25x / 1h=2x，
-# 读=0.1x）。这是**等价 API 成本**——订阅制（Pro/Max）用户并不按此实际扣费，仅作用量参考。
-# 金额后带 ~ 表示该行含走第三方端点的调用（如 MiniMax），无公开价目，未计入。
+# COST 说明：按官方 API 价目逐条 assistant 记录计价。Anthropic 模型以 $ 计（cache 写入
+# 区分 5m=1.25x / 1h=2x，读=0.1x）；MiniMax 走 api.minimaxi.com，官方价目以人民币计，
+# 显示为 ¥ 且**不做汇率换算**——同一行两种货币并存时形如 $12.34+¥5.67。
+# 这是**等价 API 成本**——订阅制（Pro/Max）用户并不按此实际扣费，仅作用量参考。
+# 金额后带 ~ 表示该行还有查不到价目的调用（如来源不明的第三方端点），未计入。
 
 set -euo pipefail
 
 readonly ROOT="$HOME/.claude/projects"
 export IDLE_GAP="${IDLE_GAP:-600}"
+# 仅供 -s cost 排序时把 ¥ 折算成 $ 用于比较，显示的金额始终是原币种、不换算。
+export FX_CNY_PER_USD="${FX_CNY_PER_USD:-6.8}"
 
 usage() { sed -n '3,38p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
 
@@ -49,7 +54,7 @@ sort_key() {
     active)  echo active_sec ;; api)     echo api_sec ;;
     idle)    echo idle_sec ;;   in)      echo tok_in ;;
     out)     echo tok_out ;;    cache-w) echo cache_w ;;
-    cache-r) echo cache_r ;;    cost)    echo cost_usd ;;
+    cache-r) echo cache_r ;;    cost)    echo cost_sort ;;
     title)   echo title ;;      session) echo session ;;
     *)       return 1 ;;
   esac
@@ -83,46 +88,70 @@ fmt_tok() { # 1234567 -> 1.2M
   fi
 }
 
-# 金额。末尾的 ~ 表示该行还有走第三方端点的调用没计入（无公开价目）。
-fmt_cost() {
-  awk -v c="$1" -v u="${2:-0}" 'BEGIN{
-    s = (c >= 100) ? sprintf("%.0f", c) : sprintf("%.2f", c)
-    printf "$%s%s", s, (u > 0 ? "~" : "")
-  }'
+# 按显示宽度右对齐。bash 的 printf %Ns 是按**字节**补空格的，而 ¥ 占 2 字节却只显示 1 列
+# （East Asian Width = Na），直接用 %11s 会比 ASCII 单元格少一列。${#s} 数的是字符，
+# 本列字符集（$ ¥ + ~ 数字 小数点）全是单列宽，所以字符数即显示宽度。
+pad_disp() { # $1=串 $2=目标显示宽度
+  local n=$(( $2 - ${#1} ))
+  (( n > 0 )) && printf '%*s' "$n" ''
+  printf '%s' "$1"
+}
+
+# 金额。$ 与 ¥ 分别累加、不做汇率换算，两者都非零时形如 $12.34+¥5.67。
+# 末尾的 ~ 表示该行还有查不到价目的调用没计入。
+fmt_cost() { # $1=USD $2=CNY $3=unpriced
+  awk -v d="${1:-0}" -v y="${2:-0}" -v u="${3:-0}" '
+    function n(v) { return (v >= 100) ? sprintf("%.0f", v) : sprintf("%.2f", v) }
+    BEGIN{
+      s = ""
+      if (d > 0) s = "$" n(d)
+      if (y > 0) s = s (s == "" ? "" : "+") "¥" n(y)
+      if (s == "") s = "$0.00"
+      printf "%s%s", s, (u > 0 ? "~" : "")
+    }'
 }
 
 # shellcheck disable=SC2016  # 内含的 $ev/$spans 是 jq 变量，不能让 shell 展开
 readonly JQ_PROG='
-# 每百万 token 单价（USD）。cache 写入按 base input 计价：5m = 1.25x，1h = 2x；cache 读 = 0.1x。
-# 第三方端点的模型（MiniMax-M3 等，走 claude-mini 之类的 wrapper）不在此表，不计费——
-# 它们的调用数单独统计为 unpriced，成本列会标 ~ 提示金额不完整。
+# 每百万 token 单价。c 是币种：Anthropic 官方价目以 USD 计，MiniMax（api.minimaxi.com）
+# 以 CNY 计，两者不换算、各自累加。cache 写入 Anthropic 按 base input 计价（5m = 1.25x，
+# 1h = 2x），cache 读 = 0.1x；MiniMax 不区分 5m/1h，M3 的缓存写入免费。
+# 查不到价的模型（来源不明的第三方端点）不计费，调用数单独统计为 unpriced，成本列标 ~。
 def price($m):
-  { "claude-opus-4-8":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5 },
-    "claude-opus-4-7":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5 },
-    "claude-opus-4-6":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5 },
-    "claude-fable-5":    { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0 },
-    "claude-mythos-5":   { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0 },
-    "claude-sonnet-5":   { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3 },
-    "claude-sonnet-4-6": { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3 },
-    "claude-haiku-4-5":  { i:  1, o:  5, w5:  1.25, w1h:  2, r: 0.1 }
-  }[$m];
+  # jsonl 里可能记完整 ID（claude-haiku-4-5-20251001），而表里用的是别名，先剥掉日期后缀。
+  ($m | sub("-[0-9]{8}$"; "")) as $k
+  | { "claude-opus-4-8":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
+      "claude-opus-4-7":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
+      "claude-opus-4-6":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
+      "claude-fable-5":    { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0, c: "USD" },
+      "claude-mythos-5":   { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0, c: "USD" },
+      "claude-sonnet-5":   { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3, c: "USD" },
+      "claude-sonnet-4-6": { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3, c: "USD" },
+      "claude-haiku-4-5":  { i:  1, o:  5, w5:  1.25, w1h:  2, r: 0.1, c: "USD" },
+      # MiniMax 官方价目（元/百万 tokens，已含「永久五折」）。M3 按 ≤512k 档计，
+      # 不做 >512k 翻倍处理；M3 缓存写入免费，M2.7 系列为 2.625。
+      "MiniMax-M3":             { i: 2.1, o:  8.4, w5: 0,     w1h: 0,     r: 0.42, c: "CNY" },
+      "MiniMax-M2.7":           { i: 2.1, o:  8.4, w5: 2.625, w1h: 2.625, r: 0.42, c: "CNY" },
+      "MiniMax-M2.7-highspeed": { i: 4.2, o: 16.8, w5: 2.625, w1h: 2.625, r: 0.42, c: "CNY" }
+    }[$k];
 
 # 逐条 assistant 记录计价：一个会话可能混用多个模型，且 5m/1h 写入单价不同，
 # 所以不能拿汇总 token 数乘单一价格。
 def record_cost:
   . as $rec
   | (price($rec.model // "")) as $p
-  | if $p == null then 0
+  | if $p == null then { usd: 0, cny: 0 }
     else ($rec.usage) as $u
       | ( ($u.cache_creation.ephemeral_5m_input_tokens
            // $u.cache_creation_input_tokens // 0) ) as $c5
       | ( ($u.cache_creation.ephemeral_1h_input_tokens // 0) ) as $c1h
-      | ( $p.i   * ($u.input_tokens // 0)
-        + $p.o   * ($u.output_tokens // 0)
-        + $p.w5  * $c5
-        + $p.w1h * $c1h
-        + $p.r   * ($u.cache_read_input_tokens // 0)
-        ) / 1000000
+      | ( ( $p.i   * ($u.input_tokens // 0)
+          + $p.o   * ($u.output_tokens // 0)
+          + $p.w5  * $c5
+          + $p.w1h * $c1h
+          + $p.r   * ($u.cache_read_input_tokens // 0)
+          ) / 1000000 ) as $v
+      | if $p.c == "CNY" then { usd: 0, cny: $v } else { usd: $v, cny: 0 } end
     end;
 
 # fromdateiso8601 不认毫秒，拆开算以保留亚秒精度
@@ -160,9 +189,15 @@ def title:
 | ([ $spans[] | select(.isPrompt | not) | select(.d > $gap) | .d ] | add // 0) as $idle_stall
 # API 时间不含本地工具执行，也不含权限等待（那些落在 tool_result 之前的间隔里）
 | ([ $spans[] | select(.isApi) | select(.d <= $gap) | .d ] | add // 0)  as $api
-| [ $ev[] | select(.type == "assistant") | .message ]                   as $m
+# 一次 API 响应里的每个 content block 都会写成一条独立记录，且各带一份**相同**的 usage
+# （典型：一轮并行 tool_use 有几个工具就重复几条）。按 message.id 去重，否则调用数、
+# token 数、金额会成倍虚高——实测最狠的 session 虚高 2 倍以上。
+| ([ $ev[] | select(.type == "assistant") | .message ]
+   | group_by(.id) | map(.[0]))                                         as $m
 | [ $m[].usage ]                                                        as $u
-| ([ $m[] | record_cost ] | add // 0)                                   as $cost
+| ([ $m[] | record_cost ]
+   | { usd: (map(.usd) | add // 0), cny: (map(.cny) | add // 0) })      as $cost
+| (($ENV.FX_CNY_PER_USD) | tonumber)                                    as $fx
 # 只把「真的烧了 token 却查不到价」的调用算作未计价。<synthetic> 之类的本地合成记录
 # token 为零、成本为零，不该让整行的金额被打上不完整标记。
 | ([ $m[]
@@ -191,8 +226,11 @@ def title:
     tok_out:    ([ $u[].output_tokens ]                | add // 0),
     cache_w:    ([ $u[].cache_creation_input_tokens ]  | add // 0),
     cache_r:    ([ $u[].cache_read_input_tokens ]      | add // 0),
-    cost_usd:   (($cost * 10000 | round) / 10000),
-    unpriced:   $unpriced }              # 未计价的调用数（第三方端点模型）
+    cost_usd:   (($cost.usd * 10000 | round) / 10000),
+    cost_cny:   (($cost.cny * 10000 | round) / 10000),
+    # 排序专用：把 ¥ 折成 $ 好跨币种比大小，不参与显示
+    cost_sort:  (((($cost.usd + $cost.cny / $fx) * 10000) | round) / 10000),
+    unpriced:   $unpriced }              # 未计价的调用数（查不到价目的模型）
 end'
 
 # 渲染一行：顺便把标题按「显示宽度」截断（CJK/Emoji 占 2 列，ASCII 占 1 列），
@@ -211,7 +249,7 @@ def trunc($max):
          | if .cut then (.out | implode) + "…" else (.out | implode) end )
   end;
 [ .start, .turns, .api_calls, .total_sec, .active_sec, .api_sec,
-  .tok_in, .tok_out, .cache_w, .cache_r, .cost_usd, .unpriced, .session, .cwd,
+  .tok_in, .tok_out, .cache_w, .cache_r, .cost_usd, .cost_cny, .unpriced, .session, .cwd,
   (.title | if . == "" then "-" else trunc(($ENV.TITLE_WIDTH | tonumber)) end) ] | @tsv'
 
 main() {
@@ -306,8 +344,12 @@ main() {
   # 表格（全 ASCII 表头，规避中英文宽度混排的对齐问题）
   # TITLE 特意放最后一列：末列无需 padding，中文标题的显示宽度就不会影响其他列对齐。
   # 跨项目统计时多插一列 PROJECT，否则无从判断某行属于哪个项目。
-  local fmt='%-16s %5s %5s %8s %8s %8s  %7s %7s %7s %7s %9s  %-8s'
-  local prefix_w=110      # TITLE 之前所有列（含分隔空格）占用的宽度
+  # COST 留 13 宽：单币种最多 8 字符（$1452.60~），双币种只出现在合计行，形如
+  # $2160+¥21.04~ 需要 13（金额 ≥100 时省掉小数，所以这基本是实际上界）。
+  # 该列用 %s 而非 %13s——含 ¥ 时要按显示宽度补齐，交给 pad_disp 处理。
+  local cost_w=13
+  local fmt='%-16s %5s %5s %8s %8s %8s  %7s %7s %7s %7s %s  %-8s'
+  local prefix_w=114      # TITLE 之前所有列（含分隔空格）占用的宽度
   if (( all )); then
     fmt+='  %-16s'
     prefix_w=$(( prefix_w + 18 ))
@@ -325,7 +367,7 @@ main() {
 
   local rule; rule=$(printf '%.0s-' $(seq 1 $(( prefix_w + (TITLE_WIDTH > 0 ? TITLE_WIDTH : 20) ))))
 
-  local -a head=(START TURNS CALLS TOTAL ACTIVE API IN OUT CACHE-W CACHE-R COST SESSION)
+  local -a head=(START TURNS CALLS TOTAL ACTIVE API IN OUT CACHE-W CACHE-R "$(pad_disp COST "$cost_w")" SESSION)
   (( all )) && head+=(PROJECT)
   head+=(TITLE)
   # shellcheck disable=SC2059
@@ -333,17 +375,17 @@ main() {
   printf '%s\n' "$rule"
 
   local t_total=0 t_active=0 t_api=0 t_in=0 t_out=0 t_cw=0 t_cr=0 t_turns=0 t_calls=0
-  local t_cost=0 t_unpriced=0
+  local t_cost=0 t_cost_cny=0 t_unpriced=0
   for row in "${rows[@]}"; do
-    local start turns calls total active api tin tout cw cr cost unpriced sid cwd title
-    IFS=$'\t' read -r start turns calls total active api tin tout cw cr cost unpriced \
+    local start turns calls total active api tin tout cw cr cost ccny unpriced sid cwd title
+    IFS=$'\t' read -r start turns calls total active api tin tout cw cr cost ccny unpriced \
       sid cwd title <<<"$(jq -r "$JQ_ROW" <<<"$row")"
 
     local -a cells=(
       "${start:0:16}" "$turns" "$calls"
       "$(fmt_dur "$total")" "$(fmt_dur "$active")" "$(fmt_dur "$api")"
       "$(fmt_tok "$tin")" "$(fmt_tok "$tout")" "$(fmt_tok "$cw")" "$(fmt_tok "$cr")"
-      "$(fmt_cost "$cost" "$unpriced")" "${sid:0:8}"
+      "$(pad_disp "$(fmt_cost "$cost" "$ccny" "$unpriced")" "$cost_w")" "${sid:0:8}"
     )
     (( all )) && cells+=("$(basename "${cwd:-?}")")
     cells+=("$title")
@@ -355,6 +397,7 @@ main() {
     t_turns=$((t_turns+turns)); t_calls=$((t_calls+calls))
     t_unpriced=$((t_unpriced+unpriced))
     t_cost=$(awk -v a="$t_cost" -v b="$cost" 'BEGIN{printf "%.6f", a+b}')
+    t_cost_cny=$(awk -v a="$t_cost_cny" -v b="$ccny" 'BEGIN{printf "%.6f", a+b}')
   done
 
   printf '%s\n' "$rule"
@@ -362,7 +405,7 @@ main() {
     "TOTAL" "$t_turns" "$t_calls"
     "$(fmt_dur $t_total)" "$(fmt_dur $t_active)" "$(fmt_dur $t_api)"
     "$(fmt_tok $t_in)" "$(fmt_tok $t_out)" "$(fmt_tok $t_cw)" "$(fmt_tok $t_cr)"
-    "$(fmt_cost "$t_cost" "$t_unpriced")" "${#rows[@]} sess"
+    "$(pad_disp "$(fmt_cost "$t_cost" "$t_cost_cny" "$t_unpriced")" "$cost_w")" "${#rows[@]} sess"
   )
   (( all )) && foot+=("")
   foot+=("")
