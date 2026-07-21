@@ -111,7 +111,7 @@ ARGS=()
 case $1 in
 info | abv | install | reinstall | uninstall | remove | rm | upgrade | test)
     for ARG in "$@"; do
-        if [[ $ARG != "and" ]]; then
+        if [[ $ARG != "and" && $ARG != "✔," && $ARG != "✔" ]]; then
             ARGS+=("${ARG%,}")
         fi
     done
