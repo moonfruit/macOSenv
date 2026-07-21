@@ -150,7 +150,7 @@
       { "protocol": ["bittorrent", "ntp", "stun"], "outbound": "DIRECT" },
       // Direct Domain
       {
-        "rule_set": ["FakeIpBypass", "Private", "Direct", "GeoIP@CN", "GeoSites@CN", "Apple"],
+        "rule_set": ["FakeIpBypass", "Private", "Direct", "GeoIP@CN", "GeoSites@CN"],
         "invert": true,
         "action": "sniff-override-destination"
       }
