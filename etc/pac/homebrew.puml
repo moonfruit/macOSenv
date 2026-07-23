@@ -123,6 +123,7 @@ skinparam usecase {
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
+(droast)
 (dry)
 (dtc) << dep >>
 (dtc)-->(libyaml)
@@ -772,7 +773,6 @@ skinparam usecase {
 (skopeo)-->(gpgme)
 (snappy) << dep >>
 (sniffnet)
-(sniffnet)-->(openssl@3)
 (socat)
 (socat)-->(openssl@3)
 (sops)

@@ -98,6 +98,28 @@ default_branch() {
     return 1
 }
 
+# Wait up to 30s for the proxy to reach GitHub. Returns 0 on success, 1 on timeout.
+# Uses the `proxy` CLI to wrap curl so we don't need to know the proxy URL here.
+# --connect-timeout keeps a single hung attempt from eating the whole deadline.
+wait_for_proxy() {
+    local deadline=$((SECONDS + 30))
+
+    if ! hash proxy >/dev/null 2>&1; then
+        warn "proxy command not found, skipping reachability check"
+        return 1
+    fi
+
+    while ((SECONDS < deadline)); do
+        if proxy curl -fsSX HEAD --connect-timeout 5 \
+            https://github.com/ >/dev/null 2>&1; then
+            return 0
+        fi
+        sleep 2
+    done
+    warn "GitHub unreachable via proxy after 30s, continuing with homebrew update"
+    return 1
+}
+
 rg submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | sort |
     while read -r MODULE; do
         echo "-------- $MODULE --------"
@@ -129,8 +151,11 @@ fd -tf update.sh | while read -r MODULE; do
 done
 
 if [[ -n $BREW ]]; then
+    echo "-------- proxy --------"
+    wait_for_proxy || true
+    echo
+
     echo "-------- homebrew --------"
-    sleep 1
     brew-up.sh
     brew-livecheck.sh --parallel
 fi
