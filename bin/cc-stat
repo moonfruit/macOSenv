@@ -120,7 +120,8 @@ readonly JQ_PROG='
 def price($m):
   # jsonl 里可能记完整 ID（claude-haiku-4-5-20251001），而表里用的是别名，先剥掉日期后缀。
   ($m | sub("-[0-9]{8}$"; "")) as $k
-  | { "claude-opus-4-8":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
+  | { "claude-opus-5":     { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
+      "claude-opus-4-8":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-opus-4-7":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-opus-4-6":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-fable-5":    { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0, c: "USD" },
