@@ -34,11 +34,58 @@ finalize_log() {
 
 TS="$(date +%Y%m%d-%H%M%S)"
 LAZY_LOG="$LOG_DIR/lazy-$TS.log"
+TREESITTER_LOG="$LOG_DIR/treesitter-$TS.log"
 MASON_LOG="$LOG_DIR/mason-$TS.log"
 
 h1 Updating lazy.nvim plugins
 nvim --headless "+Lazy! update" +qa 2>&1 | tee "$LAZY_LOG" | "$SCRIPT_DIR/lazy-progress.py"
 finalize_log "$LAZY_LOG" lazy
+echo
+
+h1 Updating treesitter parsers
+create-temp-file LUA
+cat >"$LUA" <<'EOF'
+-- lazy.nvim 的 build 钩子里 TSUpdate 是异步的，lazy 不等它跑完就结束任务，
+-- nvim 一退出编译就被打断：parser 停在旧版，而 queries 是软链、已随插件更新到新版，
+-- 于是打开对应文件时报 Query error: Invalid node type。这里显式同步等待，补上这一步。
+local ok, err = pcall(function()
+    require("nvim-treesitter").update(nil, { summary = true }):wait(900000)
+end)
+if not ok then
+    vim.api.nvim_echo({ { "[nvim-treesitter]: update failed: " .. tostring(err), "ErrorMsg" } }, true, {})
+    vim.cmd("cquit 1") -- cspell:ignore cquit
+end
+EOF
+
+# nvim-treesitter 的日志前缀是 [nvim-treesitter/install/<lang>]: msg，且 headless 下
+# nvim_echo 的高亮组不会变成 ANSI 码。这里转成 lazy.nvim 的 [plugin] task | msg 格式
+# 并补上配色，好让 lazy-progress.py 按语言原地刷新；配色与对齐规则同 mason 段
+nvim --headless -c "luafile $LUA" +qa 2>&1 \
+    | tee "$TREESITTER_LOG" \
+    | awk -v C_PKG=$'\033[35m' -v C_ACT=$'\033[36m' -v C_SEP=$'\033[90m' \
+        -v C_OK=$'\033[32m' -v C_WARN=$'\033[33m' -v C_ERR=$'\033[31m' -v C_RST=$'\033[0m' '
+    # 对齐逻辑同 lazy.nvim：plugin_name + task 合计填充到 20 字符，task 右对齐
+    function emit(name, task, msg,    pad) {
+        pad = 20 - length(name) - length(task)
+        if (pad < 0) pad = 0
+        printf "%s[%s]%s %s%*s%s %s|%s %s\n",
+            C_PKG, name, C_RST, C_ACT, pad + length(task), task, C_RST, C_SEP, C_RST, msg
+    }
+    {
+        if (match($0, /^\[nvim-treesitter\/([^]\/]+)\/([^]]+)\](:| warning:| error:) (.*)$/, m)) {
+            name = m[2]; task = m[1]; sev = m[3]; msg = m[4]
+        } else if (match($0, /^\[nvim-treesitter\](:| warning:| error:) (.*)$/, m)) {
+            name = "nvim-treesitter"; task = "update"; sev = m[1]; msg = m[2]
+        } else {
+            print; next
+        }
+        if (sev == " warning:") msg = C_WARN "warning: " C_RST msg
+        else if (sev == " error:") msg = C_ERR "error: " C_RST msg
+        else if (msg ~ /up-to-date|Language installed|^Installed /) msg = C_OK msg C_RST
+        emit(name, task, msg)
+    }' \
+    | "$SCRIPT_DIR/lazy-progress.py"
+finalize_log "$TREESITTER_LOG" treesitter
 echo
 
 h1 Updating mason.nvim packages
