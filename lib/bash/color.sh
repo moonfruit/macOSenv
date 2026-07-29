@@ -22,5 +22,6 @@ h2() {
 }
 
 warn() {
-    echo "$_YELLOW⚠$_RESET $*"
+    # ⚠ 是多字节字符，中文 locale 下 bash 会把它并进变量名，必须用花括号断开
+    echo "${_YELLOW}⚠$_RESET $*"
 }
