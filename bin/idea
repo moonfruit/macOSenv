@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# IntelliJ IDEA 包装脚本：吃掉 ja-netfilter 在输出最开始打印的 banner。
+#
+# banner 由 ~/.jb_run/ja-netfilter.jar（vmoptions 中的 -javaagent）用
+# System.out.print 硬编码打印，没有任何静默开关，只能在这里过滤 stdout：
+#
+#     (空行)
+#       ============================================================================
+#     (空行)
+#         ja-netfilter 2025.3.0
+#     ...
+#       ============================================================================
+#     (空行)
+#
+# 只在输出开头判定：命中就整块丢弃，没命中就立刻把已读内容原样吐回、
+# 之后由 cat 接管零开销透传，绝不干涉后续输出。
+
+set -o pipefail
+
+IDEA="/Applications/IntelliJ IDEA.app/Contents/MacOS/idea"
+
+if [[ ! -x ${IDEA} ]]; then
+    echo "idea: 找不到可执行文件 ${IDEA}" >&2
+    exit 127
+fi
+
+strip_banner() {
+    # 分隔线：去掉两侧空白后是一长串 =
+    local sep='^[[:space:]]*={10,}[[:space:]]*$'
+    local -a buf=()
+    local line first=
+
+    # 1. 跳过前导空行，取第一个非空行。前导空行异常多则放弃判定。
+    while IFS= read -r line || [[ -n ${line} ]]; do
+        buf+=("${line}")
+        if [[ -n ${line//[[:space:]]/} ]]; then
+            first=${line}
+            break
+        fi
+        ((${#buf[@]} >= 8)) && break
+    done
+
+    # 2. 开头不是分隔线（或压根没有输出）：原样放行，不再检查。
+    if [[ -z ${first} ]] || ! [[ ${first} =~ ${sep} ]]; then
+        ((${#buf[@]})) && printf '%s\n' "${buf[@]}"
+        exec cat
+    fi
+
+    # 3. 是分隔线：吃到第二条分隔线为止，看这一块里是否有 ja-netfilter。
+    local closed=0
+    while ((${#buf[@]} < 40)) && { IFS= read -r line || [[ -n ${line} ]]; }; do
+        buf+=("${line}")
+        if [[ ${line} =~ ${sep} ]]; then
+            closed=1
+            break
+        fi
+    done
+
+    if ((closed)) && [[ ${buf[*]} == *ja-netfilter* ]]; then
+        # 确认是 banner：整块丢弃，顺带吃掉紧跟其后的那个空行
+        if IFS= read -r line && [[ -n ${line//[[:space:]]/} ]]; then
+            printf '%s\n' "${line}"
+        fi
+    else
+        # 长得像但不是 banner（或没闭合）：一个字都不能少
+        printf '%s\n' "${buf[@]}"
+    fi
+
+    exec cat
+}
+
+"${IDEA}" "$@" | strip_banner
+exit "${PIPESTATUS[0]}"
+
+# cspell:words janetfilter vmoptions
