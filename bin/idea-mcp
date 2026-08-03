@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# IntelliJ IDEA 的 MCP stdio server 包装脚本。
+#
+# IDEA 自带 `idea stdioMcpServer`，靠两个环境变量定位要接管的 IDE 实例：
+#   IJ_MCP_SERVER_PROJECT_PATH  项目根目录（须已在 IDEA 中打开）
+#   IJ_MCP_SERVER_PORT          该实例的 MCP 端口，默认 64342
+#
+# 直接写进 .mcp.json 的话项目路径得写死，一个项目一份配置。这里改成从
+# 当前工作目录推导，于是任意项目共用同一份：
+#
+#     { "mcpServers": { "idea": { "type": "stdio", "command": "idea-mcp" } } }
+#
+# stdout 是 JSON-RPC 通道，一个字节都不能污染：所有提示走 stderr。
+
+set -euo pipefail
+
+# shellcheck disable=SC1091
+source "$ENV/lib/bash/project.sh"
+
+NAME=$(simple-basename "$0")
+DEFAULT_PORT=64342
+
+die() {
+    echo "${NAME}: $*" >&2
+    exit 1
+}
+
+help() {
+    cat <<EOF
+Usage: ${NAME} [-p PORT] [项目路径]
+
+以 stdio MCP server 方式启动 IntelliJ IDEA，供 Claude Code 等客户端连接。
+
+选项：
+  -p, --port PORT       MCP 端口，默认 ${DEFAULT_PORT}
+  -d, --project PATH    项目根目录，等价于位置参数
+  -h, --help            显示本帮助
+
+项目路径与端口均按「命令行参数 > 环境变量 > 默认值」确定，其中项目路径
+的默认值是由当前工作目录向上推导（git 根 / .idea / pom.xml 等）。
+
+环境变量：
+  IJ_MCP_SERVER_PROJECT_PATH  项目根目录
+  IJ_MCP_SERVER_PORT          MCP 端口
+
+示例：
+  ${NAME}                          # 当前项目，默认端口
+  ${NAME} -p 64343                 # 当前项目，指定另一个 IDEA 实例
+  ${NAME} -p 64343 ~/code/foo      # 指定项目与端口
+
+在 .mcp.json 中使用：
+  { "mcpServers": { "idea": { "type": "stdio", "command": "${NAME}" } } }
+EOF
+}
+
+PROJECT=
+PORT=
+
+while (($#)); do
+    case $1 in
+    -p | --port)
+        [[ $# -ge 2 ]] || { die "$1 需要一个端口号"; }
+        PORT=$2
+        shift 2
+        ;;
+    --port=*)
+        PORT=${1#*=}
+        shift
+        ;;
+    -d | --project)
+        [[ $# -ge 2 ]] || { die "$1 需要一个路径"; }
+        PROJECT=$2
+        shift 2
+        ;;
+    --project=*)
+        PROJECT=${1#*=}
+        shift
+        ;;
+    help | -h | --help)
+        help
+        exit 0
+        ;;
+    --)
+        shift
+        break
+        ;;
+    -*)
+        die "未知选项 $1，用 --help 查看帮助"
+        ;;
+    *)
+        [[ -z ${PROJECT} ]] || die "项目路径重复指定：${PROJECT} 与 $1"
+        PROJECT=$1
+        shift
+        ;;
+    esac
+done
+
+if (($#)); then
+    [[ -z ${PROJECT} ]] || die "项目路径重复指定：${PROJECT} 与 $1"
+    PROJECT=$1
+    shift
+    if (($#)); then
+        die "多余的参数：$*"
+    fi
+fi
+
+PORT=${PORT:-${IJ_MCP_SERVER_PORT:-${DEFAULT_PORT}}}
+if ! [[ ${PORT} =~ ^[0-9]+$ ]] || ((PORT < 1 || PORT > 65535)); then
+    die "端口号非法：${PORT}"
+fi
+
+PROJECT=${PROJECT:-${IJ_MCP_SERVER_PROJECT_PATH:-}}
+if [[ -z ${PROJECT} ]] && ! PROJECT=$(project-root); then
+    die "无法从 ${PWD} 推导项目根目录，请显式指定"
+fi
+
+RAW=${PROJECT}
+if ! PROJECT=$(to-absolute-path "${RAW}" 2>/dev/null) || [[ ! -d ${PROJECT} ]]; then
+    die "项目目录不存在：${RAW}"
+fi
+
+# 没有 .idea 说明这个项目从没在 IDEA 里打开过，MCP 必然连不上——
+# 与其让客户端拿到一个连不通的 server，不如现在就说清楚。
+if [[ ! -d ${PROJECT}/.idea ]]; then
+    die "${PROJECT} 下没有 .idea，请先用 IDEA 打开该项目"
+fi
+
+export IJ_MCP_SERVER_PROJECT_PATH=${PROJECT}
+export IJ_MCP_SERVER_PORT=${PORT}
+
+IDEA="/Applications/IntelliJ IDEA.app/Contents/MacOS/idea"
+if [[ ! -x ${IDEA} ]]; then
+    IDEA=idea
+fi
+exec "$IDEA" stdioMcpServer
+
+# cspell:words mcpServers stdio
