@@ -78,6 +78,8 @@ restart-sing() {
 }
 
 h2 Generating config.json
-if clash-to-sing | sing-box format -c /dev/stdin | sing-exec "$SING_RULES/fix-format.py" >zoo.json; then
+# Use the beta version of sing-box for config formatting
+SING_BOX=/opt/homebrew/opt/sing-box-beta/bin/sing-box
+if clash-to-sing | "$SING_BOX" format -c /dev/stdin | sing-exec "$SING_RULES/fix-format.py" >zoo.json; then
     copy-if-diff zoo.json "$DIR/config" restart-sing
 fi

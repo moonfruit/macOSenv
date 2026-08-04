@@ -59,6 +59,9 @@
       "mcp__plugin_github_github__search_issues",
       "mcp__plugin_github_github__search_pull_requests"
     ],
+    "deny": [
+      "mcp__idea__execute_terminal_command"
+    ],
     "defaultMode": "auto"
   },
   "hooks": {

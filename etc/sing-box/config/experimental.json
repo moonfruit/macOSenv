@@ -1,4 +1,5 @@
 {
+  "$schema": "file:///opt/homebrew/opt/sing-box-ref1nd/share/sing-box-ref1nd/schema.json",
   "experimental": {
     "urltest_unified_delay": true
   }

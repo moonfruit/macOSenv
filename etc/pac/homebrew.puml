@@ -195,7 +195,6 @@ skinparam usecase {
 (git-svn)
 (git-svn)-->(git)
 (git-svn)-->(subversion)
-(github-mcp-server)
 (glab)
 (glib) << dep >>
 (glib)-->(gettext)
