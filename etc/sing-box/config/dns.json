@@ -2,24 +2,22 @@
   "$schema": "file:///opt/homebrew/opt/sing-box-ref1nd/share/sing-box-ref1nd/schema.json",
   "dns": {
     "servers": [
-      // Local
-      { "tag": "dns-local", "type": "local" },
       // Resolver
-      { "tag": "dns-pod-raw", "type": "udp", "server": "119.29.29.29" },
-      { "tag": "dns-ali-raw", "type": "udp", "server": "223.5.5.5" },
-      { "tag": "dns-ali-raw2", "type": "udp", "server": "223.6.6.6" },
+      { "tag": "dbs-pod-udp", "type": "udp", "server": "119.29.29.29" },
+      { "tag": "dns-aliyun-udp-1", "type": "udp", "server": "223.5.5.5" },
+      { "tag": "dns-aliyun-udp-2", "type": "udp", "server": "223.6.6.6" },
       {
         "tag": "dns-resolver",
         "type": "group",
-        "servers": ["dns-pod-raw", "dns-ali-raw", "dns-ali-raw2"]
+        "servers": ["dbs-pod-udp", "dns-aliyun-udp-1", "dns-aliyun-udp-2"]
       },
       // Direct
-      { "tag": "dns-ali", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
+      { "tag": "dns-aliyun", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       { "tag": "dns-pod", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
       {
         "tag": "dns-direct",
         "type": "group",
-        "servers": ["dns-pod", "dns-ali"]
+        "servers": ["dns-pod", "dns-aliyun"]
       },
       // Proxy
       // { "tag": "dns-google", "type": "h3", "server": "dns.google", "detour": "🔰 默认出口" },
@@ -30,28 +28,28 @@
         "type": "group",
         "servers": ["dns-one", "dns-cloudflare"]
       },
+      // Hosts
+      { "tag": "dns-hosts", "type": "hosts", "path": ["hosts", "/etc/hosts"] },
+      // Local
+      { "tag": "dns-local", "type": "local" },
       // Gingkoo
       { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       // LazyCat
       { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
       // Tailscale
       { "tag": "dns-tailscale", "type": "tailscale", "endpoint": "tailscale-ep" },
-      // Hosts
-      { "tag": "dns-hosts", "type": "hosts", "path": ["hosts", "/etc/hosts"] },
       // FakeIP
       { "tag": "dns-fakeip", "type": "fakeip", "inet4_range": "22.0.0.0/8" }
     ],
     "rules": [
-      // Local
-      { "preferred_by": "dns-local", "server": "dns-local" },
       // Hosts
       { "preferred_by": "dns-hosts", "server": "dns-hosts" },
+      // Local
+      { "preferred_by": "dns-local", "server": "dns-local" },
       // Tailscale
       { "preferred_by": "dns-tailscale", "server": "dns-tailscale" },
       // LazyCat
       { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
-      // 内网地址
-      { "domain_suffix": ["heiyu.space", "ts.net"], "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
       // Gingkoo
       { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo" },
       // 无 IPv6 时不解析 IPv6 地址
@@ -85,14 +83,6 @@
     "reverse_mapping": true,
     "strategy": "prefer_ipv6"
   },
-  "inbounds": [
-    {
-      "type": "direct",
-      "tag": "dns-in",
-      "listen": "127.0.0.1",
-      "listen_port": 53
-    }
-  ],
   "route": {
     "rules": [
       // DNS inbound

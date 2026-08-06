@@ -2,6 +2,7 @@ language: en,en-GB
 allowCompoundWords: true
 ignoreRandomStrings: true
 words:
+  - aliyun
   - astrovim
   - augroup
   - autocmd

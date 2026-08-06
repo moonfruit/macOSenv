@@ -1,33 +1,15 @@
 {
   "$schema": "https://sing-box.sagernet.org/schema.json",
   "outbounds": [
-    {
-      "tag": "DIRECT",
-      "type": "direct"
-    },
-    {
-      "tag": "REJECT",
-      "type": "block"
-    },
-    {
-      "tag": "BRIDGE",
-      "type": "bridge"
-    }
+    { "tag": "DIRECT", "type": "direct" },
+    { "tag": "REJECT", "type": "block" },
+    { "tag": "BRIDGE", "type": "bridge" }
   ],
   "route": {
     "rules": [
-      {
-        "clash_mode": "Direct",
-        "outbound": "DIRECT"
-      },
-      {
-        "clash_mode": "Global",
-        "outbound": "GLOBAL"
-      },
-      {
-        "inbound": "global-in",
-        "outbound": "GLOBAL"
-      }
+      { "clash_mode": "Direct", "outbound": "DIRECT" },
+      { "clash_mode": "Global", "outbound": "GLOBAL" },
+      { "inbound": "global-in", "outbound": "GLOBAL" }
     ]
   }
 }

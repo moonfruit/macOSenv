@@ -40,5 +40,17 @@
       "cnaps",
       "cub"
     ]
+  },
+  "app@10.1.2.34": {
+    "tags": [
+      "gingkoo",
+      "jenkins"
+    ]
+  },
+  "app@10.1.2.35": {
+    "tags": [
+      "gingkoo",
+      "jenkins"
+    ]
   }
 }

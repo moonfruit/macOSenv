@@ -3,9 +3,9 @@
   "inbounds": [
     {
       "type": "mixed",
-      "tag": "protected-in",
+      "tag": "public-in",
       "listen": "::",
-      "listen_port": 7899,
+      "listen_port": 7897,
       "users": [
         {
           "Username": "username",
