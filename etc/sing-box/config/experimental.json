@@ -1,5 +1,5 @@
 {
-  "$schema": "file:///opt/homebrew/opt/sing-box-ref1nd/share/sing-box-ref1nd/schema.json",
+  "$schema": "https://raw.githubusercontent.com/moonfruit/sing-box/refs/heads/moonfruit/docs/schema.json",
   "experimental": {
     "urltest_unified_delay": true
   }

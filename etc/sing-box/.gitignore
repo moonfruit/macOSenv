@@ -8,3 +8,6 @@
 /test
 /ui
 /zoo
+
+# bypass agent 配置含 [http].token，绝不能进版本库
+/bypass-agent.conf

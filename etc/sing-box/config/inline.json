@@ -15,6 +15,17 @@
       },
       {
         "type": "inline",
+        "tag": "Home",
+        "rules": [
+          {
+            "type": "logical",
+            "mode": "and",
+            "rules": [{ "domain_suffix": [".lan", ".home.arpa"] }, { "default_interface_address": ["192.168.50.0/24"] }]
+          }
+        ]
+      },
+      {
+        "type": "inline",
         "tag": "PublicDNS",
         "rules": [
           { "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"] }

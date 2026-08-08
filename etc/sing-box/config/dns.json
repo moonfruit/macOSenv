@@ -1,37 +1,27 @@
 {
-  "$schema": "file:///opt/homebrew/opt/sing-box-ref1nd/share/sing-box-ref1nd/schema.json",
+  "$schema": "https://raw.githubusercontent.com/moonfruit/sing-box/refs/heads/moonfruit/docs/schema.json",
   "dns": {
     "servers": [
       // Resolver
       { "tag": "dbs-pod-udp", "type": "udp", "server": "119.29.29.29" },
       { "tag": "dns-aliyun-udp-1", "type": "udp", "server": "223.5.5.5" },
       { "tag": "dns-aliyun-udp-2", "type": "udp", "server": "223.6.6.6" },
-      {
-        "tag": "dns-resolver",
-        "type": "group",
-        "servers": ["dbs-pod-udp", "dns-aliyun-udp-1", "dns-aliyun-udp-2"]
-      },
+      { "tag": "dns-resolver", "type": "group", "servers": ["dbs-pod-udp", "dns-aliyun-udp-1", "dns-aliyun-udp-2"] },
       // Direct
       { "tag": "dns-aliyun", "type": "h3", "server": "dns.alidns.com", "domain_resolver": "dns-resolver" },
       { "tag": "dns-pod", "type": "https", "server": "doh.pub", "domain_resolver": "dns-resolver" },
-      {
-        "tag": "dns-direct",
-        "type": "group",
-        "servers": ["dns-pod", "dns-aliyun"]
-      },
+      { "tag": "dns-direct", "type": "group", "servers": ["dns-pod", "dns-aliyun"] },
       // Proxy
       // { "tag": "dns-google", "type": "h3", "server": "dns.google", "detour": "🔰 默认出口" },
       { "tag": "dns-one", "type": "h3", "server": "one.one.one.one", "detour": "🔰 默认出口" },
       { "tag": "dns-cloudflare", "type": "h3", "server": "cloudflare-dns.com", "detour": "🔰 默认出口" },
-      {
-        "tag": "dns-proxy",
-        "type": "group",
-        "servers": ["dns-one", "dns-cloudflare"]
-      },
+      { "tag": "dns-proxy", "type": "group", "servers": ["dns-one", "dns-cloudflare"] },
       // Hosts
       { "tag": "dns-hosts", "type": "hosts", "path": ["hosts", "/etc/hosts"] },
       // Local
       { "tag": "dns-local", "type": "local" },
+      // Home
+      { "tag": "dns-home", "type": "udp", "server": "192.168.50.1", "server_port": 1053 },
       // Gingkoo
       { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       // LazyCat
@@ -46,6 +36,8 @@
       { "preferred_by": "dns-hosts", "server": "dns-hosts" },
       // Local
       { "preferred_by": "dns-local", "server": "dns-local" },
+      // Home
+      { "rule_set": "Home", "server": "dns-home" },
       // Tailscale
       { "preferred_by": "dns-tailscale", "server": "dns-tailscale" },
       // LazyCat
@@ -62,8 +54,8 @@
         "type": "logical",
         "mode": "and",
         "rules": [
-          { "query_type": ["A", "AAAA"] },
           { "process_name": "q", "invert": true },
+          { "query_type": ["A", "AAAA"] },
           { "rule_set": "NetworkProcess", "invert": true }
         ],
         "server": "dns-fakeip",

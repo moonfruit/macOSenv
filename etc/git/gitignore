@@ -20,3 +20,5 @@ Icon
 /Library/Homebrew/.lazy.lua
 
 **/.claude/settings.local.json
+.codegraph/
+.serena/
