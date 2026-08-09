@@ -1,0 +1,235 @@
+#!/usr/bin/env bash
+# kitesurf —— 把 Cloudflare Kitesurf（跑在 Workers 上的云端无头浏览器）接成本地 MCP server。
+#
+# 凭据从 etc/secrets/secret.env 里 sops 解密取出，MCP 客户端的配置里因此不需要出现 token。
+# 需要 CLOUDFLARE_ACCOUNT_ID 和 CLOUDFLARE_API_TOKEN（权限：Browser Rendering - Edit）。
+
+set -euo pipefail
+
+if [[ -z ${ENV:-} || ! -d ${ENV:-} ]]; then
+    ENV=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+fi
+# MCP 客户端可能由 GUI 拉起，PATH 里未必有 homebrew
+case ":${PATH}:" in
+*:/opt/homebrew/bin:*) ;;
+*) PATH="/opt/homebrew/bin:${PATH}" ;;
+esac
+export ENV PATH
+
+# shellcheck disable=SC1091
+source "$ENV/lib/bash/native.sh"
+
+NAME=$(simple-basename "$0")
+SECRETS="$ENV/etc/secrets/secret.env"
+
+MODE=chrome-devtools
+BROWSER=kitesurf
+ACTION=run
+KEEP_ALIVE=          # 默认不带：kitesurf 不接受这个参数，只有 chromium 支持
+ARGS=()
+
+die() {
+    echo "${NAME}: $*" >&2
+    exit 1
+}
+
+# 把 Cloudflare 的错误 JSON 转成缩进的可读行；不是 JSON 就原样截断输出
+report-errors() {
+    local raw msg
+    raw=$(cat)
+    msg=$(jq -r '.errors[]? | "      \(.message)" +
+        (if .error_chain then " (\(.error_chain[0].message))" else "" end)' \
+        <<<"$raw" 2>/dev/null) || msg=
+    [[ -n $msg ]] || msg="      $(head -c 300 <<<"$raw")"
+    # 用 if 而不是 &&：空响应时函数会返回非零，在 set -e 下会打断调用方
+    if [[ -n ${msg//[[:space:]]/} ]]; then
+        echo "$msg"
+    fi
+}
+
+usage() {
+    cat <<EOF
+用法: ${NAME} [选项] [-- 透传给底层 MCP server 的参数...]
+
+后端选择:
+  --chrome-devtools    使用 chrome-devtools-mcp（默认）
+  --playwright         使用 @playwright/mcp
+
+选项:
+  --browser <name>     kitesurf（默认）或 chromium，两者端点不同
+  --keep-alive <ms>    会话保活毫秒数，仅 --browser chromium 可用
+  --test               检查凭据是否可用（校验 token 并握手一次 CDP 端点）
+  --print-config       打印可粘贴进 MCP 客户端的配置 JSON
+  --endpoint           打印 CDP WebSocket 端点（不含 token）
+  -h, --help           显示本帮助
+
+示例:
+  claude mcp add-json kitesurf "\$(${NAME} --print-config)"
+  ${NAME} --playwright --print-config
+  ${NAME} -- --slim          # 透传 chrome-devtools-mcp 的 --slim
+EOF
+}
+
+while (($#)); do
+    case $1 in
+    --chrome-devtools | --cdp) MODE=chrome-devtools ;;
+    --playwright | --pw) MODE=playwright ;;
+    --browser) BROWSER=${2:?--browser 需要参数}; shift ;;
+    --browser=*) BROWSER=${1#*=} ;;
+    --keep-alive) KEEP_ALIVE=${2:?--keep-alive 需要参数}; shift ;;
+    --keep-alive=*) KEEP_ALIVE=${1#*=} ;;
+    --test | --check) ACTION='test' ;;
+    --print-config) ACTION=print-config ;;
+    --endpoint) ACTION=endpoint ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    --)
+        shift
+        ARGS+=("$@")
+        break
+        ;;
+    *) ARGS+=("$1") ;;
+    esac
+    shift
+done
+
+# --print-config 只吐配置，不碰 secrets
+if [[ $ACTION = print-config ]]; then
+    CONFIG_ARGS=()
+    [[ $MODE = playwright ]] && CONFIG_ARGS+=(--playwright)
+    [[ $BROWSER != kitesurf ]] && CONFIG_ARGS+=(--browser "$BROWSER")
+    if ((${#CONFIG_ARGS[@]})); then
+        ARGS_JSON=$(printf '%s\n' "${CONFIG_ARGS[@]}" |
+            jq -Rs 'split("\n") | map(select(length > 0))')
+    else
+        ARGS_JSON='[]'
+    fi
+    jq -n --arg cmd "$ENV/bin/$NAME" --argjson args "$ARGS_JSON" \
+        '{command: $cmd, args: $args}'
+    exit 0
+fi
+
+if [[ -z ${CLOUDFLARE_ACCOUNT_ID:-} || -z ${CLOUDFLARE_API_TOKEN:-} ]]; then
+    [[ -r $SECRETS ]] || die "读不到凭据文件 ${SECRETS}"
+    has-command sops || die "找不到 sops，无法解密凭据"
+    PLAIN=$(sops decrypt "$SECRETS") || die "解密 ${SECRETS} 失败"
+    set -a
+    # shellcheck disable=SC1091
+    source /dev/stdin <<<"$PLAIN"
+    set +a
+    unset PLAIN
+fi
+
+[[ -n ${CLOUDFLARE_ACCOUNT_ID:-} ]] || die "凭据里缺少 CLOUDFLARE_ACCOUNT_ID"
+[[ -n ${CLOUDFLARE_API_TOKEN:-} ]] || die "凭据里缺少 CLOUDFLARE_API_TOKEN"
+
+# 两种浏览器挂在不同端点上，互相不认对方的参数：
+#   kitesurf 只在 browser-run 下，且不接受 keep_alive
+#   chromium 仍在老的 browser-rendering 下，不接受 browser 参数
+BASE="wss://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}"
+case $BROWSER in
+kitesurf)
+    [[ -z $KEEP_ALIVE ]] ||
+        die "--keep-alive 只对 --browser chromium 有效，kitesurf 不支持"
+    ENDPOINT="${BASE}/browser-run/devtools/browser?browser=kitesurf"
+    ;;
+chromium)
+    ENDPOINT="${BASE}/browser-rendering/devtools/browser"
+    if [[ -n $KEEP_ALIVE ]]; then
+        ENDPOINT+="?keep_alive=${KEEP_ALIVE}"
+    fi
+    ;;
+*)
+    die "--browser 只支持 kitesurf 或 chromium，收到 ${BROWSER}"
+    ;;
+esac
+
+if [[ $ACTION = endpoint ]]; then
+    echo "$ENDPOINT"
+    exit 0
+fi
+
+if [[ $ACTION = test ]]; then
+    has-command curl || die "找不到 curl"
+    has-command jq || die "找不到 jq"
+    FAILED=0
+
+    # 能走到这里说明 sops 解密成功且两个变量都非空
+    echo "[1/3] 读取凭据 ... ✓ (account ${CLOUDFLARE_ACCOUNT_ID})"
+
+    # token 自校验：任何有效 token 都能调这个端点，与具体权限无关
+    printf '[2/3] 校验 token ... '
+    if VERIFY=$(curl -sS --max-time 15 \
+        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+        'https://api.cloudflare.com/client/v4/user/tokens/verify' 2>&1); then
+        if [[ $(jq -r '.success // false' <<<"$VERIFY" 2>/dev/null) = true ]]; then
+            echo "✓ ($(jq -r '.result.status' <<<"$VERIFY"))"
+        else
+            echo "✗"
+            report-errors <<<"$VERIFY"
+            FAILED=1
+        fi
+    else
+        echo "✗ 请求失败"
+        echo "      ${VERIFY}"
+        FAILED=1
+    fi
+
+    # 对真实 CDP 端点做一次 WebSocket 握手，account、权限、浏览器可用性一起验了
+    printf '[3/3] 握手 %s ... ' "$BROWSER"
+    HDR=$(mktemp) BODY=$(mktemp)
+    # shellcheck disable=SC2064  # 要的就是立即展开路径
+    trap "rm -f '${HDR}' '${BODY}'" EXIT
+    # --http1.1 必须有：HTTP/2 没有 Upgrade 机制，走 h2 会拿不到 101。
+    # 握手成功后 curl 会一直持有连接直到 --max-time，所以它的退出码不可信，
+    # 只认响应头里的状态码。
+    curl -sS --http1.1 -D "$HDR" -o "$BODY" --max-time 6 \
+        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+        -H 'Connection: Upgrade' \
+        -H 'Upgrade: websocket' \
+        -H 'Sec-WebSocket-Version: 13' \
+        -H "Sec-WebSocket-Key: $(head -c 16 /dev/urandom | base64)" \
+        "https://${ENDPOINT#wss://}" &>/dev/null || true
+    CODE=$(awk 'NR == 1 { print $2 }' "$HDR")
+    if [[ $CODE = 101 ]]; then
+        echo "✓ (HTTP 101 Switching Protocols)"
+    else
+        echo "✗ (HTTP ${CODE:-无响应})"
+        report-errors <"$BODY"
+        FAILED=1
+    fi
+
+    if ((FAILED)); then
+        echo
+        echo "看上面的报错。凭据在 ${SECRETS} 的 CLOUDFLARE_ACCOUNT_ID / CLOUDFLARE_API_TOKEN，"
+        echo "token 需要 Browser Rendering (Browser Run) - Edit 权限。"
+        exit 1
+    fi
+    echo
+    echo "全部通过。"
+    exit 0
+fi
+
+case $MODE in
+chrome-devtools)
+    has-command chrome-devtools-mcp ||
+        die "找不到 chrome-devtools-mcp，请先 brew install chrome-devtools-mcp"
+    # chrome-devtools-mcp 只支持从命令行收 header，token 会出现在 ps 里
+    exec chrome-devtools-mcp \
+        --wsEndpoint="$ENDPOINT" \
+        --wsHeaders="{\"Authorization\":\"Bearer ${CLOUDFLARE_API_TOKEN}\"}" \
+        ${ARGS[@]+"${ARGS[@]}"}
+    ;;
+playwright)
+    has-command playwright-mcp ||
+        die "找不到 playwright-mcp，请先 brew install playwright-mcp"
+    # playwright-mcp 支持用环境变量传，token 不会出现在命令行里
+    export PLAYWRIGHT_MCP_CDP_ENDPOINT="$ENDPOINT"
+    export PLAYWRIGHT_MCP_CDP_HEADERS="Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+    exec playwright-mcp ${ARGS[@]+"${ARGS[@]}"}
+    ;;
+esac
+
+# cspell:words kitesurf wsEndpoint wsHeaders
