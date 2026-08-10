@@ -25,10 +25,10 @@ fi
 : "${TOKEN:?TOKEN not set}"
 : "${GATEWAY:?GATEWAY not set}"
 LOCAL_CLASH_API="${LOCAL_CLASH_API:-http://127.0.0.1:9999}"
-TTL="${TTL:-120}"
+TTL="${TTL:-240}"
 STATE_FILE="${STATE_FILE:-/var/run/sing-bypass-agent.ip}"
 
-# 只在状态变化时说话：每 30s 一次、一天 2880 次，稳态输出会把日志刷爆。
+# 只在状态变化时说话：每 60s 一次、一天 1440 次，稳态输出会把日志刷爆。
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*"; }
 
 revoke() {
@@ -42,10 +42,16 @@ revoke() {
     rm -f "$STATE_FILE"
 }
 
-# 本机代理不健康时【必须】撤销：此刻我们确知自己还在 LAN 内（能跑到这里说明
-# 前面的检查还没失败），注销请求发得出去，路由器立刻接管，本机不至于既没
-# 自己的代理、又被路由器放行而裸奔。
-give_up_unhealthy() {
+# 撤销并退出。两种情形走这里，共同点是我们【确知】这条租约已经不该存在了，
+# 而且此刻撤销请求还发得出去：
+#   a) 本机代理不健康——此刻我们确知自己还在 LAN 内（能跑到这里说明位置检查
+#      还没失败），路由器立刻接管，本机不至于既没自己的代理、又被路由器放行
+#      而裸奔。
+#   b) 确认已离开 LAN——租约上那个地址已经不是本机了，白留最长一个 TTL，期间
+#      家里任何一台 DHCP 拿到同一地址的设备都会平白蹭到 bypass。过去这里只能
+#      靠 TTL 过期（"离开了路由器就不可达"），但有 tailnet 之后路由器仍然可达，
+#      这一次撤销发得出去；发不出去也不重试，TTL 照旧兜底。
+give_up_revoking() {
     _reason="$1"
     if [ -f "$STATE_FILE" ]; then
         _prev=$(cat "$STATE_FILE" 2>/dev/null || true)
@@ -58,13 +64,12 @@ give_up_unhealthy() {
 }
 
 # 网络位置判断失败时【绝不能】撤销、也不能碰 STATE_FILE：这条路径不代表
-# "确认已离开 LAN"，只代表这一次没能判断出结果。Wi-Fi 漫游瞬断、DHCP 续租
-# 都会让 `route -n get` 或 `ifconfig` 短暂拿不到东西，而此时 Mac 可能仍在
-# LAN 内、sing-box 完全健康——如果这里 revoke，会撤掉一个本不该撤的合法
-# 租约，接下来最长一个 StartInterval 窗口内 Mac 既被路由器代理、自己又在
-# 代理，正是"路由器不可达时不撤销"这条语义想避免的双重代理。真的离开 LAN
-# 时路由器本来就不可达，请求发不出去，交给 TTL 自然过期即可；所以这条路径
-# 干脆不发任何网络请求，只写一行本地日志，静默退出。
+# "确认已离开 LAN"（那种情形走 give_up_revoking），只代表这一次没能判断出
+# 结果。Wi-Fi 漫游瞬断、DHCP 续租都会让 `route -n get` 或 `ifconfig` 短暂拿
+# 不到东西，而此时 Mac 可能仍在 LAN 内、sing-box 完全健康——如果这里 revoke，
+# 会撤掉一个本不该撤的合法租约，接下来最长一个 StartInterval 窗口内 Mac 既被
+# 路由器代理、自己又在代理，正是"路由器不可达时不撤销"这条语义想避免的双重
+# 代理。所以这条路径干脆不发任何网络请求，只写一行本地日志，静默退出。
 give_up_unknown_location() {
     _reason="$1"
     log "$_reason"
@@ -74,20 +79,46 @@ give_up_unknown_location() {
 # 1) 本机 sing-box 是否 ready。用 clash api /version，与 sing-router 自己的
 #    ready check 采用同一个信号。
 if ! curl -sf --max-time 2 "$LOCAL_CLASH_API/version" >/dev/null 2>&1; then
-    give_up_unhealthy "local sing-box not ready"
+    give_up_revoking "local sing-box not ready"
 fi
 
 # 2) 找出通往网关的接口与源地址。
 #    不用 default 路由——本机 TUN 装了 auto_route，default 会被它接管；网关是
-#    同网段私有地址，走的是直连路由，拿到的必定是物理口。
-IFACE=$(route -n get "$GATEWAY" 2>/dev/null | awk '/interface:/{print $2}')
+#    同网段私有地址，在 LAN 内走的是直连路由，拿到的必定是物理口。
+#    一次 route 调用拿全 interface 与 gateway，避免两次调用之间路由表已经变了。
+ROUTE_OUT=$(route -n get "$GATEWAY" 2>/dev/null || true)
+IFACE=$(printf '%s\n' "$ROUTE_OUT" | awk '/interface:/{print $2; exit}')
 if [ -z "$IFACE" ]; then
     give_up_unknown_location "no route to $GATEWAY (not on the target LAN, or a transient blip)"
 fi
+
+# 2a) 到网关的这条路由必须是直连的。离开家之后 tailnet 依然能到 $GATEWAY，
+#     route 会给出一条带下一跳的隧道路由（interface utun*、gateway 11.0.0.1
+#     之类）——此刻本机根本不在目标 LAN 上，拿它的出口地址去注册对路由器的
+#     bypass 白名单毫无意义。
+#     判据来自 macOS 的输出形状：直连主机路由是 LLINFO 的克隆路由，压根不打印
+#     gateway 行；只要打印了、且下一跳不在本网段内，就是经隧道/路由跳转到达。
+#     这是确定性信号（区别于上面那条"什么都没拿到"），所以顺手把旧租约撤掉。
+#     Wi-Fi 瞬断也会命中这里——直连路由一消失，$GATEWAY 立刻 fallback 到 tailnet
+#     那条——但那本来就已经不在 LAN 上了，撤销无误，恢复后下一轮自会重新注册。
+LAN_PREFIX="${GATEWAY%.*}."
+NEXT_HOP=$(printf '%s\n' "$ROUTE_OUT" | awk '/gateway:/{print $2; exit}')
+case "$NEXT_HOP" in
+    "" | "$LAN_PREFIX"*) ;;
+    *) give_up_revoking "route to $GATEWAY goes via $NEXT_HOP on $IFACE (off-LAN, e.g. over tailnet)" ;;
+esac
+
 IP=$(ifconfig "$IFACE" inet 2>/dev/null | awk '/inet /{print $2; exit}')
 if [ -z "$IP" ]; then
     give_up_unknown_location "interface $IFACE has no IPv4 address (not on the target LAN, or a transient blip)"
 fi
+
+# 2b) 出口地址本身也必须落在目标网段内。这是"我就在这个 LAN 上"的正面证据，
+#     不依赖 route 输出的形状——万一哪天隧道路由也不打印下一跳，这里仍然能拦住。
+case "$IP" in
+    "$LAN_PREFIX"*) ;;
+    *) give_up_revoking "source address $IP on $IFACE is outside ${LAN_PREFIX}0/24 (off-LAN)" ;;
+esac
 
 # 3) IP 变了先注销旧的，把切换窗口从整个 TTL 压到接近 0。
 PREV=""
