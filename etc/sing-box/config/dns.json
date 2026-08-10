@@ -22,6 +22,7 @@
       { "tag": "dns-local", "type": "local" },
       // Home
       { "tag": "dns-home", "type": "udp", "server": "192.168.50.1", "server_port": 1053 },
+      { "tag": "dns-home-tailnet", "type": "udp", "server": "192.168.50.1", "server_port": 1053, "detour": "tailscale-ep" },
       // Gingkoo
       { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
       // LazyCat
@@ -38,10 +39,13 @@
       { "preferred_by": "dns-local", "server": "dns-local" },
       // Home
       { "rule_set": "Home", "server": "dns-home" },
+      { "rule_set": "NotHome", "server": "dns-home-tailnet" },
       // Tailscale
       { "preferred_by": "dns-tailscale", "server": "dns-tailscale" },
       // LazyCat
       { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
+      // Lan
+      { "domain_suffix": ["heiyu.space", "ts.net"], "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
       // Gingkoo
       { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo" },
       // 无 IPv6 时不解析 IPv6 地址

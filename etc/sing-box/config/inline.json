@@ -4,17 +4,6 @@
     "rule_set": [
       {
         "type": "inline",
-        "tag": "NoIPv6",
-        "rules": [
-          {
-            "type": "logical",
-            "mode": "and",
-            "rules": [{ "query_type": "AAAA" }, { "default_interface_address": ["2000::/3"], "invert": true }]
-          }
-        ]
-      },
-      {
-        "type": "inline",
         "tag": "Home",
         "rules": [
           {
@@ -26,9 +15,27 @@
       },
       {
         "type": "inline",
-        "tag": "PublicDNS",
+        "tag": "NotHome",
         "rules": [
-          { "domain": ["dns.alidns.com", "doh.pub", "dot.pub", "dns.google", "one.one.one.one", "cloudflare-dns.com"] }
+          {
+            "type": "logical",
+            "mode": "and",
+            "rules": [
+              { "domain_suffix": [".lan", ".home.arpa"] },
+              { "default_interface_address": ["192.168.50.0/24"], "invert": true }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "inline",
+        "tag": "NoIPv6",
+        "rules": [
+          {
+            "type": "logical",
+            "mode": "and",
+            "rules": [{ "query_type": "AAAA" }, { "default_interface_address": ["2000::/3"], "invert": true }]
+          }
         ]
       },
       {
