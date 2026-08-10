@@ -88,6 +88,7 @@ skinparam usecase {
 (clang-format)
 (cline)
 (cline)-->(node)
+(cloudflare-speed-cli)
 (cloudflare-wrangler)
 (cloudflare-wrangler)-->(node)
 (cmake)
