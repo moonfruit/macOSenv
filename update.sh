@@ -135,7 +135,7 @@ rg submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | sort |
         fi
     done
 
-fd -tf update.sh | while read -r MODULE; do
+fd -tf '^update.sh$' | while read -r MODULE; do
     if [[ $MODULE == update.sh ]]; then
         continue
     fi
