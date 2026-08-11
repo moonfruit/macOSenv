@@ -5,6 +5,7 @@ import base64
 import contextlib
 import importlib.util
 import io
+import json
 import os
 import re
 import stat
@@ -56,6 +57,20 @@ LOON_BARE = (
 )
 
 
+# subscribe.sh 的相关片段（照抄真实结构，UA 与仓库当前值一致）。基准 UA 运行时从
+# 这里解析——测试一律显式指定 --subscribe-sh，免得结论随本机 $WORKSPACE 里那份真脚本漂。
+SUBSCRIBE_SH = (
+    "#!/usr/bin/env bash\n"
+    "CLIENT=${3:-sing-box}\n"
+    "if [[ $CLIENT == 'sing-box' ]]; then\n"
+    '    AGENT="SFA/1.13.18 (sing-box 1.13.18)"\n'
+    "else\n"
+    '    AGENT="$CLIENT/*"\n'
+    "fi\n"
+    'OPTS=(-fL -H "User-Agent: $AGENT" -o "$OUTPUT")\n'
+)
+
+
 class ParseClashTxtTest(unittest.TestCase):
     def test_跳过注释行与空行(self):
         text = (
@@ -78,8 +93,17 @@ class ParseClashTxtTest(unittest.TestCase):
 
 
 class BaselineUaTest(unittest.TestCase):
-    def test_sing_box_走硬编码串(self):
-        self.assertEqual(ua_diff.baseline_ua("sing-box"), "SFA/1.13.16 (sing-box 1.13.16)")
+    def test_sing_box_跟随解析出来的基准来源(self):
+        """基准串不再是文件里的常量，而是 subscribe.sh 解析结果。"""
+        ua_diff.set_baseline_source(
+            ua_diff.BaselineSource("SFA/9.9.9 (sing-box 9.9.9)", "读自 subscribe.sh", True))
+        self.addCleanup(ua_diff.set_baseline_source, None)
+        self.assertEqual(ua_diff.baseline_ua("sing-box"), "SFA/9.9.9 (sing-box 9.9.9)")
+
+    def test_没设定来源时用内置兜底(self):
+        ua_diff.set_baseline_source(None)
+        # 手写字面量，不引用被测常量：常量被改成别的值时这条必须炸
+        self.assertEqual(ua_diff.baseline_ua("sing-box"), "SFA/1.13.18 (sing-box 1.13.18)")
 
     def test_其余客户端走通配形式(self):
         self.assertEqual(ua_diff.baseline_ua("clash"), "clash/*")
@@ -90,22 +114,39 @@ class BaselineUaTest(unittest.TestCase):
 
 
 class UaTableTest(unittest.TestCase):
-    def test_六个客户端各两个版本(self):
-        self.assertEqual(len(ua_diff.UA_TABLE), 6)
+    def test_四个客户端各两个版本(self):
+        # 手写客户端名字面量：遍历表本身来断言等于没断言（删表项 = 删断言）
+        self.assertEqual(sorted(ua_diff.UA_TABLE), ["clash-verge", "mihomo", "shadowrocket", "sing-box"])
         for client, entries in ua_diff.UA_TABLE.items():
             self.assertEqual(len(entries), 2, f"{client} 应有最新与旧版两项")
             for version, ua in entries:
                 self.assertTrue(version and ua, f"{client} 的条目不完整")
 
-    def test_十二个_UA_串两两不同(self):
+    def test_不再探测_loon_与_quantumult_x(self):
+        """两轮真实探测：nanocloud.json 对它们返回 0 字节，ash.b64 返回 conf /
+        base64-conf——下游没有 loader，可用节点恒为 0。白费每订阅 4 次请求。"""
+        self.assertNotIn("loon", ua_diff.UA_TABLE)
+        self.assertNotIn("quantumult-x", ua_diff.UA_TABLE)
+        uas = [ua for entries in ua_diff.UA_TABLE.values() for _, ua in entries]
+        self.assertFalse([u for u in uas if u.startswith(("Loon/", "Quantumult"))])
+
+    def test_sing_box_两项用_SFA_而不是_SFI(self):
+        """subscribe.sh 实际发的是 SFA。写成 SFI 的话串永远不等于基准，
+        build_ua_plan 的合并逻辑就是死代码，每订阅白发一次请求。"""
+        self.assertEqual(
+            [ua for _, ua in ua_diff.UA_TABLE["sing-box"]],
+            ["SFA/1.13.18 (sing-box 1.13.18)", "SFA/1.12.25 (sing-box 1.12.25)"],
+        )
+
+    def test_八个_UA_串两两不同(self):
         """UA 串必须唯一。
 
         build_ua_plan 用 `ua == base` 判定基准去重，若表里有两条 UA 串相同，
         后一条会 last-match-wins 地覆盖掉基准项，悄悄改变基准是谁。
         """
         uas = [ua for entries in ua_diff.UA_TABLE.values() for _, ua in entries]
-        self.assertEqual(len(uas), 12)
-        self.assertEqual(len(set(uas)), 12, "UA 串有重复")
+        self.assertEqual(len(uas), 8)
+        self.assertEqual(len(set(uas)), 8, "UA 串有重复")
 
 
 class DetectFormatTest(unittest.TestCase):
@@ -644,6 +685,16 @@ class ParseLinksTest(unittest.TestCase):
         nodes = ua_diff.parse_nodes(b"vless://uuid@1.2.3.4:443\n", "links")
         self.assertEqual(nodes[0].name, "Line#0")
 
+    def test_urlparse_自己抛_ValueError_时只跳过该行(self):
+        """netloc 含 CJK 等字符时 urlparse 的 NFKC 校验会抛 ValueError。
+        不接住的话整次探测被记成「解析失败」，而本该只是少一行节点。"""
+        text = (
+            "vless://uuid@例\u2100子.com:443#坏行\n"
+            "vless://uuid@1.2.3.4:443#好行\n"
+        )
+        nodes = ua_diff.parse_nodes(text.encode(), "links")
+        self.assertEqual([n.name for n in nodes], ["好行"])
+
     def test_越界端口后跟合法行(self):
         """畸形输入：端口越界（99999），应被跳过不抛异常，后面的合法行应被解析。"""
         text = "vless://uuid@1.2.3.4:99999#bad\nvless://uuid@5.6.7.8:443#good\n"
@@ -882,14 +933,13 @@ class RateLimiterTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 ua_diff.RateLimiter(bad, clock=self.clock, sleeper=self.sleeper)
 
-    def test_十三次请求的总跨度不低于限速要求(self):
-        # 13 次请求 × 8 秒间隔 = 96 秒跨度，即 12 个间隔。
-        # 以 8 秒间隔调度的请求恰好填满 60 秒窗口，无富余。
+    def test_九次请求的总跨度不低于限速要求(self):
+        # 单订阅最多 9 次请求（8 个 UA + 未合并的基准），即 8 个间隔 × 8 秒 = 64 秒跨度。
         limiter = ua_diff.RateLimiter(8.0, clock=self.clock, sleeper=self.sleeper)
         start = self.now
-        for _ in range(13):
+        for _ in range(9):
             limiter.wait()
-        self.assertGreaterEqual(self.now - start, 12 * 8.0)
+        self.assertGreaterEqual(self.now - start, 8 * 8.0)
 
     def test_任意60秒窗口内请求数不超过8(self):
         # 直接断言核心不变量：任意 60 秒滑动窗口内的请求数 ≤ 8。
@@ -1166,24 +1216,32 @@ class BuildUaPlanTest(unittest.TestCase):
         plan = ua_diff.build_ua_plan(sub, None)
         self.assertTrue(plan[0][3])
         self.assertEqual(plan[0][2], "shadowsocket/*")
-        self.assertEqual(len(plan), 13)  # 12 个 UA + 1 个基准
+        self.assertEqual(len(plan), 9)  # 8 个 UA + 1 个基准（基准串不在表里，不合并）
 
-    def test_基准与表中某项相同时复用不重复请求(self):
+    def test_基准与表中最新_sing_box_项合并(self):
+        """subscribe.sh 的串与表里最新 SFA 项一致，两者必须合并成一次请求：
+        8 个 UA 而不是 9。合并没生效的话每订阅白发一次、多等 8 秒。"""
+        ua_diff.set_baseline_source(ua_diff.BaselineSource(
+            "SFA/1.13.18 (sing-box 1.13.18)", "读自 subscribe.sh", True))
+        self.addCleanup(ua_diff.set_baseline_source, None)
         sub = ua_diff.Subscription("x", "https://example.org/sub", "sing-box")
-        original = ua_diff.SING_BOX_BASELINE_UA
-        try:
-            # 把基准串改成与表中最新 sing-box 项一致，验证去重
-            ua_diff.SING_BOX_BASELINE_UA = "SFI/1.13.18 (sing-box 1.13.18)"
-            plan = ua_diff.build_ua_plan(sub, None)
-        finally:
-            ua_diff.SING_BOX_BASELINE_UA = original
-        self.assertEqual(len(plan), 12)
+        plan = ua_diff.build_ua_plan(sub, None)
+        self.assertEqual(len(plan), 8)
         self.assertEqual(sum(1 for entry in plan if entry[3]), 1)
+        self.assertEqual(plan[0][0], "sing-box")
+        self.assertEqual(plan[0][1], "1.13.18")
+
+    def test_基准串与表里都不同时不合并(self):
+        ua_diff.set_baseline_source(ua_diff.BaselineSource(
+            "SFA/9.9.9 (sing-box 9.9.9)", "读自 subscribe.sh", True))
+        self.addCleanup(ua_diff.set_baseline_source, None)
+        sub = ua_diff.Subscription("x", "https://example.org/sub", "sing-box")
+        self.assertEqual(len(ua_diff.build_ua_plan(sub, None)), 9)
 
     def test_按客户端过滤时基准仍保留(self):
         sub = ua_diff.Subscription("ash.b64", "https://example.org/sub", "shadowsocket")
-        plan = ua_diff.build_ua_plan(sub, ["loon"])
-        self.assertEqual(len(plan), 3)  # 基准 + loon 两个版本
+        plan = ua_diff.build_ua_plan(sub, ["mihomo"])
+        self.assertEqual(len(plan), 3)  # 基准 + mihomo 两个版本
         self.assertTrue(plan[0][3])
 
 
@@ -1202,9 +1260,9 @@ class ProbeSubscriptionTest(unittest.TestCase):
             self.SUB, interval=8.0, timeout=20.0, fetcher=fetcher,
             sleeper=slept.append, clock=lambda: 0.0,
         )
-        self.assertEqual(len(probes), 13)
-        self.assertEqual(len(seen), 13)
-        self.assertEqual(len(slept), 12)  # 首次不等待，其余 12 次各等一轮
+        self.assertEqual(len(probes), 9)
+        self.assertEqual(len(seen), 9)
+        self.assertEqual(len(slept), 8)  # 首次不等待，其余 8 次各等一轮
         self.assertTrue(all(s == 8.0 for s in slept))
 
     def test_失败请求也不打断限速节奏(self):
@@ -1231,9 +1289,9 @@ class ProbeSubscriptionTest(unittest.TestCase):
             self.SUB, interval=8.0, timeout=20.0, fetcher=fetcher,
             sleeper=sleeper, clock=lambda: 0.0,
         )
-        self.assertEqual(len(probes), 13)
-        # 首次请求前不限速，其余 12 次请求前各限速一次，失败不改变这个节奏
-        expected = ["fetch"] + ["sleep", "fetch"] * 12
+        self.assertEqual(len(probes), 9)
+        # 首次请求前不限速，其余 8 次请求前各限速一次，失败不改变这个节奏
+        expected = ["fetch"] + ["sleep", "fetch"] * 8
         self.assertEqual(events, expected)
 
     def test_解析结果写入_probe(self):
@@ -1261,7 +1319,7 @@ class ProbeSubscriptionTest(unittest.TestCase):
             self.SUB, interval=8.0, timeout=20.0, fetcher=fetcher,
             sleeper=lambda s: None, clock=lambda: 0.0,
         )
-        self.assertEqual(len(probes), 13)
+        self.assertEqual(len(probes), 9)
         failed = [p for p in probes if p.error]
         self.assertEqual(len(failed), 1)
         self.assertEqual(failed[0].error, "连接超时")
@@ -1327,7 +1385,7 @@ class ProbeSubscriptionTest(unittest.TestCase):
                     self.SUB, interval=8.0, timeout=20.0, fetcher=fetcher,
                     sleeper=lambda s: None, clock=lambda: 0.0, dump_dir=blocked,
                 )
-        self.assertEqual(len(probes), 13)
+        self.assertEqual(len(probes), 9)
         self.assertTrue(all(p.ok for p in probes))
         self.assertIn("保存原始响应失败", stderr.getvalue())
 
@@ -1393,7 +1451,7 @@ class ProbeSubscriptionTest(unittest.TestCase):
             self.SUB, interval=8.0, timeout=20.0, fetcher=fetcher,
             sleeper=lambda s: None, clock=lambda: 0.0,
         )
-        self.assertEqual(len(probes), 13)
+        self.assertEqual(len(probes), 9)
 
     def test_没注入_sleeper_时限速等待走_cancel_event_wait(self):
         """限速等待必须是可打断的 cancel_event.wait，不能是 time.sleep。
@@ -2004,6 +2062,10 @@ class MainTest(unittest.TestCase):
         self.root = Path(tmp.name)
         self.list_file = self.root / "clash.txt"
         self.list_file.write_text(self.LIST, encoding="utf-8")
+        self.subscribe_sh = self.root / "subscribe.sh"
+        self.subscribe_sh.write_text(SUBSCRIBE_SH, encoding="utf-8")
+        # main() 会设定全局基准来源，不复位会污染后面的测试
+        self.addCleanup(ua_diff.set_baseline_source, None)
         self.requests = []
 
     def _fetcher(self, url, ua, timeout):
@@ -2015,7 +2077,7 @@ class MainTest(unittest.TestCase):
         out, err = io.StringIO(), io.StringIO()
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = ua_diff.main(
-                ["-f", str(self.list_file), *argv],
+                ["-f", str(self.list_file), "--subscribe-sh", str(self.subscribe_sh), *argv],
                 fetcher=fetcher or self._fetcher,
                 sleeper=lambda seconds: None,
                 clock=lambda: 0.0,
@@ -2027,7 +2089,8 @@ class MainTest(unittest.TestCase):
     def test_默认测清单里全部有效订阅(self):
         code, out, _ = self.run_main()
         self.assertEqual(code, 0)
-        self.assertEqual(len(self.requests), 26)  # 2 个订阅 × 13 次
+        # ash.b64（shadowsocket）9 次 + nanocloud.json（sing-box，基准与最新 SFA 合并）8 次
+        self.assertEqual(len(self.requests), 17)
         self.assertIn("ash.b64", out)
         self.assertIn("nanocloud.json", out)
         self.assertNotIn("xipcloud", out)  # 注释行不该被测
@@ -2046,17 +2109,17 @@ class MainTest(unittest.TestCase):
         self.assertIn("没有可测的订阅", err)
 
     def test_client_过滤只发该客户端的_UA(self):
-        code, _, _ = self.run_main("--only", "ash.b64", "--client", "loon")
+        code, _, _ = self.run_main("--only", "ash.b64", "--client", "mihomo")
         self.assertEqual(code, 0)
-        # 基准 + loon 两个版本
+        # 基准 + mihomo 两个版本
         self.assertEqual(len(self.requests), 3)
         uas = [ua for _, ua in self.requests]
         self.assertEqual(uas[0], "shadowsocket/*")
-        self.assertTrue(all(u.startswith("Loon/") for u in uas[1:]))
+        self.assertTrue(all(u.startswith("mihomo/") for u in uas[1:]))
 
     def test_client_写错名字直接报错而不是静默退化(self):
         """写错名字会让计划只剩基准一项，然后发一次请求就宣布「已最优」。"""
-        for bad in ("loonn", "Loon", "LOON"):
+        for bad in ("mihomoo", "Mihomo", "MIHOMO"):
             with self.subTest(bad=bad):
                 with self.assertRaises(SystemExit) as ctx:
                     self.run_main("--client", bad)
@@ -2066,7 +2129,7 @@ class MainTest(unittest.TestCase):
     def test_client_报错时列出可选值(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err), self.assertRaises(SystemExit):
-            ua_diff.main(["-f", str(self.list_file), "--client", "loonn"],
+            ua_diff.main(["-f", str(self.list_file), "--client", "mihomoo"],
                          fetcher=self._fetcher, sleeper=lambda s: None, clock=lambda: 0.0)
         for client in ua_diff.UA_TABLE:
             self.assertIn(client, err.getvalue())
@@ -2095,7 +2158,7 @@ class MainTest(unittest.TestCase):
     def test_force_interval_显式放行压测(self):
         code, _, _ = self.run_main("--only", "ash.b64", "--interval", "0.1", "--force-interval")
         self.assertEqual(code, 0)
-        self.assertEqual(len(self.requests), 13)
+        self.assertEqual(len(self.requests), 9)
 
     def test_force_interval_也不放行非正间隔(self):
         with self.assertRaises(SystemExit):
@@ -2106,14 +2169,15 @@ class MainTest(unittest.TestCase):
 
     def test_默认不落盘(self):
         self.run_main("--only", "ash.b64")
-        self.assertEqual([p.name for p in self.root.iterdir()], ["clash.txt"])
+        self.assertEqual(sorted(p.name for p in self.root.iterdir()),
+                         ["clash.txt", "subscribe.sh"])
 
     def test_dump_写盘且目录权限为_700(self):
         dump = self.root / "dump"
         code, _, _ = self.run_main("--only", "ash.b64", "--dump", str(dump))
         self.assertEqual(code, 0)
         files = sorted(p.name for p in dump.iterdir())
-        self.assertEqual(len(files), 13)
+        self.assertEqual(len(files), 9)
         self.assertTrue(all(f.startswith("ash.b64.") and f.endswith(".raw") for f in files))
         self.assertEqual((dump / files[0]).read_bytes(), self.BODY)
         # 落盘内容是完整订阅响应，含全部节点凭据，别人不该读得到
@@ -2149,10 +2213,86 @@ class MainTest(unittest.TestCase):
         self.assertNotIn("token=aaa", out)
         self.assertNotIn("▌", out)  # 不该混进终端报告
 
+    def test_json_里带基准_UA_的来源(self):
+        """机器可读那一路也该看得见 provenance：读自 subscribe.sh 还是内置兜底，
+        决定了整份增量可不可信。"""
+        import json as _json
+        _, out, _ = self.run_main("--only", "nanocloud.json", "--json")
+        source = _json.loads(out)[0]["baseline_source"]
+        self.assertEqual(source["ua"], "SFA/1.13.18 (sing-box 1.13.18)")
+        self.assertEqual(source["note"], "读自 subscribe.sh")
+        self.assertTrue(source["from_file"])
+
+    def test_json_里的来源在兜底时也说清楚(self):
+        import json as _json
+        _, out, _ = self.run_main(
+            "--only", "nanocloud.json", "--json", "--subscribe-sh", str(self.root / "缺失.sh"))
+        source = _json.loads(out)[0]["baseline_source"]
+        self.assertFalse(source["from_file"])
+        self.assertIn("内置兜底", source["note"])
+
     def test_json_加_show_url_时保留完整_URL(self):
         code, out, _ = self.run_main("--only", "ash.b64", "--json", "--show-url")
         self.assertEqual(code, 0)
         self.assertIn("token=aaa", out)
+
+    # ---- 报告排版与基准 UA 来源 ----
+
+    def test_首份报告前也有空行(self):
+        """汇总行（stderr）与第一份报告贴在一起时读起来像同一段，
+        而订阅之间是空开的，节奏不一致。"""
+        code, out, _ = self.run_main("--only", "ash.b64")
+        self.assertEqual(code, 0)
+        self.assertTrue(out.startswith("\n▌ ash.b64"), repr(out[:40]))
+
+    def test_订阅之间仍然空一行(self):
+        code, out, _ = self.run_main()
+        self.assertEqual(code, 0)
+        self.assertIn("\n\n▌ nanocloud.json", out)
+
+    def test_报告标明基准_UA_读自_subscribe_sh(self):
+        code, out, _ = self.run_main("--only", "nanocloud.json")
+        self.assertEqual(code, 0)
+        self.assertIn("基准 UA: SFA/1.13.18 (sing-box 1.13.18)（读自 subscribe.sh）", out)
+
+    def test_基准_UA_跟着_subscribe_sh_改而不是钉在常量上(self):
+        """subscribe.sh 升过版而这边没跟上，报告里的基准 UA 就是假的——
+        而每一个增量都是相对它算的。"""
+        self.subscribe_sh.write_text(
+            SUBSCRIBE_SH.replace("1.13.18", "9.9.9"), encoding="utf-8")
+        code, out, _ = self.run_main("--only", "nanocloud.json")
+        self.assertEqual(code, 0)
+        self.assertIn("基准 UA: SFA/9.9.9 (sing-box 9.9.9)（读自 subscribe.sh）", out)
+        # 真发出去的也得是它
+        self.assertIn("SFA/9.9.9 (sing-box 9.9.9)", [ua for _, ua in self.requests])
+        # 与表里最新项不再相同，于是不合并：9 次而不是 8 次
+        self.assertEqual(len(self.requests), 9)
+
+    def test_subscribe_sh_不存在时报告标明内置兜底(self):
+        code, out, _ = self.run_main(
+            "--only", "nanocloud.json", "--subscribe-sh", str(self.root / "缺失.sh"))
+        self.assertEqual(code, 0)
+        self.assertIn("SFA/1.13.18 (sing-box 1.13.18)", out)
+        self.assertIn("内置兜底", out)
+        self.assertNotIn("读自 subscribe.sh", out)
+
+    def test_非_sing_box_订阅不标来源(self):
+        """shadowsocket/* 是本脚本的内置规则，不来自 subscribe.sh 的那行赋值。"""
+        code, out, _ = self.run_main("--only", "ash.b64")
+        self.assertEqual(code, 0)
+        self.assertIn("基准 UA: shadowsocket/*", out)
+        self.assertNotIn("读自 subscribe.sh", out)
+
+    def test_subscribe_sh_的_else_分支变了时告警但不中断(self):
+        self.subscribe_sh.write_text(
+            SUBSCRIBE_SH.replace('AGENT="$CLIENT/*"', 'AGENT="$CLIENT/1.0"'),
+            encoding="utf-8",
+        )
+        code, out, err = self.run_main("--only", "ash.b64")
+        self.assertEqual(code, 0)                 # 只告警，照跑
+        self.assertIn("$CLIENT/*", err)
+        self.assertIn("▌ ash.b64", out)
+        self.assertNotIn("$CLIENT/*", out)        # 告警走 stderr，别混进报告
 
     def test_默认走终端报告而不是_JSON(self):
         code, out, _ = self.run_main("--only", "ash.b64")
@@ -2180,13 +2320,13 @@ class MainTest(unittest.TestCase):
     def test_退出码_1_存在更优_UA(self):
         def fetcher(url, ua, timeout):
             links = self.LINKS
-            if ua.startswith("Loon/3.5.0"):
+            if ua.startswith("mihomo/v1.19.29"):
                 links += b"vless://uuid@5.6.7.8:443#HK-02\n"
             return ua_diff.Response(200, self.b64(links))
 
         code, out, _ = self.run_main("--only", "ash.b64", fetcher=fetcher)
         self.assertEqual(code, 1)
-        self.assertIn("推荐 loon", out)
+        self.assertIn("推荐 mihomo", out)
 
     def test_返回明文_links_的_UA_节点再多也不推荐(self):
         """集成回归：links 下游会被无条件 b64decode 崩掉，不算收益。
@@ -2195,7 +2335,7 @@ class MainTest(unittest.TestCase):
         退出码 1，用户照做后 clash-to-sing.py 直接 binascii.Error。
         """
         def fetcher(url, ua, timeout):
-            if ua.startswith("Loon/3.5.0"):
+            if ua.startswith("mihomo/v1.19.29"):
                 # 明文链接表，而且节点数是基准的 5 倍
                 return ua_diff.Response(200, b"".join(
                     b"vless://uuid@10.0.0.%d:443#N-%d\n" % (i, i) for i in range(1, 6)))
@@ -2203,13 +2343,13 @@ class MainTest(unittest.TestCase):
 
         code, out, _ = self.run_main("--only", "ash.b64", fetcher=fetcher)
         self.assertEqual(code, 0)
-        self.assertNotIn("推荐 loon", out)
+        self.assertNotIn("推荐 mihomo", out)
         self.assertIn("当前 UA 已最优", out)
         # 但不能装作没看见：那 5 个节点要出现在「待支持」列里
-        loon_line = next(l for l in out.splitlines() if "loon" in l and "3.5.0" in l)
-        self.assertIn("links", loon_line)
-        self.assertRegex(loon_line, r"\s0\s")   # 可用 0
-        self.assertIn("5", loon_line)           # 待支持 5
+        row_line = next(l for l in out.splitlines() if "mihomo" in l and "1.19.29" in l)
+        self.assertIn("links", row_line)
+        self.assertRegex(row_line, r"\s0\s")   # 可用 0
+        self.assertIn("5", row_line)            # 待支持 5
 
     def test_退出码_2_基准探测失败(self):
         def fetcher(url, ua, timeout):
@@ -2222,9 +2362,9 @@ class MainTest(unittest.TestCase):
         self.assertIn("基准 UA 探测失败", out)
 
     def test_个别_UA_拿到_HTML_不影响退出码(self):
-        """12 个陌生 UA 里出现 unknown 是常态，不该把退出码钉死在 2。"""
+        """8 个陌生 UA 里出现 unknown 是常态，不该把退出码钉死在 2。"""
         def fetcher(url, ua, timeout):
-            if ua.startswith("Loon/"):
+            if ua.startswith("Shadowrocket/"):
                 return ua_diff.Response(200, b"<html><body>403 forbidden</body></html>")
             return ua_diff.Response(200, self.BODY)
 
@@ -2313,7 +2453,7 @@ class MainTest(unittest.TestCase):
         self.assertGreaterEqual(len(out.splitlines()), 4)
 
     def test_预估耗时按实际请求数算(self):
-        _, _, err = self.run_main("--only", "ash.b64", "--client", "loon")
+        _, _, err = self.run_main("--only", "ash.b64", "--client", "mihomo")
         self.assertIn("最多每个 3 次请求", err)
 
 
@@ -2894,7 +3034,7 @@ class ProbeProgressCallbackTest(unittest.TestCase):
 
     def _run(self, fetcher, on_progress, clients=None):
         return ua_diff.probe_subscription(
-            self.SUB, interval=8.0, timeout=1.0, clients=clients or ["loon"],
+            self.SUB, interval=8.0, timeout=1.0, clients=clients or ["mihomo"],
             fetcher=fetcher, sleeper=lambda s: None, clock=lambda: 0.0,
             on_progress=on_progress,
         )
@@ -2904,7 +3044,7 @@ class ProbeProgressCallbackTest(unittest.TestCase):
         self._run(lambda u, a, t: ua_diff.Response(200, self.BODY),
                   lambda *args: events.append(args))
         phases = [e[0] for e in events]
-        # 基准 + loon 两个版本 = 3 次请求 × 4 个阶段
+        # 基准 + mihomo 两个版本 = 3 次请求 × 4 个阶段
         self.assertEqual(phases, [
             ua_diff.PHASE_WAIT, ua_diff.PHASE_FETCH, ua_diff.PHASE_PARSE, ua_diff.PHASE_DONE,
         ] * 3)
@@ -2922,7 +3062,7 @@ class ProbeProgressCallbackTest(unittest.TestCase):
         # 用一个会记录顺序的 sleeper 更直接
         timeline.clear()
         ua_diff.probe_subscription(
-            self.SUB, interval=8.0, timeout=1.0, clients=["loon"],
+            self.SUB, interval=8.0, timeout=1.0, clients=["mihomo"],
             fetcher=lambda u, a, t: ua_diff.Response(200, self.BODY),
             sleeper=lambda s: timeline.append(("sleep", s)),
             clock=lambda: 0.0,
@@ -2972,11 +3112,11 @@ class ProbeProgressCallbackTest(unittest.TestCase):
         warnings = []
         with tempfile.TemporaryDirectory() as tmp:
             dump = Path(tmp)
-            (dump / "ash.b64.loon.3.5.0.raw").mkdir()  # 占住文件名 → IsADirectoryError
+            (dump / "ash.b64.mihomo.1.19.29.raw").mkdir()  # 占住文件名 → IsADirectoryError
             stderr = io.StringIO()
             with contextlib.redirect_stderr(stderr):
                 probes = ua_diff.probe_subscription(
-                    self.SUB, interval=8.0, timeout=1.0, clients=["loon"],
+                    self.SUB, interval=8.0, timeout=1.0, clients=["mihomo"],
                     fetcher=lambda u, a, t: ua_diff.Response(200, self.BODY),
                     sleeper=lambda s: None, clock=lambda: 0.0, dump_dir=dump,
                     on_warn=warnings.append,
@@ -2993,7 +3133,7 @@ class MainProgressTest(unittest.TestCase):
     成 StringIO（isatty() 为假），所以走的是非 TTY 分支。
     """
 
-    DONE_LINE = re.compile(r"\[\d+/13\]")
+    DONE_LINE = re.compile(r"\[\d+/\d+\]")
 
     LIST = (
         "ash.b64 https://example.org/sub?token=aaa shadowsocket\n"
@@ -3007,6 +3147,9 @@ class MainProgressTest(unittest.TestCase):
         self.root = Path(tmp.name)
         self.list_file = self.root / "clash.txt"
         self.list_file.write_text(self.LIST, encoding="utf-8")
+        self.subscribe_sh = self.root / "subscribe.sh"
+        self.subscribe_sh.write_text(SUBSCRIBE_SH, encoding="utf-8")
+        self.addCleanup(ua_diff.set_baseline_source, None)
 
     def _fetcher(self, url, ua, timeout):
         return ua_diff.Response(200, self.BODY)
@@ -3015,7 +3158,7 @@ class MainProgressTest(unittest.TestCase):
         out, err = io.StringIO(), io.StringIO()
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = ua_diff.main(
-                ["-f", str(self.list_file), *argv],
+                ["-f", str(self.list_file), "--subscribe-sh", str(self.subscribe_sh), *argv],
                 fetcher=fetcher or self._fetcher,
                 sleeper=lambda seconds: None,
                 clock=lambda: 0.0,
@@ -3025,12 +3168,13 @@ class MainProgressTest(unittest.TestCase):
     def test_每完成一次请求在_stderr_打一行(self):
         code, _, err = self.run_main("--only", "ash.b64")
         self.assertEqual(code, 0)
-        self.assertEqual(len(self.DONE_LINE.findall(err)), 13)
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 9)
 
     def test_多个订阅各自计数(self):
         code, _, err = self.run_main()
         self.assertEqual(code, 0)
-        self.assertEqual(len(self.DONE_LINE.findall(err)), 26)
+        # shadowsocket 9 次 + sing-box 8 次（基准与最新 SFA 合并）
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 17)
         self.assertIn("ash.b64", err)
         self.assertIn("nanocloud.json", err)
 
@@ -3051,7 +3195,9 @@ class MainProgressTest(unittest.TestCase):
         self.assertEqual(code, 0)
         data = _json.loads(out)  # 整份解析，不是逐行找
         self.assertEqual(data[0]["subscription"]["name"], "ash.b64")
-        self.assertEqual(len(self.DONE_LINE.findall(err)), 13)  # 进度照常，只是在 stderr
+        # --json 的 stdout 连开头那个空行都不该有：整份必须是一个 JSON 数组
+        self.assertTrue(out.startswith("["), f"stdout 开头不是 JSON：{out[:20]!r}")
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 9)  # 进度照常，只是在 stderr
 
     def test_no_progress_彻底关掉进度(self):
         _, _, err = self.run_main("--only", "ash.b64", "--no-progress")
@@ -3073,8 +3219,8 @@ class MainProgressTest(unittest.TestCase):
         self.assertNotIn("example.org", err)
 
     def test_进度行里有客户端与版本(self):
-        _, _, err = self.run_main("--only", "ash.b64", "--client", "loon")
-        self.assertIn("loon 3.5.0", err)
+        _, _, err = self.run_main("--only", "ash.b64", "--client", "mihomo")
+        self.assertIn("mihomo 1.19.29", err)
 
     def test_重名订阅各占一行不互相覆盖(self):
         """clash.txt 允许重名，两个 worker 写进同一行会让计数互相覆盖。"""
@@ -3086,14 +3232,14 @@ class MainProgressTest(unittest.TestCase):
         code, _, err = self.run_main()
         self.assertEqual(code, 0)
         self.assertIn("dup#2", err)
-        self.assertEqual(len(self.DONE_LINE.findall(err)), 26)
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 16)  # 2 个 sing-box 订阅 × 8
 
     def test_落盘失败的告警照常出现(self):
         dump = self.root / "dump"
         dump.mkdir()
-        (dump / "ash.b64.loon.3.5.0.raw").mkdir()  # 占住文件名 → 写盘必失败
+        (dump / "ash.b64.mihomo.1.19.29.raw").mkdir()  # 占住文件名 → 写盘必失败
         code, out, err = self.run_main(
-            "--only", "ash.b64", "--client", "loon", "--dump", str(dump))
+            "--only", "ash.b64", "--client", "mihomo", "--dump", str(dump))
         self.assertEqual(code, 0)
         self.assertIn("保存原始响应失败", err)
         self.assertIn("▌ ash.b64", out)  # 告警不中断探测
@@ -3136,7 +3282,7 @@ class MainProgressTtyTest(MainProgressTest):
         out, err = io.StringIO(), _FakeTty()
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = ua_diff.main(
-                ["-f", str(self.list_file), *argv],
+                ["-f", str(self.list_file), "--subscribe-sh", str(self.subscribe_sh), *argv],
                 fetcher=fetcher or self._fetcher,
                 sleeper=lambda seconds: None,
                 clock=lambda: 0.0,
@@ -3155,8 +3301,8 @@ class MainProgressTtyTest(MainProgressTest):
 
     def test_进度行里有客户端与版本(self):
         # TTY 是原地重画：屏幕上只留最后一次画的内容，逐次完成行看非 TTY 那组
-        _, _, err = self.run_main("--only", "ash.b64", "--client", "loon")
-        self.assertRegex(err, r"loon \d+\.\d+\.\d+")
+        _, _, err = self.run_main("--only", "ash.b64", "--client", "mihomo")
+        self.assertRegex(err, r"mihomo \d+\.\d+\.\d+")
 
     def test_进度只走_stderr_不碰_stdout(self):
         _, out, _ = self.run_main("--only", "ash.b64")
@@ -3197,9 +3343,9 @@ class MainProgressTtyTest(MainProgressTest):
         告警、不中断」。`start()` 已经同步铺好了进度块，所以告警必然落在会被盖掉的时刻。"""
         dump = self.root / "dump"
         dump.mkdir()
-        (dump / "ash.b64.loon.3.5.0.raw").mkdir()  # 占住文件名 → 写盘必失败
+        (dump / "ash.b64.mihomo.1.19.29.raw").mkdir()  # 占住文件名 → 写盘必失败
         code, out, err = self.run_main(
-            "--only", "ash.b64", "--client", "loon", "--dump", str(dump))
+            "--only", "ash.b64", "--client", "mihomo", "--dump", str(dump))
         self.assertEqual(code, 0)
         screen = replay_ansi(err)
         self.assertTrue(any("保存原始响应失败" in l for l in screen),
@@ -3246,6 +3392,630 @@ class MainProgressTtyTest(MainProgressTest):
         self.assertEqual(alive, [])
         # 「已中断」必须在进度块被收掉之后才打，否则会插进正在重画的那几行里
         self.assertLess(err.index("\x1b[J"), err.index("已中断"))
+
+
+# ---------------------------------------------------------------- 基准 UA 来源
+
+
+class BaselineSourceTest(unittest.TestCase):
+    """基准 UA 从 subscribe.sh 解析：解析成功、各种取不到、格式漂移告警。
+
+    这条路上任何异常都会炸掉整轮探测，所以「绝不抛异常」是硬要求，逐个情形钉死。
+    """
+
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.root = Path(tmp.name)
+        self.addCleanup(ua_diff.set_baseline_source, None)
+
+    def _write(self, body):
+        path = self.root / "subscribe.sh"
+        path.write_text(body, encoding="utf-8")
+        return path
+
+    def _set_workspace(self, value):
+        previous = os.environ.get("WORKSPACE")
+
+        def restore():
+            if previous is None:
+                os.environ.pop("WORKSPACE", None)
+            else:
+                os.environ["WORKSPACE"] = previous
+
+        self.addCleanup(restore)
+        if value is None:
+            os.environ.pop("WORKSPACE", None)
+        else:
+            os.environ["WORKSPACE"] = value
+
+    # ---- 解析成功 ----
+
+    def test_解析出_sing_box_那一串(self):
+        # 用 9.9.9 而不是仓库当前值：解析失败退回兜底时这条必炸
+        source = ua_diff.resolve_baseline_source(
+            self._write(SUBSCRIBE_SH.replace("1.13.18", "9.9.9")))
+        self.assertEqual(source.ua, "SFA/9.9.9 (sing-box 9.9.9)")
+        self.assertTrue(source.from_file)
+        self.assertEqual(source.note, "读自 subscribe.sh")
+        self.assertEqual(source.warnings, ())
+
+    def test_跳过_CLIENT_模板那一条(self):
+        """两条 AGENT= 赋值，取的必须是不含 $CLIENT 的那条。"""
+        source = ua_diff.resolve_baseline_source(self._write(
+            "if [[ $CLIENT == 'sing-box' ]]; then\n"
+            '    AGENT="$CLIENT/*"\n'   # 故意把模板排在前面
+            "else\n"
+            '    AGENT="SFA/7.7.7 (sing-box 7.7.7)"\n'
+            "fi\n"
+        ))
+        self.assertEqual(source.ua, "SFA/7.7.7 (sing-box 7.7.7)")
+
+    # ---- 取不到：一律兜底 ----
+
+    def test_文件不存在时退回兜底(self):
+        source = ua_diff.resolve_baseline_source(self.root / "没有这个文件.sh")
+        # 手写字面量，不引用被测常量
+        self.assertEqual(source.ua, "SFA/1.13.18 (sing-box 1.13.18)")
+        self.assertFalse(source.from_file)
+        self.assertIn("内置兜底", source.note)
+        self.assertIn("读不了", source.note)
+
+    def test_没有读权限时退回兜底(self):
+        path = self._write(SUBSCRIBE_SH)
+        path.chmod(0o000)
+        self.addCleanup(path.chmod, 0o600)
+        if os.access(path, os.R_OK):
+            self.skipTest("以 root 运行，chmod 000 也读得了")
+        source = ua_diff.resolve_baseline_source(path)
+        self.assertEqual(source.ua, "SFA/1.13.18 (sing-box 1.13.18)")
+        self.assertFalse(source.from_file)
+        self.assertIn("内置兜底", source.note)
+
+    def test_格式变了取不到时退回兜底(self):
+        source = ua_diff.resolve_baseline_source(self._write(
+            "AGENT=$SOME_VARIABLE\n"          # 没有引号，不是本脚本认得的形状
+            "USER_AGENT='SFA/1.0'\n"
+        ))
+        self.assertEqual(source.ua, "SFA/1.13.18 (sing-box 1.13.18)")
+        self.assertFalse(source.from_file)
+        self.assertIn("没找到", source.note)
+
+    def test_只剩_CLIENT_模板时也算取不到(self):
+        source = ua_diff.resolve_baseline_source(self._write('AGENT="$CLIENT/*"\n'))
+        self.assertFalse(source.from_file)
+        self.assertIn("内置兜底", source.note)
+
+    def test_WORKSPACE_没设置时定位不到(self):
+        self._set_workspace(None)
+        self.assertIsNone(ua_diff.default_subscribe_sh())
+        source = ua_diff.resolve_baseline_source(ua_diff.default_subscribe_sh())
+        self.assertFalse(source.from_file)
+        self.assertIn("WORKSPACE", source.note)
+
+    def test_默认路径挂在_WORKSPACE_下(self):
+        self._set_workspace("/tmp/假的工作区")
+        self.assertEqual(
+            ua_diff.default_subscribe_sh(),
+            Path("/tmp/假的工作区/proxy/sing-rules/subscribe.sh"),
+        )
+
+    def test_前置的空_AGENT_赋值不会顶掉真串(self):
+        """`AGENT=""` 这类初始化既不含 $CLIENT 又排在前面，会被 next() 选中，
+        于是整份解析静默退回兜底。"""
+        source = ua_diff.resolve_baseline_source(self._write(
+            'AGENT=""\n' + SUBSCRIBE_SH.replace("1.13.18", "9.9.9")))
+        self.assertEqual(source.ua, "SFA/9.9.9 (sing-box 9.9.9)")
+        self.assertTrue(source.from_file)
+
+    def test_取到的串不像_sing_box_UA_时出声(self):
+        """脚本里多出一处写死的 UA 时「取第一个」会静默取错串，而报告仍然标
+        「读自 subscribe.sh」——假基准冒充真基准。"""
+        source = ua_diff.resolve_baseline_source(self._write(
+            'AGENT="mihomo/v1.19.29"\n' + SUBSCRIBE_SH))
+        self.assertEqual(source.ua, "mihomo/v1.19.29")
+        self.assertIn("形状可疑", source.note)
+        self.assertTrue(any("形状可疑" in w for w in source.warnings), source.warnings)
+
+    def test_形状正常时不喊可疑(self):
+        for ua in ("SFA/1.13.18 (sing-box 1.13.18)", "SFI/1.12.25 (sing-box 1.12.25)",
+                   "SFM/1.13.18 (sing-box 1.13.18)", "sing-box 1.13.18"):
+            with self.subTest(ua=ua):
+                source = ua_diff.resolve_baseline_source(self._write(
+                    f'if [[ $CLIENT == \'sing-box\' ]]; then\n'
+                    f'    AGENT="{ua}"\n'
+                    f'else\n    AGENT="$CLIENT/*"\n fi\n'))
+                self.assertEqual(source.note, "读自 subscribe.sh")
+                self.assertEqual(source.warnings, ())
+
+    def test_两种漂移同时发生时两条告警都在(self):
+        source = ua_diff.resolve_baseline_source(self._write(
+            'AGENT="mihomo/v1.19.29"\n'
+            + SUBSCRIBE_SH.replace('AGENT="$CLIENT/*"', 'AGENT="$CLIENT/1.0"')))
+        self.assertEqual(len(source.warnings), 2)
+
+    def test_读文件抛出非_OSError_也不炸(self):
+        """兜底得真的兜得住：只接 OSError 的话，别的异常会一路炸穿整轮探测。"""
+        class 会爆炸的路径:
+            def read_text(self, *args, **kwargs):
+                raise RuntimeError("boom")
+
+        source = ua_diff.resolve_baseline_source(会爆炸的路径())
+        self.assertEqual(source.ua, "SFA/1.13.18 (sing-box 1.13.18)")
+        self.assertIn("解析 subscribe.sh 失败", source.note)
+        self.assertFalse(source.from_file)
+
+    def test_任何情形都不抛异常(self):
+        binary = self.root / "binary.sh"
+        binary.write_bytes(b"\xff\xfe\x00AGENT=\x00")
+        empty = self.root / "empty.sh"
+        empty.write_text("", encoding="utf-8")
+        for path in (None, self.root, binary, empty, self.root / "缺失.sh"):
+            with self.subTest(path=path):
+                source = ua_diff.resolve_baseline_source(path)  # 不抛就是通过
+                self.assertEqual(source.ua, "SFA/1.13.18 (sing-box 1.13.18)")
+
+    # ---- else 分支漂移 ----
+
+    def test_else_分支不再是_CLIENT_模板时告警(self):
+        """baseline_ua 的另一半（<client>/*）也是 subscribe.sh 的规则拷贝，
+        那边改了这边不改，基准照样会漂，只是漂在另一半上。"""
+        source = ua_diff.resolve_baseline_source(self._write(
+            SUBSCRIBE_SH.replace('AGENT="$CLIENT/*"', 'AGENT="$CLIENT/1.0"')))
+        self.assertEqual(source.ua, "SFA/1.13.18 (sing-box 1.13.18)")
+        self.assertTrue(source.from_file)          # 仍然解析出来，不中断
+        self.assertEqual(len(source.warnings), 1)
+        self.assertIn("$CLIENT/*", source.warnings[0])
+
+    def test_else_分支正常时不告警(self):
+        source = ua_diff.resolve_baseline_source(self._write(SUBSCRIBE_SH))
+        self.assertEqual(source.warnings, ())
+
+    # ---- 与 baseline_ua 的联动 ----
+
+    def test_baseline_ua_用的是设定进去的来源(self):
+        ua_diff.set_baseline_source(
+            ua_diff.BaselineSource("SFA/5.5.5 (sing-box 5.5.5)", "读自 subscribe.sh", True))
+        self.assertEqual(ua_diff.baseline_ua("sing-box"), "SFA/5.5.5 (sing-box 5.5.5)")
+        self.assertEqual(ua_diff.baseline_ua("clash"), "clash/*")
+
+    def test_没设定时不做文件_IO(self):
+        """库层调用（含单测）不该因为环境里有没有 $WORKSPACE 而给出不同的基准。"""
+        self._set_workspace(str(self.root))
+        self._write(SUBSCRIBE_SH.replace("1.13.18", "9.9.9"))
+        ua_diff.set_baseline_source(None)
+        self.assertEqual(ua_diff.baseline_ua("sing-box"), "SFA/1.13.18 (sing-box 1.13.18)")
+
+
+# ---------------------------------------------------------------- conf 支持仍在
+
+
+class ConfSupportRetainedTest(unittest.TestCase):
+    """loon / quantumult-x 从 UA 表里删了，但 conf 与 base64-conf 的支持必须留着。
+
+    `detect_format` 与 UA 无关，别的客户端也可能返回这些格式；而
+    `USABLE_TYPES_BY_FORMAT` 里对它们的分级仍然是正确知识——把不支持的协议判成
+    「可用」会让 update.sh 直接崩（clash-to-sing.py 的 `case _` 是 raise）。
+    """
+
+    def test_conf_嗅探仍然认得(self):
+        self.assertEqual(ua_diff.detect_format(LOON_BARE.encode()), "conf")
+
+    def test_base64_conf_嗅探仍然认得(self):
+        self.assertEqual(ua_diff.detect_format(QX_BARE_B64), "base64-conf")
+
+    def test_conf_解析器仍然出得了节点(self):
+        nodes = ua_diff.parse_nodes(LOON_BARE.encode(), "conf")
+        self.assertEqual(len(nodes), 4)
+        self.assertEqual(nodes[-1].type, "trojan")
+
+    def test_base64_conf_解析器仍然出得了节点(self):
+        nodes = ua_diff.parse_nodes(QX_BARE_B64, "base64-conf")
+        self.assertEqual(len(nodes), 3)
+        self.assertEqual(nodes[0].type, "vless")
+
+    def test_conf_与_base64_conf_仍然一个可用节点都没有(self):
+        for fmt in ("conf", "base64-conf"):
+            for proto in ("vless", "trojan", "ss", "vmess", "hysteria2"):
+                with self.subTest(fmt=fmt, proto=proto):
+                    self.assertEqual(ua_diff.tier_of(proto, fmt), "pending")
+            self.assertNotIn(fmt, ua_diff.USABLE_TYPES_BY_FORMAT)
+            self.assertNotIn(fmt, ua_diff.DOWNSTREAM_LOADERS)
+
+    def test_内核不支持的类型在_conf_下仍是不可用(self):
+        self.assertEqual(ua_diff.tier_of("ssr", "conf"), "unusable")
+
+
+# ---------------------------------------------------------------- 凭据打码
+
+
+class MaskCredentialsTest(unittest.TestCase):
+    """待支持样例是原始形态，凭据必须打码——报告会被贴进 issue、聊天、日志文件。"""
+
+    def test_dict_按键名打码但保留结构(self):
+        text = ua_diff.mask_credentials({
+            "name": "🇭🇰HK-01", "type": "vless", "server": "1.2.3.4", "port": 443,
+            "uuid": "75caee81-fcef-4a2b-9c31-1d3e6f8a0b21",
+        })
+        self.assertNotIn("75caee81", text)
+        self.assertIn('"uuid": "***"', text)
+        # 非凭据字段必须留着，否则样例对补分支毫无帮助
+        self.assertIn('"server": "1.2.3.4"', text)
+        self.assertIn('"type": "vless"', text)
+
+    def test_password_键打码(self):
+        text = ua_diff.mask_credentials({"type": "trojan", "password": "hunter2"})
+        self.assertNotIn("hunter2", text)
+
+    def test_id_键打码(self):
+        text = ua_diff.mask_credentials({"type": "vmess", "id": "deadbeef-0000"})
+        self.assertNotIn("deadbeef", text)
+
+    def test_合成键名按后缀打码(self):
+        text = ua_diff.mask_credentials(
+            {"obfs-password": "op", "private-key": "pk", "auth_str": "as"})
+        for secret in ("op", "pk", "as"):
+            self.assertNotIn(f'"{secret}"', text)
+
+    def test_嵌套字典也打码(self):
+        text = ua_diff.mask_credentials(
+            {"type": "vless", "reality-opts": {"private-key": "PRIVKEY", "public-key": "PUBKEY"}})
+        self.assertNotIn("PRIVKEY", text)
+        self.assertIn("reality-opts", text)
+        # 公钥不是凭据，本来就随分享链接公开——打了纯属帮倒忙
+        self.assertIn("PUBKEY", text)
+
+    def test_列表里的字典也递归打码(self):
+        """clash 的 `wireguard.peers: [{public-key, pre-shared-key}]`、
+        sing-box 的 `users: [{uuid}]` 都是列表套字典，不递归就整段漏出去。"""
+        text = ua_diff.mask_credentials({
+            "type": "wireguard",
+            "peers": [{"public-key": "PUBKEY", "pre-shared-key": "PSKSECRET"}],
+            "users": [{"name": "u1", "uuid": "UUIDSECRET"}],
+        })
+        self.assertNotIn("PSKSECRET", text)
+        self.assertNotIn("UUIDSECRET", text)
+        self.assertIn("PUBKEY", text)
+        self.assertIn("u1", text)
+
+    def test_Surge_的_username_就是_UUID_必须打掉(self):
+        """Surge / Loon 的 vmess 节点行把 UUID 写在 username= 上，而 conf 格式下
+        vmess 恒为 pending——必进样例。集合里只有 userid 没有 username 就整串漏出去。"""
+        text = ua_diff.mask_credentials(
+            "HK = vmess, v.example.com, 443, username=11111111-2222-3333-4444-555555555555, "
+            "transport=ws, path=/ray, tls=true")
+        self.assertNotIn("11111111-2222", text)
+        self.assertIn("username=***", text)
+        self.assertIn("path=/ray", text)          # 传输层参数一个都不许打
+        self.assertIn("transport=ws", text)
+        self.assertIn("v.example.com", text)
+
+    def test_passphrase_也算凭据(self):
+        text = ua_diff.mask_credentials(
+            {"passphrase": "PHRASE", "private-key-passphrase": "PHRASE2"})
+        self.assertNotIn("PHRASE", text)
+
+    def test_URL_的_userinfo_打码(self):
+        text = ua_diff.mask_credentials(
+            "vless://75caee81-fcef-4a2b-9c31-1d3e6f8a0b21@1.2.3.4:443?sni=a.example#🇭🇰HK-01")
+        self.assertNotIn("75caee81", text)
+        self.assertIn("@1.2.3.4:443", text)
+        self.assertIn("sni=a.example", text)
+        self.assertIn("🇭🇰HK-01", text)
+
+    def test_查询串里的具名凭据打码(self):
+        text = ua_diff.mask_credentials("trojan://h.example:443?password=hunter2&sni=a.example")
+        self.assertNotIn("hunter2", text)
+        self.assertIn("sni=a.example", text)
+
+    def test_vmess_载荷解开后按键名打码(self):
+        payload = base64.b64encode(
+            b'{"ps":"HK-01","add":"1.2.3.4","port":"443","id":"deadbeef-1111","net":"ws"}')
+        text = ua_diff.mask_credentials("vmess://" + payload.decode())
+        self.assertNotIn("deadbeef", text)
+        self.assertNotIn(payload.decode(), text)   # 原样的 base64 也不能留
+        self.assertIn('"add": "1.2.3.4"', text)
+
+    def test_conf_行定位置的裸引号密码打掉(self):
+        text = ua_diff.mask_credentials(
+            '🇭🇰HK-01 = vless,1.2.3.4,10009,"75caee81-fcef-4a2b",transport:tcp')
+        self.assertNotIn("75caee81", text)
+        self.assertIn("1.2.3.4", text)
+        self.assertIn("transport:tcp", text)
+
+    def test_有键名的引号字段一律保留(self):
+        """无差别打掉所有引号段会把 SNI / tls-host / path / 节点名一起打没，
+        这一节也就废了——而 conf 正是 ash 实际返回的格式，这条路径是活的。"""
+        text = ua_diff.mask_credentials(
+            'JP-02 = trojan,5.6.7.8,443,"secretpw",tls-name="a.example",'
+            'tls-host="b.example",path="/ray",tag="🇯🇵日本-02"')
+        self.assertNotIn("secretpw", text)        # 定位置的密码照打
+        self.assertIn('tls-name="a.example"', text)
+        self.assertIn('tls-host="b.example"', text)
+        self.assertIn('path="/ray"', text)
+        self.assertIn('tag="🇯🇵日本-02"', text)
+
+    def test_QX_行的传输层参数与_tag_保留(self):
+        text = ua_diff.mask_credentials(
+            "vmess=1.2.3.4:443, method=chacha20, password=hunter2, "
+            'obfs-host="cdn.example.org", obfs-uri="/ws", tag="🇭🇰香港-A"')
+        self.assertNotIn("hunter2", text)
+        self.assertIn('obfs-host="cdn.example.org"', text)
+        self.assertIn('obfs-uri="/ws"', text)
+        self.assertIn('tag="🇭🇰香港-A"', text)
+
+    def test_URL_与_dict_两条路径口径一致(self):
+        """reality 的公钥/short-id 随分享链接公开，两边都不该打。"""
+        url = ua_diff.mask_credentials(
+            "vless://uuid@1.2.3.4:443?pbk=PUBKEY&sid=SHORTID&sni=a.example#HK")
+        mapping = ua_diff.mask_credentials(
+            {"type": "vless", "public-key": "PUBKEY", "short-id": "SHORTID"})
+        for text in (url, mapping):
+            with self.subTest(text=text):
+                self.assertIn("PUBKEY", text)
+                self.assertIn("SHORTID", text)
+
+    def test_QX_conf_的具名凭据打码(self):
+        text = ua_diff.mask_credentials(
+            "vless=1.2.3.4:10009,method=none,password=75caee81-fcef,obfs=over-tls,tag=HK-01")
+        self.assertNotIn("75caee81", text)
+        self.assertIn("obfs=over-tls", text)
+        self.assertIn("tag=HK-01", text)
+
+    def test_节点名含_id_或_pass_不会把整行打掉(self):
+        """键名用全等/后缀判定而不是子串：Madrid 含 id、Passau 含 pass。"""
+        text = ua_diff.mask_credentials('Madrid = vless,1.2.3.4,443,"pw"')
+        self.assertIn("vless,1.2.3.4,443", text)
+        self.assertNotIn('"pw"', text)
+
+    def test_键名判定的正反例(self):
+        for key in ("uuid", "id", "userid", "username", "pass", "password", "passwd",
+                    "passphrase", "psk", "pre-shared-key", "token", "secret", "key",
+                    "private-key", "wireguard-private-key", "auth", "auth_str",
+                    "auth-string", "auth-payload", "api-key", "credential",
+                    "obfs-password", "client-secret", "ss-uuid"):
+            with self.subTest(key=key):
+                self.assertTrue(ua_diff.is_credential_key(key))
+        # 这些是写转换分支必须看见的东西，或者本来就公开，一个都不许打
+        for key in ("name", "type", "server", "port", "sni", "servername", "tls-name",
+                    "host", "tls-host", "path", "network", "transport", "obfs", "tag",
+                    "alterId", "public-key", "pbk", "short-id", "sid", "host-key",
+                    "Madrid", "Passau", "Users-HK"):
+            with self.subTest(key=key):
+                self.assertFalse(ua_diff.is_credential_key(key))
+
+
+# ---------------------------------------------------------------- 原始形态与样例
+
+
+class NodeRawTest(unittest.TestCase):
+    """Node.raw 必须 compare=False：它不参与身份认定，而身份认定就是本工具的结论。"""
+
+    def test_raw_不参与相等与哈希(self):
+        a = ua_diff.Node("HK", "vless", "1.2.3.4", 443, raw={"uuid": "x"})
+        b = ua_diff.Node("HK", "vless", "1.2.3.4", 443, raw="vless://x@1.2.3.4:443#HK")
+        self.assertEqual(a, b)
+        self.assertEqual(len({a, b}), 1)      # dict raw 参与哈希的话这里直接 TypeError
+
+    def test_解析器都带上了原始形态(self):
+        self.assertEqual(
+            ua_diff.parse_nodes(b'{"outbounds":[{"type":"vless","tag":"a",'
+                                b'"server":"1.2.3.4","server_port":443}]}', "sing-box")[0].raw,
+            {"type": "vless", "tag": "a", "server": "1.2.3.4", "server_port": 443},
+        )
+        links = ua_diff.parse_nodes(b"vless://uuid@1.2.3.4:443#HK\n", "links")
+        self.assertEqual(links[0].raw, "vless://uuid@1.2.3.4:443#HK")
+        conf = ua_diff.parse_nodes(LOON_BARE.encode(), "conf")
+        self.assertTrue(all("=" in n.raw for n in conf))
+        qx = ua_diff.parse_nodes(QX_BARE_B64, "base64-conf")
+        self.assertTrue(all(n.raw.startswith(("vless=", "trojan=")) for n in qx))
+
+    def test_clash_解析出的节点带得动样例(self):
+        """clash 是最主流的格式。`raw=proxy` 断了不会报错，只会让报告静默降级成
+        「（无原始形态）节点名」——所以要走到样例那一步才算钉住。"""
+        body = json.dumps({"proxies": [
+            {"name": "HK-01", "type": "vless", "server": "1.2.3.4", "port": 443,
+             "uuid": "75caee81-fcef-4a2b", "servername": "a.example"},
+        ]}).encode()
+        nodes = ua_diff.parse_nodes(body, "clash", yq_runner=lambda b: b.decode())
+        samples = ua_diff.collect_pending_samples(nodes, "clash")   # clash 下 vless 是待支持
+        text = ua_diff.mask_credentials(samples["vless"].raw)
+        self.assertIn('"type"', text)
+        self.assertIn("1.2.3.4", text)
+        self.assertIn("a.example", text)
+        self.assertNotIn("75caee81", text)
+
+    def test_vmess_链接解析出的节点带得动样例(self):
+        payload = base64.b64encode(
+            b'{"ps":"JP-01","add":"2.2.2.2","port":"443","id":"deadbeef-9999","net":"ws"}')
+        # base64 格式下 shadowrocket loader 只收 vless/trojan/anytls，vmess 是待支持
+        nodes = ua_diff.parse_nodes(base64.b64encode(b"vmess://" + payload), "base64")
+        samples = ua_diff.collect_pending_samples(nodes, "base64")
+        text = ua_diff.mask_credentials(samples["vmess"].raw)
+        self.assertIn("2.2.2.2", text)
+        self.assertIn('"net"', text)
+        self.assertNotIn("deadbeef", text)
+
+    def test_raw_不同不改变去重与分组(self):
+        """同一批节点、两种原始形态：仍是同一份列表，没有幻影增删。"""
+        def nodes(raw_style):
+            return [
+                ua_diff.Node(f"N-{i}", "vless", f"10.0.0.{i}", 443,
+                             raw=({"name": f"N-{i}"} if raw_style else f"vless://x@10.0.0.{i}:443"))
+                for i in range(3)
+            ]
+
+        report = ua_diff.summarize(
+            ua_diff.Subscription("x", "https://example.org/sub", "shadowsocket"),
+            [
+                _probe("(基准)", "—", nodes(False), is_baseline=True, fmt="base64"),
+                _probe("mihomo", "1.19.29", nodes(True), fmt="base64"),
+            ],
+        )
+        self.assertEqual(len(report.groups), 1)
+        other = next(r for r in report.rows if not r.probe.is_baseline)
+        self.assertEqual(other.added, set())
+        self.assertEqual(other.removed, set())
+
+
+class PendingSampleTest(unittest.TestCase):
+    """待支持样例：按「格式 × 协议」各取一个，标明来源 UA，凭据打码。"""
+
+    SUB = ua_diff.Subscription("ash.b64", "https://example.org/sub", "shadowsocket")
+
+    CLASH_NODES = [
+        ua_diff.Node("HK-01", "vless", "1.2.3.4", 443,
+                     raw={"name": "HK-01", "type": "vless", "server": "1.2.3.4",
+                          "port": 443, "uuid": "75caee81-fcef-4a2b"}),
+        ua_diff.Node("HK-02", "vless", "1.2.3.5", 443,
+                     raw={"name": "HK-02", "type": "vless", "server": "1.2.3.5",
+                          "port": 443, "uuid": "aaaaaaaa-bbbb"}),
+        ua_diff.Node("TU-01", "tuic", "1.2.3.6", 443,
+                     raw={"name": "TU-01", "type": "tuic", "server": "1.2.3.6",
+                          "port": 443, "password": "hunter2"}),
+    ]
+    LINK_NODES = [
+        ua_diff.Node("JP-01", "vless", "2.2.2.2", 443,
+                     raw="vless://deadbeef-2222@2.2.2.2:443#JP-01"),
+    ]
+    # base64 格式下 vless 是可用的（走 shadowrocket loader），一个待支持都没有
+    USABLE_NODES = [ua_diff.Node("OK-01", "vless", "3.3.3.3", 443, raw="vless://x@3.3.3.3:443")]
+
+    def _report(self, rows):
+        return ua_diff.summarize(self.SUB, rows)
+
+    def _mixed(self):
+        return self._report([
+            _probe("(基准)", "—", self.USABLE_NODES, is_baseline=True, fmt="base64"),
+            _probe("clash-verge", "2.5.2", self.CLASH_NODES, fmt="clash"),
+            _probe("mihomo", "1.19.29", self.LINK_NODES, fmt="links"),
+        ])
+
+    def test_有待支持节点时才出现这一节(self):
+        text = ua_diff.render_report(self._mixed())
+        self.assertIn("待支持样例", text)
+
+    def test_没有待支持节点时不出现(self):
+        text = ua_diff.render_report(self._report([
+            _probe("(基准)", "—", self.USABLE_NODES, is_baseline=True, fmt="base64"),
+            _probe("mihomo", "1.19.29", self.USABLE_NODES, fmt="base64"),
+        ]))
+        self.assertNotIn("待支持样例", text)
+
+    def test_同格式同协议只出一个样例(self):
+        text = ua_diff.render_report(self._mixed())
+        self.assertEqual(text.count("clash / vless"), 1)
+        self.assertNotIn("HK-02", text)
+
+    def test_同协议跨两种格式出两个样例(self):
+        """补分支时改的是具体某个 *_proxy_to_outbound 函数，两个格式要补两处。"""
+        text = ua_diff.render_report(self._mixed())
+        self.assertIn("clash / vless", text)
+        self.assertIn("links / vless", text)
+
+    def test_同格式的不同协议各出一个(self):
+        text = ua_diff.render_report(self._mixed())
+        self.assertIn("clash / tuic", text)
+
+    def test_样例标明来自哪个_UA(self):
+        text = ua_diff.render_report(self._mixed())
+        line = next(l for l in text.splitlines() if "clash / vless" in l)
+        self.assertIn("来自 clash-verge 2.5.2", line)
+        line = next(l for l in text.splitlines() if "links / vless" in l)
+        self.assertIn("来自 mihomo 1.19.29", line)
+
+    def test_样例里没有明文凭据(self):
+        text = ua_diff.render_report(self._mixed(), wide=True)
+        for secret in ("75caee81", "aaaaaaaa", "hunter2", "deadbeef"):
+            self.assertNotIn(secret, text)
+        self.assertIn("***", text)
+
+    def test_样例保留了字段结构(self):
+        """光有指纹写不出转换函数，得看得见有哪些键。"""
+        text = ua_diff.render_report(self._mixed(), wide=True)
+        self.assertIn('"server": "1.2.3.4"', text)
+
+    def test_默认按宽度截断_wide_给全(self):
+        long_raw = {"name": "L", "type": "vless", "server": "1.2.3.4", "port": 443,
+                    "备注": "很长的说明" * 40}
+        rows = [
+            _probe("(基准)", "—", self.USABLE_NODES, is_baseline=True, fmt="base64"),
+            _probe("clash-verge", "2.5.2",
+                   [ua_diff.Node("L", "vless", "1.2.3.4", 443, raw=long_raw)], fmt="clash"),
+        ]
+        narrow = ua_diff.render_report(self._report(rows))
+        wide = ua_diff.render_report(self._report(rows), wide=True)
+        sample = next(l for l in narrow.splitlines() if l.strip().startswith("{"))
+        self.assertLessEqual(ua_diff.display_width(sample.strip()), ua_diff.SAMPLE_LIMIT)
+        self.assertTrue(sample.strip().endswith("…"))
+        # 量的必须是**样例本身**：整行带 8 个缩进空格，截断后照样「超宽」，
+        # 拿整行做断言的话「--wide 也截断」这个变异杀不掉。
+        wide_sample = next(l for l in wide.splitlines() if l.strip().startswith("{"))
+        self.assertFalse(wide_sample.strip().endswith("…"))
+        self.assertIn("很长的说明" * 40, wide_sample)
+        self.assertGreater(ua_diff.display_width(wide_sample.strip()), ua_diff.SAMPLE_LIMIT)
+
+    def test_失败的探测不贡献样例(self):
+        text = ua_diff.render_report(self._report([
+            _probe("(基准)", "—", self.USABLE_NODES, is_baseline=True, fmt="base64"),
+            _probe("clash-verge", "2.5.2", self.CLASH_NODES, fmt="unknown",
+                   status=200, body_len=10, preview="<html>"),
+        ]))
+        self.assertNotIn("待支持样例", text)
+
+    def test_伪节点不当样例(self):
+        text = ua_diff.render_report(self._report([
+            _probe("(基准)", "—", self.USABLE_NODES, is_baseline=True, fmt="base64"),
+            _probe("clash-verge", "2.5.2", [
+                ua_diff.Node("剩余流量：88.03 GB", "vless", "9.9.9.9", 443,
+                             raw={"name": "剩余流量：88.03 GB"}),
+                ua_diff.Node("HK-01", "vless", "1.2.3.4", 443,
+                             raw={"name": "HK-01", "server": "1.2.3.4"}),
+            ], fmt="clash"),
+        ]))
+        self.assertIn("HK-01", text.split("待支持样例", 1)[1])
+        self.assertNotIn("88.03", text.split("待支持样例", 1)[1])
+
+    def test_样例取自可用数最高的那一行(self):
+        """docstring 明写这条承诺，实现却全靠 setdefault 三个字母——改成直接赋值
+        会悄悄变成「取最后一行」。"""
+        def clash_row(marker, ss_count):
+            nodes = [ua_diff.Node(f"S-{i}", "ss", f"7.7.7.{i}", 8388, raw={"name": f"S-{i}"})
+                     for i in range(ss_count)]
+            nodes.append(ua_diff.Node("V-1", "vless", "8.8.8.8", 443,
+                                      raw={"来源": marker, "type": "vless"}))
+            return nodes
+
+        report = self._report([
+            _probe("(基准)", "—", self.USABLE_NODES, is_baseline=True, fmt="base64"),
+            _probe("mihomo", "1.19.29", clash_row("拿得少", 1), fmt="clash"),
+            _probe("clash-verge", "2.5.2", clash_row("拿得多", 4), fmt="clash"),
+        ])
+        text = ua_diff.render_report(report, wide=True)
+        block = text.split("待支持样例", 1)[1]
+        self.assertIn("拿得多", block)
+        self.assertNotIn("拿得少", block)
+        self.assertIn("来自 clash-verge 2.5.2", block)
+
+    def test_低信息量的键挪到末尾(self):
+        """截断从末尾切，name/server/port 在表里已经看得到，真正要看的
+        reality-opts / ws-opts 不能被它们挤到刀口上。"""
+        text = ua_diff.mask_credentials(
+            {"name": "HK", "type": "vless", "server": "1.2.3.4", "port": 443,
+             "reality-opts": {"public-key": "PUBKEY"}})
+        self.assertLess(text.index("reality-opts"), text.index('"server"'))
+        self.assertLess(text.index("reality-opts"), text.index('"name"'))
+
+    def test_json_里带样例且同样打码(self):
+        data = ua_diff.report_to_dict(self._mixed())
+        row = next(r for r in data["rows"] if r["client"] == "clash-verge")
+        samples = row["pending_samples"]
+        self.assertEqual(sorted(s["type"] for s in samples), ["tuic", "vless"])
+        self.assertTrue(all(s["format"] == "clash" for s in samples))
+        blob = json.dumps(data, ensure_ascii=False)
+        for secret in ("75caee81", "hunter2", "deadbeef"):
+            self.assertNotIn(secret, blob)
+        self.assertIn("***", blob)
 
 
 if __name__ == "__main__":

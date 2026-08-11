@@ -13,9 +13,9 @@
 
 `clash.txt` 里 `ash` 配 `shadowsocket` 而不是 `sing-box`，正是这个思路的产物。
 
-所以脚本读取 `clash.txt` 的每个有效订阅，用 6 个客户端 × 2 个版本共 12 个 UA
-各拉一次，**外加一次当前配置的基准 UA**，比较各自能拿到多少 sing-box 用得上的
-节点，给出相对当前配置的增量和推荐。
+所以脚本读取 `clash.txt` 的每个有效订阅，用 4 个客户端 × 2 个版本共 8 个 UA
+各拉一次，**外加一次当前配置的基准 UA**（与表中最新 sing-box 项相同时合并），
+比较各自能拿到多少 sing-box 用得上的节点，给出相对当前配置的增量和推荐。
 
 ## 交付物
 
@@ -27,7 +27,8 @@
 - **限速**：对单一订阅每分钟不得超过 8 次请求。
 - **依赖**：系统 python3（3.14）没有 yaml/requests，env 仓库没有 venv。
   只用 Python 标准库 + 外部 `yq`（v4，已安装，仅在响应是 YAML 时调用）。
-  不引入 venv，也不依赖 `$WORKSPACE/proxy/sing-rules`。
+  不引入 venv，也不 import `$WORKSPACE/proxy/sing-rules` 的任何代码
+  （**读** `subscribe.sh` 的文本取基准 UA 不算依赖它的代码，见下）。
 
 ## 输入格式
 
@@ -39,9 +40,31 @@
 `subscribe.sh` 的构造规则，不能从 UA 表里挑个近似的，否则增量是假的：
 
 ```
-CLIENT == "sing-box"  →  SFA/1.13.16 (sing-box 1.13.16)   # subscribe.sh 里硬编码
+CLIENT == "sing-box"  →  从 subscribe.sh 里那行 AGENT="…" 解析出来的完整串
 其他                   →  <CLIENT>/*
 ```
+
+**基准串不再抄成常量**：脚本运行时解析 `$WORKSPACE/proxy/sing-rules/subscribe.sh`
+（`--subscribe-sh` 可覆盖），取**第一个不含 `$CLIENT` 的 `AGENT="…"` 赋值**——另一个是
+`"$CLIENT/*"` 模板。抄一份拷贝放在脚本里曾经脱节过：`subscribe.sh` 升到 1.13.18 之后
+脚本里还写着 1.13.16，报告里那行「基准 UA」是假的，而每一个增量都相对它计算。
+
+同时校验 else 分支仍是 `"$CLIENT/*"`——`baseline_ua` 的另一半也是规则拷贝，那边改了
+这边不改，基准照样会漂。校验不过往 stderr 打一行告警，不中断。
+
+另有两道防线：跳过**空**的 `AGENT=""` 赋值（初始化语句既不含 `$CLIENT` 又排在前面，
+会把真串顶掉）；解析到的串若既不含 `sing-box` 也不像 `SF[AIM]/`，说明「取第一个」多半
+取错了——note 标成「读自 subscribe.sh（形状可疑）」并告警，不让假基准冒充真基准。
+
+文件不存在、没有读权限、格式变了、正则一个都没匹配上——一律**安全退回内置兜底常量**，
+绝不抛异常。报告的表头把来源写出来，让漂移无处藏身：
+
+```
+▌ nanocloud.json   基准 UA: SFA/1.13.18 (sing-box 1.13.18)（读自 subscribe.sh）
+▌ nanocloud.json   基准 UA: SFA/1.13.18 (sing-box 1.13.18)（内置兜底，读不了 …）
+```
+
+非 sing-box 订阅的基准是 `<client>/*`，不来自 `subscribe.sh` 那行赋值，所以不标来源。
 
 第三列写什么就发什么，哪怕它看着像拼错了。机场按子串匹配不上的 UA 会落进「无法
 识别的 UA」分支，而这类分支通常回退到 base64 链接表——恰恰是节点最全的格式。
@@ -51,53 +74,67 @@ CLIENT == "sing-box"  →  SFA/1.13.16 (sing-box 1.13.16)   # subscribe.sh 里�
 （`clash.txt` 的实际取值会变，本文不指认具体是哪个值——规则是「原样复现」，
 测试夹具里用一个刻意拼错的串来验证这条规则，与当前配置里写的是什么无关。）
 
-基准 UA 一般不等于表里任何一项，所以每订阅 12 + 1 = **13 次请求**。
+sing-box 订阅的基准串与表中最新 sing-box 项**相同**，合并成一次请求，于是
+每订阅 **8 次请求**；基准串落在表外时（非 sing-box 客户端，或 `subscribe.sh` 改了版本）
+是 8 + 1 = **9 次**。
 
 ## UA 表
 
-内置在脚本顶部，6 客户端 × 2 版本 = 12 次请求/订阅。
+内置在脚本顶部，4 客户端 × 2 版本 = 8 个 UA。
 
 | 客户端 | 最新 | 广泛使用的旧版 |
 |---|---|---|
 | mihomo | `mihomo/v1.19.29` | `mihomo/v1.18.10` |
 | clash-verge | `clash-verge/v2.5.2` | `clash-verge/v2.4.7` |
 | shadowrocket | `Shadowrocket/2.2.90 (iPhone; iOS 18.6; Scale/3.00)` | `Shadowrocket/2.2.65 (…)` |
-| loon | `Loon/3.5.0 (iPhone; iOS 18.6; Scale/3.00)` | `Loon/3.2.6 (…)` |
-| sing-box | `SFI/1.13.18 (sing-box 1.13.18)` | `SFI/1.12.25 (sing-box 1.12.25)` |
-| quantumult-x | `Quantumult%20X/1.6.0 (iPhone; iOS 18.6)` | `Quantumult%20X/1.5.1 (…)` |
+| sing-box | `SFA/1.13.18 (sing-box 1.13.18)` | `SFA/1.12.25 (sing-box 1.12.25)` |
+
+sing-box 用 **SFA**（for Android）而不是 SFI（for iOS）：`subscribe.sh` 实际发的就是
+SFA，串一致才能与基准合并、每订阅省一次请求；写成 SFI 的话两串永远不等，合并逻辑
+是死代码。
+
+**loon 与 quantumult-x 已移除**（两轮真实探测后）：`nanocloud.json` 对这两个客户端
+返回 0 字节；`ash.b64` 给的是同一批 113 个节点，但格式是 `conf` / `base64-conf`，
+下游 `clash-to-sing.py` 对这两种**没有 loader**，可用节点恒为 0。两个订阅都永远拿不到
+可用节点，白费每订阅 4 次请求（约 32 秒）。**只是不再探测它们**——`conf` / `base64-conf`
+的嗅探、解析与分级全部保留：`detect_format` 与 UA 无关，别的客户端也可能返回这些格式，
+而 `USABLE_TYPES_BY_FORMAT` 里对它们的分级仍然是正确知识。
 
 旧版选的是**上一个 minor 系列的末版**，而不是上一个 tag——patch 之间机场不会区别
-对待，minor 跨越才可能带来协议特性差异。这些分界点恰好卡在分水岭上：Loon 3.3.0 才
-加入 VLESS Reality，sing-box 1.13 与 1.12 的配置结构不同。
+对待，minor 跨越才可能带来协议特性差异。sing-box 1.13 与 1.12 的配置结构不同，
+正好卡在分水岭上。
 
-版本来源：mihomo / clash-verge / sing-box 由 GitHub Releases 实测；Shadowrocket /
-Loon / Quantumult X 的最新版由 iTunes Lookup API 实测，旧版取约一年前有明确发布
-记录的版本（闭源无公开版本分布数据）。表中每条带注释标注日期与来源，可手工修改。
+版本来源：mihomo / clash-verge / sing-box 由 GitHub Releases 实测；Shadowrocket
+的最新版由 iTunes Lookup API 实测，旧版取约一年前有明确发布记录的版本（闭源无公开
+版本分布数据）。表中每条带注释标注日期与来源，可手工修改。
 
 ## 架构
 
 纯函数 + 一层 IO，便于单测：
 
 1. `parse_clash_txt(text) -> list[Subscription]` — 解析订阅清单，跳过注释与空行
-2. `baseline_ua(client) -> str` — 复现 `subscribe.sh` 的 UA 构造规则
-3. `RateLimiter(interval)` — 单订阅内的最小请求间隔，时钟可注入
-4. `fetch(url, ua, timeout) -> Response` — `urllib.request`，唯一的网络 IO
-5. `detect_format(body) -> str` — 响应体嗅探
-6. `parse_nodes(body, fmt) -> list[Node]` — 按格式提取节点
-7. `normalize_type(t) -> str` / `fingerprint(node) -> str` — 归一化
-8. `is_pseudo_node(name) -> bool` — 伪节点识别
-9. `tier_of(type, fmt) -> str` — 可用性分级，返回 `usable` / `pending` / `unusable`；
-   **分级与订阅格式相关**，见「节点可用性分级」
-10. `summarize(results, baseline) -> Report` — 算增量、分组、挑推荐
+2. `resolve_baseline_source(path) -> BaselineSource` — 从 `subscribe.sh` 解析基准 UA
+   与来源说明，任何意外都退回内置兜底，绝不抛异常
+3. `baseline_ua(client) -> str` — 复现 `subscribe.sh` 的 UA 构造规则
+4. `RateLimiter(interval)` — 单订阅内的最小请求间隔，时钟可注入
+5. `fetch(url, ua, timeout) -> Response` — `urllib.request`，唯一的网络 IO
+6. `detect_format(body) -> str` — 响应体嗅探
+7. `parse_nodes(body, fmt) -> list[Node]` — 按格式提取节点
+8. `normalize_type(t) -> str` / `fingerprint(node) -> str` — 归一化
+9. `is_pseudo_node(name) -> bool` — 伪节点识别
+10. `tier_of(type, fmt) -> str` — 可用性分级，返回 `usable` / `pending` / `unusable`；
+    **分级与订阅格式相关**，见「节点可用性分级」
+11. `mask_credentials(raw) -> str` — 待支持样例的凭据打码，见「待支持样例」
+12. `summarize(results, baseline) -> Report` — 算增量、分组、挑推荐
 
 ### 限速与并发
 
-每个订阅一个 worker 线程；订阅内 13 次请求（12 个 UA + 1 个基准）**串行**，
+每个订阅一个 worker 线程；订阅内 8 次请求（8 个 UA，基准已合并）**串行**，
 相邻请求最小间隔 `--interval`（默认 8.0 秒 → 7.5 req/min，安全低于 8）；
 订阅之间**并行**。限速是「对单一连接」的，所以订阅间并行不违反约束。
-总耗时约 13×8 ≈ 104 秒，与订阅数量无关。
+总耗时约 7×8 ≈ 56 秒，与订阅数量无关。
 
-若基准 UA 恰好与表中某项完全相同，则复用该次请求，退化为 12 次。
+若基准 UA 与表中任何一项都不同（非 sing-box 客户端），该订阅多发一次，共 9 次、约 64 秒。
 
 ### 格式嗅探
 
@@ -248,7 +285,7 @@ base64 编码——正因为补得回来，才是 ⚠️ 待支持而不是 ✖�
 - 相对基准的**增量**：多了哪些指纹、少了哪些指纹
 - 增量中 ⚠️ 待支持 与 ✖️ 不可用 各有多少，分别列出类型分布
 
-同时按 `FP` 集合给 13 个结果分组，展示哪些 UA 拿到的是同一份列表；`FP` 相同但
+同时按 `FP` 集合给这一轮的结果分组，展示哪些 UA 拿到的是同一份列表；`FP` 相同但
 `NAMES` 不同的标注为「仅命名差异」。
 
 分组键是 `FP`，**与格式无关**——它回答的是「哪些 UA 拿到了同一份列表」。但可用数是
@@ -276,7 +313,7 @@ base64 编码——正因为补得回来，才是 ⚠️ 待支持而不是 ✖�
   CLIENT          VERSION   STATUS  FORMAT   可用   Δ   待支持  不可用  伪
   shadowrocket    2.2.90       200  base64   119    +3      0       0    3
   (基准)          —            200  base64   116     —      0       0    3  ←当前
-  loon            3.5.0        200  conf       0    -116  127       0    3
+  clash-verge     2.5.2        200  clash      2   -114  117       0    3
   sing-box        1.13.18      200  sing-box  40   -76      0       0    0
   mihomo          1.19.29      200  unknown    -     —      -       -    -
   …
@@ -290,19 +327,71 @@ base64 编码——正因为补得回来，才是 ⚠️ 待支持而不是 ✖�
 
   ℹ shadowrocket 2.2.90 识别到 3 个伪节点（已从计数剔除）：剩余流量：88.03 GB / 距离下次重置剩余：24 天 / 套餐到期：2027-03-03（另有 3 个 UA 也识别到伪节点）
 
+  ⚠️ 待支持样例（每种「格式 × 协议」一个，供补 clash-to-sing.py 分支参考）
+      clash / vless   来自 clash-verge 2.5.2
+        {"name": "🇭🇰HK-01", "type": "vless", "server": "1.2.3.4", "port": 443, "uuid": "***"}
+
   ℹ 3 组不同的节点列表：
       组 A（119 可用）  shadowrocket 2.2.90, shadowrocket 2.2.65  ← 仅命名差异
       组 B（116 可用）  (基准) —
       组 C（可用 2–40，随格式而异）  sing-box 1.13.18 [sing-box], clash-verge 2.4.7 [clash]
 ```
 
-注意示例里的 `loon`：它拿到 127 个节点，但格式是 `conf`——下游没有 loader，
-一个都用不上，所以 ✅ 列是 `0`、全部落进「待支持」，也不会被推荐。伪节点提示带上
+注意示例里的 `clash-verge`：它拿到 119 个节点，但格式是 `clash`，而 `clash` 分支
+不收 `vless`——所以 ✅ 列只有 `2`、其余全落进「待支持」，也不会被推荐。伪节点提示带上
 是哪个 UA 的，因为这是逐 UA 统计的，不是全局结论。
+
+### 待支持样例
+
+「待支持 117」这个数字本身不可行动：用户看到它之后要做的是去 `clash-to-sing.py`
+补一个转换分支，而光凭指纹 `vless://1.2.3.4:443` 写不出转换函数——得看见节点的
+**原始形态**，才知道要解析哪些字段。所以存在待支持节点时，报告加一节，
+按「**格式 × 协议**」各列一个样例（`--wide` 给完整内容，默认按宽度截断）。
+
+按「格式 × 协议」而不是只按协议：`USABLE_TYPES_BY_FORMAT` 本来就是按格式分裂的，
+补分支时改的是具体某个 `*_proxy_to_outbound` 函数（`clash_proxy_to_outbound` /
+`shadowrocket_proxy_to_outbound`），可操作的单元就是「哪个格式下的哪个协议」，
+同一个协议在两种格式下要补两处。每行标明样例来自哪个 UA——用户得知道去哪儿复现。
+
+原始形态由 `Node.raw` 承载（sing-box / clash 是那个 dict，links / conf 是原始那一行）。
+该字段**必须 `field(compare=False)`**：去重、增量、分组是这个工具的核心结论，让 raw
+参与相等性会把同一个节点的两种写法算成两个；而且 dict 不可哈希，参与 `__hash__` 就
+再也进不了 set。
+
+**凭据一律打码**（`mask_credentials`）：这和订阅 URL 是同一类泄漏面，报告会被贴进
+issue、聊天、日志。但打码口径必须**一头不漏、一头不废**，两边都翻过车：
+
+- **打**：凭据名键的值（任意位置、任意嵌套层级，含列表套字典如
+  `wireguard.peers[].pre-shared-key`、`users[].uuid`）、Loon/Surge conf 里**定位置的裸
+  引号密码**（`节点名 = 类型,server,port,"密码"`）、URL 的 userinfo、URL query 里的凭据名参数
+- **不打**：`type` / `server` / `port` / `sni` / `servername` / `tls-name` / `host` /
+  `tls-host` / `path` / 传输层参数 / 节点名与 `tag` / `alterId`（纯数字，写 vmess 转换要看）/
+  `public-key` / `pbk` / `short-id` / `sid` / `host-key`（本来就随分享链接公开）
+
+URL 形态与 dict 形态**口径一致**（`pbk`/`sid` 与 `public-key`/`short-id` 都不打）。
+
+两个必踩的坑：
+
+1. `username=` **就是 UUID**——Surge / Loon 的 vmess 节点行这么写，而 conf 下 vmess 恒为
+   pending、必进样例。键表里只有 `userid` 时整串明文漏进报告。`passphrase` 同理。
+2. 无差别打掉所有引号段会把 SNI（`tls-name`）、`tls-host`、`path`、连节点名 `tag=` 一起
+   打成 `***`，这一节就废了。正确做法是**先按键名打（`_KEY_VALUE`）、再一遍扫过去处理裸
+   引号**：每个引号段回看前面最近的非空白字符，是 `=`/`:` 就说明它有键名、放行。
+   定长 lookbehind 会错位——`_KEY_VALUE` 跑完之后凭据的引号已经被换掉了。
+
+键名判定用**全等 + 已知后缀**而不是子串（`Madrid` 含 `id`、`Passau` 含 `pass`），
+且**后缀表里没有裸 `key`**（否则 `public-key` / `host-key` 全遭殃）。全等表只列后缀覆盖
+不到的词，避免死条目——两张表里每一项删掉都有测试变红。
+
+样例呈现前把 `name` / `tag` / `type` / `server` / `port` 挪到末尾：截断从末尾切，
+而这几个键在表里已经看得到，真正要看的 `reality-opts` / `ws-opts` 不该被它们挤到刀口上。
+
+`--json` 的 `rows[].pending_samples` 带同样打码后的样例，顶层 `baseline_source`
+（`ua` / `note` / `from_file`）带基准 UA 的 provenance。
 
 ### 实时进度
 
-26 次请求全程静默会让人以为卡死。卡感的来源是**限速的 8 秒空档**而不是请求本身，
+全程十几次请求静默会让人以为卡死。卡感的来源是**限速的 8 秒空档**而不是请求本身，
 所以「每完成一次请求打一行」不够——那 8 秒里屏幕仍然是死的。进度行必须报出
 **当前阶段已经持续了多久**，那是证明「它还活着」的唯一信号；剩余时间反而不重要。
 
@@ -319,8 +408,8 @@ TTY 下每个订阅占一行，每 0.5 秒原地重画（ANSI 上移 N 行 + `\r
 返回那刻起就是确定的，不必看线程的调度运气（测试也因此不必靠 sleep 对齐）：
 
 ```
-  ash.b64         [ 4/13]  等待限速 3.2s   下一个 loon 3.5.0
-  nanocloud.json  [ 7/13]  请求中   1.1s   sing-box 1.13.18
+  ash.b64         [4/9]  等待限速 3.2s   下一个 clash-verge 2.5.2
+  nanocloud.json  [7/8]  请求中   1.1s   sing-box 1.13.18
 ```
 
 对齐用与报告同一套 `display_width` / `pad`（订阅名含中文/emoji 时不能错位）。
@@ -344,7 +433,7 @@ urllib 的异常字符串，会先过一遍 `scrub_urls`，因为个别异常会
 
 `_lock` 只护状态（`_state` / `_names` / `_stopped`），**持有期间绝不做 IO**；`_io_lock`
 护「往流里写」这件事本身，顺带护 `_drawn`（它记的是「屏幕上现在有几行进度」，必须与实际
-写出去的字节严格同步）。热路径 `update()` 每个订阅要走 4×13 次，TTY 下它**一个字节都不
+写出去的字节严格同步）。热路径 `update()` 每个订阅要走 4×9 次，TTY 下它**一个字节都不
 写**——写全交给重画线程。
 
 这不是洁癖：早先 `_write` 在 `_lock` 里，终端一卡（SSH 卡顿、用户按了 Ctrl-S 的 XOFF、
@@ -415,16 +504,16 @@ token）；`--show-url` 还原。终端里的建议行始终是全量 URL——�
 退出码：`0` 当前 UA 已最优 / `1` 存在更优 UA / `2` 结论不可信。多个订阅取最大值。
 
 `2` 只留给**基准探测失败**（没有参照物）或**某订阅全部探测失败**（没有数据）这两种
-情形。个别陌生 UA 拿到 HTML（`fmt=unknown`）是 12 个 UA 里的常态而非异常——若它也
+情形。个别陌生 UA 拿到 HTML（`fmt=unknown`）是 8 个 UA 里的常态而非异常——若它也
 算 `2`，退出码就退化成常量 `2`，`0`/`1` 永远不可达。这类失败在报告里已有 ✘ 行逐条
 告知。Ctrl-C 中断同样返回 `2`（结果不完整）。
 
 ## 已知限制
 
 `subscribe.sh` 把 `clash.txt` 第三列渲染成 `<CLIENT>/*`（`sing-box` 除外），
-所以脚本推荐的 UA 和 `update.sh` 实际会发出的 UA **不是一回事**。推荐 `loon` 时，
-实测用的是 `Loon/3.5.0 (iPhone; iOS 18.6; Scale/3.00)`，而 `update.sh` 会发
-`loon/*`——机场对这两者的响应可能不同。
+所以脚本推荐的 UA 和 `update.sh` 实际会发出的 UA **不是一回事**。推荐 `mihomo` 时，
+实测用的是 `mihomo/v1.19.29`，而 `update.sh` 会发 `mihomo/*`——机场对这两者的响应
+可能不同。
 
 报告在建议行下方明确提示这一点。要真正吃到实测结果，得改 `subscribe.sh` 支持完整
 UA，或在 `clash.txt` 第三列直接写完整 UA 串。这两项都超出本脚本范围，由使用者决定。
@@ -436,7 +525,7 @@ UA，或在 `clash.txt` 第三列直接写完整 UA 串。这两项都超出本�
 `shadowrocket` / `sing-box` 三种，其中 `shadowrocket` 会对响应体**无条件**
 `base64.b64decode`。于是换 UA 有三种翻车法：
 
-- 推荐 `loon`（响应是 `conf`）→ 下游没有任何 loader 能读
+- 推荐一个返回 `conf` 的 UA → 下游没有任何 loader 能读
 - 推荐一个返回**明文** `links` 的 UA → 对明文做 b64decode，`binascii.Error` 崩掉
   （所以 `links` 格式的节点一律记 ⚠️ 待支持，见「节点可用性分级」，压根不会被推荐）
 - 推荐一个格式变了但仍受支持的 UA（`base64` → `clash`）→ 用户还得同步改
@@ -467,7 +556,12 @@ Ctrl-C 优雅退出，已完成的部分照常输出。**不能**用 `with Threa
 覆盖全部纯函数：
 
 - `parse_clash_txt` — 注释行、空行、字段缺失
-- `baseline_ua` — `sing-box` 走硬编码串，其余走 `<client>/*`，含 `shadowsocket` 这例
+- `baseline_ua` / `resolve_baseline_source` — `sing-box` 跟随 `subscribe.sh` 的解析结果、
+  其余走 `<client>/*`（含 `shadowsocket` 这例）；解析成功 / 文件不存在 / 无读权限 /
+  格式变了取不到 / 只剩 `$CLIENT` 模板 / `$WORKSPACE` 未设置 / 读文件抛非 `OSError`
+  逐个断言，且**任何情形都不抛异常**；else 分支不再是 `"$CLIENT/*"` 时告警；
+  报告里显示来源（`读自 subscribe.sh` / `内置兜底，…`），非 sing-box 订阅不标来源。
+  兜底常量在测试里是**手写字面量**，常量被改动时这些断言必须炸
 - `detect_format` — 七种格式各一例 + 边界（空响应、HTML 错误页）、真实样本的
   `base64-conf` 与无段头裸 conf、「只有一行像节点行不算 conf」「`[General]` 的普通
   配置行不是节点行」「放宽 conf 不抢走 sing-box/clash/links」
@@ -482,6 +576,24 @@ Ctrl-C 优雅退出，已完成的部分照常输出。**不能**用 `with Threa
   `官网`/`客服` 全套测试照样全绿）
 - `tier_of` — **逐格式**取样，含「clash 下 vless 不可用」「shadowrocket 下 ss 不可用」
   「conf / base64-conf 一律不可用」这几条会让 `update.sh` 崩掉的回归
+- UA 表 — 客户端名与 sing-box 的两个 UA 串都用**手写字面量**断言（遍历表本身来断言
+  等于没断言：删表项就等于同时删断言）；`loon` / `quantumult-x` 不在表里；
+  移除它们之后 `conf` / `base64-conf` 的嗅探、解析、分级仍然存在且正确（专门一组守卫，
+  防止顺手把解析器一起删了）
+- `mask_credentials` — 两个方向都要钉：**漏码**（dict/列表递归、URL userinfo 与具名查询
+  参数、conf 的具名凭据与定位置裸引号密码、`vmess://` 载荷解开后打码、Surge 的
+  `username=` 就是 UUID）与**过度打码**（`tls-name` / `tls-host` / `path` / `tag` /
+  `alterId` / `public-key` / `pbk` / `short-id` 必须原样保留，URL 与 dict 口径一致）；
+  `is_credential_key` 的正反例（`Madrid` / `Passau` / `Users-HK` 不算凭据键），
+  两张键名表**逐条删除都有测试变红**
+- `Node.raw` — `compare=False` 的两条理由各有一条测试：raw 不同的两个 Node 相等且进
+  同一个 set（漏写 `compare=False` 时 dict raw 会直接 `TypeError`）；raw 不同不改变
+  去重与分组结果
+- 待支持样例 — 有待支持节点才出现、「格式 × 协议」去重（同格式同协议出一个、同协议
+  跨两格式出两个）、标注来源 UA、**样例取自可用数最高的那一行**、伪节点不当样例、
+  失败探测不贡献样例、默认截断 `--wide` 给全（量样例本身而不是整行）、低信息量的键
+  挪到末尾、`--json` 里带样例且同样打码；`raw` 的接线**六个解析器逐个走到样例那一步**
+  （断了不会报错，只会静默降级成「（无原始形态）节点名」）
 - `RateLimiter` — 注入假时钟，断言间隔不小于设定值；非正间隔构造即抛
 - `summarize` — 增量计算、分组、推荐选择，含「基准已最优」的情况
 - `render_report` — 推荐块正文逐字断言（`多出的 3 个：vless×3` 之类），下游格式警告、
@@ -503,6 +615,15 @@ Ctrl-C 优雅退出，已完成的部分照常输出。**不能**用 `with Threa
   `ED`，且**它自己也有测试**），把字节流还原成「最终屏幕」，才断言得了「告警有没有被下
   一帧盖掉」「收尾有没有留残影」——光看字节流看不出来，被盖掉的字节仍然在流里。
   改完做过变异验证：28 处逐一改坏，全部有测试变红。
+- 基准来源 / UA 表瘦身 / 待支持样例这一轮又做了 29 处变异（含「永远走兜底」「不跳过
+  `$CLIENT` 模板」「兜底 try 去掉」「SFA 换回 SFI」「加回 loon」「删掉 conf 解析」
+  「conf 判成可用」「`Node.raw` 参与比较」「不打码」「键名判定改子串匹配」「样例只按
+  协议去重」「首份报告不空行」「`--json` 也打空行」），全部被测试杀死。
+- review 之后的打码口径修正又做了 29 处变异（含 reviewer 自选存活的 6 条：clash 与
+  vmess link 的 `raw` 接线、`raw` 造假、list 不递归、`setdefault` 改直接赋值、
+  `--wide` 也截断），加上两张键名表**逐条删除**的 20 次 sweep，全部被测试杀死。
+  `--wide` 那条原先杀不掉是因为断言量的是整行——8 个缩进空格让截断后的行照样「超宽」，
+  必须量样例本身。
 
 每条修复都配变异测试验证：把实现改坏，确认测试真的会失败。「测试看似覆盖实则不敏感」
 在这个项目里反复出现过（`main()` 曾经零覆盖，`--client` 写错名字得出自信的错误结论

@@ -15,6 +15,7 @@ import base64
 import binascii
 import functools
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -31,12 +32,37 @@ from urllib.parse import unquote, urlparse
 
 # ---------------------------------------------------------------- 常量表
 
-# subscribe.sh 对 sing-box 客户端硬编码的 UA。这是 update.sh 当前实际发出去的串，
-# 基准增量相对它计算，所以必须与 $WORKSPACE/proxy/sing-rules/subscribe.sh 保持一致。
-SING_BOX_BASELINE_UA = "SFA/1.13.16 (sing-box 1.13.16)"
+# subscribe.sh 对 sing-box 客户端硬编码的 UA。
+#
+# **这只是兜底**：真值以 $WORKSPACE/proxy/sing-rules/subscribe.sh 为准，运行时从那份
+# 脚本里解析（`resolve_baseline_source`），解析不到才回退到这里。抄一份拷贝放在这里
+# 曾经脱节过——subscribe.sh 升到 1.13.18 之后这里还写着 1.13.16，报告里那行「基准 UA」
+# 就是假的，而**每一个增量都是相对它算的**。
+SING_BOX_BASELINE_UA = "SFA/1.13.18 (sing-box 1.13.18)"
+
+# subscribe.sh 里 UA 的两处赋值：
+#     if [[ $CLIENT == 'sing-box' ]]; then
+#         AGENT="SFA/1.13.18 (sing-box 1.13.18)"
+#     else
+#         AGENT="$CLIENT/*"
+#     fi
+# 解析假设：**第一个不含 `$CLIENT` 的 `AGENT="…"` 就是 sing-box 的那个串**，另一个是
+# `"$CLIENT/*"` 模板。这个假设成立的前提是脚本里只有这一处写死的完整 UA；哪天不成立了，
+# 拿到的就是别的串，所以 else 分支也要校验（见 `_resolve_baseline_source`）。
+_AGENT_ASSIGN = re.compile(r'AGENT="([^"]*)"')
+_CLIENT_WILDCARD = "$CLIENT/*"
+
+# subscribe.sh 相对 $WORKSPACE 的位置
+DEFAULT_SUBSCRIBE_SH = ("proxy", "sing-rules", "subscribe.sh")
 
 # 各客户端的最新版与「广泛使用的旧版」。旧版取上一个 minor 系列的末版——patch 之间
 # 机场不会区别对待，minor 跨越才可能带来协议特性差异。改版本号只需改这张表。
+#
+# loon 与 quantumult-x 曾在表里，两轮真实探测后移除：nanocloud.json 对它们返回 0 字节，
+# ash.b64 返回的是同一批 113 个节点但格式为 conf / base64-conf，而下游 clash-to-sing.py
+# 对这两种格式**没有 loader**，可用节点恒为 0。两个订阅都永远拿不到可用节点，白费每订阅
+# 4 次请求（约 32 秒）。**只是不再探测它们**——conf / base64-conf 的嗅探、解析与分级
+# 全部保留：`detect_format` 与 UA 无关，别的客户端也可能返回这些格式。
 UA_TABLE: dict[str, list[tuple[str, str]]] = {
     # GitHub Releases 实测（2026-08-10）。v1.19.29 发布于 2026-07-18。
     # v1.18.10 是 1.19 之前最后一个 minor 的末版。
@@ -55,23 +81,15 @@ UA_TABLE: dict[str, list[tuple[str, str]]] = {
         ("2.2.90", "Shadowrocket/2.2.90 (iPhone; iOS 18.6; Scale/3.00)"),
         ("2.2.65", "Shadowrocket/2.2.65 (iPhone; iOS 18.6; Scale/3.00)"),
     ],
-    # 最新版由 iTunes Lookup API 实测（3.5.0，2026-06-25）。
-    # 3.2.6 是 3.2.x 末版（2025-02-03）；3.3.0 才加入 VLESS Reality，正好卡在分水岭上。
-    "loon": [
-        ("3.5.0", "Loon/3.5.0 (iPhone; iOS 18.6; Scale/3.00)"),
-        ("3.2.6", "Loon/3.2.6 (iPhone; iOS 18.6; Scale/3.00)"),
-    ],
     # GitHub Releases 实测（2026-08-10）。v1.13.18 发布于 2026-08-09。
     # v1.12.25 是 1.12.x 末版，大量机场配置生成器仍按 1.12 出配置。
+    #
+    # 用 SFA（sing-box for Android）而不是 SFI（for iOS）：subscribe.sh 实际发的就是
+    # SFA，串一致才能让 `build_ua_plan` 把最新那项与基准合并掉，每订阅省一次请求。
+    # 写成 SFI 的话两个串永远不相等，合并逻辑是死代码。
     "sing-box": [
-        ("1.13.18", "SFI/1.13.18 (sing-box 1.13.18)"),
-        ("1.12.25", "SFI/1.12.25 (sing-box 1.12.25)"),
-    ],
-    # 最新版由 iTunes Lookup API 实测（1.6.0，2026-05-21）。
-    # 1.5.1 发布于 2025-05-06，直到 1.6.0 才被取代，独占一年、装机量最大。
-    "quantumult-x": [
-        ("1.6.0", "Quantumult%20X/1.6.0 (iPhone; iOS 18.6)"),
-        ("1.5.1", "Quantumult%20X/1.5.1 (iPhone; iOS 18.6)"),
+        ("1.13.18", "SFA/1.13.18 (sing-box 1.13.18)"),
+        ("1.12.25", "SFA/1.12.25 (sing-box 1.12.25)"),
     ],
 }
 
@@ -96,6 +114,18 @@ class Node:
     type: str
     server: str
     port: int
+    # 原始形态：sing-box / clash 是那个 outbound / proxy dict，links / conf 是原始那一行。
+    # 只为「待支持样例」服务——用户看到「待支持 113」之后要做的是去 clash-to-sing.py 补
+    # 一个转换分支，而光凭指纹 `vless://1.2.3.4:443` 写不出转换函数，得看见有哪些字段。
+    #
+    # **必须 compare=False**，两个理由缺一不可：
+    #   1) raw 不参与身份认定。去重、增量、分组全走 `fingerprint()` 与 `names`，它们才是
+    #      这个工具的核心结论；让 raw 参与相等性，同一个节点的两种写法就会变成两个节点。
+    #   2) dict 不可哈希。frozen dataclass 的 __hash__ 由参与比较的字段生成，raw 若参与，
+    #      带 dict raw 的 Node 一进 set 就 TypeError。
+    # （核实过：本文件里 Node 从没进过 set、也没当过 dict 键——集合装的是指纹字符串，
+    #   pseudo 是 list。所以 compare=False 是防线而不是补丁，但那条防线得一直在。）
+    raw: dict | str = field(default="", compare=False)
 
 
 @dataclass
@@ -137,6 +167,9 @@ class Row:
     unusable: set[str]
     pseudo: list[Node]
     names: set[str] = field(default_factory=set)
+    # 每种「待支持」协议留一个原始形态样例，键是归一后的协议名。供补 clash-to-sing.py
+    # 分支时照着写解析——格式那一维由 probe.fmt 提供。
+    pending_samples: dict[str, Node] = field(default_factory=dict)
     added: set[str] = field(default_factory=set)
     removed: set[str] = field(default_factory=set)
 
@@ -178,16 +211,121 @@ def parse_clash_txt(text: str) -> list[Subscription]:
     return subscriptions
 
 
+@dataclass(frozen=True)
+class BaselineSource:
+    """sing-box 基准 UA 及其来源。
+
+    note 是给报告用的人话（「读自 subscribe.sh」/「内置兜底，…」）——基准 UA 一旦与
+    subscribe.sh 脱节，整份报告的增量都是假的，所以来源必须摆在报告里，让漂移无处藏身。
+    warnings 是要打到 stderr 的告警，不中断执行。
+    """
+
+    ua: str
+    note: str
+    from_file: bool
+    warnings: tuple[str, ...] = ()
+
+
+def _baseline_fallback(why: str) -> BaselineSource:
+    return BaselineSource(SING_BOX_BASELINE_UA, f"内置兜底，{why}", False)
+
+
+# 没显式设定过来源时用的默认值。**故意不做文件 IO**：库层调用（以及单测）不该因为
+# 环境里有没有 $WORKSPACE 而给出不同的基准。真正去读 subscribe.sh 的只有 main()。
+_DEFAULT_BASELINE_SOURCE = _baseline_fallback("未读取 subscribe.sh")
+_BASELINE_SOURCE: BaselineSource | None = None
+
+
+def default_subscribe_sh() -> Path | None:
+    """subscribe.sh 的默认位置。$WORKSPACE 没设置时返回 None（于是走兜底）。"""
+    workspace = os.environ.get("WORKSPACE")
+    if not workspace:
+        return None
+    return Path(workspace).joinpath(*DEFAULT_SUBSCRIBE_SH)
+
+
+# sing-box 客户端的 UA 长什么样：官方客户端是 SFA（Android）/ SFI（iOS）/ SFM（macOS），
+# 内核自己发的串里带 "sing-box"。只用来判「取到的串像不像那一个」，不参与构造。
+_SING_BOX_UA_SHAPE = re.compile(r"^SF[AIM]/", re.IGNORECASE)
+
+
+def _looks_like_sing_box_ua(ua: str) -> bool:
+    return "sing-box" in ua.lower() or bool(_SING_BOX_UA_SHAPE.match(ua))
+
+
+def _resolve_baseline_source(path: Path | None) -> BaselineSource:
+    if path is None:
+        return _baseline_fallback("未设置 $WORKSPACE，定位不到 subscribe.sh")
+    try:
+        # errors="replace"：解码失败也不该炸，交给后面的正则判「没找到」
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        return _baseline_fallback(f"读不了 {path}：{exc}")
+
+    assignments = _AGENT_ASSIGN.findall(text)
+    # `a and` 不能省：前面若有一句 `AGENT=""`（初始化），空串既不含 $CLIENT 又会被
+    # next() 选中，于是整份解析静默退回兜底。
+    ua = next((a for a in assignments if a and "$CLIENT" not in a), "")
+    if not ua:
+        return _baseline_fallback(f"{path} 里没找到 sing-box 的 UA")
+
+    warnings: tuple[str, ...] = ()
+    note = "读自 subscribe.sh"
+    # 第二道防线：脚本里若多出一处写死的 UA（换了顺序、加了别的分支），上面那句
+    # 「取第一个」会**静默**取错串，而报告仍然理直气壮地标「读自 subscribe.sh」——
+    # 假基准冒充真基准，正是这次改动要消灭的东西。形状不像 sing-box 的 UA 就出声。
+    if not _looks_like_sing_box_ua(ua):
+        note = "读自 subscribe.sh（形状可疑）"
+        warnings += (
+            f"⚠️ 从 {path} 解析到的基准 UA 形状可疑：{ua}"
+            "——既不含 sing-box 也不像 SFA/SFI/SFM，请确认取到的是 sing-box 分支那一串",
+        )
+    # baseline_ua() 的另一半（非 sing-box 客户端一律 <client>/*）同样是 subscribe.sh
+    # 的规则拷贝。那边改了这边不改，基准照样会漂，只是漂在另一半上——校验不过就出声，
+    # 但仍按内置规则跑下去（拿不准也比不测强）。
+    if _CLIENT_WILDCARD not in assignments:
+        warnings += (
+            f"⚠️ {path} 里非 sing-box 客户端的 UA 已不是 {_CLIENT_WILDCARD}，"
+            "本脚本仍按内置规则构造，这些订阅的基准 UA 可能不准",
+        )
+    return BaselineSource(ua, note, True, warnings)
+
+
+def resolve_baseline_source(path: Path | None) -> BaselineSource:
+    """从 subscribe.sh 解析 sing-box 的基准 UA。
+
+    文件不存在、没有读权限、内容格式变了、正则一个都没匹配上——**一律安全退回内置兜底
+    并在 note 里说明，绝不抛异常**。这个脚本的价值全在那一份报告上，为了一个来源探测
+    把整轮探测炸掉是本末倒置。
+    """
+    try:
+        return _resolve_baseline_source(path)
+    except Exception as exc:  # noqa: BLE001 —— 兜底必须真的兜得住
+        return _baseline_fallback(f"解析 subscribe.sh 失败：{exc}")
+
+
+def baseline_source() -> BaselineSource:
+    """当前生效的基准 UA 来源。main() 启动时按 --subscribe-sh 设定，未设定则用兜底。"""
+    return _BASELINE_SOURCE if _BASELINE_SOURCE is not None else _DEFAULT_BASELINE_SOURCE
+
+
+def set_baseline_source(source: BaselineSource | None) -> None:
+    """设定（或传 None 复位）基准 UA 来源。"""
+    global _BASELINE_SOURCE
+    _BASELINE_SOURCE = source
+
+
 def baseline_ua(client: str) -> str:
     """复现 subscribe.sh 的 UA 构造规则。
 
-    sing-box 走硬编码串，其余一律 <client>/*。客户端名**原样**使用，哪怕它看着像
-    拼错了——clash.txt 里写的就是 update.sh 当前实际发出去的串，是有效的对照项，
-    不能在这里「修正」。机场按子串匹配不上的 UA 会落进「无法识别」分支，而那个分支
-    往往回退到节点最全的格式，这正是要测的东西。
+    sing-box 走 subscribe.sh 里那个写死的串（运行时解析，见 `baseline_source`），
+    其余一律 <client>/*。客户端名**原样**使用，哪怕它看着像拼错了——clash.txt 里写的
+    就是 update.sh 当前实际发出去的串，是有效的对照项，不能在这里「修正」。机场按子串
+    匹配不上的 UA 会落进「无法识别」分支，而那个分支往往回退到节点最全的格式，
+    这正是要测的东西。
     """
     if client == "sing-box":
-        return SING_BOX_BASELINE_UA
+        return baseline_source().ua
     return f"{client}/*"
 
 
@@ -344,6 +482,166 @@ _PSEUDO_PATTERNS = (
     re.compile(r"\d{4}年\d{1,2}月\d{1,2}日"),
     re.compile(r"[：:]\s*[\d.]+\s*(?:GB|MB|TB|KB|天)", re.IGNORECASE),
 )
+
+
+# ------------------------------------------------ 凭据打码（待支持样例要贴进报告）
+
+# 样例是**原始形态**，里面就有 uuid / password / psk / token。报告会被贴进 issue、
+# 聊天、甚至直接重定向成文件，这和订阅 URL 是同一类泄漏面，一律打码后才允许出现。
+CREDENTIAL_MASK = "***"
+
+# 打码口径：**只打真凭据，传输层参数一个都不许打**。样例存在的唯一理由是让人照着写
+# 转换分支，把 sni / host / path / 节点名打掉，这一节就废了。
+#
+#   打：凭据名键的值（任意位置、任意嵌套层级）、Loon/Surge conf 里定位置的裸引号密码、
+#       URL 的 userinfo、URL query 里的凭据名参数
+#   不打：type / server / port / sni / servername / tls-name / host / tls-host / path /
+#       传输层参数 / 节点名与 tag / alterId（纯数字，写 vmess 转换要看）/
+#       public-key / pbk / short-id / sid / host-key（这几个本来就随分享链接公开）
+#
+# 键名归一（去掉非字母数字、转小写）后**全等**这些词才算凭据。
+# 不用子串匹配：Loon 的 conf 行是 `节点名 = 类型,服务器,端口,"密码"`，节点名就是键，
+# 而「Madrid」含 id、「Passau」含 pass——子串匹配会把整条样例打成马赛克，样例也就废了。
+#
+# `username` 不能漏：**Surge / Loon 的 vmess 节点行就是把 UUID 写在 `username=` 上**，
+# 而 conf 格式下 vmess 恒为 pending，必进样例。
+# 只列**后缀表覆盖不到**的：`uuid` / `password` / `secret` 这些已经被下面的后缀兜住了，
+# 再抄一遍就成了删了也没人发现的死条目。
+_CREDENTIAL_KEYS = frozenset({
+    "id", "userid", "username", "pass", "presharedkey", "auth", "authstr",
+    "authstring", "authpayload", "key", "apikey", "credential",
+})
+# 后缀兜住合成键名：`obfs-password`、`ss-uuid`、`client-secret`、`wireguard-private-key`……
+# **没有裸 `key`**：`public-key` / `host-key` / `pbk` 是公钥，打了纯属帮倒忙。
+_CREDENTIAL_SUFFIXES = (
+    "password", "passwd", "passphrase", "uuid", "secret", "token", "psk", "privatekey",
+)
+
+# `key=value` / `key:value` / `?key=value`：值到逗号、&、# 或空白为止。
+#
+# 键的形状**必须先卡成「像凭据的词」**，不能拿 `[A-Za-z0-9_\-]+` 通配再回头判：
+# `trojan://h.example:443?password=hunter2` 里 `trojan:` 会先匹上（键不是凭据、原样保留），
+# 而它已经把后面的 `password=hunter2` 一起吃掉了，真正的凭据就再也扫不到。
+# 卡住形状之后仍要过一遍 `is_credential_key`——形状只是候选，全等/后缀判定才是准绳。
+# 值里排除 `#`：URL 的 fragment 是节点名，打掉它样例就认不出是谁了。
+# 形状只是**候选**，放宽一点不会误伤——候选还要过 `is_credential_key` 的全等/后缀判定，
+# `Users-HK`、`public-key` 都会在那一关被放行。
+_CREDENTIAL_TOKENS = (
+    "uuid|passwd|password|passphrase|pass|psk|token|secret|privatekey|key|auth|user|id|credential"
+)
+_KEY_VALUE = re.compile(
+    rf"([A-Za-z0-9_\-]*(?:{_CREDENTIAL_TOKENS})[A-Za-z0-9_\-]*)(\s*[=:]\s*)(\"[^\"]*\"|[^,&\s#]*)",
+    re.IGNORECASE,
+)
+# conf 行里引号包起来的字段。Loon / Surge 的密码是**定位置的裸值**（`名字 = 类型,server,
+# port,"密码"`），没有键名可判，只能按「前面是逗号不是等号」认。
+_QUOTED = re.compile(r'"[^"]*"')
+# URL 的 userinfo：`vless://uuid@host:port` 里 @ 之前的一整段
+_USERINFO = re.compile(r"(://)([^/@\s]+)(@)")
+
+
+def is_credential_key(key: str) -> bool:
+    """这个键名是不是凭据。归一后全等或按已知后缀结尾才算。"""
+    normalized = re.sub(r"[^a-z0-9]", "", key.lower())
+    return normalized in _CREDENTIAL_KEYS or normalized.endswith(_CREDENTIAL_SUFFIXES)
+
+
+def _mask_value(value):
+    if isinstance(value, dict):
+        return _mask_mapping(value)
+    if isinstance(value, list):
+        return [_mask_value(item) for item in value]
+    return value
+
+
+def _mask_mapping(data: dict) -> dict:
+    """按键名打码。**递归**：clash 的 `reality-opts.public-key`、vmess 的嵌套
+    `ws-opts.headers` 都藏在子字典里，只扫一层等于没扫。"""
+    masked = {}
+    for key, value in data.items():
+        if is_credential_key(str(key)):
+            masked[key] = CREDENTIAL_MASK
+        else:
+            masked[key] = _mask_value(value)
+    return masked
+
+
+def _mask_bare_quoted(text: str) -> str:
+    """打掉**没有键名**的引号字段，保留 `key="值"` 形式的。
+
+    判据是「这个引号段前面最近的非空白字符是不是 `=` / `:`」：
+      - `名字 = trojan,1.2.3.4,443,"密码"` —— 前面是逗号，定位置的裸密码，打；
+      - `tls-name="a.example"` —— 前面是等号，有键名，交给 `_KEY_VALUE` 按键名判，这里放行。
+
+    必须在 `_KEY_VALUE` **之后**跑，而且只能这样一遍扫过去：
+    早先版本无差别 `sub` 掉所有引号段，把 SNI（`tls-name`）、`tls-host`、`path`、
+    连节点名 `tag=` 一起打成了 `***`——正是「样例还有什么用」的那部分。
+    用 lookbehind 改写也不行：`_KEY_VALUE` 跑完之后凭据的引号已经被换掉了，
+    定长 lookbehind 会错位。
+    """
+    out = []
+    last = 0
+    for match in _QUOTED.finditer(text):
+        keyed = text[:match.start()].rstrip().endswith(("=", ":"))
+        out.append(text[last:match.start()])
+        out.append(match.group(0) if keyed else f'"{CREDENTIAL_MASK}"')
+        last = match.end()
+    out.append(text[last:])
+    return "".join(out)
+
+
+def _mask_text(line: str) -> str:
+    """给 links / conf 这类「一行就是一个节点」的原始形态打码。
+
+    三条规则依次叠加，对应三种藏法（顺序不能换，见 `_mask_bare_quoted`）：
+      1) URL 的 userinfo（`vless://<uuid>@host`）——凭据没有键名，只能按位置认；
+      2) `key=value` / `?key=value`——QX conf 与 URL 查询串里的具名凭据，按键名判；
+      3) 剩下的裸引号字段——Loon / Surge 定位置的密码。
+    """
+    masked = _USERINFO.sub(rf"\1{CREDENTIAL_MASK}\3", line)
+    masked = _KEY_VALUE.sub(
+        lambda m: f"{m.group(1)}{m.group(2)}{CREDENTIAL_MASK}" if is_credential_key(m.group(1))
+        else m.group(0),
+        masked,
+    )
+    return _mask_bare_quoted(masked)
+
+
+# 样例默认按宽度截断，而截断是从**末尾**切的。`name` / `server` / `port` 这几个键在表里
+# 和「来自哪个 UA」那行都已经看得到，真正要看的 `reality-opts` / `ws-opts` 反而排在后面，
+# 正好被切掉。所以呈现前把这几个低信息量的键挪到末尾。
+_LOW_INFO_KEYS = ("name", "tag", "ps", "type", "server", "add", "port", "server_port")
+
+
+def _reorder_for_display(data: dict) -> dict:
+    low = {k: v for k, v in data.items() if str(k).lower() in _LOW_INFO_KEYS}
+    rest = {k: v for k, v in data.items() if str(k).lower() not in _LOW_INFO_KEYS}
+    return {**rest, **low}
+
+
+def mask_credentials(raw) -> str:
+    """把节点的原始形态转成一行可安全贴进报告的文本。
+
+    vmess 链接单独处理：载荷是 base64 包的 JSON，不解开就只能整段打掉，而那样样例
+    就没有任何字段信息了——解开、按键名打码、再以 JSON 明文呈现，既安全又看得懂。
+    """
+    if isinstance(raw, dict):
+        return json.dumps(
+            _reorder_for_display(_mask_mapping(raw)), ensure_ascii=False, sort_keys=False)
+    text = str(raw).strip()
+    if text.lower().startswith("vmess://"):
+        payload, _, fragment = text[len("vmess://"):].partition("#")
+        decoded = decode_base64(payload)
+        if decoded:
+            try:
+                config = json.loads(decoded.decode("utf-8", errors="replace"))
+            except json.JSONDecodeError:
+                config = None
+            if isinstance(config, dict):
+                body = json.dumps(
+                    _reorder_for_display(_mask_mapping(config)), ensure_ascii=False)
+                return f"vmess://{body}" + (f"#{fragment}" if fragment else "")
+    return _mask_text(text)
 
 
 def normalize_type(raw: str) -> str:
@@ -538,6 +836,7 @@ def _parse_sing_box(body: bytes) -> list[Node]:
                 normalize_type(str(outbound.get("type") or "")),
                 str(server),
                 port,
+                raw=outbound,
             )
         )
     return nodes
@@ -571,6 +870,7 @@ def _parse_clash(body: bytes, yq_runner) -> list[Node]:
                 normalize_type(str(proxy.get("type") or "")),
                 str(server),
                 port,
+                raw=proxy,
             )
         )
     return nodes
@@ -578,15 +878,17 @@ def _parse_clash(body: bytes, yq_runner) -> list[Node]:
 
 def _parse_url_link(line: str, index: int) -> Node | None:
     url, _, fragment = line.partition("#")
-    parsed = urlparse(url)
     try:
+        # urlparse 自己就会抛 ValueError：netloc 含 CJK 等字符时的 NFKC 校验不过。
+        # 不纳进 try 的话，这一行会把整次探测记成「解析失败」——本该只是跳过一行。
+        parsed = urlparse(url)
         port = parsed.port
     except ValueError:
         return None
     if not parsed.hostname or not port:
         return None
     name = unquote(fragment) if fragment else f"Line#{index}"
-    return Node(name, normalize_type(parsed.scheme), parsed.hostname, port)
+    return Node(name, normalize_type(parsed.scheme), parsed.hostname, port, raw=line)
 
 
 def _parse_vmess_link(line: str, index: int) -> Node | None:
@@ -607,7 +909,7 @@ def _parse_vmess_link(line: str, index: int) -> Node | None:
                 except (TypeError, ValueError):
                     return None
                 name = str(config.get("ps") or f"Line#{index}")
-                return Node(name, "vmess", str(server), port)
+                return Node(name, "vmess", str(server), port, raw=line)
     return _parse_url_link(line, index)
 
 
@@ -640,7 +942,7 @@ def _parse_loon_proxy_line(line: str) -> Node | None:
         port = int(fields[2])
     except (TypeError, ValueError):
         return None
-    return Node(name.strip(), normalize_type(fields[0]), fields[1], port)
+    return Node(name.strip(), normalize_type(fields[0]), fields[1], port, raw=line)
 
 
 def _parse_qx_server_line(line: str) -> Node | None:
@@ -664,7 +966,7 @@ def _parse_qx_server_line(line: str) -> Node | None:
         if key.strip().lower() == "tag":
             name = value.strip()
             break
-    return Node(name, normalize_type(head), server, port)
+    return Node(name, normalize_type(head), server, port, raw=line)
 
 
 def _parse_conf(text: str) -> list[Node]:
@@ -980,9 +1282,27 @@ def classify(nodes: list[Node], fmt: str) -> tuple[set[str], set[str], set[str],
     return usable, pending, unusable, pseudo, names
 
 
+def collect_pending_samples(nodes: list[Node], fmt: str) -> dict[str, Node]:
+    """每种「待支持」协议留一个原始形态样例，按出现顺序取第一个。
+
+    伪节点排除在外：它们是套餐信息，照着它写解析没有意义。
+    """
+    samples: dict[str, Node] = {}
+    for node in nodes:
+        if is_pseudo_node(node.name):
+            continue
+        if tier_of(node.type, fmt) == "pending":
+            samples.setdefault(node.type, node)
+    return samples
+
+
 def summarize(subscription: Subscription, probes: list[Probe]) -> Report:
     """算增量、分组、挑推荐。"""
-    rows = [Row(probe, *classify(probe.nodes, probe.fmt)) for probe in probes]
+    rows = []
+    for probe in probes:
+        row = Row(probe, *classify(probe.nodes, probe.fmt))
+        row.pending_samples = collect_pending_samples(probe.nodes, probe.fmt)
+        rows.append(row)
 
     # 基准探测失败时 baseline.usable 不代表真实基准（可能是空集合），
     # 增量会虚假地把「未知」算成「全部新增」，所以必须一并守卫 baseline.probe.ok。
@@ -1068,6 +1388,30 @@ def _type_histogram(fingerprints: set[str]) -> str:
     return " ".join(f"{t}×{n}" for t, n in sorted(counts.items(), key=lambda kv: -kv[1]))
 
 
+# 待支持样例的显示宽度上限，与伪节点那行的 120 保持一致；--wide 时不截断。
+# 截断是从末尾切的，所以 dict 样例呈现前会把 name/server/port 挪到最后
+# （`_reorder_for_display`），别让 reality-opts / ws-opts 正好被切掉。
+SAMPLE_LIMIT = 120
+
+
+def report_pending_samples(report: Report) -> list[tuple[str, str, Row, Node]]:
+    """按「格式 × 协议」各取一个待支持样例，返回 (格式, 协议, 来源行, 节点)。
+
+    为什么按「格式 × 协议」而不是只按协议：`USABLE_TYPES_BY_FORMAT` 本来就是按格式
+    分裂的，补分支时改的是具体某个 `*_proxy_to_outbound` 函数（clash 的、shadowrocket
+    的），所以可操作的单元是「哪个格式下的哪个协议」——同一个协议在两种格式下要补两处。
+
+    rows 已按可用数降序，setdefault 因此取到的是「拿得最全的那个 UA」的样例。
+    """
+    seen: dict[tuple[str, str], tuple[Row, Node]] = {}
+    for row in report.rows:
+        if not row.probe.ok:
+            continue
+        for proto, node in sorted(row.pending_samples.items()):
+            seen.setdefault((row.probe.fmt, proto), (row, node))
+    return [(fmt, proto, row, node) for (fmt, proto), (row, node) in sorted(seen.items())]
+
+
 def render_report(report: Report, wide: bool = False) -> str:
     """渲染一个订阅的终端报告。"""
     lines = []
@@ -1076,7 +1420,10 @@ def render_report(report: Report, wide: bool = False) -> str:
     # （report.baseline is None，理论上不会发生，因为 build_ua_plan 总会排入
     # 基准项）才退回按 client 重算。
     base_ua = report.baseline.probe.ua if report.baseline else baseline_ua(report.subscription.client)
-    lines.append(f"▌ {report.subscription.name}   基准 UA: {base_ua}")
+    # 只有 sing-box 客户端的基准串才来自 subscribe.sh，其余是 <client>/* 的内置规则，
+    # 给它们标「读自 subscribe.sh」是撒谎。
+    origin = f"（{baseline_source().note}）" if report.subscription.client == "sing-box" else ""
+    lines.append(f"▌ {report.subscription.name}   基准 UA: {base_ua}{origin}")
 
     headers = ["CLIENT", "VERSION", "STATUS", "FORMAT", "可用", "Δ", "待支持", "不可用", "伪"]
     table = [headers]
@@ -1168,6 +1515,24 @@ def render_report(report: Report, wide: bool = False) -> str:
             line += f"（另有 {len(pseudo_rows) - 1} 个 UA 也识别到伪节点）"
         lines.append(line)
 
+    # 「待支持」的行动是去 clash-to-sing.py 补一个转换分支，而指纹里没有任何字段信息。
+    # 给每种「格式 × 协议」贴一个原始形态（凭据已打码），照着它就能写解析。
+    samples = report_pending_samples(report)
+    if samples:
+        lines.append(
+            "  ⚠️ 待支持样例（每种「格式 × 协议」一个，供补 clash-to-sing.py 分支参考）"
+        )
+        label_width = max(display_width(f"{fmt} / {proto}") for fmt, proto, _, _ in samples)
+        for fmt, proto, row, node in samples:
+            lines.append(
+                f"      {pad(f'{fmt} / {proto}', label_width)}  "
+                f"来自 {row.probe.client} {row.probe.version}"
+            )
+            text = mask_credentials(node.raw) or f"（无原始形态）{node.name}"
+            if not wide:
+                text = truncate_display(text, SAMPLE_LIMIT)
+            lines.append(f"        {text}")
+
     if len(report.groups) > 1:
         lines.append(f"  ℹ {len(report.groups)} 组不同的节点列表：")
         for index, group in enumerate(report.groups):
@@ -1245,6 +1610,12 @@ def report_to_dict(report: Report, show_url: bool = False) -> dict:
             "pending": sorted(row.pending),
             "unusable": sorted(row.unusable),
             "names": sorted(row.names),
+            # 待支持样例的原始形态。凭据已按 mask_credentials 打码——JSON 常被重定向
+            # 成文件再顺手分享，和订阅 URL 是同一类泄漏面。
+            "pending_samples": [
+                {"type": proto, "format": row.probe.fmt, "raw": mask_credentials(node.raw)}
+                for proto, node in sorted(row.pending_samples.items())
+            ],
             "pseudo": [n.name for n in row.pseudo],
             "added": sorted(row.added),
             "removed": sorted(row.removed),
@@ -1258,6 +1629,13 @@ def report_to_dict(report: Report, show_url: bool = False) -> dict:
             "client": report.subscription.client,
         },
         "baseline_ua": report.baseline.probe.ua if report.baseline else None,
+        # 机器可读那一路也得看得见 provenance：基准 UA 是读自 subscribe.sh 还是内置兜底，
+        # 决定了整份增量可不可信。
+        "baseline_source": {
+            "ua": baseline_source().ua,
+            "note": baseline_source().note,
+            "from_file": baseline_source().from_file,
+        },
         "rows": [row_dict(r) for r in report.rows],
         "recommended": row_dict(report.recommended) if report.recommended else None,
         "groups": [[r.probe.ua for r in g] for g in report.groups],
@@ -1615,6 +1993,11 @@ def main(argv: list[str] | None = None, *, fetcher=None, sleeper=None, clock=Non
     default_list = Path(__file__).resolve().parent / "clash.txt"
     parser.add_argument("-f", "--file", type=Path, default=default_list, help="订阅清单，默认 clash.txt")
     parser.add_argument("--only", action="append", metavar="名字", help="只测指定订阅，可重复")
+    parser.add_argument(
+        "--subscribe-sh", type=Path, dest="subscribe_sh", metavar="路径",
+        help="从这份 subscribe.sh 解析 sing-box 的基准 UA，"
+             "默认 $WORKSPACE/proxy/sing-rules/subscribe.sh",
+    )
     parser.add_argument("--client", action="append", metavar="客户端", help="只测指定客户端，可重复")
     parser.add_argument("--interval", type=float, default=8.0, help="单订阅内请求间隔秒数，默认 8.0")
     parser.add_argument("--timeout", type=float, default=20.0, help="单次请求超时秒数，默认 20")
@@ -1654,6 +2037,13 @@ def main(argv: list[str] | None = None, *, fetcher=None, sleeper=None, clock=Non
             parser.error(
                 f"未知客户端：{'、'.join(unknown)}；可选值：{'、'.join(UA_TABLE)}"
             )
+
+    # 基准 UA 必须与 subscribe.sh 实际发出去的一致，否则每一个增量都是相对一个假基准算的。
+    # 解析不到会安全退回内置兜底，来源写进报告；告警走 stderr，--json 的 stdout 保持纯净。
+    source = resolve_baseline_source(args.subscribe_sh or default_subscribe_sh())
+    set_baseline_source(source)
+    for warning in source.warnings:
+        print(warning, file=sys.stderr)
 
     try:
         text = args.file.read_text(encoding="utf-8")
@@ -1793,9 +2183,10 @@ def main(argv: list[str] | None = None, *, fetcher=None, sleeper=None, clock=Non
             ensure_ascii=False, indent=2,
         ))
     else:
-        for index, report in enumerate(reports):
-            if index:
-                print()
+        # 每份报告前都空一行，**包括第一份**：汇总行（stderr）和第一份报告贴在一起时
+        # 读起来像同一段，订阅之间却是空开的，节奏不一致。
+        for report in reports:
+            print()
             print(render_report(report, wide=args.wide))
 
     if interrupted or failed or not reports:
