@@ -63,3 +63,24 @@ sops decrypt etc/secrets/<name>.env
   另有 `--since`（时间窗，默认 1h）、`-n`（连接数上限）、`--wide`（不截断长内容）、`--json`、`--trace <id>`（打印单连接完整事件时间线）。
   实现要点：多条件是分别查询后对 ConnectionId 取**交集**——因为 `ProcessName` 只出现在 router 事件、`Tag` 只出现在 outbound 事件，
   单条 Seq filter 无法 AND；查询触顶时会向 stderr 输出结果可能不完整的警告。
+- **订阅 UA 探测**：`etc/sing-box/ua-diff.py` 探测每个订阅在不同代理客户端 User-Agent 下
+  能拉到多少 sing-box **可用**的出站节点，回答「换哪个 UA 能多捞到节点」。
+  机场按 UA 下发不同内容（换格式、按客户端能力裁剪协议、改节点名、塞广告节点），
+  用 sing-box 自己的 UA 往往只拿到一小撮。读 `etc/sing-box/clash.txt`，
+  6 客户端 × 2 版本 = 12 个 UA，外加一次当前配置的基准 UA，共 13 次请求/订阅。
+  **⚠️ 不要随手跑它** —— 每跑一次就消耗一轮订阅的限速额度（每订阅 13 次请求、约 96 秒）。
+  验证改动一律用离线单测，不要执行 `./ua-diff.py`，也不要用任何方式真实请求订阅 URL。
+  `clash.txt` 含订阅 token，不要把它的 URL 写进报告或提交。
+  **限速是唯一的硬约束**：对单一订阅每分钟不得超过 8 次请求，默认 `--interval 8.0`
+  （7.5 次/分钟）。低于 7.5 会被 `parser.error` 拒绝，压测须显式加 `--force-interval`。
+  订阅之间并行、订阅内串行——限速是「对单一连接」的。
+  **可用性分级按订阅格式分裂**：`clash-to-sing.py` 的转换分支是按格式分的
+  （`clash` 收 hysteria2/ss/trojan/vmess，`shadowrocket` 收 vless/trojan/anytls，
+  `sing-box` 透传，`conf` 没有 loader），且 `case _` 会 `raise ValueError` 而调用方无
+  try/except——把不支持的协议判成「可用」会让 `update.sh` 直接崩。那边加协议要同步
+  `USABLE_TYPES_BY_FORMAT`。
+  退出码：`0` 当前 UA 已最优 / `1` 存在更优 UA / `2` 结论不可信（基准探测失败、
+  某订阅全部失败、或 Ctrl-C 中断）。个别陌生 UA 拿到 HTML 是常态，不影响 0/1。
+  只用标准库（外部命令仅 `yq`，解析 clash YAML 用），无 venv。
+  测试：`cd etc/sing-box && /opt/homebrew/bin/python3 -m unittest test_ua_diff`（不联网）。
+  设计文档 `docs/superpowers/specs/2026-08-10-ua-diff-design.md`。
