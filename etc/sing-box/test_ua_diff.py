@@ -5,6 +5,7 @@ import base64
 import contextlib
 import importlib.util
 import io
+import os
 import re
 import stat
 import sys
@@ -2314,6 +2315,937 @@ class MainTest(unittest.TestCase):
     def test_预估耗时按实际请求数算(self):
         _, _, err = self.run_main("--only", "ash.b64", "--client", "loon")
         self.assertIn("最多每个 3 次请求", err)
+
+
+# ---------------------------------------------------------------- 进度显示
+
+# 进度行里除了 detail 之外的部分都是对齐骨架，detail 的**起始列**必须与订阅名无关。
+ANSI = re.compile(r"\x1b\[")
+
+
+def replay_ansi(text: str) -> list[str]:
+    """把一段带 ANSI 的输出回放成「最终屏幕上长什么样」。
+
+    只实现本脚本用得到的几个序列，够用即可：`\\r`、`\\n`（终端 ONLCR，当 CRLF 算）、
+    `CUU`（`\\033[NA` 上移）、`EL`（`\\033[K` 清到行尾）、`ED`（`\\033[J` 清到屏幕尾）。
+
+    有它才测得了「进度块活着时插进来的输出会不会被下一帧盖掉」——光看字节流是看不出
+    这件事的，被盖掉的字节仍然在流里。
+    """
+    screen: list[list[str]] = [[]]
+    row = col = 0
+    index = 0
+
+    def ensure(target: int) -> None:
+        while len(screen) <= target:
+            screen.append([])
+
+    while index < len(text):
+        char = text[index]
+        if char == "\x1b" and text[index + 1:index + 2] == "[":
+            end = index + 2
+            while end < len(text) and not text[end].isalpha():
+                end += 1
+            params, cmd = text[index + 2:end], text[end:end + 1]
+            count = int(params) if params.isdigit() else 1
+            if cmd == "A":
+                row = max(0, row - count)
+            elif cmd == "K":
+                ensure(row)
+                del screen[row][col:]
+            elif cmd == "J":
+                ensure(row)
+                del screen[row][col:]
+                del screen[row + 1:]
+            index = end + 1
+            continue
+        if char == "\r":
+            col = 0
+        elif char == "\n":
+            row += 1
+            col = 0
+            ensure(row)
+        else:
+            ensure(row)
+            line = screen[row]
+            while len(line) < col:
+                line.append(" ")
+            if col < len(line):
+                line[col] = char
+            else:
+                line.append(char)
+            col += 1
+        index += 1
+    return ["".join(line).rstrip() for line in screen]
+
+
+class ReplayAnsiTest(unittest.TestCase):
+    """回放器自己也得测——它是下面几条断言的量具。"""
+
+    def test_上移后重写会覆盖原内容(self):
+        self.assertEqual(replay_ansi("一\n二\n\x1b[2A\r\x1b[K三\n"), ["三", "二", ""])
+
+    def test_清屏到末尾(self):
+        self.assertEqual(replay_ansi("一\n二\n三\n\x1b[2A\x1b[J"), ["一", ""])
+
+    def test_回车覆盖本行(self):
+        self.assertEqual(replay_ansi("abcdef\rxy"), ["xycdef"])
+
+
+class ScrubUrlsTest(unittest.TestCase):
+    def test_擦掉_http_URL(self):
+        self.assertEqual(
+            ua_diff.scrub_urls("<urlopen error https://a.example.org/sub?token=aaa>"),
+            "<urlopen error ***",
+        )
+
+    def test_多个_URL_全擦(self):
+        out = ua_diff.scrub_urls("http://a.org/x 和 https://b.org/y?token=zzz 都不该留")
+        self.assertNotIn("token=zzz", out)
+        self.assertNotIn("a.org", out)
+        self.assertNotIn("b.org", out)
+
+    def test_没有_URL_时原样返回(self):
+        self.assertEqual(ua_diff.scrub_urls("连接超时"), "连接超时")
+
+
+class TruncateDisplayTest(unittest.TestCase):
+    def test_没超宽就原样返回(self):
+        self.assertEqual(ua_diff.truncate_display("abc", 10), "abc")
+
+    def test_超宽时截断并补省略号(self):
+        out = ua_diff.truncate_display("abcdefghij", 5)
+        self.assertEqual(out, "abcd…")
+        self.assertEqual(ua_diff.display_width(out), 5)
+
+    def test_中文按显示宽度截断而不是字符数(self):
+        # 「香港节点一二三」7 个字符 = 14 格；限 7 格只放得下 3 个字 + …
+        out = ua_diff.truncate_display("香港节点一二三", 7)
+        self.assertLessEqual(ua_diff.display_width(out), 7)
+        self.assertTrue(out.endswith("…"))
+
+    def test_宽度为零或负时返回空(self):
+        self.assertEqual(ua_diff.truncate_display("abc", 0), "")
+        self.assertEqual(ua_diff.truncate_display("abc", -3), "")
+
+    def test_不会切出半个宽字符(self):
+        for width in range(1, 16):
+            with self.subTest(width=width):
+                out = ua_diff.truncate_display("🇭🇰香港-A(流量)测试节点", width)
+                self.assertLessEqual(ua_diff.display_width(out), width)
+
+
+class FormatProgressLineTest(unittest.TestCase):
+    """行格式化是纯函数，单独测对齐与截断——它是「不折行」这条硬约束的唯一执行点。"""
+
+    NAMES = ["ash.b64", "nanocloud.json", "🇭🇰香港机场", "中文订阅"]
+
+    def _lines(self, max_width=0):
+        width = max(ua_diff.display_width(n) for n in self.NAMES)
+        return [
+            ua_diff.format_progress_line(
+                name, ua_diff.PHASE_WAIT, 4, 13, "下一个 loon 3.5.0", 3.2,
+                name_width=width, max_width=max_width,
+            )
+            for name in self.NAMES
+        ]
+
+    def test_中文与_emoji_订阅名不影响后续列的起始位置(self):
+        starts = set()
+        for line in self._lines():
+            head, sep, _ = line.partition("下一个")
+            self.assertTrue(sep, f"detail 没出现在行里：{line!r}")
+            starts.add(ua_diff.display_width(head))
+        self.assertEqual(len(starts), 1, f"detail 列起始位置不一致：{starts}")
+
+    def test_计数列右对齐(self):
+        line = ua_diff.format_progress_line(
+            "x", ua_diff.PHASE_WAIT, 4, 13, "d", 1.0, name_width=1)
+        self.assertIn("[ 4/13]", line)
+        line = ua_diff.format_progress_line(
+            "x", ua_diff.PHASE_WAIT, 12, 13, "d", 1.0, name_width=1)
+        self.assertIn("[12/13]", line)
+
+    def test_显示当前阶段已持续多久(self):
+        """「还活着」的唯一证据。限速空档里其余字段一动不动，只有这个秒数在走。"""
+        line = ua_diff.format_progress_line(
+            "x", ua_diff.PHASE_WAIT, 4, 13, "d", 3.24, name_width=1)
+        self.assertIn("3.2s", line)
+
+    def test_阶段切换不会让后面的列左右跳(self):
+        starts = set()
+        for phase in ua_diff.PROGRESS_PHASES:
+            line = ua_diff.format_progress_line(
+                "x", phase, 4, 13, "DETAIL", 1.0, name_width=1)
+            starts.add(ua_diff.display_width(line.partition("DETAIL")[0]))
+        self.assertEqual(len(starts), 1, f"阶段列宽不固定：{starts}")
+
+    def test_限宽时整行不超宽(self):
+        """折行会把原地重画的行数算错，整块显示就乱了——这是硬约束。"""
+        for max_width in (20, 40, 60, 80, 120):
+            with self.subTest(max_width=max_width):
+                for line in self._lines(max_width=max_width):
+                    self.assertLessEqual(
+                        ua_diff.display_width(line), max_width,
+                        f"行超宽会折行：{line!r}")
+
+    def test_窄到骨架都放不下时也不超宽(self):
+        for max_width in range(1, 20):
+            with self.subTest(max_width=max_width):
+                line = ua_diff.format_progress_line(
+                    "nanocloud.json", ua_diff.PHASE_FETCH, 7, 13,
+                    "sing-box 1.13.18", 1.1, name_width=14, max_width=max_width)
+                self.assertLessEqual(ua_diff.display_width(line), max_width)
+
+    def test_超长_detail_被截断而不是折行(self):
+        line = ua_diff.format_progress_line(
+            "ash.b64", ua_diff.PHASE_DONE, 13, 13, "x" * 500, 0.1,
+            name_width=7, max_width=80)
+        self.assertLessEqual(ua_diff.display_width(line), 80)
+        self.assertTrue(line.endswith("…"))
+
+    def test_不限宽时不截断(self):
+        line = ua_diff.format_progress_line(
+            "ash.b64", ua_diff.PHASE_DONE, 13, 13, "y" * 300, 0.1,
+            name_width=7, max_width=0)
+        self.assertIn("y" * 300, line)
+
+    def test_行内不含任何_ANSI(self):
+        for line in self._lines(max_width=80):
+            self.assertIsNone(ANSI.search(line))
+
+
+class ProgressRendererNonTtyTest(unittest.TestCase):
+    """非 TTY（重定向、管道、CI）：只打纯文本完成行，绝不输出 ANSI，也不起线程。"""
+
+    def _renderer(self):
+        self.stream = io.StringIO()
+        return ua_diff.ProgressRenderer(
+            [("ash.b64", 13), ("nanocloud.json", 13)],
+            stream=self.stream, isatty=False, clock=lambda: 0.0,
+        )
+
+    def test_只有完成阶段打行(self):
+        renderer = self._renderer()
+        renderer.start()
+        renderer.update("ash.b64", ua_diff.PHASE_WAIT, 0, 13, "下一个 loon 3.5.0")
+        renderer.update("ash.b64", ua_diff.PHASE_FETCH, 0, 13, "loon 3.5.0")
+        renderer.update("ash.b64", ua_diff.PHASE_PARSE, 0, 13, "loon 3.5.0")
+        self.assertEqual(self.stream.getvalue(), "")
+        renderer.update("ash.b64", ua_diff.PHASE_DONE, 1, 13, "loon 3.5.0 200 base64 3 节点")
+        renderer.stop()
+        lines = self.stream.getvalue().splitlines()
+        self.assertEqual(len(lines), 1)
+        self.assertIn("[1/13]", lines[0])
+        self.assertIn("200 base64 3 节点", lines[0])
+
+    def test_不输出任何_ANSI(self):
+        renderer = self._renderer()
+        renderer.start()
+        for i in range(1, 4):
+            renderer.update("ash.b64", ua_diff.PHASE_WAIT, i - 1, 13, "等")
+            renderer.update("ash.b64", ua_diff.PHASE_DONE, i, 13, "完")
+        renderer.stop()
+        self.assertIsNone(ANSI.search(self.stream.getvalue()))
+
+    def test_不起重画线程(self):
+        before = threading.active_count()
+        renderer = self._renderer()
+        renderer.start()
+        self.assertEqual(threading.active_count(), before)
+        renderer.stop()
+
+
+class ProgressRendererTtyTest(unittest.TestCase):
+    """TTY：每订阅一行，原地重画，且必须显示当前阶段已持续多久。"""
+
+    def setUp(self):
+        self.stream = io.StringIO()
+        self.now = 0.0
+        self.renderer = ua_diff.ProgressRenderer(
+            [("ash.b64", 13), ("nanocloud.json", 13)],
+            stream=self.stream, isatty=True, clock=lambda: self.now, width=80,
+        )
+
+    def test_首次重画打两行且不含上移(self):
+        self.renderer._redraw()
+        out = self.stream.getvalue()
+        self.assertEqual(out.count("\n"), 2)  # 不能用 splitlines：它也在 \r 处断
+        self.assertNotIn("\x1b[2A", out)
+        self.assertIn("ash.b64", out)
+        self.assertIn("nanocloud.json", out)
+
+    def test_再次重画先上移_N_行(self):
+        self.renderer._redraw()
+        self.stream.truncate(0)
+        self.stream.seek(0)
+        self.renderer._redraw()
+        self.assertTrue(self.stream.getvalue().startswith("\x1b[2A"))
+        self.assertIn("\r\x1b[K", self.stream.getvalue())
+
+    def test_阶段持续时间随时钟增长(self):
+        self.renderer.update("ash.b64", ua_diff.PHASE_WAIT, 4, 13, "下一个 loon 3.5.0")
+        self.now = 3.2
+        self.renderer._redraw()
+        line = next(l for l in self.stream.getvalue().splitlines() if "ash.b64" in l)
+        self.assertIn("等待限速", line)
+        self.assertIn("3.2s", line)
+
+    def test_阶段不变时起始时刻不重置(self):
+        self.renderer.update("ash.b64", ua_diff.PHASE_WAIT, 4, 13, "a")
+        self.now = 2.0
+        self.renderer.update("ash.b64", ua_diff.PHASE_WAIT, 4, 13, "b")
+        self.now = 5.0
+        self.renderer._redraw()
+        line = next(l for l in self.stream.getvalue().splitlines() if "ash.b64" in l)
+        self.assertIn("5.0s", line)
+
+    def test_阶段切换时起始时刻重置(self):
+        self.renderer.update("ash.b64", ua_diff.PHASE_WAIT, 4, 13, "a")
+        self.now = 8.0
+        self.renderer.update("ash.b64", ua_diff.PHASE_FETCH, 4, 13, "a")
+        self.now = 9.5
+        self.renderer._redraw()
+        line = next(l for l in self.stream.getvalue().splitlines() if "ash.b64" in l)
+        self.assertIn("1.5s", line)
+
+    def test_每行都不超终端宽度(self):
+        self.renderer.update("ash.b64", ua_diff.PHASE_DONE, 13, 13, "详情" * 200)
+        self.renderer._redraw()
+        for line in self.stream.getvalue().splitlines():
+            plain = re.sub(r"\x1b\[[0-9;]*[A-Za-z]|\r", "", line)
+            self.assertLessEqual(ua_diff.display_width(plain), 80)
+
+    def test_stop_清掉已画的行(self):
+        self.renderer._redraw()
+        self.stream.truncate(0)
+        self.stream.seek(0)
+        self.renderer.stop()
+        self.assertEqual(self.stream.getvalue(), "\x1b[2A\x1b[J")
+
+    def test_stop_幂等(self):
+        self.renderer._redraw()
+        self.renderer.stop()
+        marker = len(self.stream.getvalue())
+        self.renderer.stop()
+        self.renderer.stop()
+        self.assertEqual(len(self.stream.getvalue()), marker)
+
+    def test_stop_之后的_update_不再输出(self):
+        self.renderer.stop()
+        self.renderer.update("ash.b64", ua_diff.PHASE_DONE, 13, 13, "迟到的更新")
+        self.assertNotIn("迟到的更新", self.stream.getvalue())
+
+    def test_重画线程是_daemon_且_stop_后退出(self):
+        self.renderer._tick = 0.01
+        self.renderer.start()
+        thread = self.renderer._thread
+        self.assertTrue(thread.daemon)
+        self.renderer.stop()
+        thread.join(2.0)
+        self.assertFalse(thread.is_alive())
+
+    def test_写流失败不抛异常(self):
+        class Broken:
+            def isatty(self):
+                return True
+
+            def write(self, _text):
+                raise OSError("管道断了")
+
+            def flush(self):
+                pass
+
+        renderer = ua_diff.ProgressRenderer(
+            [("a", 3)], stream=Broken(), isatty=True, clock=lambda: 0.0, width=80)
+        renderer._redraw()          # 不该抛
+        renderer.update("a", ua_diff.PHASE_DONE, 1, 3, "x")
+        renderer.stop()
+
+
+class ProgressBackpressureTest(unittest.TestCase):
+    """终端卡住时（SSH 卡顿、Ctrl-S 的 XOFF、终端模拟器 hang），显示的背压**不能**
+    传导回探测。曾经 `_write` 在状态锁里，重画线程握着锁卡在 write 上，
+    `update()` 和 `stop()` 一起被拖住（实测各 5 秒），而 `stop()` 的 docstring
+    还写着「不阻塞」。"""
+
+    class SlowStream:
+        """第二次写开始就卡住的流。
+
+        第一次放行，是因为 `start()` 会在调用者的线程里同步画第一帧；要模拟的是
+        「**重画线程**卡在 write 里」，卡住第一帧只会卡住测试自己。
+        """
+
+        def __init__(self):
+            self.entered = threading.Event()
+            self.release = threading.Event()
+            self.chunks = []
+
+        def isatty(self):
+            return True
+
+        def write(self, text):
+            self.chunks.append(text)
+            if len(self.chunks) < 2:
+                return
+            self.entered.set()
+            self.release.wait(5.0)
+
+        def flush(self):
+            pass
+
+    def test_慢终端拖不住_update_和_stop(self):
+        stream = self.SlowStream()
+        self.addCleanup(stream.release.set)
+        renderer = ua_diff.ProgressRenderer(
+            [("ash.b64", 3)], stream=stream, isatty=True, tick=0.01, clock=lambda: 0.0)
+        renderer.start()
+        self.assertTrue(stream.entered.wait(2.0), "重画线程没进到 write 里")
+
+        start = time.monotonic()
+        renderer.update("ash.b64", ua_diff.PHASE_FETCH, 1, 3, "loon 3.5.0")
+        update_cost = time.monotonic() - start
+        self.assertLess(update_cost, 0.5, f"update() 被显示的背压拖住了：{update_cost:.2f}s")
+
+        start = time.monotonic()
+        renderer.stop()
+        stop_cost = time.monotonic() - start
+        # 这里量的是「等**别人**」的部分：join 等一次 + 抢 _io_lock 等一次，各 _STOP_WAIT。
+        # 本例里 stop() 抢不到锁、直接放弃清屏，所以它自己不发起 write。
+        # 注意 stop() 并非事事有上限：真轮到它写清屏时那次 write 没有超时可设（见其
+        # docstring），终端卡多久它就卡多久——那条路这个断言量不到，也不该被读成量到了。
+        self.assertLess(stop_cost, 3 * ua_diff._STOP_WAIT,
+                        f"stop() 被显示的背压拖住了：{stop_cost:.2f}s")
+        self.assertTrue(stream.chunks, "根本没写过，那不叫「没被拖住」")
+
+    def test_update_在_TTY_下一个字节都不写(self):
+        """写全交给重画线程，热路径才不会碰到终端。"""
+        stream = self.SlowStream()
+        self.addCleanup(stream.release.set)
+        renderer = ua_diff.ProgressRenderer(
+            [("ash.b64", 3)], stream=stream, isatty=True, clock=lambda: 0.0)
+        for phase in ua_diff.PROGRESS_PHASES:
+            renderer.update("ash.b64", phase, 1, 3, "loon 3.5.0")
+        self.assertEqual(stream.chunks, [])  # start() 都没调，更不该有人写
+
+
+class ProgressFirstFrameTest(unittest.TestCase):
+    """第一帧必须由 `start()` 同步画掉。
+
+    否则「探测 N 个订阅……」那行会孤零零挂上最多一个 tick——正是最需要反馈的时刻；
+    而且「屏幕上有几行进度」会取决于线程的调度运气，收尾清屏跟着一起变成看运气。
+    """
+
+    def test_start_返回时第一帧已经在屏幕上(self):
+        stream = io.StringIO()
+        renderer = ua_diff.ProgressRenderer(
+            [("ash.b64", 13), ("nanocloud.json", 13)],
+            stream=stream, isatty=True, tick=30.0, clock=lambda: 0.0, width=80)
+        self.addCleanup(renderer.stop)
+        renderer.start()
+        # tick 是 30 秒，线程这会儿绝无可能画过任何东西
+        screen = [l for l in replay_ansi(stream.getvalue()) if l.strip()]
+        self.assertEqual(len(screen), 2, screen)
+        self.assertIn("ash.b64", screen[0])
+        self.assertIn("nanocloud.json", screen[1])
+
+    def test_非_TTY_的_start_什么都不画(self):
+        stream = io.StringIO()
+        renderer = ua_diff.ProgressRenderer(
+            [("ash.b64", 13)], stream=stream, isatty=False, clock=lambda: 0.0)
+        renderer.start()
+        self.assertEqual(stream.getvalue(), "")
+
+
+class ProgressLogTest(unittest.TestCase):
+    """进度块活着时，往同一个流里插第三方输出。
+
+    这是原先的盲区：worker 直接 print 的告警会被下一帧盖掉——整行消失，而且
+    `stop()` 从错位置清起、顶上留一行残影压在报告上面。后果不只是难看：spec 里
+    「`--dump` 写盘失败只记一行告警、不中断」这条保证在 TTY 下静默失效。
+    """
+
+    WARN = "⚠️ 保存原始响应失败（x.raw）：磁盘满了"
+
+    def _renderer(self, stream):
+        return ua_diff.ProgressRenderer(
+            [("ash.b64", 3), ("nanocloud.json", 3)],
+            stream=stream, isatty=True, clock=lambda: 0.0, width=80)
+
+    def test_告警回放后仍在屏幕上且不留残影(self):
+        stream = io.StringIO()
+        renderer = self._renderer(stream)
+        renderer._redraw()
+        renderer.log(self.WARN)
+        renderer._redraw()
+        renderer.stop()
+        stream.write("▌ ash.b64   基准 UA: shadowsocket/*\n")  # 紧随其后的报告
+
+        screen = replay_ansi(stream.getvalue())
+        self.assertIn(self.WARN, screen, f"告警被下一帧盖掉了：{screen}")
+        self.assertIn("▌ ash.b64   基准 UA: shadowsocket/*", screen)
+        # 进度块必须被收干净，不能有半行压在报告上面
+        residue = [l for l in screen if "[0/3]" in l or "[1/3]" in l]
+        self.assertEqual(residue, [], f"进度残影：{screen}")
+
+    def test_告警之后进度块从头铺(self):
+        stream = io.StringIO()
+        renderer = self._renderer(stream)
+        renderer._redraw()
+        renderer.log(self.WARN)
+        stream.truncate(0)
+        stream.seek(0)
+        renderer._redraw()
+        # _drawn 已归零，这一帧不能再上移——上移就会盖掉刚打的告警
+        self.assertNotIn("\x1b[2A", stream.getvalue())
+
+    def test_非_TTY_下告警是纯文本(self):
+        stream = io.StringIO()
+        renderer = ua_diff.ProgressRenderer(
+            [("ash.b64", 3)], stream=stream, isatty=False, clock=lambda: 0.0)
+        renderer.log(self.WARN)
+        self.assertEqual(stream.getvalue(), self.WARN + "\n")
+
+    def test_已有换行不会补第二个(self):
+        stream = io.StringIO()
+        renderer = ua_diff.ProgressRenderer(
+            [("ash.b64", 3)], stream=stream, isatty=False, clock=lambda: 0.0)
+        renderer.log(self.WARN + "\n")
+        self.assertEqual(stream.getvalue(), self.WARN + "\n")
+
+
+class WarnHelperTest(unittest.TestCase):
+    """`_warn` 的回退：渲染器出问题时告警本身不能丢。"""
+
+    def test_有回调时走回调(self):
+        got = []
+        ua_diff._warn(got.append, "⚠️ 出事了")
+        self.assertEqual(got, ["⚠️ 出事了"])
+
+    def test_没有回调时打到_stderr(self):
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            ua_diff._warn(None, "⚠️ 出事了")
+        self.assertEqual(err.getvalue(), "⚠️ 出事了\n")
+
+    def test_回调抛异常时退回_stderr_而不是丢掉(self):
+        def boom(_text):
+            raise RuntimeError("渲染器炸了")
+
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            ua_diff._warn(boom, "⚠️ 出事了")
+        self.assertIn("⚠️ 出事了", err.getvalue())
+
+
+class ProgressTerminalWidthTest(unittest.TestCase):
+    """极窄终端：`columns - 1` 会掉到 0/负数，而那正好是「不限宽」的信号——
+    「防折行」直接翻成「保证折行」。"""
+
+    def setUp(self):
+        self.original = os.environ.get("COLUMNS")
+        self.addCleanup(self._restore)
+
+    def _restore(self):
+        if self.original is None:
+            os.environ.pop("COLUMNS", None)
+        else:
+            os.environ["COLUMNS"] = self.original
+
+    def test_终端极窄时不会退化成不限宽(self):
+        for columns in ("1", "2", "3", "10"):
+            with self.subTest(columns=columns):
+                os.environ["COLUMNS"] = columns
+                stream = io.StringIO()
+                renderer = ua_diff.ProgressRenderer(
+                    [("nanocloud.json", 13)], stream=stream, isatty=True, clock=lambda: 0.0)
+                limit = renderer._max_width()
+                self.assertGreaterEqual(limit, 1, "退化成了「不限宽」")
+                renderer.update("nanocloud.json", ua_diff.PHASE_FETCH, 7, 13,
+                                "sing-box 1.13.18 " * 5)
+                renderer._redraw()
+                for line in replay_ansi(stream.getvalue()):
+                    self.assertLessEqual(ua_diff.display_width(line), limit)
+
+
+class ProgressDuplicateNameTest(unittest.TestCase):
+    """clash.txt 允许重名。重名的两个 worker 若写进同一行，计数会互相覆盖。"""
+
+    def test_重名订阅各占一行(self):
+        stream = io.StringIO()
+        renderer = ua_diff.ProgressRenderer(
+            [("dup", 3), ("dup", 3), ("other", 3), ("dup", 3)],
+            stream=stream, isatty=True, clock=lambda: 0.0, width=120)
+        self.assertEqual(renderer.keys, ["dup", "dup#2", "other", "dup#3"])
+        for index, key in enumerate(renderer.keys):
+            renderer.update(key, ua_diff.PHASE_DONE, index + 1, 3, f"第 {index} 个")
+        renderer._redraw()
+        screen = [l for l in replay_ansi(stream.getvalue()) if l.strip()]
+        self.assertEqual(len(screen), 4, f"重名订阅没有各占一行：{screen}")
+        for index in range(4):
+            self.assertTrue(any(f"第 {index} 个" in l for l in screen), screen)
+
+
+class ProbeProgressCallbackTest(unittest.TestCase):
+    """probe_subscription 的 on_progress 回调：时机、内容、异常安全。"""
+
+    SUB = ua_diff.Subscription("ash.b64", "https://example.org/sub?token=aaa", "sing-box")
+    BODY = base64.b64encode(b"vless://uuid@1.2.3.4:443#HK-01\n")
+
+    def _run(self, fetcher, on_progress, clients=None):
+        return ua_diff.probe_subscription(
+            self.SUB, interval=8.0, timeout=1.0, clients=clients or ["loon"],
+            fetcher=fetcher, sleeper=lambda s: None, clock=lambda: 0.0,
+            on_progress=on_progress,
+        )
+
+    def test_四个阶段按顺序上报(self):
+        events = []
+        self._run(lambda u, a, t: ua_diff.Response(200, self.BODY),
+                  lambda *args: events.append(args))
+        phases = [e[0] for e in events]
+        # 基准 + loon 两个版本 = 3 次请求 × 4 个阶段
+        self.assertEqual(phases, [
+            ua_diff.PHASE_WAIT, ua_diff.PHASE_FETCH, ua_diff.PHASE_PARSE, ua_diff.PHASE_DONE,
+        ] * 3)
+        self.assertEqual([e[2] for e in events], [3] * 12)  # total
+        self.assertEqual([e[1] for e in events if e[0] == ua_diff.PHASE_DONE], [1, 2, 3])
+
+    def test_等待限速在_wait_之前上报(self):
+        """限速的 8 秒空档是全程最长的静默，进度必须在进入等待之**前**就报出来，
+        否则那 8 秒屏幕上什么都没有——正是这次要治的病。"""
+        timeline = []
+        self._run(
+            lambda u, a, t: ua_diff.Response(200, self.BODY),
+            lambda phase, *rest: timeline.append(("progress", phase)),
+        )
+        # 用一个会记录顺序的 sleeper 更直接
+        timeline.clear()
+        ua_diff.probe_subscription(
+            self.SUB, interval=8.0, timeout=1.0, clients=["loon"],
+            fetcher=lambda u, a, t: ua_diff.Response(200, self.BODY),
+            sleeper=lambda s: timeline.append(("sleep", s)),
+            clock=lambda: 0.0,
+            on_progress=lambda phase, *rest: timeline.append(("progress", phase)),
+        )
+        first_sleep = next(i for i, e in enumerate(timeline) if e[0] == "sleep")
+        before = [e[1] for e in timeline[:first_sleep] if e[0] == "progress"]
+        self.assertEqual(before[-1], ua_diff.PHASE_WAIT)
+
+    def test_完成时的摘要含状态码格式与节点数(self):
+        events = []
+        self._run(lambda u, a, t: ua_diff.Response(200, self.BODY),
+                  lambda *args: events.append(args))
+        detail = next(e[3] for e in events if e[0] == ua_diff.PHASE_DONE)
+        self.assertIn("200", detail)
+        self.assertIn("base64", detail)
+        self.assertIn("1 节点", detail)
+
+    def test_失败时摘要擦掉_URL(self):
+        """异常字符串偶尔会把请求 URL 原样带上，而订阅 URL 含 token。"""
+        events = []
+        self._run(
+            lambda u, a, t: ua_diff.Response(
+                0, b"", f"<urlopen error timed out for {u}>"),
+            lambda *args: events.append(args),
+        )
+        for _, _, _, detail in [e for e in events if e[0] == ua_diff.PHASE_DONE]:
+            self.assertNotIn("token=aaa", detail)
+            self.assertNotIn("example.org", detail)
+            self.assertIn("失败", detail)
+
+    def test_回调抛异常不影响探测(self):
+        """显示是附属功能，渲染器有 bug 不能把 worker 弄死、让整个订阅静默消失。"""
+        def boom(*_args):
+            raise RuntimeError("渲染器炸了")
+
+        probes = self._run(lambda u, a, t: ua_diff.Response(200, self.BODY), boom)
+        self.assertEqual(len(probes), 3)
+        self.assertTrue(all(p.ok for p in probes))
+
+    def test_不传回调时行为不变(self):
+        probes = self._run(lambda u, a, t: ua_diff.Response(200, self.BODY), None)
+        self.assertEqual(len(probes), 3)
+
+    def test_落盘失败的告警走_on_warn_而不是裸_print(self):
+        """裸 print 会被下一帧进度盖掉，spec 的「只记一行告警」就静默失效了。"""
+        warnings = []
+        with tempfile.TemporaryDirectory() as tmp:
+            dump = Path(tmp)
+            (dump / "ash.b64.loon.3.5.0.raw").mkdir()  # 占住文件名 → IsADirectoryError
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                probes = ua_diff.probe_subscription(
+                    self.SUB, interval=8.0, timeout=1.0, clients=["loon"],
+                    fetcher=lambda u, a, t: ua_diff.Response(200, self.BODY),
+                    sleeper=lambda s: None, clock=lambda: 0.0, dump_dir=dump,
+                    on_warn=warnings.append,
+                )
+        self.assertEqual(len(probes), 3)  # 落盘失败不吃掉剩余探测
+        self.assertTrue(any("保存原始响应失败" in w for w in warnings), warnings)
+        self.assertEqual(stderr.getvalue(), "")  # 没绕过 on_warn 直接喷 stderr
+
+
+class MainProgressTest(unittest.TestCase):
+    """main 里的进度：输出流、开关、与 --json 的隔离、不泄漏 URL。
+
+    全部离线：fetcher/sleeper/clock 走 main 的注入点。stdout/stderr 都被 redirect
+    成 StringIO（isatty() 为假），所以走的是非 TTY 分支。
+    """
+
+    DONE_LINE = re.compile(r"\[\d+/13\]")
+
+    LIST = (
+        "ash.b64 https://example.org/sub?token=aaa shadowsocket\n"
+        "nanocloud.json https://example.org/verify?token=ccc sing-box\n"
+    )
+    BODY = base64.b64encode(b"vless://uuid@1.2.3.4:443#HK-01\n")
+
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.root = Path(tmp.name)
+        self.list_file = self.root / "clash.txt"
+        self.list_file.write_text(self.LIST, encoding="utf-8")
+
+    def _fetcher(self, url, ua, timeout):
+        return ua_diff.Response(200, self.BODY)
+
+    def run_main(self, *argv, fetcher=None):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = ua_diff.main(
+                ["-f", str(self.list_file), *argv],
+                fetcher=fetcher or self._fetcher,
+                sleeper=lambda seconds: None,
+                clock=lambda: 0.0,
+            )
+        return code, out.getvalue(), err.getvalue()
+
+    def test_每完成一次请求在_stderr_打一行(self):
+        code, _, err = self.run_main("--only", "ash.b64")
+        self.assertEqual(code, 0)
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 13)
+
+    def test_多个订阅各自计数(self):
+        code, _, err = self.run_main()
+        self.assertEqual(code, 0)
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 26)
+        self.assertIn("ash.b64", err)
+        self.assertIn("nanocloud.json", err)
+
+    def test_非_TTY_下不输出任何_ANSI(self):
+        """管道/重定向/CI 里 ANSI 会变成一堆乱码，必须走纯文本分支。"""
+        _, out, err = self.run_main("--only", "ash.b64")
+        self.assertIsNone(ANSI.search(err))
+        self.assertIsNone(ANSI.search(out))
+
+    def test_进度只走_stderr_不碰_stdout(self):
+        _, out, _ = self.run_main("--only", "ash.b64")
+        self.assertIsNone(self.DONE_LINE.search(out))
+
+    def test_json_的_stdout_是纯净可解析的(self):
+        """--json 常被重定向进文件再喂给别的脚本，混进一行进度就整份废掉。"""
+        import json as _json
+        code, out, err = self.run_main("--only", "ash.b64", "--json")
+        self.assertEqual(code, 0)
+        data = _json.loads(out)  # 整份解析，不是逐行找
+        self.assertEqual(data[0]["subscription"]["name"], "ash.b64")
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 13)  # 进度照常，只是在 stderr
+
+    def test_no_progress_彻底关掉进度(self):
+        _, _, err = self.run_main("--only", "ash.b64", "--no-progress")
+        self.assertIsNone(self.DONE_LINE.search(err))
+        self.assertIn("探测 1 个订阅", err)  # 开头那行汇总保留
+
+    def test_进度不泄漏订阅_URL(self):
+        """clash.txt 的 URL 含 token，进度是直接喷到终端、也可能被重定向进日志的。"""
+        _, _, err = self.run_main("--only", "ash.b64")
+        self.assertNotIn("token=aaa", err)
+        self.assertNotIn("example.org", err)
+
+    def test_请求失败时进度也不泄漏_URL(self):
+        def fetcher(url, ua, timeout):
+            return ua_diff.Response(0, b"", f"<urlopen error timed out for {url}>")
+
+        _, _, err = self.run_main("--only", "ash.b64", fetcher=fetcher)
+        self.assertNotIn("token=aaa", err)
+        self.assertNotIn("example.org", err)
+
+    def test_进度行里有客户端与版本(self):
+        _, _, err = self.run_main("--only", "ash.b64", "--client", "loon")
+        self.assertIn("loon 3.5.0", err)
+
+    def test_重名订阅各占一行不互相覆盖(self):
+        """clash.txt 允许重名，两个 worker 写进同一行会让计数互相覆盖。"""
+        self.list_file.write_text(
+            "dup https://example.org/a?token=aaa sing-box\n"
+            "dup https://example.org/b?token=bbb sing-box\n",
+            encoding="utf-8",
+        )
+        code, _, err = self.run_main()
+        self.assertEqual(code, 0)
+        self.assertIn("dup#2", err)
+        self.assertEqual(len(self.DONE_LINE.findall(err)), 26)
+
+    def test_落盘失败的告警照常出现(self):
+        dump = self.root / "dump"
+        dump.mkdir()
+        (dump / "ash.b64.loon.3.5.0.raw").mkdir()  # 占住文件名 → 写盘必失败
+        code, out, err = self.run_main(
+            "--only", "ash.b64", "--client", "loon", "--dump", str(dump))
+        self.assertEqual(code, 0)
+        self.assertIn("保存原始响应失败", err)
+        self.assertIn("▌ ash.b64", out)  # 告警不中断探测
+
+    def test_中断时进度不影响已完成部分的输出(self):
+        """既有的 Ctrl-C 行为不能因为多了个渲染线程而回退。"""
+        original = ua_diff.as_completed
+
+        def interrupt_after_all(fs, *args, **kwargs):
+            for done in original(fs, *args, **kwargs):
+                yield done
+            raise KeyboardInterrupt
+
+        ua_diff.as_completed = interrupt_after_all
+        try:
+            code, out, err = self.run_main("--only", "ash.b64")
+        finally:
+            ua_diff.as_completed = original
+
+        self.assertEqual(code, 2)
+        self.assertIn("已中断", err)
+        self.assertIn("▌ ash.b64", out)
+
+
+class _FakeTty(io.StringIO):
+    """假装自己是终端的 StringIO，用来在离线测试里走 main 的 TTY 分支。"""
+
+    def isatty(self):
+        return True
+
+
+class MainProgressTtyTest(MainProgressTest):
+    """把 stderr 换成「是 TTY」的流，逼 main 走原地重画分支。
+
+    非 TTY 分支不起线程、stop() 也没有残影要清，所以「main 忘了 stop 渲染器」
+    在非 TTY 测试里完全观察不到——那条路只有在这里才钉得住。
+    """
+
+    def run_main(self, *argv, fetcher=None):
+        out, err = io.StringIO(), _FakeTty()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = ua_diff.main(
+                ["-f", str(self.list_file), *argv],
+                fetcher=fetcher or self._fetcher,
+                sleeper=lambda seconds: None,
+                clock=lambda: 0.0,
+            )
+        return code, out.getvalue(), err.getvalue()
+
+    # 下面这几条是非 TTY 专属断言，在 TTY 分支下不成立，覆盖掉
+    def test_每完成一次请求在_stderr_打一行(self):
+        self.skipTest("TTY 分支是原地重画，不是每次完成打一行")
+
+    def test_多个订阅各自计数(self):
+        self.skipTest("TTY 分支是原地重画，不是每次完成打一行")
+
+    def test_非_TTY_下不输出任何_ANSI(self):
+        self.skipTest("这条是非 TTY 分支专属")
+
+    def test_进度行里有客户端与版本(self):
+        # TTY 是原地重画：屏幕上只留最后一次画的内容，逐次完成行看非 TTY 那组
+        _, _, err = self.run_main("--only", "ash.b64", "--client", "loon")
+        self.assertRegex(err, r"loon \d+\.\d+\.\d+")
+
+    def test_进度只走_stderr_不碰_stdout(self):
+        _, out, _ = self.run_main("--only", "ash.b64")
+        self.assertIsNone(ANSI.search(out))
+        self.assertIsNone(self.DONE_LINE.search(out))
+
+    def test_json_的_stdout_是纯净可解析的(self):
+        import json as _json
+        code, out, err = self.run_main("--only", "ash.b64", "--json")
+        self.assertEqual(code, 0)
+        self.assertEqual(_json.loads(out)[0]["subscription"]["name"], "ash.b64")
+        self.assertIsNotNone(ANSI.search(err))  # 进度确实画了，只是画在 stderr
+
+    def test_no_progress_彻底关掉进度(self):
+        _, _, err = self.run_main("--only", "ash.b64", "--no-progress")
+        self.assertIsNone(ANSI.search(err))
+        self.assertIsNone(self.DONE_LINE.search(err))
+        self.assertIn("探测 1 个订阅", err)
+
+    def test_重名订阅各占一行不互相覆盖(self):
+        self.list_file.write_text(
+            "dup https://example.org/a?token=aaa sing-box\n"
+            "dup https://example.org/b?token=bbb sing-box\n",
+            encoding="utf-8",
+        )
+        code, _, err = self.run_main()
+        self.assertEqual(code, 0)
+        # 收尾时进度块被清掉了，所以看字节流：每帧两行、两个不同的行名、收尾按 2 行上移。
+        # 不数 [n/13]：TTY 是原地重画，两行的计数取决于抓拍到的那一刻，本来就可以不同。
+        self.assertIn("dup#2", err)
+        rows = err.count("\r\x1b[K")
+        self.assertGreaterEqual(rows, 2, err)
+        self.assertEqual(rows % 2, 0, f"每帧应当正好 2 行，实际画了 {rows} 行：{err!r}")
+        self.assertTrue(err.endswith("\x1b[2A\x1b[J"), repr(err[-20:]))
+
+    def test_落盘失败的告警照常出现(self):
+        """TTY 下裸 print 的告警会被下一帧盖掉、整行消失，而 spec 保证它「只记一行
+        告警、不中断」。`start()` 已经同步铺好了进度块，所以告警必然落在会被盖掉的时刻。"""
+        dump = self.root / "dump"
+        dump.mkdir()
+        (dump / "ash.b64.loon.3.5.0.raw").mkdir()  # 占住文件名 → 写盘必失败
+        code, out, err = self.run_main(
+            "--only", "ash.b64", "--client", "loon", "--dump", str(dump))
+        self.assertEqual(code, 0)
+        screen = replay_ansi(err)
+        self.assertTrue(any("保存原始响应失败" in l for l in screen),
+                        f"告警被下一帧盖掉了：{screen}")
+        self.assertEqual([l for l in screen if self.DONE_LINE.search(l)], [],
+                         f"进度残影压在报告上面：{screen}")
+        self.assertIn("▌ ash.b64", out)
+
+    def test_TTY_下用原地重画(self):
+        _, _, err = self.run_main("--only", "ash.b64")
+        self.assertIn("\r\x1b[K", err)   # 逐行清行重写
+        self.assertIn("\x1b[1A", err)    # 一个订阅 = 上移 1 行
+
+    def test_收尾时清掉进度块(self):
+        """不清的话进度残影会和紧随其后的报告混在一起。"""
+        _, _, err = self.run_main("--only", "ash.b64")
+        self.assertTrue(err.endswith("\x1b[1A\x1b[J"), repr(err[-40:]))
+
+    def test_main_返回后重画线程已收掉(self):
+        """渲染线程是 daemon 且 main 一定会 stop() 它，否则它会一直画下去、
+        进程也退不干净。"""
+        code, _, _ = self.run_main("--only", "ash.b64")
+        self.assertEqual(code, 0)
+        alive = [t for t in threading.enumerate() if t.name == "ua-diff-progress"]
+        self.assertEqual(alive, [], "重画线程没被收掉")
+
+    def test_中断路径也会收掉重画线程(self):
+        original = ua_diff.as_completed
+
+        def interrupt_after_all(fs, *args, **kwargs):
+            for done in original(fs, *args, **kwargs):
+                yield done
+            raise KeyboardInterrupt
+
+        ua_diff.as_completed = interrupt_after_all
+        try:
+            code, out, err = self.run_main("--only", "ash.b64")
+        finally:
+            ua_diff.as_completed = original
+
+        self.assertEqual(code, 2)
+        self.assertIn("▌ ash.b64", out)
+        alive = [t for t in threading.enumerate() if t.name == "ua-diff-progress"]
+        self.assertEqual(alive, [])
+        # 「已中断」必须在进度块被收掉之后才打，否则会插进正在重画的那几行里
+        self.assertLess(err.index("\x1b[J"), err.index("已中断"))
 
 
 if __name__ == "__main__":

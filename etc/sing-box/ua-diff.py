@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import base64
 import binascii
+import functools
 import json
 import re
 import shutil
@@ -834,6 +835,34 @@ def preview_bytes(body: bytes, limit: int = PREVIEW_LIMIT) -> str:
     return escaped + ("…" if len(body) > limit else "")
 
 
+def _notify(on_progress, phase: str, done: int, total: int, detail: str) -> None:
+    """调一次进度回调。**必须异常安全**：显示是附属功能，渲染器出任何问题
+    （流关了、终端尺寸取不到、回调本身有 bug）都不能影响探测，更不能把 worker 线程
+    弄死——那会让整个订阅静默消失。"""
+    if on_progress is None:
+        return
+    try:
+        on_progress(phase, done, total, detail)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _warn(on_warn, text: str) -> None:
+    """发一条 worker 侧告警。
+
+    TTY 下不能直接 print 到 stderr：进度块正占着屏幕底部，裸 print 会被下一帧盖掉
+    （详见 `ProgressRenderer.log`）。所以走注入的 `on_warn`；它出问题就退回直接
+    print——**告警本身不能丢**，那是 spec 里「写盘失败只记一行告警、不中断」的全部实现。
+    """
+    if on_warn is not None:
+        try:
+            on_warn(text)
+            return
+        except Exception:  # noqa: BLE001
+            pass
+    print(text, file=sys.stderr)
+
+
 def probe_subscription(
     subscription: Subscription,
     *,
@@ -846,11 +875,19 @@ def probe_subscription(
     clock=time.monotonic,
     sleeper=time.sleep,
     cancel_event: threading.Event | None = None,
+    on_progress=None,
+    on_warn=None,
 ) -> list[Probe]:
     """按限速串行探测一个订阅的所有 UA。单次失败不影响其余。
 
     cancel_event 被 set 后立刻停止，已完成的探测照常返回——Ctrl-C 时主线程靠它
     让 worker 提前收工，而不是干等最长 12×interval 秒。
+
+    on_progress(phase, done, total, detail) 在每个阶段边界被调用，供实时进度显示用。
+    它由外部注入，出任何问题都不该拖垮探测，所以调用点一律吞异常（`_notify`）。
+
+    on_warn(text) 收 worker 侧的告警。默认（None）就是直接 print 到 stderr；进度块
+    活着时必须传进来，否则告警会被下一帧盖掉（见 `_warn` 与 `ProgressRenderer.log`）。
     """
     fetcher = fetcher or fetch
     if cancel_event is not None and sleeper is time.sleep:
@@ -858,13 +895,19 @@ def probe_subscription(
         sleeper = cancel_event.wait
     limiter = RateLimiter(interval, clock=clock, sleeper=sleeper)
     probes = []
-    for client, version, ua, is_baseline in build_ua_plan(subscription, clients):
+    plan = build_ua_plan(subscription, clients)
+    total = len(plan)
+    for done, (client, version, ua, is_baseline) in enumerate(plan):
         if cancel_event is not None and cancel_event.is_set():
             break
+        label = f"{client} {version}"
+        # 限速的空档是全程最长的一段静默，进度必须在**进入等待之前**就报出来
+        _notify(on_progress, PHASE_WAIT, done, total, f"下一个 {label}")
         limiter.wait()
         # 限速可能睡了很久，睡醒后再确认一次，别在已经中断之后还发请求
         if cancel_event is not None and cancel_event.is_set():
             break
+        _notify(on_progress, PHASE_FETCH, done, total, label)
         response = fetcher(subscription.url, ua, timeout)
 
         if dump_dir is not None and response.body:
@@ -874,12 +917,13 @@ def probe_subscription(
             try:
                 (dump_dir / safe).write_bytes(response.body)
             except OSError as exc:
-                print(f"⚠️ 保存原始响应失败（{safe}）：{exc}", file=sys.stderr)
+                _warn(on_warn, f"⚠️ 保存原始响应失败（{safe}）：{exc}")
 
         error = response.error
         fmt = "unknown"
         nodes: list[Node] = []
         if not error:
+            _notify(on_progress, PHASE_PARSE, done, total, label)
             fmt = detect_format(response.body)
             try:
                 nodes = parse_nodes(response.body, fmt, yq_runner=yq_runner)
@@ -896,6 +940,12 @@ def probe_subscription(
                 preview=preview_bytes(response.body) if fmt == "unknown" else "",
             )
         )
+        if error:
+            # 异常字符串偶尔会把请求 URL 带上，而订阅 URL 含 token，先擦一遍
+            summary = f"{label} 失败：{scrub_urls(error)}"
+        else:
+            summary = f"{label} {response.status} {fmt} {len(nodes)} 节点"
+        _notify(on_progress, PHASE_DONE, done + 1, total, summary)
     return probes
 
 
@@ -1233,6 +1283,322 @@ def exit_code(reports: list[Report]) -> int:
     return code
 
 
+# ---------------------------------------------------------------- 进度显示
+
+# 卡感的来源是限速的 8 秒空档，不是请求本身。所以进度不能只在「每完成一次请求」时
+# 打一行——那 8 秒里屏幕仍然是死的。必须报出**当前阶段已经持续了多久**，那是证明
+# 「它还活着」的唯一信号；剩余时间反而不重要。
+PHASE_QUEUED = "排队中"
+PHASE_WAIT = "等待限速"
+PHASE_FETCH = "请求中"
+PHASE_PARSE = "解析中"
+PHASE_DONE = "完成"
+PROGRESS_PHASES = (PHASE_QUEUED, PHASE_WAIT, PHASE_FETCH, PHASE_PARSE, PHASE_DONE)
+
+# 阶段列按最宽的阶段名对齐，阶段之间切换时列不会左右跳
+PHASE_WIDTH = max(display_width(p) for p in PROGRESS_PHASES)
+ELAPSED_WIDTH = 5  # 够放 "99.9s"
+PROGRESS_TICK = 0.5  # 重画周期，秒
+
+# stop() 里每次「等**别人**」的上限：等重画线程退出（join）、等在途的那次 write 交还
+# _io_lock。抢不到就放弃收尾——收不干净的残影只是化妆品，而 Ctrl-C 的响应速度是硬要求。
+#
+# 注意它**封不住 stop() 自己那次清屏 write**：Python 没法给阻塞式 write 设超时。
+# 详见 ProgressRenderer.stop() 的说明。
+_STOP_WAIT = 0.5
+
+_URL_IN_TEXT = re.compile(r"[a-z][a-z0-9+.\-]*://\S+", re.IGNORECASE)
+
+
+def scrub_urls(text: str) -> str:
+    """把文本里的 URL 换成 ***。
+
+    进度行的失败摘要来自 urllib 的异常字符串，个别异常会把请求 URL 原样带上，
+    而订阅 URL 里有 token。进度是直接喷到终端、也可能被重定向进日志的，
+    不该成为 token 的泄漏点。
+    """
+    return _URL_IN_TEXT.sub("***", text)
+
+
+def truncate_display(text: str, width: int) -> str:
+    """按显示宽度截断，真截掉了才补 …（… 自己占一格）。"""
+    if width <= 0:
+        return ""
+    if display_width(text) <= width:
+        return text
+    kept: list[str] = []
+    used = 0
+    for char in text:
+        char_width = display_width(char)
+        if used + char_width > width - 1:
+            break
+        kept.append(char)
+        used += char_width
+    return "".join(kept) + "…"
+
+
+def format_progress_line(
+    name: str,
+    phase: str,
+    done: int,
+    total: int,
+    detail: str,
+    elapsed: float,
+    *,
+    name_width: int,
+    max_width: int = 0,
+) -> str:
+    """拼一行进度。纯函数，不碰任何状态，好单独测对齐与截断。
+
+    `max_width <= 0` 表示不限宽（非 TTY，或取不到终端尺寸）。限宽时**优先只截 detail**，
+    因为前面几列是对齐骨架，截了就错位；只有终端窄到连骨架都放不下时才连骨架一起截——
+    那时对齐已经无从谈起，而**绝不能让行折行**是硬约束：原地重画靠「上移 N 行」定位，
+    多折一行整块显示就全乱了。
+    """
+    digits = len(str(total)) if total > 0 else 1
+    counter = f"[{done:>{digits}}/{total}]"
+    head = (
+        "  "
+        + pad(name, name_width)
+        + "  " + counter
+        + "  " + pad(phase, PHASE_WIDTH)
+        + " " + pad(f"{elapsed:.1f}s", ELAPSED_WIDTH)
+        + "  "
+    )
+    if max_width <= 0:
+        return head + detail
+    room = max_width - display_width(head)
+    if room <= 0:
+        # 终端窄到连骨架都放不下：宁可把骨架截了，也不能折行
+        return truncate_display(head + detail, max_width)
+    return head + truncate_display(detail, room)
+
+
+class ProgressRenderer:
+    """实时进度显示。工作线程只调 `update()` 发布状态，重画由本类独立的线程负责。
+
+    这样分工是为了不碰 `RateLimiter`——它是整个项目唯一的安全闸（单订阅每分钟不超过
+    8 次请求），不该为了显示去动它的计时或 `cancel_event` 逻辑。
+
+    两种模式：
+    - TTY：每个订阅占一行，后台线程每 `tick` 秒原地重画（ANSI 上移 + 清行）。
+    - 非 TTY（重定向、管道、CI）：**不起线程、不输出任何 ANSI**，只在每次探测完成时
+      打一行纯文本。
+
+    两把锁，职责分开，为的是**别把显示的背压传导回探测**：
+
+    - `_lock` 只护状态（`_state` / `_names` / `_stopped`），持有期间**绝不做 IO**。
+      热路径 `update()` 每个订阅要走 4×13 次，它只该等一次字典赋值，不该等终端。
+      （早先版本把 write 放在 `_lock` 里：终端一卡——SSH 卡顿、Ctrl-S 的 XOFF、
+      终端模拟器 hang——`update()` 和 `stop()` 就一起被拖住，实测各卡 5 秒。）
+    - `_io_lock` 护「往流里写」这件事本身，顺带护 `_drawn`。`_drawn` 记的是「屏幕上
+      现在有几行进度」，它必须和**实际写出去的字节**严格同步，所以只在这把锁里读写。
+    """
+
+    def __init__(
+        self,
+        items,
+        *,
+        stream=None,
+        tick: float = PROGRESS_TICK,
+        clock=time.monotonic,
+        isatty: bool | None = None,
+        width: int | None = None,
+    ):
+        # stream 默认在**构造时**取 sys.stderr，这样测试里的 redirect_stderr 能接住
+        self._stream = stream if stream is not None else sys.stderr
+        self._tick = tick
+        self._clock = clock
+        self._width = width  # 固定宽度，只给测试用；None 表示每次重画都问终端
+        if isatty is None:
+            try:
+                isatty = bool(self._stream.isatty())
+            except Exception:  # noqa: BLE001 —— 流不支持 isatty 就当非 TTY
+                isatty = False
+        self._isatty = isatty
+
+        self._lock = threading.RLock()
+        self._io_lock = threading.RLock()
+        self._names: list[str] = []
+        self._state: dict[str, list] = {}
+        # keys 与传入的 items 同序，调用方拿它当 update() 的第一个参数。
+        # clash.txt 允许重名，而重名的两个 worker 若写进同一行，计数会互相覆盖、
+        # 看上去像在反复横跳，所以这里把重名的行加后缀区分开。
+        self.keys: list[str] = []
+        now = self._clock()
+        for name, total in items:
+            key = name
+            serial = 2
+            while key in self._state:
+                key = f"{name}#{serial}"
+                serial += 1
+            self.keys.append(key)
+            self._names.append(key)
+            self._state[key] = [PHASE_QUEUED, 0, total, "", now]
+        self._name_width = max((display_width(n) for n in self._names), default=0)
+
+        self._stop_event = threading.Event()
+        self._thread: threading.Thread | None = None
+        self._drawn = 0
+        self._stopped = False
+
+    # ---- 对外 ----
+
+    def start(self) -> None:
+        """铺出第一帧并起重画线程。非 TTY 模式不起线程——那时压根没有「原地重画」这回事。
+
+        第一帧在这里**同步**画掉，之后才交给线程：否则「探测 N 个订阅……」那行会孤零零
+        地挂上最多一个 tick，正是最需要看见反馈的时刻。顺带让「屏幕上有几行进度」从
+        `start()` 返回那一刻起就是确定的，不必看线程的调度运气。
+
+        代价是这次 write 发生在调用者的线程里，终端卡住时 `start()` 就跟着卡（没有超时
+        可设，同 `stop()`）。可以接受：紧邻的那行汇总 `print` 写的是同一个终端，本来就
+        一样会卡。
+        """
+        if not self._isatty or self._thread is not None or self._stopped:
+            return
+        self._redraw()
+        self._thread = threading.Thread(target=self._loop, name="ua-diff-progress", daemon=True)
+        self._thread.start()
+
+    def update(self, name: str, phase: str, done: int, total: int, detail: str = "") -> None:
+        """发布一个订阅的最新状态。工作线程调用，必须线程安全。
+
+        TTY 模式下这里**一个字节都不写**——写全交给重画线程，终端再卡也卡不到探测。
+        """
+        plain_line = ""
+        with self._lock:
+            if self._stopped:
+                return
+            previous = self._state.get(name)
+            # 阶段没变就沿用原起始时刻，「已持续多久」才会一直往上走
+            since = self._clock() if previous is None or previous[0] != phase else previous[4]
+            self._state[name] = [phase, done, total, detail, since]
+            if previous is None:
+                self._names.append(name)
+                self._name_width = max(self._name_width, display_width(name))
+            if not self._isatty and phase == PHASE_DONE:
+                plain_line = f"  {pad(name, self._name_width)}  [{done}/{total}]  {detail}\n"
+        if plain_line:  # 非 TTY 没有重画线程，不存在与谁抢 _io_lock 的问题
+            self._write(plain_line)
+
+    def log(self, text: str) -> None:
+        """在进度块**之上**插一行日志，并让下一帧重新铺。
+
+        worker 直接 print 到同一个流会把日志弄丢：它把光标推下一行，而 `_drawn` 不知情，
+        下一帧的 `\\033[{drawn}A` 就少上移一行，重写时正好把日志和一行进度一起盖掉；
+        `stop()` 的清屏也从错位置清起，顶上那行进度留成残影压在报告上面。
+        后果不只是难看——spec 里「`--dump` 写盘失败只记一行告警、不中断」这条保证会在
+        TTY 下**静默失效**，用户以为都存下来了。
+
+        与重画共用 `_io_lock`：终端卡住时这里会等在途的那次 write。告警只在出错时出现、
+        不在热路径上，宁可等，也不能让它乱序或丢失。
+        """
+        if not text.endswith("\n"):
+            text += "\n"
+        with self._io_lock:
+            prefix = f"\033[{self._drawn}A\033[J" if self._isatty and self._drawn else ""
+            self._drawn = 0  # 进度块已被收掉，下一帧从头铺
+            self._write_locked(prefix + text)
+
+    def stop(self) -> None:
+        """停掉重画并清干净已画的行。幂等，可以放心搁在 finally 里。
+
+        **不等待重画周期**：重画线程等在 `Event.wait(tick)` 上，置位后立刻醒。
+
+        `_STOP_WAIT` 封住的是「等**别人**」的两处——`join`（等重画线程退出）和
+        `_io_lock.acquire`（等在途的那次 write 交还锁）；抢不到锁就不清了，收不干净的
+        残影只是化妆品，而 Ctrl-C 的响应速度是硬要求。
+
+        **但清屏那次 write 本身没有上限**：Python 没法给阻塞式 write 设超时，终端卡死
+        （SSH 卡顿、Ctrl-S 的 XOFF、终端模拟器 hang）时它会一直卡着。实测终端写卡 3 秒
+        时 `stop()` 就是 3 秒——不是等锁，是自己那次 write。这是有意接受的取舍：清屏
+        必须写终端，而紧随其后 `main()` 打印报告要写的是同一个卡死的终端，同样会卡，
+        所以这里的边际延迟不显著；真要根治得上非阻塞写，为一个「终端本来就已经不可用」
+        的场景不值得。`start()` 同步画第一帧有完全相同的性质。
+
+        总之：`stop()` 不会因为**等待重画周期或等锁**而慢，但终端本身卡住时它一样卡。
+        """
+        with self._lock:  # 只碰状态，不做 IO，所以这把锁永远等不久
+            if self._stopped:
+                return
+            self._stopped = True
+        self._stop_event.set()
+        thread, self._thread = self._thread, None
+        if thread is not None and thread is not threading.current_thread():
+            thread.join(timeout=_STOP_WAIT)
+        if not self._isatty:
+            return
+        if self._io_lock.acquire(timeout=_STOP_WAIT):
+            try:
+                if self._drawn:
+                    # 上移到进度块开头，再清到屏幕末尾——报告不会和残影混在一起
+                    self._write_locked(f"\033[{self._drawn}A\033[J")
+                    self._drawn = 0
+            finally:
+                self._io_lock.release()
+
+    # ---- 内部 ----
+
+    def _write_locked(self, text: str) -> None:
+        """真正往流里写。调用方必须已持有 `_io_lock`。
+
+        显示出任何问题都不该影响探测本身：写失败（管道断了、流已关）一律吞掉。
+        """
+        try:
+            self._stream.write(text)
+            self._stream.flush()
+        except Exception:  # noqa: BLE001
+            pass
+
+    def _write(self, text: str) -> None:
+        with self._io_lock:
+            self._write_locked(text)
+
+    def _loop(self) -> None:
+        # 先等一个 tick 再画：第一帧已经由 start() 同步画掉了
+        while not self._stop_event.wait(self._tick):
+            self._redraw()
+
+    def _max_width(self) -> int:
+        if self._width is not None:
+            return self._width
+        try:
+            # 留一格，别顶到最后一列触发折行。夹到 >=1：极窄终端下 columns-1 会是
+            # 0 或负数，而那正好是 format_progress_line 眼里的「不限宽」，
+            # 整行原样喷出去必然折行——把「防折行」直接翻成了「保证折行」。
+            return max(1, shutil.get_terminal_size().columns - 1)
+        except Exception:  # noqa: BLE001 —— 真问不出尺寸就只能不限宽
+            return 0
+
+    def _redraw(self) -> None:
+        max_width = self._max_width()
+        with self._lock:  # 只算，不写：慢终端拖不住 update()
+            if self._stopped:
+                return
+            now = self._clock()
+            lines = [
+                format_progress_line(
+                    name,
+                    self._state[name][0],
+                    self._state[name][1],
+                    self._state[name][2],
+                    self._state[name][3],
+                    max(0.0, now - self._state[name][4]),
+                    name_width=self._name_width,
+                    max_width=max_width,
+                )
+                for name in self._names
+            ]
+        with self._io_lock:
+            # 上移几行必须按**写这一帧的那一刻**的 _drawn 算，不能用锁外的旧值：
+            # log() 可能刚把进度块收掉并把它归零。
+            out = f"\033[{self._drawn}A" if self._drawn else ""
+            out += "".join(f"\r\033[K{line}\n" for line in lines)
+            self._write_locked(out)
+            self._drawn = len(lines)
+
+
 # ---------------------------------------------------------------- CLI
 
 
@@ -1264,6 +1630,10 @@ def main(argv: list[str] | None = None, *, fetcher=None, sleeper=None, clock=Non
     parser.add_argument(
         "--no-proxy", action="store_true", dest="no_proxy",
         help="忽略 http_proxy/https_proxy 环境变量，直连拉取",
+    )
+    parser.add_argument(
+        "--no-progress", action="store_true", dest="no_progress",
+        help="关闭实时进度显示（进度默认打到 stderr）",
     )
     args = parser.parse_args(argv)
 
@@ -1323,7 +1693,26 @@ def main(argv: list[str] | None = None, *, fetcher=None, sleeper=None, clock=Non
     if clock is not None:
         probe_kwargs["clock"] = clock
 
-    def run(subscription: Subscription) -> Report:
+    # 各订阅按 --only/--client 筛选后实际的请求数可能不同（第三列 client 不同、
+    # 是否与 UA_TABLE 合并都会影响 build_ua_plan 的长度），一律按实际算。
+    plan_sizes = [(s.name, len(build_ua_plan(s, args.client))) for s in subscriptions]
+
+    # 进度一律写 stderr：--json 的 stdout 必须保持纯净可解析。
+    renderer = None if args.no_progress else ProgressRenderer(plan_sizes)
+    # 重名订阅会被 renderer 加后缀区分，所以进度用的键要从它那里取，不能直接用 name
+    progress_keys = renderer.keys if renderer is not None else [s.name for s in subscriptions]
+
+    def run(subscription: Subscription, progress_key: str) -> Report:
+        # partial 把这一行的键绑死在第一个位置参数上，签名正好是
+        # on_progress(phase, done, total, detail)；顺带避开「闭包里捕获 Optional」
+        # 触发的类型检查告警（pyright 不跨作用域传播捕获变量的窄化）。
+        on_progress = (
+            None if renderer is None
+            else functools.partial(renderer.update, progress_key)
+        )
+        # 进度块活着时告警必须从渲染器走，裸 print 会被下一帧盖掉
+        on_warn = None if renderer is None else renderer.log
+
         probes = probe_subscription(
             subscription,
             interval=args.interval,
@@ -1332,45 +1721,54 @@ def main(argv: list[str] | None = None, *, fetcher=None, sleeper=None, clock=Non
             dump_dir=dump_dir,
             fetcher=fetcher,
             cancel_event=cancel_event,
+            on_progress=on_progress,
+            on_warn=on_warn,
             **probe_kwargs,
         )
         return summarize(subscription, probes)
 
     if not args.json:
-        # 各订阅按 --only/--client 筛选后实际的请求数可能不同（第三列 client 不同、
-        # 是否与 UA_TABLE 合并都会影响 build_ua_plan 的长度），按实际算而不是硬编码
-        # 13。订阅间是并行的（ThreadPoolExecutor），墙钟时间取决于请求最多的那个，
+        # 订阅间是并行的（ThreadPoolExecutor），墙钟时间取决于请求最多的那个，
         # 所以用 max 而不是求和。
-        total = len(subscriptions)
-        max_requests = max((len(build_ua_plan(s, args.client)) for s in subscriptions), default=0)
+        max_requests = max((n for _, n in plan_sizes), default=0)
         eta = int(max(0, max_requests - 1) * args.interval)
-        print(f"探测 {total} 个订阅，最多每个 {max_requests} 次请求、间隔 {args.interval}s，约需 "
-              f"{eta} 秒……", file=sys.stderr)
+        print(f"探测 {len(subscriptions)} 个订阅，最多每个 {max_requests} 次请求、间隔 "
+              f"{args.interval}s，约需 {eta} 秒……", file=sys.stderr)
 
     # 不能用 with ThreadPoolExecutor：它的 __exit__ 是 shutdown(wait=True)，异常传播时
     # 会先把所有 worker 等完；而 max_workers == 订阅数意味着每个订阅都在跑、一个都取消
     # 不掉，Ctrl-C 于是先卡住最长 12×interval 秒再丢掉全部结果。改成显式 submit +
     # cancel_event：中断时让 worker 自己收工，已完成的照常输出（spec「错误处理」节）。
     pool = ThreadPoolExecutor(max_workers=max(1, len(subscriptions)))
-    futures = [pool.submit(run, s) for s in subscriptions]
+    futures = [pool.submit(run, s, k) for s, k in zip(subscriptions, progress_keys)]
     interrupted = False
+    if renderer is not None:
+        renderer.start()
     try:
-        for _ in as_completed(futures):
-            pass
-        pool.shutdown(wait=True)
-    except KeyboardInterrupt:
-        interrupted = True
-        cancel_event.set()
-        print("\n已中断，等待进行中的请求收尾……", file=sys.stderr)
         try:
-            # worker 看到 cancel_event 会立刻跳出循环，只剩已经发出去的那次请求要等，
-            # 用 --timeout 兜底。不等的话 f.done() 是个竞态：worker 明明马上就返回了，
-            # 结果却因为查得太早被当成「没跑完」丢掉。再按一次 Ctrl-C 可以跳过这段等待。
-            wait_futures(futures, timeout=args.timeout + 1)
+            for _ in as_completed(futures):
+                pass
+            pool.shutdown(wait=True)
         except KeyboardInterrupt:
-            pass
-        pool.shutdown(wait=False, cancel_futures=True)
-        print("输出已完成的部分", file=sys.stderr)
+            interrupted = True
+            cancel_event.set()
+            # 先收掉进度块再说话，否则「已中断」会插进正在原地重画的那几行里
+            if renderer is not None:
+                renderer.stop()
+            print("\n已中断，等待进行中的请求收尾……", file=sys.stderr)
+            try:
+                # worker 看到 cancel_event 会立刻跳出循环，只剩已经发出去的那次请求要等，
+                # 用 --timeout 兜底。不等的话 f.done() 是个竞态：worker 明明马上就返回了，
+                # 结果却因为查得太早被当成「没跑完」丢掉。再按一次 Ctrl-C 可以跳过这段等待。
+                wait_futures(futures, timeout=args.timeout + 1)
+            except KeyboardInterrupt:
+                pass
+            pool.shutdown(wait=False, cancel_futures=True)
+            print("输出已完成的部分", file=sys.stderr)
+    finally:
+        # stop() 幂等、不等重画周期，放这里保证任何退出路径都不会把重画线程和残影留下
+        if renderer is not None:
+            renderer.stop()
 
     # 按订阅原顺序取回已完成的结果；未完成/被取消的直接略过。
     # worker 抛异常的那个订阅必须出声：静默略过等于让报告少一行、退出码照报 0，

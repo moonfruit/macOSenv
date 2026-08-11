@@ -90,6 +90,15 @@ sops decrypt etc/secrets/<name>.env
   否则 `香港01：100M`、`东京：1G专线` 这类带宽标注的真节点会被误杀。
   分组按指纹（与格式无关），但可用数是格式相关的，同组内不一致时标签报范围
   「可用 2–21，随格式而异」并给每个成员标格式。
+  **实时进度**：默认开，一律打到 stderr（`--json` 的 stdout 保持纯净可解析），
+  `--no-progress` 关掉。TTY 下每订阅一行、每 0.5 秒原地重画，显示**当前阶段已持续多久**
+  （卡感来自限速的 8 秒空档，只报「完成第几次」不够）；非 TTY 只在每次完成时打一行纯
+  文本、不输出任何 ANSI。工作线程只发 `on_progress` 回调，重画独立成 daemon 线程——
+  `RateLimiter` 一行都没动。进度行不含订阅 URL。
+  `ProgressRenderer` 里两把锁分得很死：`_lock` 只护状态、**持有期间绝不做 IO**，
+  `_io_lock` 护写流与 `_drawn`。否则终端一卡（SSH 卡顿、Ctrl-S 的 XOFF）就会把背压
+  传导回探测，`update()`/`stop()` 一起被拖住。worker 侧的告警（`--dump` 写盘失败）
+  必须走 `on_warn` → `ProgressRenderer.log()`，裸 `print` 会被下一帧盖掉、整行消失。
   退出码：`0` 当前 UA 已最优 / `1` 存在更优 UA / `2` 结论不可信（基准探测失败、
   某订阅全部失败、或 Ctrl-C 中断）。个别陌生 UA 拿到 HTML 是常态，不影响 0/1。
   只用标准库（外部命令仅 `yq`，解析 clash YAML 用），无 venv。
