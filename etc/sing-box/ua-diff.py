@@ -198,6 +198,10 @@ _BASE64_CHARS = re.compile(r"^[A-Za-z0-9+/=_\-\s]+$")
 _LINK_SCHEME = re.compile(r"^[a-z][a-z0-9+.\-]*://", re.IGNORECASE)
 _CONF_SECTION = re.compile(r"^\[(Proxy|server_local)\]\s*$", re.MULTILINE | re.IGNORECASE)
 
+# 订阅响应里的 conf 通常**只有节点行、没有段头**——机场给的是节点清单，不是整份配置
+# 文件。所以除了段头，还得认得裸节点行；两行起判，一行太容易撞上普通 `key = value`。
+_BARE_CONF_MIN_LINES = 2
+
 
 def decode_base64(text: str) -> bytes:
     """宽容地解 base64：去空白、兼容 urlsafe 变体、自动补填充。解不开返回 b""。"""
@@ -211,8 +215,13 @@ def decode_base64(text: str) -> bytes:
         return b""
 
 
-def detect_format(body: bytes) -> str:
-    """嗅探订阅响应的格式。"""
+def detect_format(body: bytes, _depth: int = 0) -> str:
+    """嗅探订阅响应的格式。
+
+    _depth 只给 base64 分支的内层递归用：解出来的明文还得再嗅探一次，才知道包的是
+    链接表还是 conf。**只递归一层**——base64 套 base64 现实中不存在，无限递归倒是
+    真会发生（全 base64 字符集的正文解码后还是全 base64 字符集）。
+    """
     text = body.decode("utf-8", errors="replace")
     stripped = text.strip()
     if not stripped:
@@ -235,10 +244,23 @@ def detect_format(body: bytes) -> str:
         return "links"
 
     # 明文链接含 : 和 #，不会通过 base64 字符集检查，所以顺序上放在 links 之后是安全的
-    if _BASE64_CHARS.match(stripped) and b"://" in decode_base64(stripped):
-        return "base64"
+    if _BASE64_CHARS.match(stripped):
+        decoded = decode_base64(stripped)
+        if decoded:
+            if _depth == 0:
+                # 内层是什么，外层就是什么的 base64 包装。Quantumult X 对某些订阅返回的
+                # 就是 base64 包的 [server_local] 行（`vless=host:port,…`），里头一个
+                # `://` 都没有——只看 `://` 会把它整份丢成 unknown。
+                inner = detect_format(decoded, _depth=1)
+                if inner == "links":
+                    return "base64"
+                if inner == "conf":
+                    return "base64-conf"
+            # 兜底：首行不是链接（如机场塞的 STATUS= 行）但正文确实是链接表
+            if b"://" in decoded:
+                return "base64"
 
-    if _CONF_SECTION.search(text):
+    if _CONF_SECTION.search(text) or _count_conf_node_lines(text) >= _BARE_CONF_MIN_LINES:
         return "conf"
 
     return "unknown"
@@ -273,8 +295,11 @@ SING_BOX_KERNEL_TYPES = frozenset({
 #
 # 注意分支是按格式分裂的，不是一个全局集合：clash 收 vmess/ss 但不收 vless，
 # shadowrocket 收 vless 但不收 ss/vmess，两边都没有 tuic。
-# conf / links / unknown 不在表里——下游一个节点都进不了 config.json：
+# conf / base64-conf / links / unknown 不在表里——下游一个节点都进不了 config.json：
 #   - conf / unknown：load_proxies（:1092）根本没有对应的 loader；
+#   - base64-conf（base64 包着的 QX conf）：config.json 只能写 shadowrocket，而
+#     load_shadowrocket_proxies（:1054）b64decode 之后按 `scheme://` 解析，
+#     `vless=host:port,…` 会被 urlparse 解成 scheme 为空的垃圾，一个都进不去；
 #   - links（明文链接表）：subscribe.sh 把响应体原样落盘，config.json 里该订阅的
 #     format 只能写 shadowrocket，于是 load_shadowrocket_proxies（:1054）会对**明文**
 #     无条件 base64.b64decode——明文链接表带 `:` `#` `/`，解码直接 binascii.Error
@@ -291,11 +316,32 @@ USABLE_TYPES_BY_FORMAT: dict[str, frozenset[str]] = {
 }
 
 # 机场把套餐信息塞成节点，它们是合法 URL 但复用真实节点的 server:port。
-# 关键词有误伤真节点的可能（比如名字里带「流量」的中转节点），所以只剔除计数、照常告知。
-_PSEUDO_KEYWORDS = (
-    "流量", "到期", "过期", "剩余", "重置", "套餐", "续费",
-    "官网", "订阅", "通知", "机场", "群组", "客服",
-    "http://", "https://", "t.me/",
+#
+# 判据的取舍标准是**这个词会不会出现在真实节点名里**：
+#   - 会出现的（`流量` `到期` `过期` `剩余` `重置` `套餐` `订阅` `机场` `群组`
+#     `通知`）一律只能用词组或结构信号。裸词「流量」曾一次误杀 17 个真节点：
+#     nanocloud 用 `(流量)` / `(通用)` 标计费档位，`❇️双鱼座-D(流量)`、
+#     `🇭🇰香港-A(流量)` 全是真节点，却被整批剔出计数，基准的「21 可用」凭空少了一半。
+#   - 几乎不可能出现的（`官网` `客服` `续费`）才允许留作裸词——没人会把节点叫
+#     「香港客服」。
+_PSEUDO_PHRASES = (
+    "剩余流量", "总流量", "已用流量", "套餐流量", "流量重置", "距离下次", "重置剩余",
+    "套餐到期", "到期时间", "过期时间",
+    "续费", "官网", "客服", "http://", "https://", "t.me/",
+)
+
+# 结构信号：词组没穷举到的套餐行，靠形状兜住。
+# 1) 日期：`2027-03-03` 或 `2027年3月3日`——真节点名不会写日期
+# 2) 冒号（全角或半角）后跟「数字 + 流量/天数单位」——`剩余流量：86.89 GB` 的骨架
+#
+# 单位表**不收裸的 G / M / T**：机场按带宽命名节点是真实习惯（`香港01：100M`、
+# `东京：1G专线`），收裸单字母就是把「流量误杀 17 个真节点」的错误换个入口重来一遍。
+# 代价是漏掉 `剩余：88 G` 这类省了 B 的写法——流量单位一般不省 B，而且宁可漏一个
+# 伪节点，也不能误杀真节点：误杀会低报可用数，那正是这次修复要根治的方向。
+_PSEUDO_PATTERNS = (
+    re.compile(r"\d{4}-\d{2}-\d{2}"),
+    re.compile(r"\d{4}年\d{1,2}月\d{1,2}日"),
+    re.compile(r"[：:]\s*[\d.]+\s*(?:GB|MB|TB|KB|天)", re.IGNORECASE),
 )
 
 
@@ -303,6 +349,93 @@ def normalize_type(raw: str) -> str:
     """把各格式的协议名归一到 sing-box 的说法。未知类型原样小写返回。"""
     key = raw.strip().lower().replace("-", "").replace("_", "")
     return _TYPE_ALIASES.get(key, key)
+
+
+# ------------------------------------------------ conf 行形状（嗅探与解析共用）
+
+# 嗅探只问「这行长得像不像节点行」，不问 sing-box 用不用得上，所以内核不支持但机场
+# 确实在下发的几种也得算数——否则一份全是 ssr 的 Loon 响应会被判成 unknown。
+_CONF_EXTRA_TYPES = frozenset({"ssr", "snell", "juicity", "mieru", "hysteria2faketcp"})
+
+_CONF_HOST = re.compile(r"^[A-Za-z0-9_.\-\[\]:]+$")
+
+
+def _is_conf_type(text: str) -> bool:
+    """这个词是不是已知的代理协议名（按 normalize_type 归一后判断）。"""
+    normalized = normalize_type(text)
+    return normalized in SING_BOX_KERNEL_TYPES or normalized in _CONF_EXTRA_TYPES
+
+
+def _is_conf_port(text: str) -> bool:
+    stripped = text.strip().strip('"')
+    return stripped.isdigit() and 0 < int(stripped) <= 65535
+
+
+def _is_conf_host(text: str) -> bool:
+    """像不像主机名或 IP：无空格、只含主机名合法字符，且带 . 或 : （IPv6）。"""
+    stripped = text.strip().strip('"')
+    if not stripped or not _CONF_HOST.match(stripped):
+        return False
+    return "." in stripped or ":" in stripped
+
+
+def _is_conf_host_port(text: str) -> bool:
+    """像不像 `host:port`。"""
+    host, sep, port = text.strip().strip('"').rpartition(":")
+    return bool(sep) and _is_conf_host(host) and _is_conf_port(port)
+
+
+def _conf_line_kind(line: str) -> str:
+    """这行 conf 是哪种节点行：'qx' / 'loon' / ''（都不像）。
+
+    段头缺失时（订阅响应的常态）只能靠形状认。两种形状的判别顺序不能反：QX 的
+    `vless=1.2.3.4:443, method=none` 若先按 Loon 试，fields[0] 会是 `1.2.3.4:443`
+    而不是协议名，认不出来。
+    """
+    head, sep, rest = line.partition("=")
+    if not sep:
+        return ""
+    fields = [f.strip().strip('"') for f in rest.split(",")]
+    # QX：`类型=服务器:端口, key=value, …`
+    if _is_conf_type(head) and _is_conf_host_port(fields[0]):
+        return "qx"
+    # Loon / Surge：`节点名 = 类型, 服务器, 端口, …`
+    if (
+        len(fields) >= 3
+        and _is_conf_type(fields[0])
+        and _is_conf_host(fields[1])
+        and _is_conf_port(fields[2])
+    ):
+        return "loon"
+    return ""
+
+
+def _count_conf_node_lines(text: str, limit: int = _BARE_CONF_MIN_LINES) -> int:
+    """数长得像节点行的行，够 limit 就提前收工（30KB 的响应不必逐行走完）。
+
+    必须与 `_parse_conf` 用**同一套**「哪些行算数」的标准：只数无段头的行与节点段
+    （`[Proxy]` / `[server_local]`）内的行，别的段一概不数。两套标准不一致的后果是
+    嗅探说「这是 conf」而解析一个节点都取不出来，报告里既没有节点、也没有 unknown
+    才会打的诊断行（响应多少字节、开头长什么样）——用户排查时唯一的线索被吞掉。
+    `[General]` 里的 `socks = 127.0.0.1:1080` 就是这样一行：形状上完全合格，
+    位置上不是节点。
+    """
+    count = 0
+    section = ""
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line or line.startswith(("#", ";", "//")):
+            continue
+        if line.startswith("[") and line.endswith("]"):
+            section = line[1:-1].strip().lower()
+            continue
+        if section and section not in ("proxy", "server_local"):
+            continue
+        if _conf_line_kind(line):
+            count += 1
+            if count >= limit:
+                break
+    return count
 
 
 def fingerprint(node: Node) -> str:
@@ -317,9 +450,11 @@ def fingerprint(node: Node) -> str:
 
 
 def is_pseudo_node(name: str) -> bool:
-    """是不是机场塞的套餐信息伪节点。"""
+    """是不是机场塞的套餐信息伪节点。词组命中或结构信号命中都算。"""
     lowered = name.lower()
-    return any(keyword.lower() in lowered for keyword in _PSEUDO_KEYWORDS)
+    if any(phrase.lower() in lowered for phrase in _PSEUDO_PHRASES):
+        return True
+    return any(pattern.search(name) for pattern in _PSEUDO_PATTERNS)
 
 
 def tier_of(node_type: str, fmt: str) -> str:
@@ -532,7 +667,12 @@ def _parse_qx_server_line(line: str) -> Node | None:
 
 
 def _parse_conf(text: str) -> list[Node]:
-    """Loon / Surge / Quantumult X 的 conf 格式。只看节点段，其余段跳过。"""
+    """Loon / Surge / Quantumult X 的 conf 格式。只看节点段，其余段跳过。
+
+    订阅响应通常只有裸节点行、没有段头，所以还没见过任何段头时按行形状自行判别
+    （`_conf_line_kind`）。段头一旦出现就以段头为准——`[General]` 里的
+    `ip-mode = dual` 不该因为长得有点像而被当成节点。
+    """
     nodes = []
     section = ""
     for raw in text.splitlines():
@@ -546,6 +686,14 @@ def _parse_conf(text: str) -> list[Node]:
             node = _parse_loon_proxy_line(line)
         elif section == "server_local":
             node = _parse_qx_server_line(line)
+        elif not section:
+            kind = _conf_line_kind(line)
+            if kind == "qx":
+                node = _parse_qx_server_line(line)
+            elif kind == "loon":
+                node = _parse_loon_proxy_line(line)
+            else:
+                continue
         else:
             continue
         if node is not None:
@@ -565,6 +713,9 @@ def parse_nodes(body: bytes, fmt: str, yq_runner=None) -> list[Node]:
         return _parse_links(decode_base64(body.decode("utf-8", errors="replace")).decode("utf-8", errors="replace"))
     if fmt == "conf":
         return _parse_conf(body.decode("utf-8", errors="replace"))
+    if fmt == "base64-conf":
+        # base64 包着的 conf（Quantumult X 对某些订阅就这么给）：先脱壳再按 conf 解
+        return _parse_conf(decode_base64(body.decode("utf-8", errors="replace")).decode("utf-8", errors="replace"))
     return []
 
 
@@ -810,7 +961,9 @@ def summarize(subscription: Subscription, probes: list[Probe]) -> Report:
         if not row.probe.ok:
             continue
         grouped.setdefault(row.all_fingerprints, []).append(row)
-    groups = sorted(grouped.values(), key=lambda g: len(g[0].usable), reverse=True)
+    # 组内可用数可能不一致（同一批节点、不同响应格式），排序取组内最大值——
+    # 取第一行的数字会让排序随组内顺序抖动。
+    groups = sorted(grouped.values(), key=lambda g: max(len(r.usable) for r in g), reverse=True)
 
     return Report(subscription, baseline, rows, recommended, groups)
 
@@ -968,8 +1121,21 @@ def render_report(report: Report, wide: bool = False) -> str:
     if len(report.groups) > 1:
         lines.append(f"  ℹ {len(report.groups)} 组不同的节点列表：")
         for index, group in enumerate(report.groups):
-            members = ", ".join(f"{r.probe.client} {r.probe.version}" for r in group)
-            line = f"      组 {chr(ord('A') + index)}（{len(group[0].usable)} 可用）  {members}"
+            # 分组按指纹集合（与格式无关：它回答「谁拿到了同一份列表」），但可用数是
+            # 格式相关的——同一批节点在 sing-box 格式下 21 个可用、在 clash 格式下只有
+            # 2 个。取组内第一行的数字当标签会把这个差异藏起来，所以不一致时报范围，
+            # 并给每个成员标上自己的格式。
+            counts = {len(r.usable) for r in group}
+            formats = {r.probe.fmt for r in group}
+            if len(counts) > 1:
+                label = f"可用 {min(counts)}–{max(counts)}，随格式而异"
+            else:
+                label = f"{len(group[0].usable)} 可用"
+            if len(formats) > 1:
+                members = ", ".join(f"{r.probe.client} {r.probe.version} [{r.probe.fmt}]" for r in group)
+            else:
+                members = ", ".join(f"{r.probe.client} {r.probe.version}" for r in group)
+            line = f"      组 {chr(ord('A') + index)}（{label}）  {members}"
             # 指纹集合相同、名称集合不同 = 机场只改了节点名。这是机场四种行为之一，
             # 不标出来就会被当成「完全同一份列表」。
             if any(r.names != group[0].names for r in group[1:]):

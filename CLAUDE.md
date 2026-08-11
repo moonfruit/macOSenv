@@ -76,9 +76,20 @@ sops decrypt etc/secrets/<name>.env
   订阅之间并行、订阅内串行——限速是「对单一连接」的。
   **可用性分级按订阅格式分裂**：`clash-to-sing.py` 的转换分支是按格式分的
   （`clash` 收 hysteria2/ss/trojan/vmess，`shadowrocket` 收 vless/trojan/anytls，
-  `sing-box` 透传，`conf` 没有 loader），且 `case _` 会 `raise ValueError` 而调用方无
-  try/except——把不支持的协议判成「可用」会让 `update.sh` 直接崩。那边加协议要同步
-  `USABLE_TYPES_BY_FORMAT`。
+  `sing-box` 透传，`conf` / `base64-conf` 没有 loader），且 `case _` 会 `raise ValueError`
+  而调用方无 try/except——把不支持的协议判成「可用」会让 `update.sh` 直接崩。
+  那边加协议要同步 `USABLE_TYPES_BY_FORMAT`。
+  **格式嗅探的两个坑**：base64 分支要**递归嗅探内层一层**（QX 返回的是 base64 包着的
+  `[server_local]` 行，里头没有 `://`，只看 `://` 会整份判成 unknown），内层是 conf
+  就是新格式 `base64-conf`；conf 不能只认 `[Proxy]` / `[server_local]` 段头，订阅响应
+  常常只有裸节点行，所以「≥2 行长得像节点行」也算 conf。
+  **伪节点判据按「这个词会不会出现在真实节点名里」取舍**：会出现的（`流量`/`到期`/
+  `剩余`/`重置`/`套餐`/`订阅`/`机场`/`群组`/`通知`）只能用词组或结构信号——`(流量)` /
+  `(通用)` 是机场的计费档位标记，裸词「流量」曾一次误杀 17 个真节点；几乎不可能出现
+  的（`官网`/`客服`/`续费`）才留作裸词。结构信号的单位表**不收裸 `G`/`M`/`T`**，
+  否则 `香港01：100M`、`东京：1G专线` 这类带宽标注的真节点会被误杀。
+  分组按指纹（与格式无关），但可用数是格式相关的，同组内不一致时标签报范围
+  「可用 2–21，随格式而异」并给每个成员标格式。
   退出码：`0` 当前 UA 已最优 / `1` 存在更优 UA / `2` 结论不可信（基准探测失败、
   某订阅全部失败、或 Ctrl-C 中断）。个别陌生 UA 拿到 HTML 是常态，不影响 0/1。
   只用标准库（外部命令仅 `yq`，解析 clash YAML 用），无 venv。

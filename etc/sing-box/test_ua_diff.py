@@ -22,6 +22,39 @@ sys.modules["ua_diff"] = ua_diff
 _spec.loader.exec_module(ua_diff)
 
 
+# ---------------------------------------------------------------- 真实响应样本
+#
+# 下面两段照抄真实探测里被误判成 unknown 的响应形状（凭据已换成占位串）：
+# Quantumult X 给的是 base64 包着的 [server_local] 行，Loon 给的是没有 [Proxy]
+# 段头的裸节点行。两者的共同点是「没有段头、也没有 ://」。
+
+QX_BARE = (
+    "vless=172.81.111.224:10009,method=none,"
+    "password=75caee81-fcef-4a2b-9c31-1d3e6f8a0b21,obfs=over-tls,"
+    "obfs-host=cdn.example.org,tls-verification=false,fast-open=false,"
+    "udp-relay=true,tag=🇭🇰香港-A(流量)\n"
+    "vless=172.81.111.224:10010,method=none,"
+    "password=75caee81-fcef-4a2b-9c31-1d3e6f8a0b21,obfs=over-tls,"
+    "obfs-host=cdn.example.org,tls-verification=false,fast-open=false,"
+    "udp-relay=true,tag=🇺🇸美国-B(流量)\n"
+    "trojan=45.32.11.7:443,password=pw,over-tls=true,tls-verification=true,"
+    "fast-open=false,udp-relay=true,tag=❇️双鱼座-D(流量)\n"
+)
+
+QX_BARE_B64 = base64.b64encode(QX_BARE.encode())
+
+LOON_BARE = (
+    "剩余流量：86.88 GB=vless,172.81.111.224,10009,"
+    '"75caee81-fcef-4a2b-9c31-1d3e6f8a0b21",transport:tcp,over-tls:true\n'
+    "距离下次重置剩余：23 天=vless,172.81.111.224,10009,"
+    '"75caee81-fcef-4a2b-9c31-1d3e6f8a0b21",transport:tcp,over-tls:true\n'
+    "🇭🇰香江-G(流量)=vless,172.81.111.225,10011,"
+    '"75caee81-fcef-4a2b-9c31-1d3e6f8a0b21",transport:tcp,over-tls:true\n'
+    "🇺🇸美国-D(流量)=trojan,45.32.11.7,443,"
+    '"pw",over-tls:true,tls-name:cdn.example.org\n'
+)
+
+
 class ParseClashTxtTest(unittest.TestCase):
     def test_跳过注释行与空行(self):
         text = (
@@ -102,6 +135,72 @@ class DetectFormatTest(unittest.TestCase):
     def test_quantumult_x_conf(self):
         body = b"[server_local]\nvmess=1.2.3.4:443, method=none, tag=node-a\n"
         self.assertEqual(ua_diff.detect_format(body), "conf")
+
+    def test_base64_包装的_quantumult_x_conf(self):
+        """真实样本：QX 对 ash.b64 返回 50824 字节的 base64，解开是 [server_local] 行。
+
+        里头一个 `://` 都没有（QX 用 `类型=host:port`），只看 `://` 会整份判成
+        unknown 丢掉——而 QX 恰恰是脚本专门写了解析器的格式。
+        """
+        self.assertEqual(ua_diff.detect_format(QX_BARE_B64), "base64-conf")
+
+    def test_base64_内层是链接表时仍是_base64(self):
+        # 递归嗅探不能把原来的 base64 语义改掉
+        raw = b"vless://uuid@1.2.3.4:443?type=tcp#node-a\ntrojan://pw@5.6.7.8:443#node-b\n"
+        self.assertEqual(ua_diff.detect_format(base64.b64encode(raw)), "base64")
+
+    def test_base64_首行不是链接时仍按链接表兜底(self):
+        # 机场会在链接表最前面塞 STATUS= 行，首行认不出来但正文确实是链接表
+        raw = b"STATUS=\xe5\x89\xa9\xe4\xbd\x99 86 GB\nvless://uuid@1.2.3.4:443#a\n"
+        self.assertEqual(ua_diff.detect_format(base64.b64encode(raw)), "base64")
+
+    def test_没有段头的_loon_裸节点行(self):
+        """真实样本：Loon 对 ash.b64 返回 30460 字节，全是 `名字 = 类型,服务器,端口`
+        的裸行，没有 [Proxy] 段头——订阅响应给的是节点清单，不是整份配置文件。"""
+        self.assertEqual(ua_diff.detect_format(LOON_BARE.encode()), "conf")
+
+    def test_没有段头的_quantumult_x_裸节点行(self):
+        self.assertEqual(ua_diff.detect_format(QX_BARE.encode()), "conf")
+
+    def test_只有一行像节点行时不算_conf(self):
+        # 一行太容易撞上普通 key = value 配置行，门槛是两行
+        body = "ip-mode = dual\nvless=1.2.3.4:443, tag=x\n".encode()
+        self.assertEqual(ua_diff.detect_format(body), "unknown")
+
+    def test_普通配置行不会被当成裸节点行(self):
+        """放宽 conf 判定后，[General] 这类段的普通 key = value 不该被误判。"""
+        body = (
+            "ip-mode = dual\n"
+            "skip-proxy = 127.0.0.1, localhost\n"
+            "dns-server = 8.8.8.8, 1.1.1.1\n"
+            "proxy-test-url = http://cp.cloudflare.com/generate_204\n"
+            "test-timeout = 5\n"
+        ).encode()
+        self.assertEqual(ua_diff.detect_format(body), "unknown")
+
+    def test_非节点段里形状合格的行不算数(self):
+        """`[General]` 里的 socks/http 本地代理形状上完全像 QX 节点行。
+
+        嗅探必须与 _parse_conf 用同一套标准（只数无段头的与节点段内的），
+        否则这份响应会被判成 conf：解析出 0 个节点、又因为不是 unknown 而不打
+        「共 N 字节，前 80 字节是……」的诊断行，用户排查时唯一的线索被吞掉。
+        """
+        body = (
+            "[General]\n"
+            "socks = 127.0.0.1:1080\n"
+            "http = 127.0.0.1:8080\n"
+        ).encode()
+        self.assertEqual(ua_diff.detect_format(body), "unknown")
+
+    def test_放宽_conf_判定不影响其他格式(self):
+        """conf 在嗅探顺序上最后，前面几种不能被它抢走。"""
+        cases = {
+            b'{"outbounds":[{"type":"vless","tag":"a","server":"1.2.3.4","server_port":443}]}': "sing-box",
+            b"proxies:\n  - {name: a, server: 1.2.3.4, port: 443, type: vmess}\n": "clash",
+            b"vless://uuid@1.2.3.4:443#a\nvless://uuid@5.6.7.8:443#b\n": "links",
+        }
+        for body, expected in cases.items():
+            self.assertEqual(ua_diff.detect_format(body), expected, body[:30])
 
     def test_空响应(self):
         self.assertEqual(ua_diff.detect_format(b"   \n"), "unknown")
@@ -239,6 +338,86 @@ class IsPseudoNodeTest(unittest.TestCase):
         for name in ("🇭🇰HK-01", "🇺🇸US-04", "❇️双鱼座-A(通用)", "🇭🇰HK-06[HKBN]"):
             self.assertFalse(ua_diff.is_pseudo_node(name), name)
 
+    def test_计费档位标记的真节点不被误杀(self):
+        """真实回归：nanocloud 用 `(流量)` / `(通用)` 标计费档位，全是真节点。
+
+        裸词「流量」曾把这 6 个（实际 17 个）一并剔出计数，基准的「21 可用」
+        凭空少了一半，`伪` 列的 17 全是噪音。
+        """
+        for name in (
+            "❇️双鱼座-D(流量)", "🇺🇸美国-B(流量)", "🇺🇸美国-D(流量)",
+            "🇭🇰香江-G(流量)", "🇭🇰香江-H(流量)", "🇭🇰香港-A(流量)",
+        ):
+            self.assertFalse(ua_diff.is_pseudo_node(name), name)
+
+    def test_ash_b64_的三个真实伪节点仍然命中(self):
+        # 放宽误伤的同时不能放跑真的：这三行取自 ash.b64 的真实响应
+        for name in ("剩余流量：86.89 GB", "距离下次重置剩余：23 天", "套餐到期：2027-03-03"):
+            self.assertTrue(ua_diff.is_pseudo_node(name), name)
+
+    def test_结构信号兜住词组没穷举到的套餐行(self):
+        # 日期形状与「冒号 + 数字 + 单位」形状
+        self.assertTrue(ua_diff.is_pseudo_node("有效期至 2027-03-03"))
+        self.assertTrue(ua_diff.is_pseudo_node("可用：12.5 TB"))
+        # 对照：节点名里的连字符编号不是日期
+        self.assertFalse(ua_diff.is_pseudo_node("🇯🇵JP-2026-A"))
+
+    def test_带宽标注的真节点不被误杀(self):
+        """机场按带宽命名节点是真实习惯，裸单字母单位 G/M/T 会把它们误杀。
+
+        这是收紧关键词时**新引入**的假阳性类别（老的裸词版反而不会误伤），
+        与「流量」误杀 17 个真节点是同一类错误换了个入口，必须钉死。
+        """
+        for name in ("香港01：100M", "东京：1G专线", "🇭🇰HK-02：500M 直连", "US-01: 10G"):
+            self.assertFalse(ua_diff.is_pseudo_node(name), name)
+
+    def test_半角冒号与中文日期的套餐行不漏网(self):
+        """结构信号只认全角冒号 + 连字符日期时，这三种写法会整批漏网。"""
+        for name in ("剩余:88GB", "套餐流量 100GB", "过期：2027年3月3日"):
+            self.assertTrue(ua_diff.is_pseudo_node(name), name)
+
+    def test_裸词单独出现时也命中(self):
+        """`官网`/`客服`/`续费` 是允许保留的裸词——它们几乎不可能是真节点名的一部分。
+
+        原先的用例都带着 URL（`官网 https://…`），URL 判据独立命中，裸词本身
+        从没被单独验证过：删掉它们全套测试照样全绿。这里只给裸词，不带任何
+        其它信号。
+        """
+        for name in ("官网", "客服", "续费", "机场官网", "在线客服", "点此续费"):
+            self.assertTrue(ua_diff.is_pseudo_node(name), name)
+
+    # 判据表的**独立副本**。不能改成遍历 ua_diff._PSEUDO_PHRASES——那样删掉表里
+    # 一项就等于同时删掉了对它的检查，测试永远绿。这份字面量必须手写。
+    EXPECTED_PHRASES = (
+        "剩余流量", "总流量", "已用流量", "套餐流量", "流量重置", "距离下次", "重置剩余",
+        "套餐到期", "到期时间", "过期时间",
+        "续费", "官网", "客服", "http://", "https://", "t.me/",
+    )
+
+    def test_每个词组单独出现时都能命中(self):
+        """逐词钉住判据表：每个词组在没有任何其它信号陪伴时也必须自己命中。
+
+        作用是让**数据表本身有人守卫**：此前删掉 `官网`/`客服`/`续费` 全套 220 个
+        测试照样全绿，因为用例都带着 URL，URL 判据独立命中，裸词从没被单独验证过。
+        """
+        for phrase in self.EXPECTED_PHRASES:
+            self.assertIn(phrase, ua_diff._PSEUDO_PHRASES, f"{phrase} 被从判据表删掉了")
+            self.assertTrue(ua_diff.is_pseudo_node(phrase), phrase)
+            # 保证上一行真的在验证词组：某个词组若恰好也被结构信号兜住，
+            # 删掉它测试仍会绿，这条先一步把这种情况指出来
+            self.assertFalse(
+                any(p.search(phrase) for p in ua_diff._PSEUDO_PATTERNS),
+                f"{phrase} 被结构信号兜住了，上一行断言就不再守卫词组本身",
+            )
+
+    def test_新增词组必须同时补测试(self):
+        """判据表与上面那份字面量副本必须一一对应。
+
+        新加一个词组却不补用例时这里会挂——否则表会慢慢长出一堆没人验证的条目，
+        正是 `官网`/`客服` 变成盲区的过程。
+        """
+        self.assertEqual(sorted(ua_diff._PSEUDO_PHRASES), sorted(self.EXPECTED_PHRASES))
+
 
 class TierOfTest(unittest.TestCase):
     """分级按订阅格式分裂——clash-to-sing.py 的转换分支本身就是按格式分裂的。
@@ -295,6 +474,20 @@ class TierOfTest(unittest.TestCase):
         # load_proxies（:1092）只认 clash/shadowrocket/sing-box，conf 读都读不进去
         for t in ("vless", "ss", "trojan", "vmess", "hysteria2"):
             self.assertEqual(ua_diff.tier_of(t, "conf"), "pending", t)
+
+    def test_base64_conf_下游一个节点都读不进来(self):
+        """base64 包着的 QX conf：config.json 只能写 shadowrocket，而
+        load_shadowrocket_proxies b64decode 之后按 `scheme://` 解析，
+        `vless=host:port,…` 会被 urlparse 解成 scheme 为空的垃圾。
+
+        判成可用会给出一条照做就白改的建议，所以与 conf 同档。
+        """
+        self.assertNotIn("base64-conf", ua_diff.USABLE_TYPES_BY_FORMAT)
+        self.assertNotIn("base64-conf", ua_diff.DOWNSTREAM_LOADERS)
+        for t in sorted(ua_diff.SING_BOX_KERNEL_TYPES | {"ssr", "snell"}):
+            self.assertEqual(
+                ua_diff.tier_of(t, "base64-conf"), ua_diff.tier_of(t, "conf"), t
+            )
 
     def test_下游读不了的格式分级完全一致(self):
         """conf 与 links 是同一类事实（下游一个节点都读不进来），结论必须同一个。
@@ -585,6 +778,50 @@ class ParseConfTest(unittest.TestCase):
         nodes = ua_diff.parse_nodes(body, "conf")
         self.assertEqual(len(nodes), 1)
         self.assertEqual(nodes[0].name, "good")
+
+    def test_没有段头的_loon_裸节点行按形状解析(self):
+        nodes = ua_diff.parse_nodes(LOON_BARE.encode(), "conf")
+        self.assertEqual(len(nodes), 4)
+        by_name = {n.name: n for n in nodes}
+        self.assertEqual(by_name["🇭🇰香江-G(流量)"].type, "vless")
+        self.assertEqual(by_name["🇭🇰香江-G(流量)"].server, "172.81.111.225")
+        self.assertEqual(by_name["🇭🇰香江-G(流量)"].port, 10011)
+        self.assertEqual(by_name["🇺🇸美国-D(流量)"].type, "trojan")
+
+    def test_没有段头的_quantumult_x_裸节点行按形状解析(self):
+        nodes = ua_diff.parse_nodes(QX_BARE.encode(), "conf")
+        self.assertEqual(len(nodes), 3)
+        by_name = {n.name: n for n in nodes}
+        self.assertEqual(by_name["🇭🇰香港-A(流量)"].type, "vless")
+        self.assertEqual(by_name["🇭🇰香港-A(流量)"].server, "172.81.111.224")
+        self.assertEqual(by_name["🇭🇰香港-A(流量)"].port, 10009)
+        self.assertEqual(by_name["❇️双鱼座-D(流量)"].type, "trojan")
+
+    def test_base64_包装的_conf_先脱壳再解析(self):
+        nodes = ua_diff.parse_nodes(QX_BARE_B64, "base64-conf")
+        self.assertEqual(len(nodes), 3)
+        self.assertEqual({n.type for n in nodes}, {"vless", "trojan"})
+
+    def test_有段头时以段头为准而不是行形状(self):
+        """`[general]` 里的 http=host:port 形状上像 QX 节点行，但它在非节点段里。
+
+        段头一旦出现就该以段头为准，否则 Surge/QX 配置里的本地代理、DNS 之类
+        会被算成节点，把计数抬高。
+        """
+        body = (
+            "[general]\n"
+            "http=127.0.0.1:8080, tag=local\n"
+            "\n"
+            "[server_local]\n"
+            "vmess=5.6.7.8:443, method=none, tag=🇭🇰HK-01\n"
+        ).encode()
+        nodes = ua_diff.parse_nodes(body, "conf")
+        self.assertEqual([n.name for n in nodes], ["🇭🇰HK-01"])
+
+    def test_裸行里的普通配置行被跳过(self):
+        body = "ip-mode = dual\n剩余流量：86.88 GB=vless,1.2.3.4,443\ntest-timeout = 5\n".encode()
+        nodes = ua_diff.parse_nodes(body, "conf")
+        self.assertEqual([n.name for n in nodes], ["剩余流量：86.88 GB"])
 
     def test_空行和多种注释风格被跳过(self):
         """支持 #、;、// 三种注释形式。"""
@@ -1503,6 +1740,61 @@ class RenderReportTest(unittest.TestCase):
         self.assertIn("  ℹ 2 组不同的节点列表：", text)
         self.assertIn("      组 A（4 可用）  loon 3.5.0", text)
         self.assertIn("      组 B（3 可用）  (基准) —, mihomo 1.19.29", text)
+
+    def test_组内可用数随格式不同时标注范围与各自格式(self):
+        """真实回归：分组按指纹（与格式无关），可用数却是格式相关的。
+
+        同一批节点在 sing-box 格式下 21 个可用、在 clash 格式下只有 2 个，被分进
+        同一组后标签只取了第一行的数字，于是「组 A（21 可用）」里赫然列着一个表里
+        写着 2 可用的成员。这个差异是有价值的信息，必须显式呈现。
+        """
+        same = [ua_diff.Node(f"N-{i}", "vless", f"10.0.0.{i}", 443) for i in range(3)]
+        same.append(ua_diff.Node("S-1", "ss", "10.0.1.1", 8388))
+        other = [ua_diff.Node("X", "vless", "10.0.9.9", 443)]
+        report = ua_diff.summarize(self.SUB, [
+            # sing-box 格式透传全收：vless×3 + ss×1 = 4 可用
+            _probe("(基准)", "—", same, is_baseline=True, fmt="sing-box",
+                   ua=ua_diff.baseline_ua(self.SUB.client)),
+            # clash 格式没有 vless 分支：只剩 ss×1 = 1 可用
+            _probe("clash-verge", "2.4.7", list(same), fmt="clash"),
+            _probe("mihomo", "1.19.29", other, fmt="sing-box"),
+        ])
+        group_line = next(l for l in ua_diff.render_report(report).splitlines()
+                          if "clash-verge" in l and "组 " in l)
+        self.assertIn("可用 1–4，随格式而异", group_line)
+        # 每个成员标上自己的格式，否则读者无从知道 1 和 4 分别是谁
+        self.assertIn("(基准) — [sing-box]", group_line)
+        self.assertIn("clash-verge 2.4.7 [clash]", group_line)
+
+    def test_组内可用数一致时保持简洁标签(self):
+        same = [ua_diff.Node(f"N-{i}", "vless", f"10.0.0.{i}", 443) for i in range(3)]
+        report = ua_diff.summarize(self.SUB, [
+            _probe("(基准)", "—", same, is_baseline=True, fmt="base64",
+                   ua=ua_diff.baseline_ua(self.SUB.client)),
+            _probe("mihomo", "1.19.29", list(same), fmt="base64"),
+            _probe("loon", "3.5.0", [ua_diff.Node("X", "vless", "10.0.9.9", 443)],
+                   fmt="base64"),
+        ])
+        text = ua_diff.render_report(report)
+        self.assertIn("组 A（3 可用）  (基准) —, mihomo 1.19.29", text)
+        self.assertNotIn("随格式而异", text)
+
+    def test_组内格式不同但可用数相同时仍标出格式(self):
+        # vless 在 sing-box 与 base64 两种格式下都算可用，数字一样，但格式差异本身
+        # 也是结论的一部分（换 UA 要不要同步改 config.json 的 format）
+        same = [ua_diff.Node(f"N-{i}", "vless", f"10.0.0.{i}", 443) for i in range(3)]
+        report = ua_diff.summarize(self.SUB, [
+            _probe("(基准)", "—", same, is_baseline=True, fmt="base64",
+                   ua=ua_diff.baseline_ua(self.SUB.client)),
+            _probe("mihomo", "1.19.29", list(same), fmt="sing-box"),
+            _probe("loon", "3.5.0", [ua_diff.Node("X", "vless", "10.0.9.9", 443)],
+                   fmt="base64"),
+        ])
+        group_line = next(l for l in ua_diff.render_report(report).splitlines()
+                          if "mihomo" in l and "组 " in l)
+        self.assertIn("（3 可用）", group_line)
+        self.assertIn("(基准) — [base64]", group_line)
+        self.assertIn("mihomo 1.19.29 [sing-box]", group_line)
 
     def test_只有一组时不打印分组块(self):
         text = ua_diff.render_report(self._sized_report(3, 3))
