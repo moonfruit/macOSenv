@@ -148,6 +148,7 @@ skinparam usecase {
 (ffmpeg)-->(svt-av1)
 (ffmpeg)-->(x264)
 (ffmpeg)-->(x265)
+(ffmpeg)-->(xz)
 (figlet)
 (file-formula)
 (file-formula)-->(libmagic)
