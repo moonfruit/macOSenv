@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+declare -c SQLCL=/opt/homebrew/bin/sqlcl
+
+export ORACLE_HOME="/opt/homebrew/opt/oracle-instantclient/libexec"
+export CUSTOM_JDBC="-Djava.library.path=$ORACLE_HOME"
+
+# Java 26+
+CUSTOM_JDBC="$CUSTOM_JDBC --enable-final-field-mutation=ALL-UNNAMED"
+
+if (($#)); then
+    exec "$SQLCL" "$@"
+else
+    exec "$SQLCL" /nolog
+fi
+
+# cspell:words sqlcl
