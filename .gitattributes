@@ -2,3 +2,5 @@ etc/secrets/*.env  diff=sops
 etc/secrets/*.yaml diff=sops
 etc/secrets/*.json diff=sops
 etc/secrets/*.ini  diff=sops
+
+etc/claude/settings.json filter=strip-automode

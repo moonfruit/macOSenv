@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# 兜底检查：strip-automode filter 未生效时，拦住带 .autoMode 的 settings.json。
+#
+# 该字段由 Claude Code 的 auto mode 自动写入，内含探测到的内网服务名、secrets
+# 文件路径等，而本仓库是公开的。filter 配置只存在 .git/config，clone 后不会自动
+# 带上，所以需要这层兜底。
+set -euo pipefail
+
+FILE=etc/claude/settings.json
+
+git diff --cached --name-only --diff-filter=ACM | grep -qxF "$FILE" || exit 0
+
+# 没有 jq 就无从判断，此时必须拦下而不是放行——否则等于静默泄露。
+if ! hash jq 2>/dev/null; then
+    cat >&2 <<EOF
+✗ 提交被拦截：找不到 jq，无法检查 ${FILE} 是否含 autoMode
+
+      brew install jq
+EOF
+    exit 1
+fi
+
+if git show ":$FILE" | jq -e 'has("autoMode")' >/dev/null; then
+    cat >&2 <<EOF
+✗ 提交被拦截：${FILE} 的暂存内容仍包含 autoMode
+
+  该字段含内网服务名与 secrets 文件路径，不能进入公开仓库。
+  这说明 strip-automode filter 未生效，执行以下命令后重新 git add：
+
+      ./etc/git/setup.sh
+EOF
+    exit 1
+fi
