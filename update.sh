@@ -141,17 +141,17 @@ fd -tf '^update.sh$' | while read -r MODULE; do
     fi
     DIR=${MODULE%/*}
 
+    echo "-------- $DIR --------"
     if [[ ${#SKIP[@]} -gt 0 ]] && matches_skip "$DIR"; then
         warn "Skipping $DIR"
-        continue
+    else
+        (cd "$DIR" && ./update.sh)
     fi
-
-    echo "-------- $DIR --------"
-    (cd "$DIR" && ./update.sh)
 done
 
 if [[ -n $BREW ]]; then
     echo "-------- proxy --------"
+    h1 "Waiting for proxy to reach GitHub (up to 30s)..."
     wait_for_proxy || true
     echo
 

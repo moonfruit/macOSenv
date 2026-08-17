@@ -319,6 +319,7 @@ skinparam usecase {
 (ipython)-->(python@3.14)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
+(jenkins-cli)
 (jpeg-turbo) << dep >>
 (jpeg-xl) << dep >>
 (jpeg-xl)-->(brotli)
