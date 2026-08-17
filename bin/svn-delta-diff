@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# 把 delta 接到 subversion 的 diff-cmd 上。
+#
+# svn 的调用形式为：
+#     svn-delta-diff <diff-extensions...> -L <label1> -L <label2> <left> <right>
+# 参数原样转给 diff，输出再交给 delta 渲染。
+#
+# 用法（~/.subversion/config）：
+#     [helpers]
+#     diff-cmd = svn-delta-diff
+#
+# 注意 svn 是靠 PATH 找这个名字的，PATH 里没有 $ENV/bin 时会报
+# E200012；要在最小环境（IDE、cron 等）下也生效就改成绝对路径。
+
+set -u
+
+# 没装 delta 就退回原始行为，参数一个不动
+if ! command -v delta &>/dev/null; then
+    exec diff "$@"
+fi
+
+DIFF_ARGS=()
+HAS_UNIFIED=false
+
+for ARG in "$@"; do
+    case $ARG in
+    # delta 只吃干净的 unified diff，diff 自己上的色要剔掉
+    --color | --color=*) continue ;;
+    -u | -U | --unified | --unified=*) HAS_UNIFIED=true ;;
+    esac
+    DIFF_ARGS+=("$ARG")
+done
+
+# delta 无法渲染 context/normal diff，兜底补上 -u
+$HAS_UNIFIED || DIFF_ARGS=(-u "${DIFF_ARGS[@]}")
+
+# svn 用管道捕获 stdout，delta 探测不到终端宽度会退化成窄版 side-by-side。
+# 这里不能用 tput cols：它查的是自己 stdout 的窗口大小，在管道里只会拿到
+# terminfo 的默认 80。stty 查的是 stdin，重定向 /dev/tty 才拿得到真实宽度。
+DELTA_ARGS=(--paging=never)
+if TTY_SIZE=$(stty size 2>/dev/null </dev/tty); then
+    DELTA_ARGS+=(--width="${TTY_SIZE#* }")
+fi
+
+diff "${DIFF_ARGS[@]}" | delta "${DELTA_ARGS[@]}"
+
+# svn 按 diff 的约定判断结果：0 无差异、1 有差异，其余视为出错。
+# 不还原的话 svn 拿到的永远是 delta 的退出码。
+exit "${PIPESTATUS[0]}"
