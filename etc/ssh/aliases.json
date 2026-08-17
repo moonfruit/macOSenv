@@ -52,5 +52,13 @@
       "gingkoo",
       "jenkins"
     ]
+  },
+  "app@10.0.3.102": {
+    "tags": [
+      "gingkoo",
+      "cips",
+      "dbs",
+      "dbs-sg"
+    ]
   }
 }
