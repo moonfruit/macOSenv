@@ -2,7 +2,9 @@
 # kitesurf —— 把 Cloudflare Kitesurf（跑在 Workers 上的云端无头浏览器）接成本地 MCP server。
 #
 # 凭据从 etc/secrets/secret.env 里 sops 解密取出，MCP 客户端的配置里因此不需要出现 token。
-# 需要 CLOUDFLARE_ACCOUNT_ID 和 CLOUDFLARE_API_TOKEN（权限：Browser Rendering - Edit）。
+# 需要 CLOUDFLARE_ACCOUNT_ID，以及 CLOUDFLARE_KITESURF_TOKEN（没有就回退 CLOUDFLARE_API_TOKEN），
+# token 权限：Browser Rendering (Browser Run) - Edit。
+# 进程环境里已经有的同名变量优先，省掉一次 sops 解密。
 
 set -euo pipefail
 
@@ -27,6 +29,9 @@ BROWSER=kitesurf
 ACTION=run
 KEEP_ALIVE=          # 默认不带：kitesurf 不接受这个参数，只有 chromium 支持
 ARGS=()
+
+API_TOKEN=
+TOKEN_VAR=           # token 实际来自哪个变量，--test 时报出来方便排查串号
 
 die() {
     echo "${NAME}: $*" >&2
@@ -62,6 +67,10 @@ usage() {
   --print-config       打印可粘贴进 MCP 客户端的配置 JSON
   --endpoint           打印 CDP WebSocket 端点（不含 token）
   -h, --help           显示本帮助
+
+凭据变量:
+  CLOUDFLARE_ACCOUNT_ID                              账号 id
+  CLOUDFLARE_KITESURF_TOKEN / CLOUDFLARE_API_TOKEN   token，前者优先
 
 示例:
   claude mcp add-json kitesurf "\$(${NAME} --print-config)"
@@ -111,7 +120,20 @@ if [[ $ACTION = print-config ]]; then
     exit 0
 fi
 
-if [[ -z ${CLOUDFLARE_ACCOUNT_ID:-} || -z ${CLOUDFLARE_API_TOKEN:-} ]]; then
+# kitesurf 专用 token 优先，回退到通用的那个
+resolve-token() {
+    local var
+    for var in CLOUDFLARE_KITESURF_TOKEN CLOUDFLARE_API_TOKEN; do
+        if [[ -n ${!var:-} ]]; then
+            API_TOKEN=${!var}
+            TOKEN_VAR=$var
+            return 0
+        fi
+    done
+    return 1
+}
+
+if ! resolve-token || [[ -z ${CLOUDFLARE_ACCOUNT_ID:-} ]]; then
     [[ -r $SECRETS ]] || die "读不到凭据文件 ${SECRETS}"
     has-command sops || die "找不到 sops，无法解密凭据"
     PLAIN=$(sops decrypt "$SECRETS") || die "解密 ${SECRETS} 失败"
@@ -120,10 +142,12 @@ if [[ -z ${CLOUDFLARE_ACCOUNT_ID:-} || -z ${CLOUDFLARE_API_TOKEN:-} ]]; then
     source /dev/stdin <<<"$PLAIN"
     set +a
     unset PLAIN
+    resolve-token || true
 fi
 
 [[ -n ${CLOUDFLARE_ACCOUNT_ID:-} ]] || die "凭据里缺少 CLOUDFLARE_ACCOUNT_ID"
-[[ -n ${CLOUDFLARE_API_TOKEN:-} ]] || die "凭据里缺少 CLOUDFLARE_API_TOKEN"
+[[ -n $API_TOKEN ]] ||
+    die "凭据里缺少 CLOUDFLARE_KITESURF_TOKEN（也没有 CLOUDFLARE_API_TOKEN 可回退）"
 
 # 两种浏览器挂在不同端点上，互相不认对方的参数：
 #   kitesurf 只在 browser-run 下，且不接受 keep_alive
@@ -157,12 +181,12 @@ if [[ $ACTION = test ]]; then
     FAILED=0
 
     # 能走到这里说明 sops 解密成功且两个变量都非空
-    echo "[1/3] 读取凭据 ... ✓ (account ${CLOUDFLARE_ACCOUNT_ID})"
+    echo "[1/3] 读取凭据 ... ✓ (account ${CLOUDFLARE_ACCOUNT_ID}, token 来自 ${TOKEN_VAR})"
 
     # token 自校验：任何有效 token 都能调这个端点，与具体权限无关
     printf '[2/3] 校验 token ... '
     if VERIFY=$(curl -sS --max-time 15 \
-        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+        -H "Authorization: Bearer ${API_TOKEN}" \
         'https://api.cloudflare.com/client/v4/user/tokens/verify' 2>&1); then
         if [[ $(jq -r '.success // false' <<<"$VERIFY" 2>/dev/null) = true ]]; then
             echo "✓ ($(jq -r '.result.status' <<<"$VERIFY"))"
@@ -186,7 +210,7 @@ if [[ $ACTION = test ]]; then
     # 握手成功后 curl 会一直持有连接直到 --max-time，所以它的退出码不可信，
     # 只认响应头里的状态码。
     curl -sS --http1.1 -D "$HDR" -o "$BODY" --max-time 6 \
-        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+        -H "Authorization: Bearer ${API_TOKEN}" \
         -H 'Connection: Upgrade' \
         -H 'Upgrade: websocket' \
         -H 'Sec-WebSocket-Version: 13' \
@@ -203,7 +227,7 @@ if [[ $ACTION = test ]]; then
 
     if ((FAILED)); then
         echo
-        echo "看上面的报错。凭据在 ${SECRETS} 的 CLOUDFLARE_ACCOUNT_ID / CLOUDFLARE_API_TOKEN，"
+        echo "看上面的报错。凭据在 ${SECRETS} 的 CLOUDFLARE_ACCOUNT_ID / ${TOKEN_VAR}，"
         echo "token 需要 Browser Rendering (Browser Run) - Edit 权限。"
         exit 1
     fi
@@ -219,7 +243,7 @@ chrome-devtools)
     # chrome-devtools-mcp 只支持从命令行收 header，token 会出现在 ps 里
     exec chrome-devtools-mcp \
         --wsEndpoint="$ENDPOINT" \
-        --wsHeaders="{\"Authorization\":\"Bearer ${CLOUDFLARE_API_TOKEN}\"}" \
+        --wsHeaders="{\"Authorization\":\"Bearer ${API_TOKEN}\"}" \
         ${ARGS[@]+"${ARGS[@]}"}
     ;;
 playwright)
@@ -227,7 +251,7 @@ playwright)
         die "找不到 playwright-mcp，请先 brew install playwright-mcp"
     # playwright-mcp 支持用环境变量传，token 不会出现在命令行里
     export PLAYWRIGHT_MCP_CDP_ENDPOINT="$ENDPOINT"
-    export PLAYWRIGHT_MCP_CDP_HEADERS="Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
+    export PLAYWRIGHT_MCP_CDP_HEADERS="Authorization: Bearer ${API_TOKEN}"
     exec playwright-mcp ${ARGS[@]+"${ARGS[@]}"}
     ;;
 esac

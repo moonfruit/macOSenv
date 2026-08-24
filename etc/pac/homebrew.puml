@@ -319,6 +319,7 @@ skinparam usecase {
 (ipython)-->(python@3.14)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
+(jemalloc) << dep >>
 (jenkins-cli)
 (jpeg-turbo) << dep >>
 (jpeg-xl) << dep >>
@@ -445,11 +446,8 @@ skinparam usecase {
 (little-cms2)-->(libtiff)
 (llhttp) << dep >>
 (llmfit)
-(llvm) << dep >>
-(llvm)-->(python@3.14)
-(llvm)-->(xz)
-(llvm)-->(z3)
-(llvm)-->(zstd)
+(llvm@22) << dep >>
+(llvm@22)-->(zstd)
 (logrotate)
 (logrotate)-->(popt)
 (lpeg) << dep >>
@@ -752,7 +750,7 @@ skinparam usecase {
 (rust)
 (rust)-->(libgit2)
 (rust)-->(libssh2)
-(rust)-->(llvm)
+(rust)-->(llvm@22)
 (rust)-->(openssl@3)
 (rust)-->(pkgconf)
 (rust)-->(sqlite)
@@ -806,6 +804,7 @@ skinparam usecase {
 (testssl)
 (testssl)-->(openssl@4)
 (tmux)
+(tmux)-->(jemalloc)
 (tmux)-->(libevent)
 (tmux)-->(ncurses)
 (tmux)-->(utf8proc)
@@ -880,7 +879,6 @@ skinparam usecase {
 (yt-dlp)-->(certifi)
 (yt-dlp)-->(deno)
 (yt-dlp)-->(python@3.14)
-(z3) << dep >>
 (zlib-ng-compat) << dep >>
 (zoxide)
 (zsh)
