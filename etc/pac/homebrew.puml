@@ -30,6 +30,7 @@ skinparam usecase {
 (aria2)-->(libssh2)
 (aria2)-->(openssl@3)
 (aria2)-->(sqlite)
+(async-profiler)
 (autojump)
 (autojump)-->(python@3.14)
 (basedpyright)
@@ -186,6 +187,19 @@ skinparam usecase {
 (gettext)-->(json-c)
 (gettext)-->(libunistring)
 (gh)
+(ghostscript) << dep >>
+(ghostscript)-->(fontconfig)
+(ghostscript)-->(freetype)
+(ghostscript)-->(jbig2dec)
+(ghostscript)-->(jpeg-turbo)
+(ghostscript)-->(leptonica)
+(ghostscript)-->(libarchive)
+(ghostscript)-->(libidn)
+(ghostscript)-->(libpng)
+(ghostscript)-->(libtiff)
+(ghostscript)-->(little-cms2)
+(ghostscript)-->(openjpeg)
+(ghostscript)-->(tesseract)
 (giflib) << dep >>
 (git) << req >>
 (git)-->(gettext)
@@ -302,16 +316,32 @@ skinparam usecase {
 (hyperfine)
 (icu4c@78) << dep >>
 (iftop)
-(imagemagick)
-(imagemagick)-->(freetype)
-(imagemagick)-->(jpeg-turbo)
-(imagemagick)-->(libheif)
-(imagemagick)-->(libpng)
-(imagemagick)-->(libtiff)
-(imagemagick)-->(libtool)
-(imagemagick)-->(little-cms2)
-(imagemagick)-->(webp)
-(imagemagick)-->(xz)
+(imagemagick-full)
+(imagemagick-full)-->(cairo)
+(imagemagick-full)-->(fontconfig)
+(imagemagick-full)-->(freetype)
+(imagemagick-full)-->(gdk-pixbuf)
+(imagemagick-full)-->(gettext)
+(imagemagick-full)-->(ghostscript)
+(imagemagick-full)-->(glib)
+(imagemagick-full)-->(imath)
+(imagemagick-full)-->(jpeg-turbo)
+(imagemagick-full)-->(jpeg-xl)
+(imagemagick-full)-->(libheif)
+(imagemagick-full)-->(liblqr)
+(imagemagick-full)-->(libomp)
+(imagemagick-full)-->(libpng)
+(imagemagick-full)-->(libraw)
+(imagemagick-full)-->(librsvg)
+(imagemagick-full)-->(libtiff)
+(imagemagick-full)-->(libtool)
+(imagemagick-full)-->(libultrahdr)
+(imagemagick-full)-->(libzip)
+(imagemagick-full)-->(little-cms2)
+(imagemagick-full)-->(openexr)
+(imagemagick-full)-->(openjpeg)
+(imagemagick-full)-->(webp)
+(imagemagick-full)-->(xz)
 (imath) << dep >>
 (iperf3)
 (iperf3)-->(openssl@4)
@@ -319,6 +349,7 @@ skinparam usecase {
 (ipython)-->(python@3.14)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
+(jbig2dec) << dep >>
 (jemalloc) << dep >>
 (jenkins-cli)
 (jpeg-turbo) << dep >>
@@ -343,6 +374,18 @@ skinparam usecase {
 (lame)-->(mpg123)
 (lazydocker)
 (lazygit)
+(leptonica) << dep >>
+(leptonica)-->(giflib)
+(leptonica)-->(jpeg-turbo)
+(leptonica)-->(libpng)
+(leptonica)-->(libtiff)
+(leptonica)-->(openjpeg)
+(leptonica)-->(webp)
+(libarchive) << dep >>
+(libarchive)-->(libb2)
+(libarchive)-->(lz4)
+(libarchive)-->(xz)
+(libarchive)-->(zstd)
 (libassuan) << dep >>
 (libassuan)-->(libgpg-error)
 (libavif) << dep >>
@@ -350,6 +393,7 @@ skinparam usecase {
 (libavif)-->(dav1d)
 (libavif)-->(jpeg-turbo)
 (libavif)-->(libpng)
+(libb2) << dep >>
 (libcbor) << dep >>
 (libdatrie) << dep >>
 (libde265) << dep >>
@@ -375,19 +419,28 @@ skinparam usecase {
 (libheif)-->(libtiff)
 (libheif)-->(webp)
 (libheif)-->(x265)
+(libidn) << dep >>
 (libidn2) << dep >>
 (libidn2)-->(gettext)
 (libidn2)-->(libunistring)
 (libksba) << dep >>
 (libksba)-->(libgpg-error)
+(liblqr) << dep >>
+(liblqr)-->(gettext)
+(liblqr)-->(glib)
 (libmagic) << dep >>
 (libnghttp2) << dep >>
 (libnghttp3) << dep >>
 (libngtcp2) << dep >>
 (libngtcp2)-->(openssl@3)
+(libomp) << dep >>
 (libpng) << dep >>
 (libpsl) << dep >>
 (libptytty) << dep >>
+(libraw) << dep >>
+(libraw)-->(jpeg-turbo)
+(libraw)-->(libomp)
+(libraw)-->(little-cms2)
 (librsvg) << dep >>
 (librsvg)-->(cairo)
 (librsvg)-->(fontconfig)
@@ -413,6 +466,8 @@ skinparam usecase {
 (libtiff)-->(zstd)
 (libtool) << dep >>
 (libtool)-->(m4)
+(libultrahdr) << dep >>
+(libultrahdr)-->(jpeg-turbo)
 (libunistring) << dep >>
 (libusb) << dep >>
 (libuv) << dep >>
@@ -435,6 +490,9 @@ skinparam usecase {
 (libxrender)-->(libx11)
 (libxrender)-->(xorgproto)
 (libyaml) << dep >>
+(libzip) << dep >>
+(libzip)-->(xz)
+(libzip)-->(zstd)
 (lima) << dep >>
 (lima-additional-guestagents)
 (lima-additional-guestagents)-->(lima)
@@ -801,6 +859,17 @@ skinparam usecase {
 (taplo)
 (tcping)
 (terminal-notifier)
+(tesseract) << dep >>
+(tesseract)-->(cairo)
+(tesseract)-->(fontconfig)
+(tesseract)-->(freetype)
+(tesseract)-->(gettext)
+(tesseract)-->(glib)
+(tesseract)-->(harfbuzz)
+(tesseract)-->(icu4c@78)
+(tesseract)-->(leptonica)
+(tesseract)-->(libarchive)
+(tesseract)-->(pango)
 (testssl)
 (testssl)-->(openssl@4)
 (tmux)
