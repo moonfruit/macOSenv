@@ -35,10 +35,13 @@ done
 # delta 无法渲染 context/normal diff，兜底补上 -u
 $HAS_UNIFIED || DIFF_ARGS=(-u "${DIFF_ARGS[@]}")
 
+# svn 自己已经打过 "Index: <path>" 的文件头，delta 再来一遍 "Δ file ⟶ file"
+# 加分隔线纯属重复，omit 掉。
+DELTA_ARGS=(--paging=never --file-style=omit)
+
 # svn 用管道捕获 stdout，delta 探测不到终端宽度会退化成窄版 side-by-side。
 # 这里不能用 tput cols：它查的是自己 stdout 的窗口大小，在管道里只会拿到
 # terminfo 的默认 80。stty 查的是 stdin，重定向 /dev/tty 才拿得到真实宽度。
-DELTA_ARGS=(--paging=never)
 if TTY_SIZE=$(stty size 2>/dev/null </dev/tty); then
     DELTA_ARGS+=(--width="${TTY_SIZE#* }")
 fi
