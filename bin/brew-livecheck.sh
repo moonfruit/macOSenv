@@ -15,12 +15,15 @@ readonly GREEN=$(tput setaf 2) BLUE=$(tput setaf 4)
 # shellcheck disable=SC2155
 readonly BOLD=$(tput bold) RESET=$(tput sgr0)
 
+# 固定全量检查的 tap：里面的 formula 和 cask 不论是否安装都要查，
+# 条目随 tap 内容自动增减，不必在 EXTRA 里手工登记。
+readonly TAPS=(
+    moonfruit/tap
+)
+
+# TAPS 之外、没装但仍想跟踪的包。
 readonly EXTRA=(
     kettle
-    sing-box-beta
-    sing-box-ref1nd
-    wlp-webprofile8
-    wlp-webprofile11
     zig
 
     alacritty
@@ -110,10 +113,16 @@ join-by() {
     echo "$*"
 }
 
+# livecheck 的 --full-name 只对第三方 tap 给出全名，homebrew/core 与 homebrew/cask
+# 仍然输出短名 —— key 按同样规则生成，排除项才能精确到 tap：否则
+# moonfruit/tap/cxpatcher 会被 italomandara 那个同名 cask 连坐排除掉。
 as-json-keys() {
     local it
     for it in "$@"; do
-        echo "\"${it##*/}\":true"
+        case $it in
+        homebrew/*) echo "\"${it##*/}\":true" ;;
+        *) echo "\"$it\":true" ;;
+        esac
     done
 }
 
@@ -159,11 +168,41 @@ add-to-outdated() {
     OUTDATED+=("${OUTPUT[@]}")
 }
 
-brew-extra() {
-    brew info --json=v2 "${EXTRA[@]}" | jq -r '
+# 传进来的包里尚未安装的那些，输出全名。前导的 - 开头参数原样交给 brew info
+# （用 --formula / --cask 限定类型）；一个包名都没有时直接返回 —— 否则
+# brew info 会退化成「列出该类型的全部包」。
+uninstalled() {
+    local -a options
+    while [[ $1 == -* ]]; do
+        options+=("$1")
+        shift
+    done
+    [[ $# -gt 0 ]] || return 0
+
+    brew info --json=v2 "${options[@]}" "$@" | jq -r '
         [.formulae[] | select(.installed | length == 0) | "\(.tap)/\(.name)"] +
         [.casks[] | select(.installed | not) | "\(.tap)/\(.token)"] |
         .[]'
+}
+
+# EXTRA 与 TAPS 中尚未安装的部分。已安装的由 brew-ls 的 --installed 那半边覆盖，
+# 这里滤掉以免同一个包被检查两次；末尾去重是防 EXTRA 与 TAPS 写重。
+#
+# formula 与 cask 分三次查而不是并成一次：brew info 按短名去重，把 macast 和
+# moonfruit/tap/macast 当成同一个，后者会被静默吞掉。
+brew-extra() {
+    local tap_json
+    tap_json=$(brew tap-info --json "${TAPS[@]}")
+
+    local -a formulae casks
+    readarray -t formulae < <(jq -r '.[].formula_names[]' <<<"$tap_json")
+    readarray -t casks < <(jq -r '.[].cask_tokens[]' <<<"$tap_json")
+
+    {
+        uninstalled "${EXTRA[@]}"
+        uninstalled --formula "${formulae[@]}"
+        uninstalled --cask "${casks[@]}"
+    } | awk '!seen[$0]++'
 }
 
 brew-ls() {
@@ -190,7 +229,7 @@ exclude-skipped() {
     rg -v ': skipped - '
 }
 
-readonly LIVECHECK=(brew livecheck --json --extract-plist)
+readonly LIVECHECK=(brew livecheck --json --full-name --extract-plist)
 
 # 在 fan-out 之前把 API JSON 缓存拉齐。
 #
