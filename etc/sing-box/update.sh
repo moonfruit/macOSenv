@@ -15,7 +15,18 @@ else
     cd "$TEMP_DIR" || exit 1
 fi
 
+RESTART=
+
+mark-restart() {
+    RESTART=1
+}
+
 "$DIR/zashboard.sh"
+
+# gingkoo.sh 只在 config/gingkoo.json 真的变了时才返回 0
+if "$DIR/gingkoo.sh"; then
+    mark-restart
+fi
 
 h1 Updating config.json
 
@@ -66,5 +77,9 @@ h2 Generating config.json
 # Use the beta version of sing-box for config formatting
 SING_BOX=/opt/homebrew/opt/sing-box-beta/bin/sing-box
 if clash-to-sing | "$SING_BOX" format -c /dev/stdin | sing-exec "$SING_RULES/fix-format.py" >zoo.json; then
-    copy-if-diff zoo.json "$DIR/config" restart-sing
+    copy-if-diff zoo.json "$DIR/config" mark-restart
+fi
+
+if [[ -n $RESTART ]]; then
+    restart-sing
 fi

@@ -21,10 +21,19 @@
       // Local
       { "tag": "dns-local", "type": "local" },
       // Home
-      { "tag": "dns-home", "type": "udp", "server": "192.168.50.1", "server_port": 1053 },
-      { "tag": "dns-home-tailnet", "type": "udp", "server": "192.168.50.1", "server_port": 1053, "detour": "tailscale-ep" },
+      { "tag": "dns-home-direct", "type": "udp", "server": "192.168.50.1", "server_port": 1053 },
+      {
+        "tag": "dns-home-tailnet",
+        "type": "udp",
+        "server": "192.168.50.1",
+        "server_port": 1053,
+        "detour": "tailscale-ep"
+      },
+      { "tag": "dns-home", "type": "group", "servers": ["dns-home-direct", "dns-home-tailnet"] },
       // Gingkoo
-      { "tag": "dns-gingkoo", "type": "udp", "server": "10.1.2.59" },
+      { "tag": "dns-gingkoo-direct", "type": "udp", "server": "10.1.2.59" },
+      { "tag": "dns-gingkoo-openvpn", "type": "udp", "server": "10.1.2.59", "detour": "gingkoo-ep" },
+      { "tag": "dns-gingkoo", "type": "group", "servers": ["dns-gingkoo-direct", "dns-gingkoo-openvpn"] },
       // LazyCat
       { "tag": "dns-lazycat", "type": "udp", "server": "fc03:1136:3800::1" },
       // Tailscale
@@ -37,17 +46,16 @@
       { "preferred_by": "dns-hosts", "server": "dns-hosts" },
       // Local
       { "preferred_by": "dns-local", "server": "dns-local" },
-      // Home
-      { "rule_set": "Home", "server": "dns-home" },
-      { "rule_set": "NotHome", "server": "dns-home-tailnet" },
       // Tailscale
       { "preferred_by": "dns-tailscale", "server": "dns-tailscale" },
       // LazyCat
-      { "domain_suffix": "heiyu.space", "server": "dns-lazycat" },
-      // Lan
-      { "domain_suffix": ["heiyu.space", "ts.net"], "rule_set": "Lan", "action": "predefined", "rcode": "NXDOMAIN" },
+      { "domain_suffix": ".heiyu.space", "server": "dns-lazycat" },
+      // Home
+      { "domain_suffix": [".lan", ".home.arpa"], "server": "dns-home" },
       // Gingkoo
-      { "domain_suffix": ["server.gingkoo", "gingkoo.internal"], "server": "dns-gingkoo" },
+      { "domain_suffix": [".server.gingkoo", ".gingkoo.internal"], "server": "dns-gingkoo" },
+      // Lan
+      { "rule_set": ["Lan", "ExtraLan"], "action": "predefined", "rcode": "NXDOMAIN" },
       // 无 IPv6 时不解析 IPv6 地址
       { "rule_set": "NoIPv6", "action": "predefined" },
       // 公共 DNS
@@ -90,6 +98,11 @@
       { "rule_set": "NetworkProcess", "outbound": "DIRECT" },
       // Tailscale
       { "preferred_by": "tailscale-ep", "outbound": "tailscale-ep" },
+      // Gingkoo
+      { "rule_set": "GingkooDomains", "action": "resolve" },
+      { "rule_set": "GingkooInside", "preferred_by": "BRIDGE", "outbound": "BRIDGE" },
+      { "rule_set": "GingkooInside", "outbound": "DIRECT" },
+      { "rule_set": "GingkooOutside", "outbound": "gingkoo-ep" },
       // Direct Destination
       { "network": "icmp", "preferred_by": "BRIDGE", "outbound": "BRIDGE" },
       { "network": "icmp", "outbound": "DIRECT" },

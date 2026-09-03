@@ -1,6 +1,8 @@
 *.bak
 
+/gingkoo.json
 /protected.json
 /provider.json
+/public.json
 /rule-sets.json
 /zoo.json

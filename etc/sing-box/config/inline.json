@@ -4,31 +4,6 @@
     "rule_set": [
       {
         "type": "inline",
-        "tag": "Home",
-        "rules": [
-          {
-            "type": "logical",
-            "mode": "and",
-            "rules": [{ "domain_suffix": [".lan", ".home.arpa"] }, { "default_interface_address": ["192.168.50.0/24"] }]
-          }
-        ]
-      },
-      {
-        "type": "inline",
-        "tag": "NotHome",
-        "rules": [
-          {
-            "type": "logical",
-            "mode": "and",
-            "rules": [
-              { "domain_suffix": [".lan", ".home.arpa"] },
-              { "default_interface_address": ["192.168.50.0/24"], "invert": true }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "inline",
         "tag": "NoIPv6",
         "rules": [
           {
@@ -36,6 +11,33 @@
             "mode": "and",
             "rules": [{ "query_type": "AAAA" }, { "default_interface_address": ["2000::/3"], "invert": true }]
           }
+        ]
+      },
+      {
+        "type": "inline",
+        "tag": "GingkooDomains",
+        "rules": [{ "domain_suffix": [".server.gingkoo", ".gingkoo.internal"] }]
+      },
+      {
+        "type": "inline",
+        "tag": "GingkooInside",
+        "rules": [
+          {
+            "ip_cidr": ["10.0.0.0/8", "172.30.0.0/16", "172.32.0.0/16", "172.33.0.0/16"],
+            "default_interface_address": ["10.0.0.0/8"]
+          }
+        ]
+      },
+      {
+        "type": "inline",
+        "tag": "GingkooOutside",
+        "rules": [{ "ip_cidr": ["10.0.0.0/8", "172.30.0.0/16", "172.32.0.0/16", "172.33.0.0/16"] }]
+      },
+      {
+        "type": "inline",
+        "tag": "ExtraLan",
+        "rules": [
+          { "domain_suffix": [".heiyu.space", ".ts.net", ".lan", ".home.arpa", ".server.gingkoo", ".gingkoo.internal"] }
         ]
       },
       {

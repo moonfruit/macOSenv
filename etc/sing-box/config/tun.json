@@ -8,8 +8,8 @@
       // "route_address": ["22.0.0.0/8", "fc00::/16"],
       "route_exclude_address": [
         // ipv4
-        "10.0.0.0/8",
-        "172.16.0.0/12",
+        // "10.0.0.0/8",
+        // "172.16.0.0/12",
         // "192.168.0.0/16",
 
         // ipv6
@@ -51,9 +51,7 @@
             "heiyu.space",
             "apple.com",
             "gingkoo.com",
-            "gingkoo.internal",
-            "gingkoo.work",
-            "server.gingkoo"
+            "gingkoo.work"
           ]
         }
       }
