@@ -1,6 +1,6 @@
-etc/secrets/*.env  diff=sops
-etc/secrets/*.yaml diff=sops
-etc/secrets/*.json diff=sops
-etc/secrets/*.ini  diff=sops
+**/secrets/*.env  diff=sops
+**/secrets/*.yaml diff=sops
+**/secrets/*.json diff=sops
+**/secrets/*.ini  diff=sops
 
 etc/claude/settings.json filter=strip-automode
