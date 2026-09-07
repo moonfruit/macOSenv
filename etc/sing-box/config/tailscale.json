@@ -6,7 +6,8 @@
       "tag": "tailscale-ep",
       "hostname": "moons-macbook-sing-box",
       "accept_routes": true,
-      "taildrop_directory": "/Users/moon/Downloads/Taildrop"
+      "ssh_server": true,
+      "taildrop_directory": "taildrop"
     }
   ]
 }

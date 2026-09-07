@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "lines": [
     [
       {
@@ -25,7 +25,7 @@
         "type": "git-branch",
         "color": "magenta",
         "metadata": {
-          "hideNoGit": "true"
+          "hide": "no-git"
         }
       },
       {
@@ -33,7 +33,7 @@
         "type": "git-changes",
         "backgroundColor": "bgBrightBlue",
         "metadata": {
-          "hideNoGit": "true"
+          "hide": "no-git"
         }
       },
       {
@@ -61,10 +61,16 @@
   "minimalistMode": true,
   "powerline": {
     "enabled": true,
-    "separators": [""],
-    "separatorInvertBackground": [false],
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
     "startCaps": [],
-    "endCaps": [""],
+    "endCaps": [
+      ""
+    ],
     "theme": "nord",
     "autoAlign": true,
     "continueThemeAcrossLines": true

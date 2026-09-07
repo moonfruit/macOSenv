@@ -734,6 +734,7 @@ skinparam usecase {
 (poppler)-->(glib)
 (poppler)-->(gpgme)
 (poppler)-->(gpgmepp)
+(poppler)-->(harfbuzz)
 (poppler)-->(jpeg-turbo)
 (poppler)-->(libpng)
 (poppler)-->(libtiff)

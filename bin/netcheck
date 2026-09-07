@@ -312,6 +312,9 @@ declare -a sites=(
     "Claude|https://claude.ai/favicon.ico"
     "ASK机场服|https://ask.ash.yt/favicon.ico"
     "JMS机场服|https://tv.ash.yt/favicon.ico"
+    "路由器|http://router.home.arpa/"
+    "懒猫微服|https://dkmooncat.heiyu.space/favicon.ico"
+    "公司仓库|http://git.server.gingkoo/favicon.ico"
 )
 
 for i in "${!sites[@]}"; do

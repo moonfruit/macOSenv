@@ -35,6 +35,9 @@ export DI_ARGS="-f sMbuvpt"
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
+# for sing-box
+export BOX_API_URL=http://127.0.0.1:10000
+
 # for seqcli
 export SEQCLI_STORAGE_PATH="$ENV/etc/seqcli"
 
