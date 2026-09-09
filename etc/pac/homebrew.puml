@@ -71,6 +71,8 @@ skinparam usecase {
 (capstone)-->(gettext)
 (certifi) << dep >>
 (certifi)-->(ca-certificates)
+(cffi) << dep >>
+(cffi)-->(pycparser)
 (chafa)
 (chafa)-->(cairo)
 (chafa)-->(freetype)
@@ -760,6 +762,7 @@ skinparam usecase {
 (pstree)
 (pv)
 (pv)-->(gettext)
+(pycparser) << dep >>
 (pyright)
 (pyright)-->(node)
 (python@3.14) << dep >>
@@ -951,7 +954,9 @@ skinparam usecase {
 (yq)
 (yt-dlp)
 (yt-dlp)-->(certifi)
+(yt-dlp)-->(cffi)
 (yt-dlp)-->(deno)
+(yt-dlp)-->(pycparser)
 (yt-dlp)-->(python@3.14)
 (zlib-ng-compat) << dep >>
 (zoxide)

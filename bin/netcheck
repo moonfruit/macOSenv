@@ -306,7 +306,7 @@ declare -a sites=(
     "Gemini|https://gemini.google/favicon.ico"
     "YouTube|https://www.youtube.com/favicon.ico"
     "GitHub|https://github.com/favicon.ico"
-    "ChatGPT|https://chatgpt.com/favicon.ico"
+    "ChatGPT|https://chatgpt.com/"
     "OpenAI|https://api.openai.com/"
     "Anthropic|https://api.anthropic.com/"
     "Claude|https://claude.ai/favicon.ico"
