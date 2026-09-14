@@ -57,7 +57,12 @@
       // Lan
       { "rule_set": ["Lan", "ExtraLan"], "action": "predefined", "rcode": "NXDOMAIN" },
       // 无 IPv6 时不解析 IPv6 地址
-      { "rule_set": "NoIPv6", "action": "predefined" },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [{ "ip_version": 6 }, { "default_interface_address": ["2000::/3"], "invert": true }],
+        "action": "predefined"
+      },
       // 公共 DNS
       { "rule_set": "PublicDNS", "server": "dns-resolver" },
       // Fake IP
@@ -108,6 +113,14 @@
       { "network": "icmp", "outbound": "DIRECT" },
       { "ip_is_private": true, "preferred_by": "BRIDGE", "outbound": "BRIDGE" },
       { "ip_is_private": true, "outbound": "DIRECT" },
+      // 无 IPv6 时不转发 IPv6 地址
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [{ "ip_version": 6 }, { "default_interface_address": ["2000::/3"], "invert": true }],
+        "action": "reject",
+        "no_drop": true
+      },
       // DNS
       { "action": "sniff" },
       { "protocol": "dns", "action": "hijack-dns" },
@@ -122,30 +135,12 @@
             "type": "logical",
             "mode": "or",
             "rules": [
-              { "network": "tcp", "port": 853 }, // DoT
-              { "protocol": ["http", "tls"], "rule_set": "DoH" } // DoH
+              { "port": 853 }, // DoT/DoQ
+              { "protocol": ["http", "tls", "quic"], "rule_set": "DoH" } // DoH
             ]
           }
         ],
         "action": "reject"
-      },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          { "process_name": "q", "invert": true },
-          { "rule_set": ["GeoIP@CN", "GeoSites@CN"], "invert": true },
-          {
-            "type": "logical",
-            "mode": "or",
-            "rules": [
-              { "network": "udp", "port": 853 }, // DoQ
-              { "protocol": "quic", "rule_set": "DoH" } // DoH/3
-            ]
-          }
-        ],
-        "action": "reject",
-        "method": "drop" // 静默防风暴
       },
       // Direct Protocol
       // { "protocol": "stun", "action": "reject" }, // 禁用 STUN

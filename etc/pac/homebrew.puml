@@ -128,6 +128,10 @@ skinparam usecase {
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
+(dotnet)
+(dotnet)-->(brotli)
+(dotnet)-->(icu4c@78)
+(dotnet)-->(openssl@3)
 (droast)
 (dry)
 (dtc) << dep >>
@@ -513,11 +517,10 @@ skinparam usecase {
 (logrotate)-->(popt)
 (lpeg) << dep >>
 (lrzsz)
-(lua)
+(lua) << req >>
 (lua-language-server)
-(lua@5.4) << dep >>
 (luacheck)
-(luacheck)-->(lua@5.4)
+(luacheck)-->(lua)
 (luajit) << dep >>
 (luv) << dep >>
 (luv)-->(libuv)
@@ -585,7 +588,6 @@ skinparam usecase {
 (moonfruit/tap/tscurl)-->(zstd)
 (moonfruit/tap/tunblkctl)
 (moonfruit/tap/uutils-selected)
-(moonfruit/tap/wecom-cli)
 (moonfruit/tap/zenity-go)
 (mosh)
 (mosh)-->(protobuf)
@@ -658,13 +660,6 @@ skinparam usecase {
 (openjdk)-->(jpeg-turbo)
 (openjdk)-->(libpng)
 (openjdk)-->(little-cms2)
-(openjdk@11)
-(openjdk@11)-->(freetype)
-(openjdk@11)-->(giflib)
-(openjdk@11)-->(harfbuzz)
-(openjdk@11)-->(jpeg-turbo)
-(openjdk@11)-->(libpng)
-(openjdk@11)-->(little-cms2)
 (openjdk@17)
 (openjdk@17)-->(freetype)
 (openjdk@17)-->(giflib)
