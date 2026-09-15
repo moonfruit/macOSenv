@@ -32,10 +32,11 @@
 #   FX_CNY_PER_USD=6.8 cc-stat  仅用于 -s cost 排序时把 ¥ 折成 $ 比较（默认 6.8，不影响显示）
 #
 # COST 说明：按官方 API 价目逐条 assistant 记录计价。Anthropic 模型以 $ 计（cache 写入
-# 区分 5m=1.25x / 1h=2x，读=0.1x）；MiniMax 走 api.minimaxi.com，官方价目以人民币计，
+# 区分 5m=1.25x / 1h=2x，读=0.1x，Fable/Mythos 5.1 读=0.025x）；MiniMax 走 api.minimaxi.com，官方价目以人民币计，
 # 显示为 ¥ 且**不做汇率换算**——同一行两种货币并存时形如 $12.34+¥5.67。
 # 这是**等价 API 成本**——订阅制（Pro/Max）用户并不按此实际扣费，仅作用量参考。
 # 金额后带 ~ 表示该行还有查不到价目的调用（如来源不明的第三方端点），未计入。
+# CALLS/IN/OUT/CACHE/COST 含该会话派生的 subagent（<session>/subagents/*.jsonl）；时长与 TURNS 只按主会话算。
 
 set -euo pipefail
 
@@ -44,7 +45,7 @@ export IDLE_GAP="${IDLE_GAP:-600}"
 # 仅供 -s cost 排序时把 ¥ 折算成 $ 用于比较，显示的金额始终是原币种、不换算。
 export FX_CNY_PER_USD="${FX_CNY_PER_USD:-6.8}"
 
-usage() { sed -n '3,38p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
+usage() { sed -n '3,39p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
 
 # 排序列名 -> JSON 字段。recent 是伪列（保持文件按最近活动排列的顺序）。
 sort_key() {
@@ -115,7 +116,7 @@ fmt_cost() { # $1=USD $2=CNY $3=unpriced
 readonly JQ_PROG='
 # 每百万 token 单价。c 是币种：Anthropic 官方价目以 USD 计，MiniMax（api.minimaxi.com）
 # 以 CNY 计，两者不换算、各自累加。cache 写入 Anthropic 按 base input 计价（5m = 1.25x，
-# 1h = 2x），cache 读 = 0.1x；MiniMax 不区分 5m/1h，M3 的缓存写入免费。
+# 1h = 2x），cache 读 = 0.1x（Fable/Mythos 5.1 为 0.025x）；MiniMax 不区分 5m/1h，M3 的缓存写入免费。
 # 查不到价的模型（来源不明的第三方端点）不计费，调用数单独统计为 unpriced，成本列标 ~。
 def price($m):
   # jsonl 里可能记完整 ID（claude-haiku-4-5-20251001），而表里用的是别名，先剥掉日期后缀。
@@ -124,9 +125,13 @@ def price($m):
       "claude-opus-4-8":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-opus-4-7":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-opus-4-6":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
+      # Fable/Mythos 5.1 的 cache 读是 0.025x（$0.25），不是其他模型的 0.1x，别照抄 5 的行。
+      "claude-fable-5-1":  { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 0.25, c: "USD" },
+      "claude-mythos-5-1": { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 0.25, c: "USD" },
       "claude-fable-5":    { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0, c: "USD" },
       "claude-mythos-5":   { i: 10, o: 50, w5: 12.5,  w1h: 20, r: 1.0, c: "USD" },
-      "claude-sonnet-5":   { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3, c: "USD" },
+      # Sonnet 5 上线价 $2/$10 已转正，原定 2026-09-01 涨到 $3/$15 取消了。
+      "claude-sonnet-5":   { i:  2, o: 10, w5:  2.5,  w1h:  4, r: 0.2, c: "USD" },
       "claude-sonnet-4-6": { i:  3, o: 15, w5:  3.75, w1h:  6, r: 0.3, c: "USD" },
       "claude-haiku-4-5":  { i:  1, o:  5, w5:  1.25, w1h:  2, r: 0.1, c: "USD" },
       # MiniMax 官方价目（元/百万 tokens，已含「永久五折」）。M3 按 ≤512k 档计，
@@ -193,8 +198,11 @@ def title:
 # 一次 API 响应里的每个 content block 都会写成一条独立记录，且各带一份**相同**的 usage
 # （典型：一轮并行 tool_use 有几个工具就重复几条）。按 message.id 去重，否则调用数、
 # token 数、金额会成倍虚高——实测最狠的 session 虚高 2 倍以上。
-| ([ $ev[] | select(.type == "assistant") | .message ]
+# $sub 是 subagent 的 assistant message（已在 shell 侧预过滤）。subagent 与主会话在时间上
+# 并行，混进 $ev 会把时长算乱，所以只并入用量与金额。
+| ([ ($ev[] | select(.type == "assistant") | .message), $sub[] ]
    | group_by(.id) | map(.[0]))                                         as $m
+| ([ $sub[].id ] | unique | length)                                     as $sub_calls
 | [ $m[].usage ]                                                        as $u
 | ([ $m[] | record_cost ]
    | { usd: (map(.usd) | add // 0), cny: (map(.cny) | add // 0) })      as $cost
@@ -215,7 +223,8 @@ def title:
     end:        $ev[$n-1].timestamp,
     end_ts:     (($ev[$n-1] | ms) | round),   # 最后活动时间，-d 按它过滤
     turns:      ([ $spans[] | select(.isPrompt) ] | length),
-    api_calls:  ($u | length),
+    api_calls:  ($u | length),           # 含 subagent
+    sub_calls:  $sub_calls,              # 其中来自 subagent 的调用数
     total_sec:  ($total      | round),
     idle_sec:   (($idle_user + $idle_stall) | round),
     idle_user:  ($idle_user  | round),
@@ -311,8 +320,16 @@ main() {
 
   local rows=()
   local f row
+  local -a subs
   for f in "${files[@]}"; do
-    row=$(jq -s -c "$JQ_PROG" "$f" 2>/dev/null) || continue
+    # subagent 记录只取 assistant 的 message。用 -R + fromjson? 容错：subagent 还在跑时
+    # 末行可能写了一半，严格解析会让整个 session 被跳过。
+    subs=("${f%.jsonl}"/subagents/*.jsonl)
+    [[ -e ${subs[0]} ]] || subs=()
+    row=$(jq -s -c --slurpfile sub <(
+            (( ${#subs[@]} )) && jq -cR 'fromjson? | select(.type == "assistant") | .message
+                                          | {id, model, usage}' "${subs[@]}" 2>/dev/null
+          ) "$JQ_PROG" "$f" 2>/dev/null) || continue
     [[ -n $row ]] && rows+=("$row")
   done
   (( ${#rows[@]} )) || { echo "没有可统计的 session" >&2; exit 1; }
