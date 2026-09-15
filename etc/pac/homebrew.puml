@@ -572,7 +572,7 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
-(moonfruit/tap/p7zip-all)
+(moonfruit/tap/p7zip-full)
 (moonfruit/tap/remindctl)
 (moonfruit/tap/seqcli)
 (moonfruit/tap/seqcli)-->(brotli)
@@ -692,7 +692,6 @@ skinparam usecase {
 (p11-kit) << dep >>
 (p11-kit)-->(ca-certificates)
 (p11-kit)-->(libtasn1)
-(p7zip) << dep >>
 (pandoc)
 (pandoc)-->(gmp)
 (pango) << dep >>
