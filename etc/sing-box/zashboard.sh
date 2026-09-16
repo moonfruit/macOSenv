@@ -42,8 +42,11 @@ if [[ -z $FORCE ]] && [[ -s "$CACHE" ]] && (($(stat -f %m "$CACHE") >= $(date -v
 else
     h2 "Fetching IP labels from router"
     mkdir -p "$CACHE_DIR"
+    # 以现有缓存为上一次结果合并：离线设备在路由器里查不到 IPv4 时沿用旧值
+    PREVIOUS=()
+    [[ -s "$CACHE" ]] && PREVIOUS=(--previous "$CACHE")
     # shellcheck disable=SC2154
-    if zashboard-iplabels.py >"$TEMP_DIR/labels.json"; then
+    if zashboard-iplabels.py "${PREVIOUS[@]}" >"$TEMP_DIR/labels.json"; then
         # 先占位成空文件，让首次运行时的 diff 有个对比对象，不然 delta 会报访问不到
         [[ -e "$CACHE" ]] || : >"$CACHE"
         copy-if-diff "$TEMP_DIR/labels.json" "$CACHE" || true

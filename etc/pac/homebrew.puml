@@ -897,8 +897,6 @@ skinparam usecase {
 (ugrep)-->(xz)
 (ugrep)-->(zstd)
 (unibilium) << dep >>
-(unp)
-(unp)-->(p7zip)
 (utf8proc) << dep >>
 (uv)
 (uvwasi) << dep >>
