@@ -130,5 +130,58 @@
   "verbose": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "deniedMcpServers": [
+    {
+      "serverName": "plugin:data:amplitude"
+    },
+    {
+      "serverName": "plugin:data:amplitude-eu"
+    },
+    {
+      "serverName": "plugin:data:atlassian"
+    },
+    {
+      "serverName": "plugin:data:bigquery"
+    },
+    {
+      "serverName": "plugin:data:databricks"
+    },
+    {
+      "serverName": "plugin:data:definite"
+    },
+    {
+      "serverName": "plugin:data:hex"
+    },
+    {
+      "serverName": "plugin:data:snowflake"
+    },
+    {
+      "serverName": "plugin:engineering:asana"
+    },
+    {
+      "serverName": "plugin:engineering:atlassian"
+    },
+    {
+      "serverName": "plugin:engineering:datadog"
+    },
+    {
+      "serverName": "plugin:engineering:gmail"
+    },
+    {
+      "serverName": "plugin:engineering:google calendar"
+    },
+    {
+      "serverName": "plugin:engineering:linear"
+    },
+    {
+      "serverName": "plugin:engineering:notion"
+    },
+    {
+      "serverName": "plugin:engineering:pagerduty"
+    },
+    {
+      "serverName": "plugin:engineering:slack"
+    }
+  ]
 }
