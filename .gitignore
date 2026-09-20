@@ -4,3 +4,6 @@
 !.sops.yaml
 
 /bin/zoo
+
+# Alfred workflow 自动生成的更新检查缓存
+/preferences/alfred/**/update_cache*
