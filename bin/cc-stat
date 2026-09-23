@@ -32,7 +32,7 @@
 #   FX_CNY_PER_USD=6.8 cc-stat  仅用于 -s cost 排序时把 ¥ 折成 $ 比较（默认 6.8，不影响显示）
 #
 # COST 说明：按官方 API 价目逐条 assistant 记录计价。Anthropic 模型以 $ 计（cache 写入
-# 区分 5m=1.25x / 1h=2x，读=0.1x，Fable/Mythos 5.1 读=0.025x）；MiniMax 走 api.minimaxi.com，官方价目以人民币计，
+# 区分 5m=1.25x / 1h=2x，读=0.1x，Opus 5.5 读=0.05x，Fable/Mythos 5.1 读=0.025x）；MiniMax 走 api.minimaxi.com，官方价目以人民币计，
 # 显示为 ¥ 且**不做汇率换算**——同一行两种货币并存时形如 $12.34+¥5.67。
 # 这是**等价 API 成本**——订阅制（Pro/Max）用户并不按此实际扣费，仅作用量参考。
 # 金额后带 ~ 表示该行还有查不到价目的调用（如来源不明的第三方端点），未计入。
@@ -116,12 +116,14 @@ fmt_cost() { # $1=USD $2=CNY $3=unpriced
 readonly JQ_PROG='
 # 每百万 token 单价。c 是币种：Anthropic 官方价目以 USD 计，MiniMax（api.minimaxi.com）
 # 以 CNY 计，两者不换算、各自累加。cache 写入 Anthropic 按 base input 计价（5m = 1.25x，
-# 1h = 2x），cache 读 = 0.1x（Fable/Mythos 5.1 为 0.025x）；MiniMax 不区分 5m/1h，M3 的缓存写入免费。
+# 1h = 2x），cache 读 = 0.1x（Opus 5.5 为 0.05x，Fable/Mythos 5.1 为 0.025x）；MiniMax 不区分 5m/1h，M3 的缓存写入免费。
 # 查不到价的模型（来源不明的第三方端点）不计费，调用数单独统计为 unpriced，成本列标 ~。
 def price($m):
   # jsonl 里可能记完整 ID（claude-haiku-4-5-20251001），而表里用的是别名，先剥掉日期后缀。
   ($m | sub("-[0-9]{8}$"; "")) as $k
-  | { "claude-opus-5":     { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
+  | { # Opus 5.5 比 Opus 5 便宜：$4/$20，cache 读 $0.20（0.05x，不是 0.1x）。
+      "claude-opus-5-5":   { i:  4, o: 20, w5:  5,    w1h:  8, r: 0.2, c: "USD" },
+      "claude-opus-5":     { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-opus-4-8":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-opus-4-7":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },
       "claude-opus-4-6":   { i:  5, o: 25, w5:  6.25, w1h: 10, r: 0.5, c: "USD" },

@@ -803,6 +803,7 @@ skinparam usecase {
 (rlwrap)-->(readline)
 (rmux)
 (rsync)
+(rsync)-->(libidn2)
 (rsync)-->(lz4)
 (rsync)-->(openssl@3)
 (rsync)-->(popt)
