@@ -5,8 +5,6 @@
 #      slash makes cmux inject the same dir twice; see below).
 #   2. Ghostty SSH wrapper:
 #      - Snapshot ghostty's built-in ssh() as ghostty-ssh and forward to it.
-#      - Under cmux, rewrite GHOSTTY_BIN_DIR so ghostty's `+ssh-cache` finds the
-#        real CLI (cmux exposes the GUI dir; the CLI lives in ../Resources/bin).
 #      - Honor ~/.ssh/ghostty-blacklist (one zsh glob per line, `#` comments) to
 #        skip the terminfo install attempt entirely on hosts that never accept it.
 
@@ -44,15 +42,6 @@ fi
 
 # ── 2. Ghostty SSH wrapper ─────────────────────────────────────────────────
 [[ "$GHOSTTY_SHELL_FEATURES" == *ssh-terminfo* ]] || return 0
-
-_yy_ghostty_resolve_bin_dir() {
-    local dir="${GHOSTTY_BIN_DIR%/}"
-    if [[ "${dir##*/}" == "MacOS" && -x "${dir%/MacOS}/Resources/bin/ghostty" ]]; then
-        print -r -- "${dir%/MacOS}/Resources/bin"
-    else
-        print -r -- "$dir"
-    fi
-}
 
 _yy_ghostty_features_without_ssh_terminfo() {
     local -a parts
@@ -106,17 +95,10 @@ _yy_ghostty_ssh_install() {
         emulate -L zsh
         setopt local_options no_glob_subst
 
-        # Both fixups below compose: apply each independently, then call
-        # ghostty-ssh once. local -x scopes the overrides to this call and,
-        # via zsh's dynamic scoping, makes them visible to ghostty-ssh.
-        local -x GHOSTTY_BIN_DIR="$GHOSTTY_BIN_DIR"
+        # local -x scopes the override to this call and, via zsh's dynamic
+        # scoping, makes it visible to ghostty-ssh, which reads the feature
+        # list at call time (dropping ssh-terminfo => `+ssh --terminfo=false`).
         local -x GHOSTTY_SHELL_FEATURES="$GHOSTTY_SHELL_FEATURES"
-
-        # Under cmux, GHOSTTY_BIN_DIR points at the GUI dir (…/MacOS) which has
-        # no CLI; rewrite it to ../Resources/bin so ghostty's +ssh-cache works.
-        if [[ "${__CFBundleIdentifier:-}" == "com.cmuxterm.app" ]]; then
-            GHOSTTY_BIN_DIR="$(_yy_ghostty_resolve_bin_dir)"
-        fi
 
         # Skip the terminfo install on blacklisted hosts.
         local target=""
