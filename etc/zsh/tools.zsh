@@ -36,7 +36,7 @@ autoload -U zmv
 alias mmv='noglob zmv -W'
 
 # for sing-box
-export BOX_API_URL=http://127.0.0.1:10000
+export BOX_API_URL=http://127.0.0.1:9999
 
 # for seqcli
 export SEQCLI_STORAGE_PATH="$ENV/etc/seqcli"
