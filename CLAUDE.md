@@ -49,5 +49,8 @@ sops decrypt etc/secrets/<name>.env
 - **Secrets 加载**：`bin/claude`（及 `claude-glm`/`claude-mini`/`claude-open`/`claude-xiaomi` 等同名软链）按调用名 `$0` 从 `etc/secrets/<name>.env` 中 `sops decrypt` 出 env 并 export，再 exec 真实 claude；同样模式适用于 `gemini`/`gemini-x`。
 - **多版本 Java**：`bin/zoo/javan` 是统一入口，调用名按正则 `<cmd><version>` 解析（如 `mvn21`、`java8`、`ijhttp21`、`mvn-release-17.sh`），最终通过 `java-home -v <version>` 选版本执行。
 - **日志查询**：`seqbox` 查询 Seq 中的 sing-box 连接日志，实现在 submodule `package/yyscripts/seqbox.py`。详见 `docs/seqbox.md`。
+- **会话统计**：`cc-stat` 统计 Claude Code session 的时长/token/等价 API 成本，实现在 submodule
+  `package/yyscripts/cc-stat.py`（typer + rich），`bin/cc-stat` 是指向 `wrapper.sh` 的软链。新模型价目加在文件顶部 `PRICES`；
+  测试 `tests/test_cc_stat.py` 全用构造数据，`venv/bin/python -m pytest` 运行。
 - **订阅 UA 探测**：`etc/sing-box/ua-diff.py` 比较不同客户端 UA 能从订阅拉到多少可用节点。
   **动它之前先读 `docs/ua-diff.md`**——不要真实请求订阅 URL（消耗限速额度），验证一律用离线单测。
