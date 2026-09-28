@@ -269,7 +269,7 @@ skinparam usecase {
 (gpgmepp)-->(gpgme)
 (gradle)
 (gradle)-->(gradle-completion)
-(gradle)-->(openjdk@25)
+(gradle)-->(openjdk)
 (gradle-completion) << dep >>
 (graphite2) << dep >>
 (graphviz) << dep >>
@@ -553,7 +553,7 @@ skinparam usecase {
 (moonfruit/tap/ccstatusline)
 (moonfruit/tap/ccstatusline)-->(node)
 (moonfruit/tap/codegraph)
-(moonfruit/tap/codegraph)-->(node)
+(moonfruit/tap/codegraph)-->(node@24)
 (moonfruit/tap/ethr)
 (moonfruit/tap/geo)
 (moonfruit/tap/gotools)
@@ -641,9 +641,24 @@ skinparam usecase {
 (node)-->(nbytes)
 (node)-->(openssl@3)
 (node)-->(simdjson)
+(node)-->(simdutf)
 (node)-->(sqlite)
 (node)-->(uvwasi)
 (node)-->(zstd)
+(node@24) << dep >>
+(node@24)-->(brotli)
+(node@24)-->(c-ares)
+(node@24)-->(hdrhistogram_c)
+(node@24)-->(icu4c@78)
+(node@24)-->(libnghttp2)
+(node@24)-->(libnghttp3)
+(node@24)-->(libngtcp2)
+(node@24)-->(libuv)
+(node@24)-->(openssl@3)
+(node@24)-->(simdjson)
+(node@24)-->(sqlite)
+(node@24)-->(uvwasi)
+(node@24)-->(zstd)
 (npth) << dep >>
 (nspr) << dep >>
 (nss) << dep >>
@@ -656,6 +671,7 @@ skinparam usecase {
 (openexr)-->(imath)
 (openexr)-->(libdeflate)
 (openexr)-->(openjph)
+(openexr)-->(zstd)
 (openjdk) << req >>
 (openjdk)-->(freetype)
 (openjdk)-->(giflib)
@@ -677,13 +693,6 @@ skinparam usecase {
 (openjdk@21)-->(jpeg-turbo)
 (openjdk@21)-->(libpng)
 (openjdk@21)-->(little-cms2)
-(openjdk@25) << dep >>
-(openjdk@25)-->(freetype)
-(openjdk@25)-->(giflib)
-(openjdk@25)-->(harfbuzz)
-(openjdk@25)-->(jpeg-turbo)
-(openjdk@25)-->(libpng)
-(openjdk@25)-->(little-cms2)
 (openjpeg) << dep >>
 (openjpeg)-->(libpng)
 (openjpeg)-->(libtiff)
@@ -930,7 +939,7 @@ skinparam usecase {
 (wget)-->(libidn2)
 (wget)-->(libpsl)
 (wget)-->(libunistring)
-(wget)-->(openssl@3)
+(wget)-->(openssl@4)
 (wget2)
 (wget2)-->(brotli)
 (wget2)-->(gettext)
