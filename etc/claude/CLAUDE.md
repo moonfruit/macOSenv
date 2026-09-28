@@ -51,11 +51,11 @@ Claude 可以使用以下工具：
 ## Java 开发
 
 - 系统中存在多个`java`环境：PATH 中包含多个与其相关的命令：
-  - `java` 与 `mvn`：系统中最新版本的，目前为 Java 25
+  - `java` 与 `mvn`：跟随系统中最新版，目前为 Java 27
   - `java8` 与 `mvn8`：Java 8
-  - `java11` 与 `mvn11`：Java 11
   - `java17` 与 `mvn17`：Java 17
   - `java21` 与 `mvn21`：Java 21
+  - `java25` 与 `mvn25`：Java 25
 - 需要根据项目需求选择合适的`java`版本进行开发和构建
 
 ## 终端/文本输出
