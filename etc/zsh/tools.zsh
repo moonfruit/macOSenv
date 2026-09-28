@@ -2,8 +2,11 @@
 # shellcheck disable=SC1090
 
 # for secrets
-eval "$(sops decrypt "$ENV/etc/secrets/secret.env" |
-	sed -E 's/^([[:space:]]*[[:alnum:]_]+=)/export \1/')"
+for _secret in secret telegram; do
+	eval "$(sops decrypt "$ENV/etc/secrets/${_secret}.env" |
+		sed -E 's/^([[:space:]]*[[:alnum:]_]+=)/export \1/')"
+done
+unset _secret
 
 # for minimax
 export MINIMAX_API_HOST="https://api.minimaxi.com"

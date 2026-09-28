@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>DIRENV_LOG_FORMAT</key>
+		<string></string>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+	</dict>
+	<key>Label</key>
+	<string>moonfruit.tg-checkin</string>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>Nice</key>
+	<integer>1</integer>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/opt/homebrew/bin/direnv</string>
+		<string>exec</string>
+		<string>package/yyscripts/tg-checkin.py</string>
+		<string>@NanoAir_bot</string>
+	</array>
+	<key>StandardErrorPath</key>
+	<string>/tmp/moonfruit.tg-checkin.err</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/moonfruit.tg-checkin.out</string>
+	<key>StartCalendarInterval</key>
+	<array>
+		<dict>
+			<key>Hour</key>
+			<integer>10</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>21</integer>
+			<key>Minute</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/Users/moon/Workspace.localized/env</string>
+</dict>
+</plist>
