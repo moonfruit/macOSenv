@@ -81,3 +81,8 @@ fi
 
 # for manpath
 unset MANPATH
+
+# for claude code
+if [[ $CLAUDECODE ]]; then
+    unalias cat grep ls 2>/dev/null
+fi

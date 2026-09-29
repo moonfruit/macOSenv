@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ -n $CLAUDECODE ]] && return
+
 alias dir='ls -l'
 alias ll='ls -l'
 alias la='ls -a'

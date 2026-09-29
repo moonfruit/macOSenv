@@ -40,11 +40,7 @@ Claude 可以使用以下工具：
   - 优先使用`jq`处理`JSON`数据而不是`sed`或`awk`
   - 优先考虑使用`yq`处理`YAML`,`XML`,`TOML`数据而不是`sed`或`awk`
 
-- 默认环境中的 `awk`, `sed`, `getopt`, `grep` 是 GNU 版本，使用时请注意兼容性问题
-
-- 交互式 shell 中 `rm`、`cp`、`mv` 被 alias 为 `rm -i`、`cp -i`、`mv -i`，覆盖或删除前会等待确认，agent 执行时会卡住或被当作拒绝
-  - 在 Bash 工具里执行时，一律用 `command rm`/`command cp`/`command mv`（或 `\rm` 等）绕过 alias
-  - 需要静默覆盖时再显式加 `-f`，如 `command cp -f src dst`；不要用 `yes |` 之类的方式硬喂确认
+- 默认环境中的 `awk`, `sed`, `getopt`, `grep`, `tar` 是 GNU 版本，使用时请注意兼容性问题
 
 - 必要时可以使用`homebrew`安装工具
 
