@@ -32,7 +32,12 @@
    快照环境固定 `GIT_EDITOR=true`。因此 sudo/ssh 终端提示、git 调编辑器都不会卡住。
 6. **后台命令**：`run_in_background` 的 tool_result 含
    `Output is being written to: <path>`（位于 `<session 临时目录>/tasks/<id>.output`），其 zsh 进程存活至任务结束。
-7. **`L=` 用法**：Claude 常写 `L=<scratchpad>/xxx.log; cmd > $L 2>&1; tail $L`，但 `L=` 也会是
+7. **前台命令输出**：前台命令的 zsh 进程 fd 1/2 同样指向 `<session 临时目录>/tasks/<id>.output`（普通文件，
+   stdin 为 `/dev/null`），但 tool_result 不写这个路径，只能经 psutil `open_files()` 取 fd 1 得到；
+   命令结束后 Claude Code 会删除该文件。
+   命令自己重定向（`cmd > "$log" 2>&1`，变量名不一定是 `L`）时 zsh 的 fd 1 几乎为空，
+   真正的输出在子进程 fd 1 指向的文件里。
+8. **`L=` 用法**：Claude 常写 `L=<scratchpad>/xxx.log; cmd > $L 2>&1; tail $L`，但 `L=` 也会是
    `$(...)`、`/usr/bin/log` 等非日志值，需要过滤。
 
 另：env 仓库已提交 `efa004f`，Claude 环境下不再加载 `rm/cp/mv -i` 等 alias，
@@ -45,7 +50,7 @@
 | 数据源 | 用途 | 刷新 |
 |---|---|---|
 | `~/.claude/sessions/*.json` + psutil 验证 pid 存活 | 活跃会话列表 | 2s |
-| psutil 取 claude pid 的子进程树 | 正在执行的命令（每个 `zsh -c … eval '…'` 子进程一条）及其进程树 | 1s |
+| psutil 取 claude pid 的子进程树 | 正在执行的命令（每个 `zsh -c … eval '…'` 子进程一条）及其进程树；各进程 fd 1 的输出文件 | 1s |
 | 会话 jsonl 及 `subagents/*.jsonl`（按偏移增量读） | 命令原文、description、timeout、是否后台；提取 `L=` 路径、后台输出路径；tool_result 的退出码与 `-i` 被拒痕迹 | 1s |
 
 对象模型：
@@ -67,6 +72,9 @@ Log  path, source(L= | background), size, mtime, last_growth_at, tail
 
 - **进程 ↔ tool_use**：用还原后的命令原文精确匹配；匹配前先以进程身份显示，匹配后补全 description 等字段。
 - **日志 ↔ 命令**：`L=` 日志属于声明它的那条 tool_use；后台输出文件属于对应的后台 tool_use。
+  没有 `L=` 时每个 tick 扫进程树：取最新创建、fd 1 指向另一个普通文件的后代（`redirect`），步骤间隙保留上一个；
+  都没有再用 zsh 自身的 fd 1（`stdout`）。优先级 `L=` > `redirect` > 后台输出 > `stdout`；
+  每个进程的 fd 1 按（pid, 创建时间）只查一次；文件被删后保留最后大小。
 - **`L=` 过滤**：只接受 `^\s*L=` 后紧跟的绝对路径（可带引号），排除 `$(`、反引号、以及指向可执行文件或目录的值。
 - **已结束命令**：在列表中保留 `--keep-done`（默认 10 分钟），期间日志仍可查看。
 - **启动时**：只对活跃会话的 jsonl 做一次全量扫描建立映射；逐行先用子串预检（`"tool_use"`/`"tool_result"`），命中才做 JSON 解析。

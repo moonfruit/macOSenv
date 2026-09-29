@@ -52,7 +52,7 @@ sops decrypt etc/secrets/<name>.env
 - **会话统计**：`cc-stat` 统计 Claude Code session 的时长/token/等价 API 成本，实现在 submodule
   `package/yyscripts/cc-stat.py`（typer + rich），`bin/cc-stat` 是指向 `wrapper.sh` 的软链。新模型价目加在文件顶部 `PRICES`；
   测试 `tests/test_cc_stat.py` 全用构造数据，`venv/bin/python -m pytest` 运行。
-- **命令跟踪**：`cc-tail` 在另一个终端实时跟踪所有活跃 Claude Code 会话正在执行的 Bash 命令、`L=` 日志与后台输出，
+- **命令跟踪**：`cc-tail` 在另一个终端实时跟踪所有活跃 Claude Code 会话正在执行的 Bash 命令及其输出（`L=` 日志 > 子进程重定向的文件 > 后台输出 > 命令自身 fd 1 文件），
   命令卡在 `-i` 确认、GUI 授权、监听端口或疑似卡死时提醒（默认 textual 仪表盘，`--stream` 为流式）。实现在 submodule
   `package/yyscripts/cc-tail.py` + `cctail/`（psutil 取进程，不调 ps/lsof），`bin/cc-tail` 是指向 `wrapper.sh` 的软链；
   依赖 Claude Code 内部格式（sessions/*.json、jsonl、Bash 命令的 `zsh -c … eval '…'` 结构），升级后失灵先对照
