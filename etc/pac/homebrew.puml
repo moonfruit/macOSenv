@@ -19,16 +19,16 @@ skinparam usecase {
 (apache-serf) << dep >>
 (apache-serf)-->(apr)
 (apache-serf)-->(apr-util)
-(apache-serf)-->(openssl@3)
+(apache-serf)-->(openssl@4)
 (apr) << dep >>
 (apr-util) << dep >>
 (apr-util)-->(apr)
-(apr-util)-->(openssl@3)
+(apr-util)-->(openssl@4)
 (aria2)
 (aria2)-->(c-ares)
 (aria2)-->(gettext)
 (aria2)-->(libssh2)
-(aria2)-->(openssl@3)
+(aria2)-->(openssl@4)
 (aria2)-->(sqlite)
 (aribb24) << dep >>
 (aribb24)-->(libpng)
@@ -115,7 +115,7 @@ skinparam usecase {
 (curl)-->(libngtcp2)
 (curl)-->(libpsl)
 (curl)-->(libssh2)
-(curl)-->(openssl@3)
+(curl)-->(openssl@4)
 (curl)-->(zstd)
 (curlie)
 (dav1d) << dep >>
@@ -132,10 +132,6 @@ skinparam usecase {
 (dockerfile-language-server)
 (dockerfile-language-server)-->(node)
 (doge)
-(dotnet)
-(dotnet)-->(brotli)
-(dotnet)-->(icu4c@78)
-(dotnet)-->(openssl@3)
 (droast)
 (dry)
 (dtc) << dep >>
@@ -149,18 +145,6 @@ skinparam usecase {
 (fdupes)-->(pcre2)
 (fernflower)
 (fernflower)-->(openjdk)
-(ffmpeg)
-(ffmpeg)-->(dav1d)
-(ffmpeg)-->(lame)
-(ffmpeg)-->(libvmaf)
-(ffmpeg)-->(libvpx)
-(ffmpeg)-->(openssl@3)
-(ffmpeg)-->(opus)
-(ffmpeg)-->(sdl2-compat)
-(ffmpeg)-->(svt-av1)
-(ffmpeg)-->(x264)
-(ffmpeg)-->(x265)
-(ffmpeg)-->(xz)
 (ffmpeg-full)
 (ffmpeg-full)-->(aom)
 (ffmpeg-full)-->(aribb24)
@@ -434,7 +418,7 @@ skinparam usecase {
 (json5)-->(node)
 (k9s)
 (krb5) << dep >>
-(krb5)-->(openssl@3)
+(krb5)-->(openssl@4)
 (lame) << dep >>
 (lame)-->(mpg123)
 (lazydocker)
@@ -473,16 +457,17 @@ skinparam usecase {
 (libde265) << dep >>
 (libdeflate) << dep >>
 (libevent) << dep >>
-(libevent)-->(openssl@3)
+(libevent)-->(openssl@4)
 (libffi) << dep >>
 (libfido2) << dep >>
 (libfido2)-->(libcbor)
-(libfido2)-->(openssl@3)
+(libfido2)-->(openssl@4)
 (libgcrypt) << dep >>
 (libgcrypt)-->(libgpg-error)
 (libgit2) << dep >>
 (libgit2)-->(libssh2)
 (libgit2)-->(llhttp)
+(libgit2)-->(openssl@4)
 (libgpg-error) << dep >>
 (libgpg-error)-->(gettext)
 (libheif) << dep >>
@@ -508,7 +493,7 @@ skinparam usecase {
 (libnghttp2) << dep >>
 (libnghttp3) << dep >>
 (libngtcp2) << dep >>
-(libngtcp2)-->(openssl@3)
+(libngtcp2)-->(openssl@4)
 (libogg) << dep >>
 (libomp) << dep >>
 (libplacebo) << dep >>
@@ -553,9 +538,9 @@ skinparam usecase {
 (libsodium) << dep >>
 (libsoxr) << dep >>
 (libssh) << dep >>
-(libssh)-->(openssl@3)
+(libssh)-->(openssl@4)
 (libssh2) << dep >>
-(libssh2)-->(openssl@3)
+(libssh2)-->(openssl@4)
 (libtasn1) << dep >>
 (libthai) << dep >>
 (libthai)-->(libdatrie)
@@ -609,7 +594,7 @@ skinparam usecase {
 (little-cms2)-->(libtiff)
 (llama.cpp) << dep >>
 (llama.cpp)-->(ggml)
-(llama.cpp)-->(openssl@3)
+(llama.cpp)-->(openssl@4)
 (llhttp) << dep >>
 (llmfit)
 (llvm) << dep >>
@@ -651,6 +636,8 @@ skinparam usecase {
 (mongodb/brew/mongodb-community)
 (moonfruit/tap/ccstatusline)
 (moonfruit/tap/ccstatusline)-->(node)
+(moonfruit/tap/claude-mem)
+(moonfruit/tap/claude-mem)-->(node)
 (moonfruit/tap/codegraph)
 (moonfruit/tap/codegraph)-->(node@24)
 (moonfruit/tap/ethr)
@@ -661,8 +648,6 @@ skinparam usecase {
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/imsg)
-(moonfruit/tap/inkos)
-(moonfruit/tap/inkos)-->(node)
 (moonfruit/tap/lsof-wchar)
 (moonfruit/tap/lzc-cli)
 (moonfruit/tap/lzc-cli)-->(node)
@@ -674,6 +659,8 @@ skinparam usecase {
 (moonfruit/tap/openssl@1.0)
 (moonfruit/tap/openssl@1.0)-->(ca-certificates)
 (moonfruit/tap/oracle-instantclient)
+(moonfruit/tap/rea-agents)
+(moonfruit/tap/rea-agents)-->(node)
 (moonfruit/tap/remindctl)
 (moonfruit/tap/seqcli)
 (moonfruit/tap/seqcli)-->(brotli)
@@ -700,7 +687,7 @@ skinparam usecase {
 (msedit)
 (mysql-client)
 (mysql-client)-->(libfido2)
-(mysql-client)-->(openssl@3)
+(mysql-client)-->(openssl@4)
 (mysql-client)-->(zlib-ng-compat)
 (mysql-client)-->(zstd)
 (nbytes) << dep >>
@@ -738,7 +725,7 @@ skinparam usecase {
 (node)-->(llhttp)
 (node)-->(merve)
 (node)-->(nbytes)
-(node)-->(openssl@3)
+(node)-->(openssl@4)
 (node)-->(simdjson)
 (node)-->(simdutf)
 (node)-->(sqlite)
@@ -753,7 +740,7 @@ skinparam usecase {
 (node@24)-->(libnghttp3)
 (node@24)-->(libngtcp2)
 (node@24)-->(libuv)
-(node@24)-->(openssl@3)
+(node@24)-->(openssl@4)
 (node@24)-->(simdjson)
 (node@24)-->(sqlite)
 (node@24)-->(uvwasi)
@@ -799,8 +786,6 @@ skinparam usecase {
 (openjpeg)-->(little-cms2)
 (openjph) << dep >>
 (openjph)-->(libtiff)
-(openssl@3) << dep >>
-(openssl@3)-->(ca-certificates)
 (openssl@4) << dep >>
 (openssl@4)-->(ca-certificates)
 (opus) << dep >>
@@ -863,7 +848,7 @@ skinparam usecase {
 (postgresql@18)-->(icu4c@78)
 (postgresql@18)-->(krb5)
 (postgresql@18)-->(lz4)
-(postgresql@18)-->(openssl@3)
+(postgresql@18)-->(openssl@4)
 (postgresql@18)-->(readline)
 (postgresql@18)-->(zstd)
 (prettier)
@@ -881,7 +866,7 @@ skinparam usecase {
 (python@3.14) << dep >>
 (python@3.14)-->(ca-certificates)
 (python@3.14)-->(mpdecimal)
-(python@3.14)-->(openssl@3)
+(python@3.14)-->(openssl@4)
 (python@3.14)-->(sqlite)
 (python@3.14)-->(xz)
 (python@3.14)-->(zstd)
@@ -909,7 +894,7 @@ skinparam usecase {
 (rcs)
 (readline) << dep >>
 (redis)
-(redis)-->(openssl@3)
+(redis)-->(openssl@4)
 (ripgrep)
 (ripgrep)-->(pcre2)
 (rlwrap)
@@ -919,7 +904,7 @@ skinparam usecase {
 (rsync)
 (rsync)-->(libidn2)
 (rsync)-->(lz4)
-(rsync)-->(openssl@3)
+(rsync)-->(openssl@4)
 (rsync)-->(popt)
 (rsync)-->(xxhash)
 (rsync)-->(zstd)
@@ -928,7 +913,7 @@ skinparam usecase {
 (rubberband)-->(libsndfile)
 (ruby) << req >>
 (ruby)-->(libyaml)
-(ruby)-->(openssl@3)
+(ruby)-->(openssl@4)
 (ruby-lsp)
 (ruby-lsp)-->(ruby)
 (ruff)
@@ -936,7 +921,7 @@ skinparam usecase {
 (rust)-->(libgit2)
 (rust)-->(libssh2)
 (rust)-->(llvm)
-(rust)-->(openssl@3)
+(rust)-->(openssl@4)
 (rust)-->(pkgconf)
 (rust)-->(sqlite)
 (rustnet)
@@ -960,7 +945,7 @@ skinparam usecase {
 (snappy) << dep >>
 (sniffnet)
 (socat)
-(socat)-->(openssl@3)
+(socat)-->(openssl@4)
 (sops)
 (speex) << dep >>
 (speex)-->(libogg)
@@ -970,7 +955,7 @@ skinparam usecase {
 (sqlite) << dep >>
 (sqlite)-->(readline)
 (srt) << dep >>
-(srt)-->(openssl@3)
+(srt)-->(openssl@4)
 (sshpass)
 (staticcheck)
 (staticcheck)-->(go)
@@ -1019,7 +1004,7 @@ skinparam usecase {
 (tomcat-native)
 (tomcat-native)-->(apr)
 (tomcat-native)-->(openjdk)
-(tomcat-native)-->(openssl@3)
+(tomcat-native)-->(openssl@4)
 (tomcat@10)
 (tomcat@10)-->(openjdk)
 (tomcat@9)
