@@ -753,6 +753,7 @@ skinparam usecase {
 (ollama)
 (ollama)-->(mlx-c)
 (oniguruma) << dep >>
+(open-code-review)
 (opencore-amr) << dep >>
 (openexr) << dep >>
 (openexr)-->(imath)
