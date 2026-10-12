@@ -104,7 +104,7 @@ Log  path, source(L= | background), size, mtime, last_growth_at, tail
 通知：
 
 - 每条命令每进入一个需告警的状态只通知一次；回到非告警状态后再次进入，重新通知。
-- 默认渠道（`--notify auto`）：在 cmux 里（有 `CMUX_SURFACE_ID` 且能找到 `cmux`）用 `cmux notify --json` 发送，`--notify-timeout`（默认 10s）后 `cmux dismiss-notification --id` 撤回；其它终端写 OSC 9 + BEL（Ghostty、iTerm2 支持，无法撤回）。仪表盘内同时弹 textual toast，同样按 `--notify-timeout` 消失。
+- 默认渠道（`--notify auto`）：在 cmux 里（有 `CMUX_SURFACE_ID` 且能找到 `cmux`）用 `cmux notify --json` 发送，`--notify-timeout`（默认 10s）后 `cmux dismiss-notification --id` 撤回；其它终端写 OSC 9 + BEL（Ghostty、iTerm2 支持，无法撤回）。仪表盘内同时弹 textual toast，同样按 `--notify-timeout` 消失；点掉 toast 时立即撤回对应的 cmux 通知（Toast 的 Click 冒泡到 App，依赖 textual 内部的 `Toast._notification`）。
 - 可选渠道：`--notify osc|cmux` 强制指定；`--notify osascript`（系统 `osascript`，默认关闭）；`--notify none` 关闭。
 - 通知内容：会话名、状态、description、卡住的进程（name + pid + 精简 argv）、超时剩余。
 
@@ -185,7 +185,7 @@ package/yyscripts/
 │  ├─ procs.py       # 唯一接触 psutil 的模块，返回纯数据类 ProcInfo
 │  ├─ model.py       # Tracker：每个 tick 汇总数据源，维护 Session / Command / Log
 │  ├─ detect.py      # 纯函数 classify(采样历史, now, 阈值) → State；通知去重
-│  ├─ notify.py      # cmux notify（定时撤回）/ OSC 9 + BEL；可选 osascript
+│  ├─ notify.py      # cmux notify（定时/点 toast 撤回）/ OSC 9 + BEL；可选 osascript
 │  ├─ tui.py         # textual 界面
 │  └─ stream.py      # 流式模式
 └─ tests/test_cc_tail_{cells,sources,detect,model,ui,procs}.py
