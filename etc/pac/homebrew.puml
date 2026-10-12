@@ -33,8 +33,6 @@ skinparam usecase {
 (aribb24) << dep >>
 (aribb24)-->(libpng)
 (async-profiler)
-(autojump)
-(autojump)-->(python@3.14)
 (basedpyright)
 (basedpyright)-->(node)
 (bash) << req >>
@@ -51,7 +49,7 @@ skinparam usecase {
 (bfg)
 (bfg)-->(openjdk)
 (black)
-(black)-->(python@3.14)
+(black)-->(python@3.15)
 (brotli) << dep >>
 (btop)
 (bun)
@@ -394,7 +392,7 @@ skinparam usecase {
 (iperf3)
 (iperf3)-->(openssl@4)
 (ipython)
-(ipython)-->(python@3.14)
+(ipython)-->(python@3.15)
 (jasper) << dep >>
 (jasper)-->(jpeg-turbo)
 (jbig2dec) << dep >>
@@ -871,6 +869,13 @@ skinparam usecase {
 (python@3.14)-->(sqlite)
 (python@3.14)-->(xz)
 (python@3.14)-->(zstd)
+(python@3.15) << req >>
+(python@3.15)-->(ca-certificates)
+(python@3.15)-->(mpdecimal)
+(python@3.15)-->(openssl@4)
+(python@3.15)-->(sqlite)
+(python@3.15)-->(xz)
+(python@3.15)-->(zstd)
 (q)
 (qemu) << dep >>
 (qemu)-->(capstone)
