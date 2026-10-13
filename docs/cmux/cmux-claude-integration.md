@@ -294,46 +294,60 @@ Claude Code 的 subagent（Task/Agent 工具）在**同一 claude CLI 进程内*
 
 ## 6. claude-mini 等符号链接变体的链路与 CMUX_PRESERVE 握手
 
-`claude-mini`/`claude-glm` 等是指向 `bin/claude` 的符号链接，`bin/claude` 按 `$0` 的 basename 用 sops 解密 `etc/secrets/<name>.env` 加载该账号的 secrets。这些名字**不进 cmux 的 zsh 函数/shim**（cmux 只为 `claude` 安装），但 `bin/claude` 内部有一段**主动回指 cmux** 的握手逻辑。
+`claude-mini`/`claude-glm` 等是指向 `bin/claude` 的符号链接，`bin/claude` 用 sops 解密 `etc/secrets/<profile>.env` 加载该账号的 secrets。`<profile>` 来自**三级回退**：父进程透传的 `CLAUDE_PROFILE` > 默认 `claude` 改写为 `claude-glm` > 链接 basename（见 §6.5）。这些名字**不进 cmux 的 zsh 函数/shim**（cmux 只为 `claude` 安装），但 `bin/claude` 内部有一段**主动回指 cmux** 的握手逻辑。
 
-### 6.1 决定走向的分支（`bin/claude:20-32`）
+### 6.1 决定走向的分支（`bin/claude:1-46`）
 
 ```bash
+NAME="$(simple-basename "$0")"
+
+# Profile 三级回退:CLAUDE_PROFILE(透传) > claude→claude-glm(默认) > basename
+if [[ -n "${CLAUDE_PROFILE:-}" ]]; then
+    NAME="$CLAUDE_PROFILE"
+elif [[ $NAME == "claude" ]]; then
+    NAME="claude-glm"
+fi
+
+# ... 加载 secrets(${NAME}.env) ...
+
 if [[ $NAME != claude && -z $CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV && -n $CMUX_SURFACE_ID ]]; then
     if [[ -x $CMUX_CLAUDE_WRAPPER_SHIM ]]; then
         CLAUDE=$CMUX_CLAUDE_WRAPPER_SHIM
         export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1   # ← 回指同时设保留开关
+        export CLAUDE_PROFILE="$NAME"                    # ← 透传 profile 给跳 3
     elif [[ -x $_CMUX_CLAUDE_WRAPPER ]]; then
         CLAUDE=$_CMUX_CLAUDE_WRAPPER
         export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
+        export CLAUDE_PROFILE="$NAME"
     fi
 fi
 if [[ -z $CLAUDE ]]; then
     CLAUDE=/opt/homebrew/bin/claude
     unset CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV
+    unset CLAUDE_PROFILE                                  # ← 直连时不污染 shell
 fi
 exec "$CLAUDE" "$@"
 ```
 
-- **在 cmux 内**（`CMUX_SURFACE_ID` 非空）且名字非 `claude` 且开关未设 → 回指 `CMUX_CLAUDE_WRAPPER_SHIM`，**同时 `export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1`**。
-- **不在 cmux** → 直接 `/opt/homebrew/bin/claude`，完全不经过 cmux。
+- **在 cmux 内**（`CMUX_SURFACE_ID` 非空）且名字非 `claude` 且开关未设 → 回指 `CMUX_CLAUDE_WRAPPER_SHIM`，**同时 `export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1` 和 `export CLAUDE_PROFILE="$NAME"`**。
+- **不在 cmux** → 直接 `/opt/homebrew/bin/claude`，并 `unset CLAUDE_PROFILE`，完全不经过 cmux。
 
 ### 6.2 实际逐跳链路（cmux 内，已验证 PATH 中 env/bin 位置 3 先于 homebrew 位置 21）
 
-| 跳 | 进程 | `$0`/NAME | 行为 |
-|---|---|---|---|
-| 1 | `bin/claude`（经 `claude-mini` 链接） | `claude-mini` | 载 `claude-3rd.sh` + `sops decrypt claude-mini.env`（`set -a` 导出）；命中 `:20` → `export CMUX_PRESERVE_…=1` → `exec $CMUX_CLAUDE_WRAPPER_SHIM` |
-| 2 | shim → `cmux-claude-wrapper` | — | `find_real_claude` 按 PATH 取首个 `claude` = `env/bin/claude`（非 self/shim）→ 注入 hooks/`--session-id/--settings` |
-| 3 | `bin/claude`（第 2 次） | **`claude`** | `NAME==claude` → `:7`/`:20` 分支均不成立 → `CLAUDE=/opt/homebrew/bin/claude` → `exec` |
-| 4 | `/opt/homebrew/bin/claude` | — | 真实 claude，带 cmux 注入参数 + mini secrets |
+| 跳 | 进程 | `$0`/NAME | CLAUDE_PROFILE | 行为 |
+|---|---|---|---|---|
+| 1 | `bin/claude`（经 `claude-mini` 链接） | `claude-mini` | — | 三级回退：`CLAUDE_PROFILE` 未设 → NAME=`claude-mini`（非 `claude`，跳过默认改写）→ 载 `claude-3rd.sh` + `sops decrypt claude-mini.env`（`set -a` 导出）；命中 `:30` → `export CMUX_PRESERVE_…=1` + `export CLAUDE_PROFILE=claude-mini` → `exec $CMUX_CLAUDE_WRAPPER_SHIM` |
+| 2 | shim → `cmux-claude-wrapper` | — | `claude-mini`(继承) | `find_real_claude` 按 PATH 取首个 `claude` = `env/bin/claude`（非 self/shim）→ 注入 hooks/`--session-id/--settings` |
+| 3 | `bin/claude`（第 2 次） | **`claude`** | `claude-mini`(继承) | 三级回退：`CLAUDE_PROFILE=claude-mini` 命中第一级 → NAME=`claude-mini`（跳过默认改写）；`:30` 因 `CMUX_PRESERVE_…=1` 跳过回指分支 → `CLAUDE=/opt/homebrew/bin/claude` + `unset CLAUDE_PROFILE` → `exec` |
+| 4 | `/opt/homebrew/bin/claude` | — | — | 真实 claude，带 cmux 注入参数 + mini secrets |
 
-用户猜测链路 `claude-mini → claude → $CMUX_CLAUDE_WRAPPER_SHIM → claude → /opt/homebrew/bin/claude` **完全成立**。
+用户猜测链路 `claude-mini → claude → $CMUX_CLAUDE_WRAPPER_SHIM → claude → /opt/homebrew/bin/claude` **完全成立**。跳 3 的"basename=claude"是链路必经的退化点，由 `CLAUDE_PROFILE` 透传抹平。
 
 ### 6.3 三个潜在风险点均被挡住
 
-1. **不循环/不重复进 cmux**：第 2 次进 `bin/claude` 时 `$0` 已是绝对路径 `env/bin/claude` → `NAME==claude` 跳过回指分支；且 `CMUX_PRESERVE_…=1` 使 `:20` 条件再多一道不成立（双闸门）。
+1. **不循环/不重复进 cmux**：第 2 次进 `bin/claude` 时 `$0` 已是绝对路径 `env/bin/claude` → basename=`claude` → `CLAUDE_PROFILE` 命中第一级回退取得正确 NAME → 但 NAME 此时仍是 `claude-mini`/etc（**不是** `claude`）→ `:30` 因 `CMUX_PRESERVE_…=1` 跳过回指分支（双闸门）。
 2. **不触发 #7010 重入护栏**：wrapper 的 reexec-shim 嗅探只匹配字面量 `exec claude`/`=claude`，而 `bin/claude` 用 `exec "$CLAUDE"`（变量）+ `CLAUDE=/opt/homebrew/bin/claude`（子串 `bin/claude` 非 `=claude`）→ 不命中 → 判为"真 Claude 边界"，清零 guard 直接 exec，hops 不自增。
-3. **mini secrets 不丢**：`claude-mini.env` 第 1 跳即 export 进环境，靠 exec 链继承；第 2 跳 `NAME==claude` 不会重载 `claude.env` 覆盖它。
+3. **mini secrets 不丢**：`claude-mini.env` 第 1 跳即 export 进环境，靠 exec 链继承；第 3 跳 `CLAUDE_PROFILE=claude-mini` 让 NAME 回到 `claude-mini`，但 secrets 已在第 1 跳加载完成，跳 3 不会重复解密同一文件（也无需重复）。
 
 **结论**：链路成立、无循环、不触发护栏、secrets 正确保留。代价是 mini 会被 cmux 完整接管（注入 hooks/连 Feed/新 session-id），但这是主动回指 shim 的预期行为。
 
@@ -357,14 +371,43 @@ CLAUDE_CODE_USE_BEDROCK  CLAUDE_CODE_USE_VERTEX
 - 可选 `CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV_KEYS`（逗号/空格分隔）改成只保留指定 key 的 allow-list。
 - 即使开关为 false，`CLAUDE_CODE_USE_VERTEX/BEDROCK` 为真时相关 key 仍自动保留（issue #3641/#3638）。
 
-**与 mini 的关系**：`bin/claude` 在回指 shim 的同一行（`:23/:26`）自动 `export CMUX_PRESERVE_…=1`，等于对 cmux 声明"这些认证变量是我故意载入的，别动"；直连 homebrew 路径（`:32`）则 `unset`。**所以这个保留是 `bin/claude` 替你自动完成的握手，无需手动设置**——也正是 6.3 中"mini secrets 不被清掉"的保障来源。
+**与 mini 的关系**：`bin/claude` 在回指 shim 的同一行（`:33/:37`）自动 `export CMUX_PRESERVE_…=1`，等于对 cmux 声明"这些认证变量是我故意载入的，别动"；直连 homebrew 路径（`:44`）则 `unset`。**所以这个保留是 `bin/claude` 替你自动完成的握手，无需手动设置**——也正是 6.3 中"mini secrets 不被清掉"的保障来源。
 
 | source key | 说明 |
 |---|---|
-| 设置方 | `bin/claude:23/:26`（回指时 =1）、`:32`（直连时 unset） |
-| 读取方 | wrapper `:262-320`（归一化+保留判断）；`bin/claude:20`（当"已处理"护栏） |
+| 设置方 | `bin/claude:33/:37`（回指时 =1）、`:44`（直连时 unset） |
+| 读取方 | wrapper `:262-320`（归一化+保留判断）；`bin/claude:30`（当"已处理"护栏） |
 | 被保护的变量 | `CLAUDE_AUTH_SELECTION_ENV_KEYS`（wrapper `:253-259`，5 个认证/后端/模型选择变量） |
 | 清除逻辑 | `clear_inherited_claude_auth_selection_env`（wrapper `:521-531`，`IN_CMUX==1` 时触发） |
+
+### 6.5 CLAUDE_PROFILE 的作用
+
+`bin/claude` 与 cmux wrapper 之间还有一个"profile 名"握手信号 `CLAUDE_PROFILE`，解决 cmux 回环时 basename 退化为 `claude` 而丢失原链接名。
+
+**上下文映射**：
+cmux wrapper 的 PATH 解析（`find_real_claude`）在跳 2 找到 `env/bin/claude`（绝对路径），跳 3 的 basename 必然退化为 `claude`。如果仅靠 basename 决定 secrets，第 1 跳选中的 `claude-mini` 在跳 3 会丢失——要么加载不到任何 env，要么被新引入的"默认 claude 走 GLM"逻辑覆盖成 GLM。`CLAUDE_PROFILE` 就是把第 1 跳决定的 profile 名透传到后续跳。
+
+**三级回退语义**（`bin/claude:5-14`）：
+
+| 优先级 | 来源 | 适用场景 |
+|---|---|---|
+| 1 | `CLAUDE_PROFILE` 环境变量（非空） | cmux 回环到 `env/bin/claude`（跳 3），或父 shell 显式 override |
+| 2 | basename `==` `"claude"` 改写为 `claude-glm` | 直接命令行 `claude`（无透传），按约定走 GLM |
+| 3 | basename 原值 | 链接名直接调 `claude-mini` / `claude-xiaomi` / 等 |
+
+**关键不变量**：
+- `CLAUDE_PROFILE` 检查在"默认改写"**之前**——否则跳 3 仍会先被改写成 GLM 再被覆盖回，引入顺序陷阱。
+- `export CLAUDE_PROFILE` 仅在 cmux 握手分支（`:33/:37`）执行，与 `CMUX_PRESERVE_…` 完全对称；直连 homebrew 分支（`:45`）主动 `unset`，不污染用户后续 shell 命令。
+- wrapper 不在 `CLAUDE_AUTH_SELECTION_ENV_KEYS` 白名单里动这个变量（也未在别处 `unset`），透传路径不会被截断。
+
+**与 mini 的关系**：`bin/claude` 在回指 shim 的同一行（`:33/:37`）自动 `export CLAUDE_PROFILE="$NAME"`，等于把第 1 跳选定的 profile 传给后续 exec 链；直连 homebrew 路径（`:45`）则 `unset`。**所以这个透传也是 `bin/claude` 替你自动完成的握手，无需手动设置**——也正是 6.3 中"mini secrets 不被覆盖"的保障来源（前提是"默认 claude 走 GLM"逻辑不再把 mini 抢走）。
+
+| source key | 说明 |
+|---|---|
+| 设置方 | `bin/claude:10-14`（读取三级回退）；`:33/:37`（回指时 export）；`:45`（直连时 unset） |
+| 读取方 | `bin/claude:10`（profile 解析，**仅**本进程；wrapper 不读） |
+| 被透传的变量 | `CLAUDE_PROFILE`（字符串，profile 名，如 `claude-mini` / `claude-glm`） |
+| 生命期 | 自 `bin/claude` 决定 NAME 后贯穿整条 exec 链，结束于最后一次直连 homebrew 时的 `unset` |
 
 ---
 
