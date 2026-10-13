@@ -1,16 +1,26 @@
 #!/usr/bin/env bash
 source "$ENV/lib/bash/native.sh"
 NAME="$(simple-basename "$0")"
-CLAUDE=
+
+# Profile 三级回退:
+#   1. 父进程透传的 CLAUDE_PROFILE(覆盖 basename,防止 cmux wrapper 回环时
+#      basename 退化为 "claude" 又被默认改写成 "claude-glm" 而覆盖了原链接名)
+#   2. 默认 claude 改写为 claude-glm(无链接名时走 GLM 配置)
+#   3. 沿用 basename(claude-mini / claude-xiaomi / 等)
+if [[ -n "${CLAUDE_PROFILE:-}" ]]; then
+    NAME="$CLAUDE_PROFILE"
+elif [[ $NAME == "claude" ]]; then
+    NAME="claude-glm"
+fi
 
 DEFAULT="$ENV/etc/secrets/claude-3rd.sh"
-if [[ "$NAME" != "claude" && -r "$DEFAULT" ]]; then
+if [[ $NAME != "claude" && -r $DEFAULT ]]; then
     # shellcheck disable=SC1090
     source "$DEFAULT"
 fi
 
 RC="$ENV/etc/secrets/${NAME}.env"
-if [[ -r "$RC" ]]; then
+if [[ -r $RC ]]; then
     set -a
     # shellcheck disable=SC1090
     source <(sops decrypt "$RC")
@@ -21,15 +31,18 @@ if [[ $NAME != claude && -z $CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV && -n $CMUX
     if [[ -x $CMUX_CLAUDE_WRAPPER_SHIM ]]; then
         CLAUDE=$CMUX_CLAUDE_WRAPPER_SHIM
         export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
+        export CLAUDE_PROFILE="$NAME"
     elif [[ -x $_CMUX_CLAUDE_WRAPPER ]]; then
         CLAUDE=$_CMUX_CLAUDE_WRAPPER
         export CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1
+        export CLAUDE_PROFILE="$NAME"
     fi
 fi
 
 if [[ -z $CLAUDE ]]; then
     CLAUDE=/opt/homebrew/bin/claude
     unset CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV
+    unset CLAUDE_PROFILE
     if [[ -z "$CLAUDE_CODE_NO_FLICKER" ]]; then
         export CLAUDE_CODE_NO_FLICKER=1
     fi
