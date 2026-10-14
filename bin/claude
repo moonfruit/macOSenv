@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-source "$ENV/lib/bash/native.sh"
-NAME="$(simple-basename "$0")"
-
 # Profile 三级回退:
 #   1. 父进程透传的 CLAUDE_PROFILE(覆盖 basename,防止 cmux wrapper 回环时
 #      basename 退化为 "claude" 又被默认改写成 "claude-glm" 而覆盖了原链接名)
@@ -9,8 +6,12 @@ NAME="$(simple-basename "$0")"
 #   3. 沿用 basename(claude-mini / claude-xiaomi / 等)
 if [[ -n "${CLAUDE_PROFILE:-}" ]]; then
     NAME="$CLAUDE_PROFILE"
-elif [[ $NAME == "claude" ]]; then
-    NAME="claude-glm"
+else
+    source "$ENV/lib/bash/native.sh"
+    NAME="$(simple-basename "$0")"
+    #if [[ $NAME == "claude" ]]; then
+    #    NAME="claude-glm"
+    #fi
 fi
 
 DEFAULT="$ENV/etc/secrets/claude-3rd.sh"
