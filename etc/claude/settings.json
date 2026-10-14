@@ -187,6 +187,7 @@
   "autoUpdatesChannel": "latest",
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
+  "theme": "auto",
   "verbose": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,

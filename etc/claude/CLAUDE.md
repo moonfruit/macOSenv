@@ -44,6 +44,9 @@ Claude 可以使用以下工具：
 
 - 必要时可以使用`homebrew`安装工具
 
+- 本地命令 `gh`（GitHub）和 `glab`（GitLab）均已登录，可直接用于访问仓库（查看 issue/PR、代码搜索、创建 PR 等）
+  - 在仓库 clone 目录内，`glab` 会根据 git remote 自动识别所属实例（自建 GitLab `git.server.gingkoo` 或 `gitlab.com`），操作当前仓库无需额外参数；仅在仓库外目录或操作非当前仓库时，才需要 `GITLAB_HOST=git.server.gingkoo` 或 `-R git.server.gingkoo/<owner>/<repo>`
+
 ## Java 开发
 
 - 系统中存在多个`java`环境：PATH 中包含多个与其相关的命令：
