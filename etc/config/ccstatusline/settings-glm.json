@@ -1,0 +1,72 @@
+{
+  "version": 4,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "fe0c4158-f4da-405d-83ef-a31d75defd99",
+        "type": "context-percentage-usable",
+        "backgroundColor": "bgYellow"
+      },
+      {
+        "id": "9c40b69f-c546-4847-84af-c634cc7fe4e5",
+        "type": "current-working-dir",
+        "backgroundColor": "bgBlue",
+        "metadata": {
+          "fishStyle": "true"
+        }
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta",
+        "metadata": {
+          "hide": "no-git"
+        }
+      },
+      {
+        "id": "2c99f19a-a3f8-4158-bb58-e0bbcaf5e9b8",
+        "type": "git-changes",
+        "backgroundColor": "bgBrightBlue",
+        "metadata": {
+          "hide": "no-git"
+        }
+      },
+      {
+        "id": "124bd31b-61c1-4a57-b8c3-eafc77cfe28b",
+        "type": "custom-command",
+        "backgroundColor": "bgBrightYellow",
+        "commandPath": "/Users/moon/Workspace.localized/env/bin/claude-hooks/glm-usage.py - usage"
+      },
+      {
+        "id": "ba792c00-5f45-4136-8473-a1b5088e1178",
+        "type": "custom-command",
+        "backgroundColor": "bgBrightCyan",
+        "commandPath": "/Users/moon/Workspace.localized/env/bin/claude-hooks/glm-usage.py - weekly_usage"
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full",
+  "compactThreshold": 60,
+  "colorLevel": 3,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "minimalistMode": true,
+  "powerline": {
+    "enabled": true,
+    "separators": [""],
+    "separatorInvertBackground": [false],
+    "startCaps": [],
+    "endCaps": [""],
+    "theme": "nord",
+    "autoAlign": true,
+    "continueThemeAcrossLines": true
+  }
+}

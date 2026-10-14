@@ -16,6 +16,8 @@ export PATH="$script_dir:$PATH"
 
 if [[ "$model" == claude-* ]]; then
     echo "$json" | ccstatusline
+elif [[ "$model" == glm-* || "$model" == GLM-* ]]; then
+    echo "$json" | ccstatusline --config "$HOME/.config/ccstatusline/settings-glm.json"
 elif [[ "$model" == MiniMax-* ]]; then
     echo "$json" | ccstatusline --config "$HOME/.config/ccstatusline/settings-mini.json"
 else
