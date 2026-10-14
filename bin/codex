@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# 调用链：cmux-codex-wrapper -> 本脚本 -> Homebrew Codex。
+# cmux 将自己的 --disable computer_use 放在 argv 开头；只删除这一对，
+# 保留后续用户参数（包括用户主动禁用的选项）和 cmux Hook/MCP 配置。
+if [[ -n "${CMUX_SURFACE_ID:-}" && -n "${CMUX_CODEX_PID:-}" &&
+    "${1:-}" == "--disable" && "${2:-}" == "computer_use" ]]; then
+    shift 2
+fi
+
+CODEX="${CODEX_BIN:-/opt/homebrew/bin/codex}"
+if [[ ! -x "$CODEX" || "$CODEX" -ef "$0" ]]; then
+    printf 'codex: real executable is missing, not executable, or points to this wrapper: %s\n' "$CODEX" >&2
+    exit 127
+fi
+
+exec "$CODEX" "$@"
