@@ -10,6 +10,7 @@ skinparam usecase {
 (actionlint)-->(shellcheck)
 (ada-url) << dep >>
 (ada-url)-->(fmt)
+(ada-url)-->(simdutf)
 (age)
 (aliyun-cli)
 (ant)
@@ -91,6 +92,8 @@ skinparam usecase {
 (chrome-devtools-mcp)-->(node)
 (cjson) << dep >>
 (clang-format)
+(claude-code-router)
+(claude-code-router)-->(node)
 (cline)
 (cline)-->(node)
 (cloudflare-speed-cli)
@@ -202,6 +205,7 @@ skinparam usecase {
 (fontconfig)-->(freetype)
 (fontconfig)-->(gettext)
 (freetype) << dep >>
+(freetype)-->(brotli)
 (freetype)-->(libpng)
 (frei0r) << dep >>
 (fribidi) << dep >>
@@ -628,7 +632,7 @@ skinparam usecase {
 (miniserve)
 (mkcert)
 (mlx) << dep >>
-(mlx)-->(python@3.14)
+(mlx)-->(python@3.15)
 (mlx-c) << dep >>
 (mlx-c)-->(mlx)
 (mongodb/brew/mongodb-community)
@@ -806,6 +810,8 @@ skinparam usecase {
 (pango)-->(libthai)
 (parallel)
 (pcre2) << dep >>
+(pi-coding-agent)
+(pi-coding-agent)-->(node)
 (pigz)
 (pinentry) << dep >>
 (pinentry)-->(libassuan)

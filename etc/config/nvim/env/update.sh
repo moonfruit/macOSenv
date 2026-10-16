@@ -30,7 +30,5 @@ pip install -U --upgrade-strategy eager -r requirements.txt pip setuptools wheel
 pip list -o
 
 echo --- ruby ---
-if [[ ! -d vendor/ruby ]]; then
-    bundle config set path vendor
-fi
+bundle config set path vendor
 bundle update --all
