@@ -96,4 +96,5 @@ FAIL=0
 for app in "${APPS[@]}"; do
     update_app "$app" || FAIL=1
 done
+echo
 exit "$FAIL"

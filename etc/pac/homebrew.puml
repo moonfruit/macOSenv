@@ -362,7 +362,7 @@ skinparam usecase {
 (htop)-->(ncurses)
 (httpie)
 (httpie)-->(certifi)
-(httpie)-->(python@3.14)
+(httpie)-->(python@3.15)
 (hyperfine)
 (icu4c@78) << dep >>
 (iftop)
@@ -789,6 +789,8 @@ skinparam usecase {
 (openjpeg)-->(little-cms2)
 (openjph) << dep >>
 (openjph)-->(libtiff)
+(openssl@3)
+(openssl@3)-->(ca-certificates)
 (openssl@4) << dep >>
 (openssl@4)-->(ca-certificates)
 (opus) << dep >>
@@ -821,7 +823,7 @@ skinparam usecase {
 (pinentry-mac)-->(libassuan)
 (pinentry-mac)-->(libgpg-error)
 (pipgrip)
-(pipgrip)-->(python@3.14)
+(pipgrip)-->(python@3.15)
 (pixman) << dep >>
 (pkgconf) << dep >>
 (plantuml)
@@ -868,13 +870,6 @@ skinparam usecase {
 (pycparser) << dep >>
 (pyright)
 (pyright)-->(node)
-(python@3.14) << dep >>
-(python@3.14)-->(ca-certificates)
-(python@3.14)-->(mpdecimal)
-(python@3.14)-->(openssl@4)
-(python@3.14)-->(sqlite)
-(python@3.14)-->(xz)
-(python@3.14)-->(zstd)
 (python@3.15) << req >>
 (python@3.15)-->(ca-certificates)
 (python@3.15)-->(mpdecimal)
@@ -963,7 +958,7 @@ skinparam usecase {
 (speex)-->(libogg)
 (sqlfluff)
 (sqlfluff)-->(libyaml)
-(sqlfluff)-->(python@3.14)
+(sqlfluff)-->(python@3.15)
 (sqlite) << dep >>
 (sqlite)-->(readline)
 (srt) << dep >>
@@ -1090,7 +1085,7 @@ skinparam usecase {
 (yt-dlp)-->(cffi)
 (yt-dlp)-->(deno)
 (yt-dlp)-->(pycparser)
-(yt-dlp)-->(python@3.14)
+(yt-dlp)-->(python@3.15)
 (z3) << dep >>
 (zeromq) << dep >>
 (zeromq)-->(libsodium)
