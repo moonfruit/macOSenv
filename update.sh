@@ -120,6 +120,31 @@ wait_for_proxy() {
     return 1
 }
 
+# Final report on exit: print a completion timestamp and fire a macOS
+# notification. Trapped on EXIT so failures are reported too — this script
+# usually runs unattended and the outcome should be visible when you return.
+report_exit() {
+    local status=$?
+    local ts elapsed msg
+
+    ts=$(date '+%Y-%m-%d %H:%M:%S')
+    elapsed="$((SECONDS / 60))m$((SECONDS % 60))s"
+
+    echo
+    if ((status == 0)); then
+        h1 "全部更新完成 @ ${ts}（耗时 ${elapsed}）"
+        msg="env 更新完成（耗时 ${elapsed}）"
+    else
+        h1 "更新失败（exit ${status}）@ ${ts}（耗时 ${elapsed}）"
+        msg="env 更新失败：exit ${status}"
+    fi
+
+    # 统一走 notify.sh：自动适配当前终端（cmux/iTerm2/ghostty/terminal-notifier）
+    "$ENV/bin/notify.sh" "env update.sh" "${msg} @ ${ts}" >/dev/null 2>&1 || true
+    exit "$status"
+}
+trap report_exit EXIT
+
 rg submodule .gitmodules | sed 's/.*"\(.*\)".*/\1/' | sort |
     while read -r MODULE; do
         echo "-------- $MODULE --------"

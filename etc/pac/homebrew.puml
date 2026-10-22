@@ -670,6 +670,8 @@ skinparam usecase {
 (moonfruit/tap/sing-box-beta)
 (moonfruit/tap/sing-box-ref1nd)
 (moonfruit/tap/sing2seq)
+(moonfruit/tap/sonarqube-mcp-server)
+(moonfruit/tap/sonarqube-mcp-server)-->(openjdk)
 (moonfruit/tap/tongsuo) << dep >>
 (moonfruit/tap/tongsuo)-->(ca-certificates)
 (moonfruit/tap/tscurl)

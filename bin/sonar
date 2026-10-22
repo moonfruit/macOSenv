@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [[ -n "${SONARQUBE_URL:-}" && -z "${SONARQUBE_CLI_SERVER:-}" ]]; then
+    export SONARQUBE_CLI_SERVER="$SONARQUBE_URL"
+fi
+
+if [[ -n "${SONARQUBE_TOKEN:-}" && -z "${SONARQUBE_CLI_TOKEN:-}" ]]; then
+    export SONARQUBE_CLI_TOKEN="$SONARQUBE_TOKEN"
+fi
+
+exec /opt/homebrew/bin/sonar "$@"
