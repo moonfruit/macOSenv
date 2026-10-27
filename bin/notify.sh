@@ -9,7 +9,7 @@ set -euo pipefail
 #   echo '{"title":"…","message":"…"}' | notify.sh   # 兼容 hook 的 JSON 输入
 #
 # 支持的终端：
-#   cmux      →  cmux notify（仅凭 __CFBundleIdentifier=com.cmuxterm.app 探测）
+#   cmux      →  cmux notify（仅凭 __CFBundleIdentifier=com.cmuxterm.app 探测），聚焦该 pane 标为已读后连历史记录一起删除
 #   iTerm2    →  OSC 9 通知 + OSC 1337 图标持续弹跳（直到激活到前台）
 #   ghostty   →  OSC 777 桌面通知
 #   其它      →  terminal-notifier（借用 __CFBundleIdentifier 身份，含 VSCode/JetBrains）；缺失则回退 osascript
@@ -34,6 +34,30 @@ emit_osc() {
         seq=$'\eP'"$seq"$'\e\\'
     fi
     printf '%s' "$seq" >/dev/tty 2>/dev/null || printf '%s' "$seq"
+}
+
+# 后台等待 cmux 通知被标为已读（聚焦/交互该 pane 时 cmux 自动标记），随后将其从历史中删除。
+# 通知先被删除/清空/替换则直接退出；最长等 1 天，cmux 退出时事件流结束也随之退出。
+# $1 = 通知 id，$2 = 发通知前的事件序号（从此处回放，避免订阅前已读的竞态）。
+# dismiss 放在管道末段内：jq 取到首个匹配即处理，不必等 cmux events 退出；
+# 不加 --no-heartbeat，cmux events 靠随后的心跳写入（≤15s）触发 SIGPIPE 退出。
+cmux_dismiss_on_read() {
+    local id=$1 after=$2
+    {
+        timeout 1d cmux events --after "$after" --category notification --no-ack |
+            {
+                ev=$(jq -nr --arg id "$id" 'first(inputs | select(
+                    (.name == "notification.created" and (.payload.replaced_notification_ids // [] | index($id)))
+                    or (.name == "notification.removed" and .payload.notification_id == $id)
+                    or ((.name == "notification.read" or .name == "notification.cleared")
+                        and (.payload.notification_ids // [] | index($id)))
+                )) | .name') || true
+                if [[ $ev == notification.read ]]; then
+                    cmux dismiss-notification --id "$id"
+                fi
+            }
+    } </dev/null &>/dev/null &
+    disown
 }
 
 # ---- 解析输入 ----------------------------------------------------------------
@@ -91,7 +115,11 @@ iTerm.app)
 ghostty)
     # cmux 中 TERM_PROGRAM 同样是 ghostty，靠 __CFBundleIdentifier 区分；失败则降级到 OSC 777
     if [[ ${__CFBundleIdentifier:-} == com.cmuxterm.app ]] && has cmux; then
-        cmux notify --title "$title" --body "$message" &>/dev/null && notified=1 || true
+        after=$(cmux events --snapshot --category notification 2>/dev/null | jq -r '.resume.latest_seq // empty') || after=""
+        if id=$(cmux notify --title "$title" --body "$message" --json 2>/dev/null | jq -r '.id // empty') && [[ -n $id ]]; then
+            notified=1
+            [[ -n $after ]] && cmux_dismiss_on_read "$id" "$after"
+        fi
     fi
     if [[ $notified -eq 0 ]]; then
         emit_osc "777;notify;$title;$message" # 桌面通知（title;body）

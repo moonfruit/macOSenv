@@ -347,7 +347,7 @@ skinparam usecase {
 (harfbuzz)-->(freetype)
 (harfbuzz)-->(glib)
 (harfbuzz)-->(graphite2)
-(harfbuzz)-->(icu4c@78)
+(harfbuzz)-->(icu4c@79)
 (harfbuzz)-->(libpng)
 (hazelcast/hz/hazelcast)
 (hazelcast/hz/hazelcast-management-center)
@@ -364,7 +364,7 @@ skinparam usecase {
 (httpie)-->(certifi)
 (httpie)-->(python@3.15)
 (hyperfine)
-(icu4c@78) << dep >>
+(icu4c@79) << dep >>
 (iftop)
 (imagemagick-full)
 (imagemagick-full)-->(cairo)
@@ -419,8 +419,6 @@ skinparam usecase {
 (json5)
 (json5)-->(node)
 (k9s)
-(krb5) << dep >>
-(krb5)-->(openssl@4)
 (lame) << dep >>
 (lame)-->(mpg123)
 (lazydocker)
@@ -722,7 +720,7 @@ skinparam usecase {
 (node)-->(c-ares)
 (node)-->(hdrhistogram_c)
 (node)-->(highway)
-(node)-->(icu4c@78)
+(node)-->(icu4c@79)
 (node)-->(libffi)
 (node)-->(libnghttp2)
 (node)-->(libuv)
@@ -739,7 +737,7 @@ skinparam usecase {
 (node@24)-->(brotli)
 (node@24)-->(c-ares)
 (node@24)-->(hdrhistogram_c)
-(node@24)-->(icu4c@78)
+(node@24)-->(icu4c@79)
 (node@24)-->(libnghttp2)
 (node@24)-->(libnghttp3)
 (node@24)-->(libngtcp2)
@@ -852,14 +850,6 @@ skinparam usecase {
 (poppler)-->(nss)
 (poppler)-->(openjpeg)
 (popt) << dep >>
-(postgresql@18)
-(postgresql@18)-->(gettext)
-(postgresql@18)-->(icu4c@78)
-(postgresql@18)-->(krb5)
-(postgresql@18)-->(lz4)
-(postgresql@18)-->(openssl@4)
-(postgresql@18)-->(readline)
-(postgresql@18)-->(zstd)
 (prettier)
 (prettier)-->(node)
 (procs)
@@ -904,6 +894,7 @@ skinparam usecase {
 (readline) << dep >>
 (redis)
 (redis)-->(openssl@4)
+(redis)-->(zstd)
 (ripgrep)
 (ripgrep)-->(pcre2)
 (rlwrap)
@@ -945,7 +936,7 @@ skinparam usecase {
 (shfmt)
 (simdjson) << dep >>
 (simdutf) << dep >>
-(simdutf)-->(icu4c@78)
+(simdutf)-->(icu4c@79)
 (sk)
 (skills)
 (skills)-->(node)
@@ -993,7 +984,7 @@ skinparam usecase {
 (tesseract)-->(gettext)
 (tesseract)-->(glib)
 (tesseract)-->(harfbuzz)
-(tesseract)-->(icu4c@78)
+(tesseract)-->(icu4c@79)
 (tesseract)-->(leptonica)
 (tesseract)-->(libarchive)
 (tesseract)-->(pango)
