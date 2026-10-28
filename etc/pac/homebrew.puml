@@ -679,6 +679,8 @@ skinparam usecase {
 (moonfruit/tap/tscurl)-->(zstd)
 (moonfruit/tap/tunblkctl)
 (moonfruit/tap/uutils-selected)
+(moonfruit/tap/zai-mcp-server)
+(moonfruit/tap/zai-mcp-server)-->(node)
 (moonfruit/tap/zenity-go)
 (mosh)
 (mosh)-->(protobuf)
