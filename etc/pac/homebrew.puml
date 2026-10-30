@@ -109,7 +109,7 @@ skinparam usecase {
 (croc)
 (cspell)
 (cspell)-->(node)
-(curl)
+(curl) << req >>
 (curl)-->(brotli)
 (curl)-->(libnghttp2)
 (curl)-->(libnghttp3)
@@ -252,6 +252,7 @@ skinparam usecase {
 (ghostscript)-->(tesseract)
 (giflib) << dep >>
 (git) << req >>
+(git)-->(curl)
 (git)-->(gettext)
 (git)-->(pcre2)
 (git-delta)

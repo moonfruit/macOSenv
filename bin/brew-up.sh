@@ -47,36 +47,6 @@ cleanup() {
     fi
 }
 
-KNOWN_BOTTLED=(
-    hashicorp/tap/consul
-    hazelcast/hz/hazelcast
-    hazelcast/hz/hazelcast-management-center
-    mongodb/brew/mongodb-community
-    moonfruit/tap/wlp-webprofile8
-    moonfruit/tap/wlp-webprofile10
-    moonfruit/tap/wlp-webprofile11
-    oven-sh/bun/bun
-)
-
-find-bottled() {
-    local result=()
-    local item
-    for item in "$@"; do
-        for i in "${!KNOWN_BOTTLED[@]}"; do
-            if [[ "$item" == "${KNOWN_BOTTLED[i]}" ]]; then
-                result+=("$item")
-                unset 'KNOWN_BOTTLED[i]' # 删除已匹配元素，避免重复匹配
-                break
-            fi
-        done
-    done
-    if ((${#result[@]})); then
-        echo "${result[@]}"
-    else
-        return 1
-    fi
-}
-
 cleanup-fonts() {
     FIND_FONTS=(fd -tf -e otf -e ttc -e ttf -e woff -e woff2 . "$(brew --caskroom)/font-"*)
     if "${FIND_FONTS[@]}" -q; then
@@ -121,9 +91,12 @@ readarray -t OUTDATED < <(brew outdated)
 if ((${#OUTDATED[@]})); then
     cleanup "${OUTDATED[@]}"
 
-    if BOTTLED=$(find-bottled "${OUTDATED[@]}"); then
-        # shellcheck disable=SC2086
-        brew upgrade --display-times --yes $BOTTLED
+    # `--force-bottle` 遇到无 bottle 的 formula 会直接失败，先单独升级它们
+    readarray -t UNBOTTLED < <(
+        brew-info "${OUTDATED[@]}" | jq -r '.formulae[] | select(.bottle.stable == null) | .full_name'
+    )
+    if ((${#UNBOTTLED[@]})); then
+        brew upgrade --display-times --yes "${UNBOTTLED[@]}"
     fi
 
     if brew upgrade --force-bottle --display-times --yes; then

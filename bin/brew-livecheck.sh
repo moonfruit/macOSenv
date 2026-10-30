@@ -21,59 +21,14 @@ readonly TAPS=(
     moonfruit/tap
 )
 
-# TAPS 之外、没装但仍想跟踪的包。
-readonly EXTRA=(
-    kettle
-    zig
-
-    alacritty
-    ariang
-    c0re100-qbittorrent
-    dbvisualizer
-    discord
-    graalvm-jdk
-    graalvm-jdk@21
-    kitty
-    macast
-    motrix
-    oracle-jdk
-    oracle-jdk@17
-    oracle-jdk@21
-    qbittorrent
-    rapidapi
-    semeru-jdk-open
-    semeru-jdk-open@8
-    semeru-jdk-open@11
-    semeru-jdk-open@17
-    semeru-jdk-open@21
-    slack
-    wezterm
-    zulu
-    zulu@8
-    zulu@11
-    zulu@17
-    zulu@21
-
-    homebrew/cask/docker
-    homebrew/cask/samsung-magician
-
-    android-studio
-    clion
-    datagrip
-    dataspell
-    fleet
-    goland
-    ijhttp
-    intellij-idea
-    jetbrains-gateway
-    mps
-    phpstorm
-    pycharm
-    rider
-    rubymine
-    rustrover
-    webstorm
-)
+# TAPS 之外、没装但仍想跟踪的包。曾登记 kettle/zig、各 JDK、JetBrains 全家桶
+# 等 47 个包，2026-10 排查后全部清空：要么已被 BrewTestBot 接管 autobump
+# （brew livecheck 默认直接跳过名单内的包，bump PR 也会被拒），要么包本身
+# 已被上游 disabled（alacritty/ariang/macast/dataspell/fleet/kettle，其中
+# homebrew/cask/docker 还改名成了 docker-desktop）。
+# 新加条目前先确认不在 autobump 名单且未 disabled，否则登记了也查不出来：
+#   brew ruby -e 'p CoreTap.instance.autobump.include?("名字"); p CoreCaskTap.instance.autobump.include?("名字")'
+readonly EXTRA=()
 
 readonly EXCLUDED=(
     harelba/q/q
