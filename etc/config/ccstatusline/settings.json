@@ -67,6 +67,18 @@
         "metadata": {
           "compact": "true"
         }
+      },
+      {
+        "id": "anthropic-latency",
+        "type": "custom-command",
+        "color": "cyan",
+        "commandPath": "/opt/homebrew/bin/python3 /Users/moon/Workspace.localized/env/bin/claude-hooks/anthropic-latency.py",
+        "timeout": 1000
+      },
+      {
+        "id": "f03be64b-69ce-455a-b667-503e6880323d",
+        "backgroundColor": "bgRed",
+        "type": "remote-control-status"
       }
     ],
     [],
@@ -76,8 +88,12 @@
   "compactThreshold": 60,
   "colorLevel": 3,
   "defaultPadding": " ",
+  "defaultPaddingSide": "both",
   "inheritSeparatorColors": false,
   "globalBold": false,
+  "gitCacheTtlSeconds": 5,
+  "terminalWidthCacheTtlSeconds": 5,
+  "customCommandCacheTtlSeconds": 0,
   "minimalistMode": true,
   "powerline": {
     "enabled": true,

@@ -15,6 +15,9 @@ Reloader = hs.pathwatcher.new(paths.home .. "/.hammerspoon", hs.reload):start()
 ---
 hs.ipc.cliSaveHistory(true)
 
+--- Switch to English when a terminal app becomes active
+require("terminal-input"):start()
+
 ---
 --- Prevent nustore from creating some folders
 ---
@@ -25,7 +28,7 @@ hs.ipc.cliSaveHistory(true)
 ---
 --- Quit tunnelblick when connect to gingkoo wifi
 --
-local tunnelblick = require("tunnelblick"):start()
+-- local tunnelblick = require("tunnelblick"):start()
 
 ---
 --- Launch HSTracker when Hearthstone is launching

@@ -293,7 +293,7 @@ Be concise and helpful in all responses.
 			<key>Text</key>
 			<string></string>
 		</dict>
-		<key>0xd-0x20000-0x24</key>
+		<key>0xd-0x20000-0x24-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>12</integer>
@@ -17141,7 +17141,7 @@ Be concise and helpful in all responses.
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x5a-0x120000-0x6</key>
+				<key>0x5a-0x120000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -17167,7 +17167,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x63-0x100000-0x8</key>
+				<key>0x63-0x100000-0x8-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -17180,7 +17180,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x73-0x100000-0x1</key>
+				<key>0x73-0x100000-0x1-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -17193,7 +17193,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x7a-0x100000-0x6</key>
+				<key>0x7a-0x100000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -20325,7 +20325,7 @@ Be concise and helpful in all responses.
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x5a-0x120000-0x6</key>
+				<key>0x5a-0x120000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -20351,7 +20351,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x63-0x100000-0x8</key>
+				<key>0x63-0x100000-0x8-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -20364,7 +20364,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x73-0x100000-0x1</key>
+				<key>0x73-0x100000-0x1-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -20377,7 +20377,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x7a-0x100000-0x6</key>
+				<key>0x7a-0x100000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -21908,7 +21908,7 @@ Be concise and helpful in all responses.
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x5a-0x120000-0x6</key>
+				<key>0x5a-0x120000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -21934,7 +21934,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x63-0x100000-0x8</key>
+				<key>0x63-0x100000-0x8-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -21947,7 +21947,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x73-0x100000-0x1</key>
+				<key>0x73-0x100000-0x1-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -21960,7 +21960,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x7a-0x100000-0x6</key>
+				<key>0x7a-0x100000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -46957,7 +46957,7 @@ Be concise and helpful in all responses.
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x5a-0x120000-0x6</key>
+				<key>0x5a-0x120000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -46983,7 +46983,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x63-0x100000-0x8</key>
+				<key>0x63-0x100000-0x8-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -46996,7 +46996,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x73-0x100000-0x1</key>
+				<key>0x73-0x100000-0x1-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -47020,7 +47020,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x7a-0x100000-0x6</key>
+				<key>0x7a-0x100000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -65815,7 +65815,7 @@ Be concise and helpful in all responses.
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x5a-0x120000-0x6</key>
+				<key>0x5a-0x120000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -65841,7 +65841,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x63-0x100000-0x8</key>
+				<key>0x63-0x100000-0x8-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -65854,7 +65854,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x73-0x100000-0x1</key>
+				<key>0x73-0x100000-0x1-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -65867,7 +65867,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x7a-0x100000-0x6</key>
+				<key>0x7a-0x100000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -67452,7 +67452,7 @@ Be concise and helpful in all responses.
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x5a-0x120000-0x6</key>
+				<key>0x5a-0x120000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -67478,7 +67478,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x63-0x100000-0x8</key>
+				<key>0x63-0x100000-0x8-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -67491,7 +67491,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x73-0x100000-0x1</key>
+				<key>0x73-0x100000-0x1-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
@@ -67504,7 +67504,7 @@ Be concise and helpful in all responses.
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
-				<key>0x7a-0x100000-0x6</key>
+				<key>0x7a-0x100000-0x6-0x1</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
