@@ -28,6 +28,15 @@ if "$DIR/gingkoo.sh"; then
     mark-restart
 fi
 
+if "$DIR/ash.sh"; then
+    mark-restart
+else
+    ASH_STATUS=$?
+    if [[ $ASH_STATUS -ne 2 ]]; then
+        warn "Failed to update Ash DNS - keeping existing config"
+    fi
+fi
+
 h1 Updating config.json
 
 mkdir -p dat "$CACHE"
