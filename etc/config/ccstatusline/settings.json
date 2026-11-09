@@ -74,11 +74,6 @@
         "color": "cyan",
         "commandPath": "/opt/homebrew/bin/python3 /Users/moon/Workspace.localized/env/bin/claude-hooks/anthropic-latency.py",
         "timeout": 1000
-      },
-      {
-        "id": "f03be64b-69ce-455a-b667-503e6880323d",
-        "backgroundColor": "bgRed",
-        "type": "remote-control-status"
       }
     ],
     [],

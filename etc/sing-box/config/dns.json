@@ -16,8 +16,6 @@
       { "tag": "dns-one", "type": "h3", "server": "one.one.one.one", "detour": "🔰 默认出口" },
       { "tag": "dns-cloudflare", "type": "h3", "server": "cloudflare-dns.com", "detour": "🔰 默认出口" },
       { "tag": "dns-proxy", "type": "group", "servers": ["dns-one", "dns-cloudflare"] },
-      // Ash
-      { "tag": "dns-ash", "type": "https", "server": "edge1.ashnet.cc", "domain_resolver": "dns-resolver" },
       // Hosts
       { "tag": "dns-hosts", "type": "hosts", "path": ["hosts", "/etc/hosts"] },
       // Local
@@ -56,8 +54,6 @@
       { "domain_suffix": [".lan", ".home.arpa"], "server": "dns-home" },
       // Gingkoo
       { "domain_suffix": [".server.gingkoo", ".gingkoo.internal"], "server": "dns-gingkoo" },
-      // Ash
-      { "domain_suffix": ".staticlane.org", "server": "dns-ash" },
       // Lan
       { "rule_set": ["Lan", "ExtraLan"], "action": "predefined", "rcode": "NXDOMAIN" },
       // 无 IPv6 时不解析 IPv6 地址

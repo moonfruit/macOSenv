@@ -646,6 +646,7 @@ skinparam usecase {
 (moonfruit/tap/gotools)
 (moonfruit/tap/gwt@2.6)
 (moonfruit/tap/gwt@2.6)-->(openjdk)
+(moonfruit/tap/hghub)
 (moonfruit/tap/impl)
 (moonfruit/tap/impl)-->(go)
 (moonfruit/tap/imsg)
@@ -758,7 +759,6 @@ skinparam usecase {
 (ollama)
 (ollama)-->(mlx-c)
 (oniguruma) << dep >>
-(open-code-review)
 (opencore-amr) << dep >>
 (openexr) << dep >>
 (openexr)-->(imath)

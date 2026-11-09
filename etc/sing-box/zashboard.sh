@@ -10,6 +10,7 @@ UI="$DIR/ui"
 NAME=zashboard-settings.json
 SETTINGS="$UI/$NAME"
 KEY=config/source-ip-label-list
+RETENTION=$((7 * 24 * 60 * 60))
 
 FORCE=
 
@@ -42,11 +43,25 @@ if [[ -z $FORCE ]] && [[ -s "$CACHE" ]] && (($(stat -f %m "$CACHE") >= $(date -v
 else
     h2 "Fetching IP labels from router"
     mkdir -p "$CACHE_DIR"
-    # 以现有缓存为上一次结果合并：离线设备在路由器里查不到 IPv4 时沿用旧值
-    PREVIOUS=()
-    [[ -s "$CACHE" ]] && PREVIOUS=(--previous "$CACHE")
+    # 只采集当前记录；不要使用采集器无限期补全旧 IPv4 的 --previous。
     # shellcheck disable=SC2154
-    if zashboard-iplabels.py "${PREVIOUS[@]}" >"$TEMP_DIR/labels.json"; then
+    if zashboard-iplabels.py >"$TEMP_DIR/current.json"; then
+        PREVIOUS="$CACHE"
+        if [[ ! -s "$PREVIOUS" ]]; then
+            PREVIOUS="$TEMP_DIR/previous.json"
+            echo '[]' >"$PREVIOUS"
+        fi
+        # 按 IP 合并：重新注册立即替换旧映射；首次缺失时开始计时，后续不续期。
+        jq --argjson now "$(date +%s)" --argjson retention "$RETENTION" \
+            --slurpfile previous "$PREVIOUS" '
+            (map(.key) | INDEX(.)) as $keys
+            | (map(del(.invalid_since)) + [
+                $previous[0][]
+                | select($keys[.key] == null)
+                | .invalid_since //= $now
+                | select(.invalid_since + $retention > $now)
+              ]) | sort_by(.label, .key)
+            ' "$TEMP_DIR/current.json" >"$TEMP_DIR/labels.json" || exit 1
         # 先占位成空文件，让首次运行时的 diff 有个对比对象，不然 delta 会报访问不到
         [[ -e "$CACHE" ]] || : >"$CACHE"
         copy-if-diff "$TEMP_DIR/labels.json" "$CACHE" || true
@@ -62,6 +77,17 @@ if [[ ! -s "$CACHE" ]]; then
     exit 0
 fi
 
+# 即使跳过抓取或抓取失败，已到保留期限的记录也应移除。
+# copy-if-diff 在内容相同时不改 mtime，保留原来的抓取节奏。
+jq --argjson now "$(date +%s)" --argjson retention "$RETENTION" '
+    map(select(.invalid_since == null or .invalid_since + $retention > $now))
+    ' "$CACHE" >"$TEMP_DIR/retained.json" || exit 1
+if ! cmp -s "$TEMP_DIR/retained.json" "$CACHE"; then
+    # 清理保留期不能冒充一次成功抓取。
+    touch -r "$CACHE" "$TEMP_DIR/retained.json" || exit 1
+    cp -p "$TEMP_DIR/retained.json" "$CACHE" || exit 1
+fi
+
 # 二、无条件从缓存重新生成：ui 目录由 sing-box 定期重新下载，里面的文件会被清掉，
 #     所以上一步没有变更并不代表 ui 里的文件还在
 if [[ ! -d "$UI" ]]; then
@@ -73,7 +99,8 @@ fi
 h2 "Generating $NAME from cache"
 
 # shellcheck disable=SC2154
-jq -n --arg key "$KEY" --rawfile labels "$CACHE" '{($key): ($labels | fromjson | tojson)}' >"$TEMP_DIR/$NAME" || exit 1
+jq -n --arg key "$KEY" --slurpfile labels "$CACHE" \
+    '{($key): ($labels[0] | map(del(.invalid_since)) | tojson)}' >"$TEMP_DIR/$NAME" || exit 1
 
 if [[ ! -e "$SETTINGS" ]]; then
     sudo touch "$SETTINGS"

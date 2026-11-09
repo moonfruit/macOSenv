@@ -180,6 +180,12 @@
         "source": "github",
         "repo": "typesafe-ai/skills"
       }
+    },
+    "yyskills": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/moon/Workspace.localized/ai/yyskills"
+      }
     }
   },
   "language": "简体中文",

@@ -94,5 +94,7 @@ TTY 下每订阅一行、每 0.5 秒原地重画，显示**当前阶段已持续
 或 Ctrl-C 中断）。个别陌生 UA 拿到 HTML 是常态，不影响 0/1。
 
 只用标准库（外部命令仅 `yq`，解析 clash YAML 用），无 venv。
-测试：`cd etc/sing-box && /opt/homebrew/bin/python3 -m unittest test_ua_diff`（不联网）。
+测试文件位于 `etc/sing-box/tests/`。
+运行 UA 探测的离线测试：`cd etc/sing-box && /opt/homebrew/bin/python3 -m unittest discover -s tests -p 'test_ua_diff.py'`（不联网）。
+运行该目录全部测试：`cd etc/sing-box && /opt/homebrew/bin/python3 -m unittest discover -s tests`。
 设计文档 `docs/superpowers/specs/2026-08-10-ua-diff-design.md`。

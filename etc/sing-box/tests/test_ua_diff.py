@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ua-diff.py 的单元测试。运行：/opt/homebrew/bin/python3 -m unittest test_ua_diff -v"""
+"""ua-diff.py 的单元测试。在 etc/sing-box 下运行：python3 -m unittest discover -s tests -v"""
 
 import base64
 import contextlib
@@ -17,7 +17,7 @@ import unittest
 from pathlib import Path
 
 _spec = importlib.util.spec_from_file_location(
-    "ua_diff", Path(__file__).with_name("ua-diff.py")
+    "ua_diff", Path(__file__).resolve().parents[1] / "ua-diff.py"
 )
 ua_diff = importlib.util.module_from_spec(_spec)
 sys.modules["ua_diff"] = ua_diff
