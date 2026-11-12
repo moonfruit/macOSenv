@@ -100,6 +100,8 @@ skinparam usecase {
 (cloudflare-wrangler)
 (cloudflare-wrangler)-->(node)
 (cmake)
+(cocoapods)
+(cocoapods)-->(ruby)
 (colima)
 (colima)-->(lima)
 (context7-mcp)
@@ -109,7 +111,7 @@ skinparam usecase {
 (croc)
 (cspell)
 (cspell)-->(node)
-(curl) << req >>
+(curl)
 (curl)-->(brotli)
 (curl)-->(libnghttp2)
 (curl)-->(libnghttp3)
@@ -252,7 +254,6 @@ skinparam usecase {
 (ghostscript)-->(tesseract)
 (giflib) << dep >>
 (git) << req >>
-(git)-->(curl)
 (git)-->(gettext)
 (git)-->(pcre2)
 (git-delta)
@@ -483,6 +484,15 @@ skinparam usecase {
 (libidn2) << dep >>
 (libidn2)-->(gettext)
 (libidn2)-->(libunistring)
+(libimobiledevice)
+(libimobiledevice)-->(libimobiledevice-glue)
+(libimobiledevice)-->(libplist)
+(libimobiledevice)-->(libtasn1)
+(libimobiledevice)-->(libtatsu)
+(libimobiledevice)-->(libusbmuxd)
+(libimobiledevice)-->(openssl@4)
+(libimobiledevice-glue) << dep >>
+(libimobiledevice-glue)-->(libplist)
 (libksba) << dep >>
 (libksba)-->(libgpg-error)
 (liblqr) << dep >>
@@ -502,6 +512,7 @@ skinparam usecase {
 (libplacebo)-->(shaderc)
 (libplacebo)-->(vulkan-headers)
 (libplacebo)-->(vulkan-loader)
+(libplist) << dep >>
 (libpng) << dep >>
 (libpsl) << dep >>
 (libptytty) << dep >>
@@ -543,6 +554,8 @@ skinparam usecase {
 (libssh2) << dep >>
 (libssh2)-->(openssl@4)
 (libtasn1) << dep >>
+(libtatsu) << dep >>
+(libtatsu)-->(libplist)
 (libthai) << dep >>
 (libthai)-->(libdatrie)
 (libtiff) << dep >>
@@ -558,6 +571,9 @@ skinparam usecase {
 (libunibreak) << dep >>
 (libunistring) << dep >>
 (libusb) << dep >>
+(libusbmuxd) << dep >>
+(libusbmuxd)-->(libimobiledevice-glue)
+(libusbmuxd)-->(libplist)
 (libuv) << dep >>
 (libvidstab) << dep >>
 (libvmaf) << dep >>
@@ -928,6 +944,8 @@ skinparam usecase {
 (rust)-->(pkgconf)
 (rust)-->(sqlite)
 (rustnet)
+(rustup)
+(rustup)-->(xz)
 (sd)
 (sdl2-compat) << dep >>
 (sdl2-compat)-->(sdl3)
@@ -1067,6 +1085,7 @@ skinparam usecase {
 (wildfly-as)-->(openjdk)
 (x264) << dep >>
 (x265) << dep >>
+(xcodegen)
 (xh)
 (xorgproto) << dep >>
 (xvid) << dep >>
