@@ -9,11 +9,13 @@ import tempfile
 
 DOMAIN = r'(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z][a-z0-9-]*'
 HOST = re.compile(r'\*\.(' + DOMAIN + r')\s*=\s*server:https://(' + DOMAIN + r')/dns-query', re.I)
+BOOTSTRAP = re.compile(r'(' + DOMAIN + r')\s*=\s*server:223\.5\.5\.5', re.I)
 
 
 def update(plugin, target):
     section = None
     domains, servers, warnings = set(), set(), []
+    bootstrap_rules = []
     for number, raw in enumerate(plugin.splitlines(), 1):
         line = raw.strip()
         if not line or line.startswith(('#', ';', '//')):
@@ -30,6 +32,15 @@ def update(plugin, target):
             domains.add('.' + match[1].lower())
             servers.add(match[2].lower())
         else:
+            bootstrap = BOOTSTRAP.fullmatch(line) if section == '[Host]' else None
+            if bootstrap:
+                bootstrap_rules.append((number, line, bootstrap[1].lower()))
+            else:
+                warnings.append(f'line {number}: unexpected rule {line}')
+    # dns-resolver 已包含 223.5.5.5；仅接受 DoH 服务器自身的引导解析，
+    # 其他域名或 DNS 地址仍需告警，不能当成通配域名加入代理 DNS 规则。
+    for number, line, domain in bootstrap_rules:
+        if domain not in servers:
             warnings.append(f'line {number}: unexpected rule {line}')
     for warning in warnings:
         print(f'Warning: {warning}', file=sys.stderr)

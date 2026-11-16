@@ -54,6 +54,30 @@ class AshTest(unittest.TestCase):
         self.assertTrue(any('foo.example = 1.2.3.4' in w for w in warnings))
         self.assertTrue(any('DOMAIN,foo.example,DIRECT' in w for w in warnings))
 
+    def test_doh_bootstrap_rule_is_already_covered(self):
+        for bootstrap_first in (True, False):
+            with self.subTest(bootstrap_first=bootstrap_first):
+                lines = ['DNS.example = server:223.5.5.5',
+                         '*.a.example = server:https://dns.example/dns-query']
+                if not bootstrap_first:
+                    lines.reverse()
+                _, warnings, result = self.run_update('[Host]\n' + '\n'.join(lines))
+                self.assertEqual(warnings, [])
+                self.assertEqual(result['dns']['rules'][0]['domain_suffix'],
+                                 ['.a.example', '.z.example'])
+                self.assertEqual(result['dns']['servers'][0]['domain_resolver'], 'dns-resolver')
+
+    def test_unknown_bootstrap_rules_still_warn(self):
+        for rule in ('other.example = server:223.5.5.5',
+                     'dns.example = server:1.1.1.1',
+                     'dns.example = server:223.5.5.5, 1.1.1.1'):
+            with self.subTest(rule=rule):
+                _, warnings, _ = self.run_update(
+                    '[Host]\n' + rule + '\n'
+                    '*.a.example = server:https://dns.example/dns-query\n')
+                self.assertEqual(len(warnings), 1)
+                self.assertIn(rule, warnings[0])
+
     def test_invalid_or_conflicting_plugin_preserves_file(self):
         for plugin in ('<html>error</html>', '[Host]\n',
                        '[Host]\n*.a.example = server:https://one.example/dns-query\n'
