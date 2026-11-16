@@ -31,7 +31,7 @@ while (($# > 0)); do
 	shift
 done
 
-BASE=(-F)
+BASE=(--classify=auto)
 if [[ -n $LONG ]]; then
 	BASE+=(-gM --git --icons --time-style long-iso)
 elif [[ $MODE = tree ]]; then
