@@ -78,7 +78,10 @@ Host tokyo.gingkoo.work
     User app
     Port 34322
 
-Host moonsallyx.local
+Host moons-rog-xbox.local
     User dkmoo
+
+Host apples-matebook.local
+    User xiaoq
 
 # vim: filetype=sshconfig

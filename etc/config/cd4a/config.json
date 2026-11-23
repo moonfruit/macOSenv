@@ -1,3 +1,5 @@
 {
-  "viewport": "1440x900"
+  "chromeArg": [
+    "--window-size=1440,900"
+  ]
 }
